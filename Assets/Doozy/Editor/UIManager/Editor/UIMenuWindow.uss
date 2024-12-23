@@ -1,0 +1,11 @@
+.UIMenu.Window#layoutContainer {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.UIMenu.Window#sideMenuContainer {
+}
+
+.UIMenu.Window#contentContainer {
+    flex-grow: 1;
+}

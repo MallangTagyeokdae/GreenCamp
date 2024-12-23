@@ -1,0 +1,870 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8004742925440169184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2479a69f56cf54c96de81c44e8ad1a, type: 3}
+  m_Name: Portal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: ce3516dc-6b53-44f4-bf4c-5163b884de38
+  NodeType: 1
+  NodeName: Tab UIMenu
+  NodeDescription: 
+  InputPorts: []
+  OutputPorts:
+  - NodeId: ce3516dc-6b53-44f4-bf4c-5163b884de38
+    PortId: b558f6a2-9e70-49bd-9f63-95ddd1d4dd57
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - 77eb7254-3d95-4ee1-aefa-3b196a6bda9f
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: -161, y: 416}
+  Trigger: 2
+  SignalPayload:
+    StreamId:
+      Category: None
+      Name: None
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+  ButtonId:
+    Category: None
+    Name: None
+    Custom: 0
+  ToggleId:
+    Category: Tab
+    Name: UIMenu
+    Custom: 1
+  CommandToggle: 0
+  ViewId:
+    Category: None
+    Name: None
+    Custom: 0
+  CommandShowHide: 0
+--- !u!114 &-5373288080484923018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c43f2597bc48340b6a8f2909b66d09, type: 3}
+  m_Name: Signal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 48c258fb-5fd1-4f45-b76a-05efcce76e6c
+  NodeType: 0
+  NodeName: Signal
+  NodeDescription: 
+  InputPorts:
+  - NodeId: 48c258fb-5fd1-4f45-b76a-05efcce76e6c
+    PortId: f37fbbb5-eabb-4d96-a836-546836fab41a
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - 93121d40-b256-4340-acd8-b09c064a6ba8
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: 48c258fb-5fd1-4f45-b76a-05efcce76e6c
+    PortId: 80b5c79f-9fdc-4c6b-be94-6dd9ad8e9a25
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - 5d7106f4-5483-4536-906e-11f29882327e
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 0, y: 106}
+  Payload:
+    StreamId:
+      Category: Music
+      Name: Stop
+      Custom: 1
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-4934940936190843952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c43f2597bc48340b6a8f2909b66d09, type: 3}
+  m_Name: Signal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 1522ed76-d18f-4c03-b743-bb7754a9c27b
+  NodeType: 0
+  NodeName: Signal
+  NodeDescription: 
+  InputPorts:
+  - NodeId: 1522ed76-d18f-4c03-b743-bb7754a9c27b
+    PortId: a66e0ab6-8575-486b-924f-cd8382242894
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - 9a8d2e17-c528-4361-bc03-5b6f40aceeb7
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: 1522ed76-d18f-4c03-b743-bb7754a9c27b
+    PortId: 7d4fec4e-442d-4a54-8e86-56cbd79b68f6
+    Direction: 1
+    Capacity: 0
+    Connections: []
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 347, y: 309}
+  Payload:
+    StreamId:
+      Category: Music
+      Name: Nody
+      Custom: 1
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-2767351905232799902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c43f2597bc48340b6a8f2909b66d09, type: 3}
+  m_Name: Signal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: b8a1aea5-8ede-44e4-a24e-2bc7641de56c
+  NodeType: 0
+  NodeName: Signal
+  NodeDescription: 
+  InputPorts:
+  - NodeId: b8a1aea5-8ede-44e4-a24e-2bc7641de56c
+    PortId: 77eb7254-3d95-4ee1-aefa-3b196a6bda9f
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - b558f6a2-9e70-49bd-9f63-95ddd1d4dd57
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: b8a1aea5-8ede-44e4-a24e-2bc7641de56c
+    PortId: 40cc893b-a8bb-4c61-bdd5-7be32b23c766
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - a2ee9227-035d-4b49-8cc3-d314a0efbea5
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 0, y: 416}
+  Payload:
+    StreamId:
+      Category: Music
+      Name: Stop
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &-1022704263188075556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c43f2597bc48340b6a8f2909b66d09, type: 3}
+  m_Name: Signal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: f60ec9da-a056-4511-ad27-293e124a936b
+  NodeType: 0
+  NodeName: Signal
+  NodeDescription: 
+  InputPorts:
+  - NodeId: f60ec9da-a056-4511-ad27-293e124a936b
+    PortId: a2ee9227-035d-4b49-8cc3-d314a0efbea5
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - 40cc893b-a8bb-4c61-bdd5-7be32b23c766
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: f60ec9da-a056-4511-ad27-293e124a936b
+    PortId: ab034ba8-c4a8-4b5b-b4b9-1dbf4352a6fe
+    Direction: 1
+    Capacity: 0
+    Connections: []
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 347, y: 416}
+  Payload:
+    StreamId:
+      Category: Music
+      Name: UIMenu
+      Custom: 1
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02761efe598a45c98fa1baf4d446c6a7, type: 3}
+  m_Name: E01
+  m_EditorClassIdentifier: 
+  Id: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  GraphName: Flow Graph
+  GraphDescription: 
+  IsSubGraph: 0
+  Nodes:
+  - {fileID: 166908779398436844}
+  - {fileID: 7300523624071510163}
+  - {fileID: 3114527666614507346}
+  - {fileID: -5373288080484923018}
+  - {fileID: 4115582544244191433}
+  - {fileID: 8873501072658963051}
+  - {fileID: 2584643417299666791}
+  - {fileID: -4934940936190843952}
+  - {fileID: -8004742925440169184}
+  - {fileID: -2767351905232799902}
+  - {fileID: -1022704263188075556}
+  - {fileID: 2318625539033996374}
+  - {fileID: 4445825358677256859}
+  - {fileID: 8673402858132437171}
+  RootNode: {fileID: 166908779398436844}
+  ActiveNode: {fileID: 0}
+--- !u!114 &166908779398436844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751458f148144184aa69e35c01aecec0, type: 3}
+  m_Name: Start
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 44af88f7-abcf-48f4-88f3-c5fe96c8ac82
+  NodeType: 2
+  NodeName: Start
+  NodeDescription: 
+  InputPorts: []
+  OutputPorts:
+  - NodeId: 44af88f7-abcf-48f4-88f3-c5fe96c8ac82
+    PortId: 04ef9574-caf5-48e0-9b24-7dcefb6b2b73
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - 5d7106f4-5483-4536-906e-11f29882327e
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 0
+  Passthrough: 1
+  ClearGraphHistory: 1
+  Position: {x: 0, y: 0}
+  SystemNodeType: 0
+--- !u!114 &2318625539033996374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2479a69f56cf54c96de81c44e8ad1a, type: 3}
+  m_Name: Portal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 222ebc5c-24cb-4463-ab08-366577e206ff
+  NodeType: 1
+  NodeName: Tab Signals
+  NodeDescription: 
+  InputPorts: []
+  OutputPorts:
+  - NodeId: 222ebc5c-24cb-4463-ab08-366577e206ff
+    PortId: a3b7750e-6661-4e5d-8195-b8ae2b794567
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - 317f11a5-3fac-4400-b7ef-59022dff1161
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: -161, y: 207}
+  Trigger: 2
+  SignalPayload:
+    StreamId:
+      Category: None
+      Name: None
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+  ButtonId:
+    Category: None
+    Name: None
+    Custom: 0
+  ToggleId:
+    Category: Tab
+    Name: Signals
+    Custom: 1
+  CommandToggle: 0
+  ViewId:
+    Category: None
+    Name: None
+    Custom: 0
+  CommandShowHide: 0
+--- !u!114 &2584643417299666791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c43f2597bc48340b6a8f2909b66d09, type: 3}
+  m_Name: Signal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 89ed57e0-5cf6-4b22-b8a5-49b3b5559b58
+  NodeType: 0
+  NodeName: Signal
+  NodeDescription: 
+  InputPorts:
+  - NodeId: 89ed57e0-5cf6-4b22-b8a5-49b3b5559b58
+    PortId: 0685685d-5fd8-4118-b46c-50826569e0ba
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - e64adf6f-9b97-4169-bc0e-0c33c6212202
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: 89ed57e0-5cf6-4b22-b8a5-49b3b5559b58
+    PortId: 9a8d2e17-c528-4361-bc03-5b6f40aceeb7
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - a66e0ab6-8575-486b-924f-cd8382242894
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 0, y: 309}
+  Payload:
+    StreamId:
+      Category: Music
+      Name: Stop
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3114527666614507346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c43f2597bc48340b6a8f2909b66d09, type: 3}
+  m_Name: Signal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 2f9bd5c1-532f-4627-816c-5a142f704a92
+  NodeType: 0
+  NodeName: Reactor Music
+  NodeDescription: 
+  InputPorts:
+  - NodeId: 2f9bd5c1-532f-4627-816c-5a142f704a92
+    PortId: 6dddd69c-1caf-480a-8e1e-07770b15093e
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - 3f4d2c03-bc46-4a3a-8027-4671a84cb09a
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: 2f9bd5c1-532f-4627-816c-5a142f704a92
+    PortId: d65c7215-b1aa-4aae-9ece-ad4a4a573a55
+    Direction: 1
+    Capacity: 0
+    Connections: []
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 341, y: 106}
+  Payload:
+    StreamId:
+      Category: Music
+      Name: Reactor
+      Custom: 1
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4115582544244191433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26771609544c5348b153b61330ee08f, type: 3}
+  m_Name: Pivot
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: f936eff5-eacb-44df-b1de-279faf18467c
+  NodeType: 0
+  NodeName: Pivot
+  NodeDescription: 
+  InputPorts:
+  - NodeId: f936eff5-eacb-44df-b1de-279faf18467c
+    PortId: 5d7106f4-5483-4536-906e-11f29882327e
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - 80b5c79f-9fdc-4c6b-be94-6dd9ad8e9a25
+    - 04ef9574-caf5-48e0-9b24-7dcefb6b2b73
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: f936eff5-eacb-44df-b1de-279faf18467c
+    PortId: 3f4d2c03-bc46-4a3a-8027-4671a84cb09a
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - 6dddd69c-1caf-480a-8e1e-07770b15093e
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 192, y: 126}
+  PivotOrientation: 0
+--- !u!114 &4445825358677256859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c43f2597bc48340b6a8f2909b66d09, type: 3}
+  m_Name: Signal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 39a92b61-a363-4cbd-8005-b94baed6e044
+  NodeType: 0
+  NodeName: Signal
+  NodeDescription: 
+  InputPorts:
+  - NodeId: 39a92b61-a363-4cbd-8005-b94baed6e044
+    PortId: 317f11a5-3fac-4400-b7ef-59022dff1161
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - a3b7750e-6661-4e5d-8195-b8ae2b794567
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: 39a92b61-a363-4cbd-8005-b94baed6e044
+    PortId: 0ecc361d-ddeb-437c-b8a7-205a45b67731
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - 9718d91c-1747-4148-8106-564e49565fd0
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 0, y: 207}
+  Payload:
+    StreamId:
+      Category: Music
+      Name: Stop
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7300523624071510163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2479a69f56cf54c96de81c44e8ad1a, type: 3}
+  m_Name: Portal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 16b9fa94-2a37-4630-9592-c488cafd2bc3
+  NodeType: 1
+  NodeName: Tab Reactor
+  NodeDescription: 
+  InputPorts: []
+  OutputPorts:
+  - NodeId: 16b9fa94-2a37-4630-9592-c488cafd2bc3
+    PortId: 93121d40-b256-4340-acd8-b09c064a6ba8
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - f37fbbb5-eabb-4d96-a836-546836fab41a
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: -161, y: 106}
+  Trigger: 2
+  SignalPayload:
+    StreamId:
+      Category: None
+      Name: None
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+  ButtonId:
+    Category: None
+    Name: None
+    Custom: 0
+  ToggleId:
+    Category: Tab
+    Name: Reactor
+    Custom: 1
+  CommandToggle: 0
+  ViewId:
+    Category: None
+    Name: None
+    Custom: 0
+  CommandShowHide: 0
+--- !u!114 &8673402858132437171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87c43f2597bc48340b6a8f2909b66d09, type: 3}
+  m_Name: Signal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 43aa7371-8574-408b-97f5-3b888618b170
+  NodeType: 0
+  NodeName: Signal
+  NodeDescription: 
+  InputPorts:
+  - NodeId: 43aa7371-8574-408b-97f5-3b888618b170
+    PortId: 9718d91c-1747-4148-8106-564e49565fd0
+    Direction: 0
+    Capacity: 1
+    Connections:
+    - 0ecc361d-ddeb-437c-b8a7-205a45b67731
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  OutputPorts:
+  - NodeId: 43aa7371-8574-408b-97f5-3b888618b170
+    PortId: 20f8dc0e-5528-4dbc-b4d5-9ccc0286d5b3
+    Direction: 1
+    Capacity: 0
+    Connections: []
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 341, y: 207}
+  Payload:
+    StreamId:
+      Category: Music
+      Name: Signals
+      Custom: 1
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8873501072658963051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2479a69f56cf54c96de81c44e8ad1a, type: 3}
+  m_Name: Portal
+  m_EditorClassIdentifier: 
+  FlowGraphId: 935df7bc-58ca-403e-bb28-a1b03e41a6a9
+  NodeId: 6b149e26-0a0f-404d-a5d0-dcee8c6f6a9a
+  NodeType: 1
+  NodeName: Tab Nody
+  NodeDescription: 
+  InputPorts: []
+  OutputPorts:
+  - NodeId: 6b149e26-0a0f-404d-a5d0-dcee8c6f6a9a
+    PortId: e64adf6f-9b97-4169-bc0e-0c33c6212202
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - 0685685d-5fd8-4118-b46c-50826569e0ba
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: -161, y: 309}
+  Trigger: 2
+  SignalPayload:
+    StreamId:
+      Category: None
+      Name: None
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+  ButtonId:
+    Category: Tab
+    Name: Nody
+    Custom: 1
+  ToggleId:
+    Category: Tab
+    Name: Nody
+    Custom: 1
+  CommandToggle: 0
+  ViewId:
+    Category: None
+    Name: None
+    Custom: 0
+  CommandShowHide: 0

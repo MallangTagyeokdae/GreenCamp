@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.UIElements"
+        xmlns:editor="UnityEditor.UIElements"
+        xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:VisualElement name="layoutContainer" class="UIMenuItemButton">
+        <engine:Image name="backgroundTexture" class="UIMenuItemButton"/>
+        <engine:VisualElement name="previewContainer" class="UIMenuItemButton">
+            <engine:Image name="previewImage" class="UIMenuItemButton"/>
+        </engine:VisualElement>
+        <engine:VisualElement name="topContainer" class="UIMenuItemButton">
+            <engine:Label name="infoTag" class="UIMenuItemButton"/>
+            <engine:Image name="lockedIcon" class="UIMenuItemButton"/>
+        </engine:VisualElement>
+        <engine:VisualElement name="middleContainer" class="UIMenuItemButton"/>
+        <engine:VisualElement name="bottomContainer" class="UIMenuItemButton">
+            <engine:Label name="prefabNameLabel" class="UIMenuItemButton"/>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

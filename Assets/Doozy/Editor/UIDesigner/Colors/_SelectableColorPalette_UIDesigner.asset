@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866e8c8661bc423691f27ec91ab289ad, type: 3}
+  m_Name: _SelectableColorPalette_UIDesigner
+  m_EditorClassIdentifier: 
+  PaletteName: UIDesigner
+  SelectableColors:
+  - ColorName: Color
+    Normal:
+      ColorOnDark: {r: 0.99215686, g: 0.3333334, b: 0.37436157, a: 1}
+      ColorOnLight: {r: 0.5471698, g: 0.20389818, b: 0.22700292, a: 1}
+    Highlighted:
+      ColorOnDark: {r: 0.7937255, g: 0.26666668, b: 0.36329412, a: 1}
+      ColorOnLight: {r: 0.43773586, g: 0.16311856, b: 0.21346506, a: 1}
+    Pressed:
+      ColorOnDark: {r: 0.6349804, g: 0.21333334, b: 0.2906353, a: 1}
+      ColorOnLight: {r: 0.39396226, g: 0.1468067, b: 0.19211856, a: 1}
+    Selected:
+      ColorOnDark: {r: 0.71435297, g: 0.24000001, b: 0.3269647, a: 1}
+      ColorOnLight: {r: 0.49396226, g: 0.2468067, b: 0.29211855, a: 1}
+    Disabled:
+      ColorOnDark: {r: 0.99215686, g: 0.3333334, b: 0.37436157, a: 0.6}
+      ColorOnLight: {r: 0.5471698, g: 0.20389818, b: 0.22700292, a: 0.6}

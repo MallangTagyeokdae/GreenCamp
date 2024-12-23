@@ -1,0 +1,11 @@
+.DoozyDashboard.Window#layoutContainer {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.DoozyDashboard.Window#sideMenuContainer {
+}
+
+.DoozyDashboard.Window#contentContainer {
+    flex-grow: 1;
+}

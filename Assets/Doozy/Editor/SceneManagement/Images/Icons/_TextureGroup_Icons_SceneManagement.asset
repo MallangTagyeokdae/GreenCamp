@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a32318dec4495cb166bf98e60f7c0d, type: 3}
+  m_Name: _TextureGroup_Icons_SceneManagement
+  m_EditorClassIdentifier: 
+  GroupCategory: SceneManagement
+  GroupName: Icons
+  RemovePrefixFromTextureName: 
+  IgnoreTextureSettings: 0
+  Textures:
+  - TextureName: ActivateLoadedScenesNode
+    TextureReference: {fileID: 2800000, guid: dd985880155d5f0409a9baf2004e1f10, type: 3}
+  - TextureName: LoadSceneNode
+    TextureReference: {fileID: 2800000, guid: 5f9cb1cebfcb3a345a9d070cfae56154, type: 3}
+  - TextureName: SceneDirector
+    TextureReference: {fileID: 2800000, guid: bbff8795673117d4681a3141d3bec1f5, type: 3}
+  - TextureName: SceneLoader
+    TextureReference: {fileID: 2800000, guid: 72342ac4b0f5176439c11c4119a33f2b, type: 3}
+  - TextureName: UnloadSceneNode
+    TextureReference: {fileID: 2800000, guid: 6d713ec0ca77c4140928eca0a04ab2c4, type: 3}

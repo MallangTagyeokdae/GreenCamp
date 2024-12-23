@@ -1,0 +1,798 @@
+fileFormatVersion: 2
+guid: 5e83c6c6f6f85544fa3f04bb77d6cf5c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8727295972009721064
+    second: ~ConnectedDisconnected_000
+  - first:
+      213: -868068576987898432
+    second: ~ConnectedDisconnected_001
+  - first:
+      213: 3286004641513545925
+    second: ~ConnectedDisconnected_002
+  - first:
+      213: 5863442555761732153
+    second: ~ConnectedDisconnected_003
+  - first:
+      213: -3954511656414355308
+    second: ~ConnectedDisconnected_004
+  - first:
+      213: -4363574245775337264
+    second: ~ConnectedDisconnected_005
+  - first:
+      213: 6364923993621188679
+    second: ~ConnectedDisconnected_006
+  - first:
+      213: 4135653751220313189
+    second: ~ConnectedDisconnected_007
+  - first:
+      213: 7954379100058918476
+    second: ~ConnectedDisconnected_008
+  - first:
+      213: -8520462428659705822
+    second: ~ConnectedDisconnected_009
+  - first:
+      213: 6137959848191989760
+    second: ~ConnectedDisconnected_010
+  - first:
+      213: -5432169953007811518
+    second: ~ConnectedDisconnected_011
+  - first:
+      213: 5131467598897651871
+    second: ~ConnectedDisconnected_012
+  - first:
+      213: 7413937647917330498
+    second: ~ConnectedDisconnected_013
+  - first:
+      213: 8174821796165324321
+    second: ~ConnectedDisconnected_014
+  - first:
+      213: -1760482456862759250
+    second: ~ConnectedDisconnected_015
+  - first:
+      213: -4174534179465261387
+    second: ~ConnectedDisconnected_016
+  - first:
+      213: -6942955864546151200
+    second: ~ConnectedDisconnected_017
+  - first:
+      213: -583181640615890576
+    second: ~ConnectedDisconnected_018
+  - first:
+      213: -6167824784750029537
+    second: ~ConnectedDisconnected_019
+  - first:
+      213: -7505376125218900748
+    second: ~ConnectedDisconnected_020
+  - first:
+      213: -703992432483519654
+    second: ~ConnectedDisconnected_021
+  - first:
+      213: -2714686633428264686
+    second: ~ConnectedDisconnected_022
+  - first:
+      213: -4189540736231072284
+    second: ~ConnectedDisconnected_023
+  - first:
+      213: -6087547220736885404
+    second: ~ConnectedDisconnected_024
+  - first:
+      213: -6280279002673163088
+    second: ~ConnectedDisconnected_025
+  - first:
+      213: -4095830278334326938
+    second: ~ConnectedDisconnected_026
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_000
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ec365582759d1970800000000000000
+      internalID: 8727295972009721064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_001
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 256
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cd15fb7a3004f3f0800000000000000
+      internalID: -868068576987898432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_002
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 256
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c023bbbfcb3a9d20800000000000000
+      internalID: 3286004641513545925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_003
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93a261940f12f5150800000000000000
+      internalID: 5863442555761732153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_004
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 224
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 490e743b990ce19c0800000000000000
+      internalID: -3954511656414355308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_005
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 224
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d89489b7587173c0800000000000000
+      internalID: -4363574245775337264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_006
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 740d62e36a0c45850800000000000000
+      internalID: 6364923993621188679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_007
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 192
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56c9f73dc2bc46930800000000000000
+      internalID: 4135653751220313189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_008
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 192
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4e9dcbb5a1a36e60800000000000000
+      internalID: 7954379100058918476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_009
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2281da1809c31c980800000000000000
+      internalID: -8520462428659705822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_010
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 160
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 008181d26f96e2550800000000000000
+      internalID: 6137959848191989760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_011
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 160
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2444b67653e0d94b0800000000000000
+      internalID: -5432169953007811518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_012
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f90a8b0f792a63740800000000000000
+      internalID: 5131467598897651871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_013
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 128
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 240f103920993e660800000000000000
+      internalID: 7413937647917330498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_014
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 128
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12e0e8e8c1dc27170800000000000000
+      internalID: 8174821796165324321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_015
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea6636d68828197e0800000000000000
+      internalID: -1760482456862759250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_016
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 96
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5be0f3a08431116c0800000000000000
+      internalID: -4174534179465261387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_017
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 96
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e4f2823d6aa5af90800000000000000
+      internalID: -6942955864546151200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_018
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0717f8f336f18e7f0800000000000000
+      internalID: -583181640615890576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_019
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 64
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f15df1c690c776aa0800000000000000
+      internalID: -6167824784750029537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_020
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 64
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f431a6ed2c87d790800000000000000
+      internalID: -7505376125218900748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_021
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a53b141dc9aea36f0800000000000000
+      internalID: -703992432483519654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_022
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 32
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 219d102d3ee735ad0800000000000000
+      internalID: -2714686633428264686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_023
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 32
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ed1be4c5e2cbd5c0800000000000000
+      internalID: -4189540736231072284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_024
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46dbf825e00b48ba0800000000000000
+      internalID: -6087547220736885404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_025
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b4525b7587f7d8a0800000000000000
+      internalID: -6280279002673163088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ~ConnectedDisconnected_026
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 240
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 667d79fff00b827c0800000000000000
+      internalID: -4095830278334326938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      ~ConnectedDisconnected_021: -703992432483519654
+      ~ConnectedDisconnected_015: -1760482456862759250
+      ~ConnectedDisconnected_024: -6087547220736885404
+      ~ConnectedDisconnected_023: -4189540736231072284
+      ~ConnectedDisconnected_005: -4363574245775337264
+      ~ConnectedDisconnected_006: 6364923993621188679
+      ~ConnectedDisconnected_020: -7505376125218900748
+      ~ConnectedDisconnected_012: 5131467598897651871
+      ~ConnectedDisconnected_008: 7954379100058918476
+      ~ConnectedDisconnected_004: -3954511656414355308
+      ~ConnectedDisconnected_014: 8174821796165324321
+      ~ConnectedDisconnected_009: -8520462428659705822
+      ~ConnectedDisconnected_022: -2714686633428264686
+      ~ConnectedDisconnected_002: 3286004641513545925
+      ~ConnectedDisconnected_007: 4135653751220313189
+      ~ConnectedDisconnected_010: 6137959848191989760
+      ~ConnectedDisconnected_016: -4174534179465261387
+      ~ConnectedDisconnected_013: 7413937647917330498
+      ~ConnectedDisconnected_017: -6942955864546151200
+      ~ConnectedDisconnected_026: -4095830278334326938
+      ~ConnectedDisconnected_000: 8727295972009721064
+      ~ConnectedDisconnected_019: -6167824784750029537
+      ~ConnectedDisconnected_025: -6280279002673163088
+      ~ConnectedDisconnected_018: -583181640615890576
+      ~ConnectedDisconnected_011: -5432169953007811518
+      ~ConnectedDisconnected_001: -868068576987898432
+      ~ConnectedDisconnected_003: 5863442555761732153
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

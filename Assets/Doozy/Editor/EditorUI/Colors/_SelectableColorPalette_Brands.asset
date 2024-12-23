@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866e8c8661bc423691f27ec91ab289ad, type: 3}
+  m_Name: _SelectableColorPalette_Brands
+  m_EditorClassIdentifier: 
+  PaletteName: Brands
+  SelectableColors:
+  - ColorName: Discord
+    Normal:
+      ColorOnDark: {r: 0.34509805, g: 0.39607844, b: 0.9490196, a: 1}
+      ColorOnLight: {r: 0.34509805, g: 0.39607844, b: 0.9490196, a: 1}
+    Highlighted:
+      ColorOnDark: {r: 0.27607846, g: 0.3807582, b: 0.7592157, a: 1}
+      ColorOnLight: {r: 0.27607846, g: 0.3807582, b: 0.7592157, a: 1}
+    Pressed:
+      ColorOnDark: {r: 0.22086278, g: 0.30460656, b: 0.6073726, a: 1}
+      ColorOnLight: {r: 0.24847062, g: 0.34268236, b: 0.6832941, a: 1}
+    Selected:
+      ColorOnDark: {r: 0.24847062, g: 0.34268236, b: 0.6832941, a: 1}
+      ColorOnLight: {r: 0.34847063, g: 0.4426824, b: 0.78329414, a: 1}
+    Disabled:
+      ColorOnDark: {r: 0.34509805, g: 0.39607844, b: 0.9490196, a: 0.6}
+      ColorOnLight: {r: 0.34509805, g: 0.39607844, b: 0.9490196, a: 0.6}
+  - ColorName: Facebook
+    Normal:
+      ColorOnDark: {r: 0.25882354, g: 0.40392157, b: 0.69803923, a: 1}
+      ColorOnLight: {r: 0.25882354, g: 0.4039216, b: 0.69803923, a: 1}
+    Highlighted:
+      ColorOnDark: {r: 0.20705886, g: 0.3710327, b: 0.55843145, a: 1}
+      ColorOnLight: {r: 0.20705886, g: 0.3710327, b: 0.55843145, a: 1}
+    Pressed:
+      ColorOnDark: {r: 0.16564709, g: 0.29682618, b: 0.44674516, a: 1}
+      ColorOnLight: {r: 0.18635297, g: 0.33392945, b: 0.5025883, a: 1}
+    Selected:
+      ColorOnDark: {r: 0.18635297, g: 0.33392945, b: 0.5025883, a: 1}
+      ColorOnLight: {r: 0.28635296, g: 0.43392944, b: 0.6025883, a: 1}
+    Disabled:
+      ColorOnDark: {r: 0.25882354, g: 0.40392157, b: 0.69803923, a: 0.6}
+      ColorOnLight: {r: 0.25882354, g: 0.4039216, b: 0.69803923, a: 0.6}
+  - ColorName: Twitter
+    Normal:
+      ColorOnDark: {r: 0.11372549, g: 0.6313726, b: 0.9490196, a: 1}
+      ColorOnLight: {r: 0.1137255, g: 0.6313726, b: 0.9490197, a: 1}
+    Highlighted:
+      ColorOnDark: {r: 0.09098039, g: 0.60329413, b: 0.7592157, a: 1}
+      ColorOnLight: {r: 0.09098043, g: 0.6032942, b: 0.7592157, a: 1}
+    Pressed:
+      ColorOnDark: {r: 0.07278431, g: 0.48263532, b: 0.6073726, a: 1}
+      ColorOnLight: {r: 0.08188239, g: 0.54296476, b: 0.6832941, a: 1}
+    Selected:
+      ColorOnDark: {r: 0.08188235, g: 0.5429647, b: 0.6832941, a: 1}
+      ColorOnLight: {r: 0.1818824, g: 0.6429648, b: 0.78329414, a: 1}
+    Disabled:
+      ColorOnDark: {r: 0.11372549, g: 0.6313726, b: 0.9490196, a: 0.6}
+      ColorOnLight: {r: 0.1137255, g: 0.6313726, b: 0.9490197, a: 0.6}
+  - ColorName: YouTube
+    Normal:
+      ColorOnDark: {r: 1, g: 0, b: 0, a: 1}
+      ColorOnLight: {r: 1, g: 0, b: 0, a: 1}
+    Highlighted:
+      ColorOnDark: {r: 0.8, g: 0, b: 0, a: 1}
+      ColorOnLight: {r: 0.8, g: 0, b: 0, a: 1}
+    Pressed:
+      ColorOnDark: {r: 0.64, g: 0, b: 0, a: 1}
+      ColorOnLight: {r: 0.72, g: 0, b: 0, a: 1}
+    Selected:
+      ColorOnDark: {r: 0.72, g: 0, b: 0, a: 1}
+      ColorOnLight: {r: 0.82, g: 0.1, b: 0.1, a: 1}
+    Disabled:
+      ColorOnDark: {r: 1, g: 0, b: 0, a: 0.6}
+      ColorOnLight: {r: 1, g: 0, b: 0, a: 0.6}

@@ -1,0 +1,64 @@
+﻿.ESpriteSheetInfo#LayoutContainer {
+    padding: 6px;
+    border-radius: 6px;
+    border-width: 1px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.ESpriteSheetInfo#ContentContainer {
+    flex-direction: row;
+}
+
+.ESpriteSheetInfo#PreviewImageContainer {
+    width: 80px;
+    height: 80px;
+    padding: 8px;
+    border-width: 1px;
+    border-radius: 2px;
+    margin-right: 2px;
+}
+
+.ESpriteSheetInfo#PreviewImage {
+    width: 64px;
+    height: 64px;
+    align-self: center;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.ESpriteSheetInfo#DetailsContainer {
+    flex-grow: 1;
+    margin-left: 4px;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.ESpriteSheetInfo#AnimationName {
+    margin: 0;
+    padding: 0;
+}
+
+.ESpriteSheetInfo#Path {
+    font-size: 8px;
+    -unity-text-align: middle-left;
+    margin: 0;
+    padding: 0;
+    padding-top: 4px;
+}
+
+.ESpriteSheetInfo#NumberOfFrames {
+    font-size: 11px;
+    -unity-text-align: upper-right;
+}
+
+.ESpriteSheetInfo#TextureSize {
+    font-size: 9px;
+    -unity-text-align: upper-right;
+}
+
+.ESpriteSheetInfo.FieldName{
+    font-size: 8px;
+    -unity-text-align: middle-left;
+    padding: 0;
+    margin: 0;
+}

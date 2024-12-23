@@ -1,0 +1,18 @@
+﻿            public static class //GROUP_NAME//
+            {
+                private static EditorDataSpriteSheetGroup s_spriteSheetGroup;
+                private static EditorDataSpriteSheetGroup spriteSheetGroup =>
+                    s_spriteSheetGroup
+                        ? s_spriteSheetGroup
+                        : s_spriteSheetGroup = EditorDataSpriteSheetDatabase.GetSpriteSheetGroup("//GROUP_CATEGORY//","//GROUP_NAME//");
+
+                public static List<Texture2D> GetTextures(SpriteSheetName sheetName) =>
+                    spriteSheetGroup.GetTextures(sheetName.ToString());
+
+                public enum SpriteSheetName
+                {
+//NAMES//
+                }
+                
+//CACHE//                
+            }

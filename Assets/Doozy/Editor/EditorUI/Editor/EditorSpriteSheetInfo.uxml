@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<engine:UXML
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:engine="UnityEngine.UIElements"
+        xmlns:editor="UnityEditor.UIElements"
+        xsi:noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd"
+>
+    <engine:VisualElement class="ESpriteSheetInfo" name="LayoutContainer">
+
+        <engine:VisualElement class="ESpriteSheetInfo" name="ContentContainer">
+
+            <engine:Image class="ESpriteSheetInfo" name="PreviewImageContainer">
+                <engine:Image class="ESpriteSheetInfo" name="PreviewImage"/>
+            </engine:Image>
+
+            <engine:VisualElement class="ESpriteSheetInfo" name="DetailsContainer">
+
+                <engine:VisualElement style="flex-direction: row">
+
+                    <engine:VisualElement style="flex-direction: column">
+                        <engine:Label class="ESpriteSheetInfo FieldName" text="Sprite Sheet Name"/>
+                        <engine:Label class="ESpriteSheetInfo" name="SheetName" binding-path="SheetName"/>
+                    </engine:VisualElement>
+                    <editor:VisualSplitter style="flex-grow: 1"/>
+                    <engine:VisualElement style="flex-direction: column">
+                        <engine:Label class="ESpriteSheetInfo" name="NumberOfFrames"/>
+                        <engine:Label class="ESpriteSheetInfo" name="TextureSize"/>
+                    </engine:VisualElement>
+
+                </engine:VisualElement>
+
+                <engine:VisualElement class="ESpriteSheetInfo" name="Player"/>
+
+            </engine:VisualElement>
+
+        </engine:VisualElement>
+
+        <engine:Label class="ESpriteSheetInfo" name="Path"/>
+
+    </engine:VisualElement>
+</engine:UXML>

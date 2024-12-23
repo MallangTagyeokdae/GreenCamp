@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a32318dec4495cb166bf98e60f7c0d, type: 3}
+  m_Name: _TextureGroup_Icons_UIDesigner
+  m_EditorClassIdentifier: 
+  GroupCategory: UIDesigner
+  GroupName: Icons
+  RemovePrefixFromTextureName: 
+  IgnoreTextureSettings: 0
+  Textures:
+  - TextureName: AlignModeCenter
+    TextureReference: {fileID: 2800000, guid: a140bc6fecbb95442863807e6534a1e3, type: 3}
+  - TextureName: AlignModeInside
+    TextureReference: {fileID: 2800000, guid: 91cc5b0ce5dc4bd49973af8fd61131b9, type: 3}
+  - TextureName: AlignModeOutside
+    TextureReference: {fileID: 2800000, guid: 882e7e649e27ffc4293199d94d05aaaa, type: 3}
+  - TextureName: DistributeSpacingHorizontal
+    TextureReference: {fileID: 2800000, guid: 295dbae7e8dea794ebd4f9c6c5db70df, type: 3}
+  - TextureName: DistributeSpacingVertical
+    TextureReference: {fileID: 2800000, guid: 0bf71db505563f644891c52029634e2f, type: 3}
+  - TextureName: HorizontalAlignCenter
+    TextureReference: {fileID: 2800000, guid: 988dfebaba7cff54fa64ee7d55d341f0, type: 3}
+  - TextureName: HorizontalAlignLeft
+    TextureReference: {fileID: 2800000, guid: 1c9fabcca77a5f4478f9a3082b9c6f69, type: 3}
+  - TextureName: HorizontalAlignRight
+    TextureReference: {fileID: 2800000, guid: ef90d7aae383f4d41b3c9fdbbf63344d, type: 3}
+  - TextureName: HorizontalDistributeCenter
+    TextureReference: {fileID: 2800000, guid: 26d2ded9dd02b9e419541acf2ee12033, type: 3}
+  - TextureName: HorizontalDistributeLeft
+    TextureReference: {fileID: 2800000, guid: 2c4f9ed2de06f094e83bfbddae5f2a53, type: 3}
+  - TextureName: HorizontalDistributeRight
+    TextureReference: {fileID: 2800000, guid: 8e94fae287b6c0b468768eb504237816, type: 3}
+  - TextureName: KeyObject
+    TextureReference: {fileID: 2800000, guid: 03090897fed5b2447a644a61be6ab099, type: 3}
+  - TextureName: Parent
+    TextureReference: {fileID: 2800000, guid: 5decc04789b0cc849a84814f163d6b70, type: 3}
+  - TextureName: RectTrandform
+    TextureReference: {fileID: 2800000, guid: c3bbf074e6e829c47a7a0afe0029920b, type: 3}
+  - TextureName: RootCanvas
+    TextureReference: {fileID: 2800000, guid: d0e48f4a806d1454a9b4fda0c0d8ba27, type: 3}
+  - TextureName: RotateLeft
+    TextureReference: {fileID: 2800000, guid: 87148fea35554bd4884eb95f390ffc38, type: 3}
+  - TextureName: RotateRight
+    TextureReference: {fileID: 2800000, guid: 697a51b31096b9742840bc8b0b48a8a1, type: 3}
+  - TextureName: ScaleDecrease
+    TextureReference: {fileID: 2800000, guid: 4a325d583eb253242bdad774d00809a1, type: 3}
+  - TextureName: ScaleIncrease
+    TextureReference: {fileID: 2800000, guid: 7bc5b88bd9102014baf5e73c2054091d, type: 3}
+  - TextureName: Selection
+    TextureReference: {fileID: 2800000, guid: 647cffe715e2b1b4484b0abe9de8d876, type: 3}
+  - TextureName: SizeDecrease
+    TextureReference: {fileID: 2800000, guid: 584414f5e45f7ad4aacef2c77bf7ca3a, type: 3}
+  - TextureName: SizeIncrease
+    TextureReference: {fileID: 2800000, guid: 641b241a3f91e19499467459155dd966, type: 3}
+  - TextureName: UIRescaler
+    TextureReference: {fileID: 2800000, guid: 07474e61be4c9ef4e94a32b536fbb8db, type: 3}
+  - TextureName: VerticalAlignBottom
+    TextureReference: {fileID: 2800000, guid: d5b9218b5c0a6d443aa1e16266586618, type: 3}
+  - TextureName: VerticalAlignCenter
+    TextureReference: {fileID: 2800000, guid: 05a3ec5a14a5c764c895711525d7fe55, type: 3}
+  - TextureName: VerticalAlignTop
+    TextureReference: {fileID: 2800000, guid: c5d4934493d5cc7499840d3ec210d611, type: 3}
+  - TextureName: VerticalDistributeBottom
+    TextureReference: {fileID: 2800000, guid: fef21afda376d1d4a9ca2a305dd23928, type: 3}
+  - TextureName: VerticalDistributeCenter
+    TextureReference: {fileID: 2800000, guid: 968a0ff26c364d04dba8692033bb2bdc, type: 3}
+  - TextureName: VerticalDistributeTop
+    TextureReference: {fileID: 2800000, guid: f07582a9b9f978c4583b673fcac7c934, type: 3}

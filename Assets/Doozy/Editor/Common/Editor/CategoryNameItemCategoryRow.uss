@@ -1,0 +1,36 @@
+﻿.CategoryNameItem.CategoryRow#layoutContainer {
+    flex-direction: row;
+    margin-bottom: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    flex-shrink: 0;
+}
+
+.CategoryNameItem.CategoryRow#leftContainer {
+    flex-direction: row;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.CategoryNameItem.CategoryRow#middleContainer {
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.CategoryNameItem.CategoryRow#nameLabel {
+    flex-shrink: 0;
+    font-size: 18px;
+    align-self: center;
+}
+
+.CategoryNameItem.CategoryRow#nameTextField {
+    flex-grow: 1;
+    display: none;
+}
+
+.CategoryNameItem.CategoryRow#rightContainer {
+    flex-direction: row;
+    align-items: center;
+    margin-left: 16px;
+}

@@ -1,0 +1,29 @@
+.PrefabLink.ItemRow#layoutContainer {
+    height: 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+    padding-left: 6px;
+    padding-right: 6px;
+    flex-direction: row;
+    margin: 3px;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.PrefabLink.ItemRow#leftContainer {
+    flex-direction: row;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.PrefabLink.ItemRow#middleContainer {
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.PrefabLink.ItemRow#rightContainer {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+}
