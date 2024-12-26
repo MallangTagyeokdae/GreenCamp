@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 using UnityEngine.UIElements;
 
 public class ClickManager : MonoBehaviour
@@ -14,30 +15,33 @@ public class ClickManager : MonoBehaviour
     public bool drawRay = false;
     void Update()
     {
-        //좌클릭
-        LeftClick();
+        //Mouse Button Down
+        if (Input.GetMouseButtonDown(0)) //좌클릭
+        {
+            Click(0, (go, position) => {go.GetComponent<ClickEventHandler>().LeftClickDown(position);});
+        }
 
-        //우클릭
-        RightClick();
+        if (Input.GetMouseButtonDown(1))  //우클릭
+        {
+            Click(1, (go, position) => {go.GetComponent<ClickEventHandler>().RightClickDown(position);});
+        }
+
+        //Mouse Button Up
+        if (Input.GetMouseButtonUp(0)) //좌클릭
+        {
+            Click(0, (go, position) => {go.GetComponent<ClickEventHandler>().LeftClickUp(position);});
+        }
+        if (Input.GetMouseButtonUp(1)) //우클릭릭
+        {
+            Click(1, (go, position) => {go.GetComponent<ClickEventHandler>().RightClickUp(position);});
+        }
 
         //hover
         MouseHover();
     }
 
-    private void LeftClick()
-    {
-        ClickDown(0);
-        ClickUp(0);
-    }
 
-    private void RightClick()
-    {
-        ClickDown(1);
-        ClickUp(1);
-    }
-
-
-    private void ClickDown(int side)    //클릭 시에 ray cast
+    private void Click(int side, Action<GameObject , Vector3> action)    //클릭 시에 ray cast
     {
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
@@ -51,61 +55,14 @@ public class ClickManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Input.GetMouseButtonDown(side))
+        if (drawRay)
         {
-            if (drawRay)
-            {
-                Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
-            }
-
-            if (Physics.Raycast(ray, out hit, _distance) && hit.collider.tag == "Clickable")
-            {
-                switch (side)
-                {
-                    case 0:
-                        hit.collider.GetComponent<ClickEventHandler>().LeftClickDown(hit.point);
-                        break;
-                    case 1:
-                        hit.collider.GetComponent<ClickEventHandler>().RightClickDown(hit.point);
-                        break;
-                }
-            }
-        }
-    }
-
-    private void ClickUp(int side)    //클릭 시에 ray cast
-    {
-        float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
-
-        if (Input.mousePosition.x < 0 || Input.mousePosition.x > screenWidth ||
-            Input.mousePosition.y < 0 || Input.mousePosition.y > screenHeight)
-        {
-            return;
+            Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
         }
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Input.GetMouseButtonUp(side))
+        if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
         {
-            if (drawRay)
-            {
-                Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
-            }
-
-            if (Physics.Raycast(ray, out hit, _distance) && hit.collider.tag == "Clickable")
-            {
-                switch (side)
-                {
-                    case 0:
-                        hit.collider.GetComponent<ClickEventHandler>().LeftClickUp(hit.point);
-                        break;
-                    case 1:
-                        hit.collider.GetComponent<ClickEventHandler>().RightClickUp(hit.point);
-                        break;
-                }
-            }
+            action?.Invoke(hit.collider.gameObject, hit.point);
         }
     }
 
