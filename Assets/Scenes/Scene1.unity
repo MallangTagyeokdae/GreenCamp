@@ -920,7 +920,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2043537340}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99991924
+  m_Size: 0.9976406
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1274,8 +1274,8 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        StartDelay: 0
-        Duration: 0.8
+        StartDelay: 0.3
+        Duration: 1
         Loops: 0
         LoopDelay: 0
         UseRandomStartDelay: 0
@@ -1338,7 +1338,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        StartDelay: 0
+        StartDelay: 0.3
         Duration: 0.6
         Loops: 0
         LoopDelay: 0
@@ -1545,7 +1545,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         StartDelay: 0
-        Duration: 0.8
+        Duration: 0.5
         Loops: 0
         LoopDelay: 0
         UseRandomStartDelay: 0
@@ -1609,7 +1609,7 @@ MonoBehaviour:
           m_PostInfinity: 2
           m_RotationOrder: 4
         StartDelay: 0.1
-        Duration: 0.8
+        Duration: 0.5
         Loops: 0
         LoopDelay: 0
         UseRandomStartDelay: 0
@@ -4416,8 +4416,8 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        StartDelay: 0
-        Duration: 0.8
+        StartDelay: 0.3
+        Duration: 1
         Loops: 0
         LoopDelay: 0
         UseRandomStartDelay: 0
@@ -4480,7 +4480,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        StartDelay: 0
+        StartDelay: 0.3
         Duration: 0.6
         Loops: 0
         LoopDelay: 0
@@ -4943,7 +4943,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00004843158, y: 0.0001591197}
+  m_AnchoredPosition: {x: -0.00004843158, y: -0.00010552943}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1784914636 stripped
@@ -5483,8 +5483,8 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        StartDelay: 0
-        Duration: 0.8
+        StartDelay: 0.3
+        Duration: 1
         Loops: 0
         LoopDelay: 0
         UseRandomStartDelay: 0
@@ -5547,8 +5547,8 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        StartDelay: 0
-        Duration: 0.6
+        StartDelay: 0.3
+        Duration: 0.5
         Loops: 0
         LoopDelay: 0
         UseRandomStartDelay: 0
