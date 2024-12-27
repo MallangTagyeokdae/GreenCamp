@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 416996691}
   m_Layer: 5
   m_Name: QuitBtn
-  m_TagString: Untagged
+  m_TagString: QuitBtn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -288,7 +288,7 @@ MonoBehaviour:
   NormalState:
     StateType: 0
     StateEvent:
-      EventName: Unnamed
+      EventName: Normal State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -296,7 +296,7 @@ MonoBehaviour:
   HighlightedState:
     StateType: 1
     StateEvent:
-      EventName: Unnamed
+      EventName: Highlighted State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -304,7 +304,7 @@ MonoBehaviour:
   PressedState:
     StateType: 2
     StateEvent:
-      EventName: Unnamed
+      EventName: Pressed State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -321,10 +321,22 @@ MonoBehaviour:
               m_StringArgument: QuitBtn
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 1215408781}
+            m_TargetAssemblyTypeName: FlowManager, Assembly-CSharp
+            m_MethodName: GameExit
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: QuitBtn
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
-      EventName: Unnamed
+      EventName: Selected State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -332,7 +344,7 @@ MonoBehaviour:
   DisabledState:
     StateType: 4
     StateEvent:
-      EventName: Unnamed
+      EventName: Disabled State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -407,6 +419,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1215408782}
   - {fileID: 1856523941}
   m_Father: {fileID: 687304987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1577,7 +1590,7 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {r: 0.89100003, g: 0.89100003, b: 0.89100003, a: 1}
+      FromValue: {r: 0.791, g: 0.791, b: 0.791, a: 1}
       ToValue: {r: 0.791, g: 0.791, b: 0.791, a: 1}
       CurrentValue: {r: 0.89100003, g: 0.89100003, b: 0.89100003, a: 1}
       Enabled: 1
@@ -1851,7 +1864,7 @@ GameObject:
   - component: {fileID: 1057481890}
   m_Layer: 5
   m_Name: LoginBtn
-  m_TagString: Untagged
+  m_TagString: LoginBtn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1954,6 +1967,18 @@ MonoBehaviour:
             m_TargetAssemblyTypeName: Tab2NextSelectable, Assembly-CSharp
             m_MethodName: Selected
             m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: LoginBtn
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 1215408781}
+            m_TargetAssemblyTypeName: FlowManager, Assembly-CSharp
+            m_MethodName: Go2AfterLoginScene
+            m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2079,12 +2104,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: -0.00000023841858, y: 0, z: 0}
-      ToValue: {x: -0.00000023841858, y: 0, z: 0}
+      FromValue: {x: 0, y: 0, z: 0}
+      ToValue: {x: 0, y: 0, z: 0}
       CurrentValue: {x: -0.00000023841858, y: 0, z: 0}
       Enabled: 1
       AnimationType: 5
-      StartPosition: {x: -0.00000023841858, y: 0, z: 0}
+      StartPosition: {x: 0, y: 0, z: 0}
       FromReferenceValue: 1
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
@@ -2349,12 +2374,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: -0.00000023841858, y: 0, z: 0}
-      ToValue: {x: -0.00000023841858, y: 2, z: 0}
-      CurrentValue: {x: -0.00000023841858, y: 0, z: 0}
+      FromValue: {x: 0, y: 0, z: 0}
+      ToValue: {x: 0, y: 2, z: 0}
+      CurrentValue: {x: 0, y: 0, z: 0}
       Enabled: 0
       AnimationType: 6
-      StartPosition: {x: -0.00000023841858, y: 0, z: 0}
+      StartPosition: {x: 0, y: 0, z: 0}
       FromReferenceValue: 0
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
@@ -2619,12 +2644,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: -0.00000023841858, y: 0, z: 0}
-      ToValue: {x: -0.00000023841858, y: 8, z: 0}
-      CurrentValue: {x: -0.00000023841858, y: 0, z: 0}
+      FromValue: {x: 0, y: 0, z: 0}
+      ToValue: {x: 0, y: 8, z: 0}
+      CurrentValue: {x: 0, y: 0, z: 0}
       Enabled: 0
       AnimationType: 6
-      StartPosition: {x: -0.00000023841858, y: 0, z: 0}
+      StartPosition: {x: 0, y: 0, z: 0}
       FromReferenceValue: 1
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
@@ -2889,12 +2914,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: -0.00000023841858, y: 0, z: 0}
-      ToValue: {x: -0.00000023841858, y: 2, z: 0}
-      CurrentValue: {x: -0.00000023841858, y: 0, z: 0}
+      FromValue: {x: 0, y: 0, z: 0}
+      ToValue: {x: 0, y: 2, z: 0}
+      CurrentValue: {x: 0, y: 0, z: 0}
       Enabled: 0
       AnimationType: 4
-      StartPosition: {x: -0.00000023841858, y: 0, z: 0}
+      StartPosition: {x: 0, y: 0, z: 0}
       FromReferenceValue: 0
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
@@ -3159,12 +3184,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: -0.00000023841858, y: 0, z: 0}
-      ToValue: {x: -0.00000023841858, y: 0, z: 0}
+      FromValue: {x: 0, y: 0, z: 0}
+      ToValue: {x: 0, y: 0, z: 0}
       CurrentValue: {x: -0.00000023841858, y: 0, z: 0}
       Enabled: 1
       AnimationType: 5
-      StartPosition: {x: -0.00000023841858, y: 0, z: 0}
+      StartPosition: {x: 0, y: 0, z: 0}
       FromReferenceValue: 1
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
@@ -3459,6 +3484,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1215408780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1215408782}
+  - component: {fileID: 1215408781}
+  m_Layer: 0
+  m_Name: FlowManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1215408781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215408780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a69a50fca8f9f4c15be3ef6ab03a3700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1215408782
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215408780}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -65.94934, y: 115.34546, z: -3.996102}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 572108920}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1419048945
 GameObject:
   m_ObjectHideFlags: 0
