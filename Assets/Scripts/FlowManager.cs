@@ -10,10 +10,9 @@ public class FlowManager : MonoBehaviour
     void Start() {
         isLogin = false;
     }
-    
+
     public void Go2AfterLoginScene() {
         isLogin = true;
-        SceneManager.LoadScene(1);
     }
     public void GameExit(){
         isLogin = false;
