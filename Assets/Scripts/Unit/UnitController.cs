@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public List<Unit> unitList;
+    private int _unitCount;
+    public void Initialize()
     {
-        
+        _unitCount = 0;
+    }
+    public void createUnit(Unit unit)
+    {
+        unitList.Add(unit);
+    }
+    public void unitAttacked(int unitID, int damage)
+    {
+        Unit selectedUnit = unitList[unitID];
     }
 
-    // Update is called once per frame
-    void Update()
+    public void destroyUnit(int unitID)
+    {
+
+    }
+    public void moveUnit(int unitID)
     {
         
     }
