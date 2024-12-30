@@ -4,17 +4,31 @@ using UnityEngine;
 
 public class BuildingController : MonoBehaviour
 {
-    public  List<Building> buildingList;
+    public  List<Building> buildingList = new List<Building>();
     private int _buildingCount;
-    public void Initialize()
+    private Dictionary<int, GameObject> buildingPrefabs;
+    public void Start()
     {
         _buildingCount = 0;
+        buildingPrefabs = new Dictionary<int, GameObject>()
+        {
+            {0, Resources.Load<GameObject>("Prefabs/buildings/Command")}
+        };
     }
 
-    public void createBuilding(Building building)
+    public void createBuilding(Vector3 buildingLocation)
     // 건물 생성
     {
-        buildingList.Add(building);
+        if(buildingPrefabs.ContainsKey(0)) // 건물 Prefab에 해당 건물이 있으면
+        {
+            GameObject buildingObject = Instantiate(buildingPrefabs[_buildingCount],buildingLocation, Quaternion.identity);
+            if(0 == 0) // Command 생성
+            {
+                // Command 객체 생성
+                Command newBuilding = new Command("Blue", _buildingCount, 0, buildingLocation, 500, 0, 10, 5 );
+                buildingList.Add(newBuilding);
+            }
+        }
     }
 
     public void buildingAttacked(int buildingID, int damage)
