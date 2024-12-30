@@ -75,5 +75,25 @@ public class GameStatus : MonoBehaviour
     {
         currentBuildingCount++;
     }
+    
+    // ------------------------------------------------
+    // Building Create 체크 관련 함수들
+
+    public bool canCreateBuilding(Building building)
+    {
+        if(this.currentResourceCount < building.buildingCost)
+        {
+            Debug.Log("자원부족");
+            return false;
+        }
+        if(this.maxBuildingCount < this.currentBuildingCount + 1)
+        {
+            Debug.Log("건물 인구수 부족");
+            return false;
+        }
+        return true;
+    }
+
+    // ------------------------------------------------
 
 }
