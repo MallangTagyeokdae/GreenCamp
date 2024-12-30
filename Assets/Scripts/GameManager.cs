@@ -5,22 +5,28 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager _instance;
+    public static GameManager instance{
+        get{
+            if(_instance == null){
+                _instance = FindObjectOfType<GameManager>();
+                return _instance;
+            }
+
+            return _instance;
+        }
+    }
     public List<GameObject> gameStates;
     public UIController uIController;
     private BuildingController _buildingController;
     
     public Building selectedBuilding;
-    public void Update()
+        
+    public void createBuilding(Vector3 buildingPos)
     {
-        // -------------------------------
-        // Building 관련 로직
         if(GameStatus.instance.canCreateBuilding(selectedBuilding))
         { // 건물을 생성할 수 있음
-            _buildingController.createBuilding(selectedBuilding);
+            _buildingController.createBuilding(buildingPos);
         }
-        // -------------------------------
     }
-        
-       
-
 }
