@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         buildingController.createBuilding(buildingPos,"Command");
         grid.SetActive(false);
         // }
-    }
+    }   
     public void createUnit(Vector3 unitPos) // 해윤
     {
         unitController.createUnit(unitPos, "Archer");

@@ -20,6 +20,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private List<RoomInfo> _roomList;// = new List<RoomInfo>();
     private readonly string version = "1.0f";
     private string userId = "Charlie";
+    public LobbyController lobbyController;
     void Awake()
     {
         // 이 객체가 씬 전환 시 파괴되지 않도록 설정
@@ -59,8 +60,26 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log("check update");
         _roomList = roomList;
+        lobbyController.updateRoomList(_roomList);
         //base.OnRoomListUpdate(roomList);
+    }
+
+    public void CreateRoom(string roomTitle){
+        string roomName = "Room_" + System.Guid.NewGuid().ToString();
+        
+        // 룸 생성
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 2; // 예시: 최대 플레이어 수 설정
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
+        {
+            { "Title", roomTitle }  // "Title"이라는 키에 방 제목 저장
+        };
+        
+        if(PhotonNetwork.CreateRoom(roomName, roomOptions)){
+            Debug.Log("Created room with name: " + roomName + " and room title: " + roomTitle);
+        }
     }
 
     public List<RoomInfo> GetRoomInfos(){
