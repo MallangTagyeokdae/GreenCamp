@@ -6,7 +6,6 @@ public class GameHandler : MonoBehaviour
 {
     public void createBuilding(Vector3 buildingPos)
     {
-        Debug.Log(buildingPos);
-        //GameManager.instance.createBuilding(buildingPos);
+        GameManager.instance.createBuilding(buildingPos);
     }
 }
