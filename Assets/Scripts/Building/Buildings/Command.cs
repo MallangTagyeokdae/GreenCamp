@@ -8,7 +8,7 @@ public class Command : Building
     public int attackRange { get; set; }
 
     public Command(string teamID, int buildingID, string buildingType, Vector3 buildingLocation, int buildingHealth, int buildingCost, int attackPower, int attackRange)
-     : base(teamID, buildingID, buildingType, buildingLocation, buildingHealth, buildingCost)
+     : base(teamID, buildingID, buildingType: "", buildingLocation, buildingHealth, buildingCost)
     {
         attackPower = attackPower;
         attackRange = attackRange;
