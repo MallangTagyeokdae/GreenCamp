@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     //-----------------------------
     
     //------------ 준현 ------------
-    public Building selectedBuilding;
     public BuildingController buildingController; // 준현
     public Building selectedBuilding; // 준현
     //-----------------------------
