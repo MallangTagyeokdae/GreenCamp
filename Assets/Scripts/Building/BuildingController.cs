@@ -6,28 +6,32 @@ public class BuildingController : MonoBehaviour
 {
     public  List<Building> buildingList = new List<Building>();
     private int _buildingCount;
-    private Dictionary<int, GameObject> buildingPrefabs;
+    private Dictionary<string, GameObject> buildingPrefabs;
     public void Start()
     {
         _buildingCount = 0;
-        buildingPrefabs = new Dictionary<int, GameObject>()
-        {
-            {0, Resources.Load<GameObject>("Prefabs/buildings/Command")}
-        };
+         buildingPrefabs = new Dictionary<string, GameObject>()
+         {
+             {"Command", Resources.Load<GameObject>("Prefabs/buildings/Command")}
+         };
     }
 
-    public void createBuilding(Vector3 buildingLocation)
+    public void createBuilding(Vector3 buildingLocation, string buildingType)
     // 건물 생성
     {
-        if(buildingPrefabs.ContainsKey(0)) // 건물 Prefab에 해당 건물이 있으면
+        GameObject buildingObject = Instantiate(buildingPrefabs["Command"],buildingLocation, Quaternion.identity);
+        
+        switch(buildingType)
         {
-            GameObject buildingObject = Instantiate(buildingPrefabs[_buildingCount],buildingLocation, Quaternion.identity);
-            if(0 == 0) // Command 생성
-            {
+            case "Command":
                 // Command 객체 생성
-                Command newBuilding = new Command("Blue", _buildingCount, 0, buildingLocation, 500, 0, 10, 5 );
+                Command newBuilding = new Command("Blue", 0, "Command", buildingLocation, 500, 0, 10, 5 );
                 buildingList.Add(newBuilding);
-            }
+                break;
+            case "Barrack":
+                // Barrack 생성 (유닛 생성 건물)
+            
+                break;
         }
     }
 
