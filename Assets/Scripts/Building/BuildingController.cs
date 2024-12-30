@@ -7,25 +7,26 @@ public class BuildingController : MonoBehaviour
     public  List<Building> buildingList = new List<Building>();
     private int _buildingCount;
     private Dictionary<string, GameObject> buildingPrefabs;
+    
     public void Start()
     {
         _buildingCount = 0;
          buildingPrefabs = new Dictionary<string, GameObject>()
          {
-             {"Command", Resources.Load<GameObject>("Prefabs/buildings/Command")}
+             {"Command", Resources.Load<GameObject>("Prefabs/Buildings/Command")}
          };
     }
 
     public void createBuilding(Vector3 buildingLocation, string buildingType)
     // 건물 생성
     {
-        GameObject buildingObject = Instantiate(buildingPrefabs["Command"],buildingLocation, Quaternion.identity);
+        GameObject buildingObject = Instantiate(buildingPrefabs["Command"],buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
         
         switch(buildingType)
         {
             case "Command":
                 // Command 객체 생성
-                Command newBuilding = new Command("Blue", 0, "Command", buildingLocation, 500, 0, 10, 5 );
+                Command newBuilding = new Command("Blue", 0, buildingLocation);
                 buildingList.Add(newBuilding);
                 break;
             case "Barrack":
