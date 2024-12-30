@@ -17,10 +17,19 @@ public class GameManager : MonoBehaviour
         }
     }
     public List<GameObject> gameStates;
-    public UIController uIController;
-    public BuildingController buildingController; // 준현
     
+    //------------ 해윤 ------------
+    public UIController uIController;
+    public UnitController unitController;
+    public Unit selectedUnit;
+    //-----------------------------
+    
+    //------------ 준현 ------------
+    public Building selectedBuilding;
+    public BuildingController buildingController; // 준현
     public Building selectedBuilding; // 준현
+    //-----------------------------
+    
     public GameObject grid;
     public void createBuilding(Vector3 buildingPos)
     {
@@ -30,5 +39,9 @@ public class GameManager : MonoBehaviour
         buildingController.createBuilding(buildingPos,"Command");
         grid.SetActive(false);
         // }
+    }
+    public void createUnit(Vector3 unitPos) // 해윤
+    {
+        unitController.createUnit(unitPos, "Archer");
     }
 }

@@ -6,7 +6,7 @@ public class Command : Building
 {
     public int attackPower { get; set; }
     public int attackRange { get; set; }
-
+    
     public Command(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
         teamID,
