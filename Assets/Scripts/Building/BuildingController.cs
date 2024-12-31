@@ -1,39 +1,52 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingController : MonoBehaviour
 {
-    public  List<Building> buildingList = new List<Building>();
-    private int _buildingCount;
-    private Dictionary<string, GameObject> buildingPrefabs;
-    
+    public  Dictionary<int ,Building> buildingList = new Dictionary<int, Building>();
+    private int _buildingID;
+    private Dictionary<string, GameObject> buildingPrefabs = new Dictionary<string, GameObject>();
+
     public void Start()
     {
-        _buildingCount = 0;
-         buildingPrefabs = new Dictionary<string, GameObject>()
-         {
-             {"Command", Resources.Load<GameObject>("Prefabs/Buildings/Command")}
-         };
+        _buildingID = 0;
+
+        string _teamID = GameStatus.instance.teamID;
+        
+        // 폴더 경로에 있는 모든 GameObject를 Load해 unitPrefabsList에 임시로 저장
+        List<GameObject> buildingPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Buildings/{_teamID}TeamBuildings"));
+
+        // foreach문으로 List 안에 있는 building 객체들을 다시 Dictionary로 저장
+        foreach (GameObject building in buildingPrefabsList)
+        {
+            if (!buildingPrefabs.ContainsKey(building.name))
+            {
+                buildingPrefabs.Add(building.name, building);
+            }
+        }
+        
     }
 
     public void createBuilding(Vector3 buildingLocation, string buildingType)
     // 건물 생성
     {
-        GameObject buildingObject = Instantiate(buildingPrefabs["Command"],buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
-        
+        GameObject buildingObject = Instantiate(buildingPrefabs[buildingType],buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
         switch(buildingType)
         {
             case "Command":
                 // Command 객체 생성
-                Command newBuilding = new Command("Blue", 0, buildingLocation);
-                buildingList.Add(newBuilding);
+                Command newCommand = new Command("Blue", 0, buildingLocation);
+                buildingList.Add(_buildingID, newCommand);
                 break;
             case "Barrack":
-                // Barrack 생성 (유닛 생성 건물)
+                Barrack newBarrack = new Barrack("Blue", 0, buildingLocation);
+                buildingList.Add(_buildingID, newBarrack);
             
                 break;
         }
+        _buildingID ++;
     }
 
     public void buildingAttacked(int buildingID, int damage)

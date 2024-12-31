@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "UserInfo", menuName = "UserInfo")]
-public class UserInfo : MonoBehaviour
+public class UserInfo : ScriptableObject
 {
-    public string user{get; set;}
+    public string user;
 
 }

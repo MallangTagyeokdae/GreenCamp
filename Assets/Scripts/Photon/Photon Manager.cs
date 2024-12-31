@@ -21,6 +21,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     private readonly string version = "1.0f";
     private string userId = "Charlie";
     public LobbyController lobbyController;
+    public UserInfo userInfo;
     void Awake()
     {
         // 이 객체가 씬 전환 시 파괴되지 않도록 설정
