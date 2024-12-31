@@ -64,7 +64,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     //RoomList가 update될 때마다 실행
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log("check update");
+        Debug.Log($"Number of Room: {roomList.Count}");
         Debug.Log(roomList.Count);
         _roomList = roomList;
         lobbyController.updateRoomList(_roomList);
@@ -99,22 +99,21 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         }
     }
 
-    void OnApplicationQuit()
-    {
-        if (PhotonNetwork.InRoom)
-        {
-            PhotonNetwork.LeaveRoom();  // 게임 종료 시 방을 떠나는 처리를 추가
-        }
-    }
+   private void OnApplicationQuit() {
+        PhotonNetwork.LeaveRoom();
+        Debug.Log("check leave");
+   }
 
-    public override void OnLeftRoom()
+
+
+    /*public override void OnLeftRoom()
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
             Debug.Log("No player left");
             PhotonNetwork.LeaveRoom();
         }
-    }
+    }*/
 
     public List<RoomInfo> GetRoomInfos()
     {
