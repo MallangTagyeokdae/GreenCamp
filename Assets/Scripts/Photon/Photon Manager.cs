@@ -6,11 +6,14 @@ using Photon.Realtime;
 using TMPro.Examples;
 
 public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviour > MonoBehaviourPunCallbacks로 변경(MonoBehaviour에서 photon 관련 behavior가 추가된 버전)
-{   
+{
     private static PhotonManager _instance;
-    public static PhotonManager instance{
-        get{
-            if(_instance == null){
+    public static PhotonManager instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
                 _instance = FindObjectOfType<PhotonManager>();
                 return _instance;
             }
@@ -68,9 +71,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         //base.OnRoomListUpdate(roomList);
     }
 
-    public void CreateRoom(string roomTitle){
+    public void CreateRoom(string roomTitle)
+    {
         string roomName = "Room_" + System.Guid.NewGuid().ToString();
-        
+
         // 룸 생성
         RoomOptions roomOptions = new RoomOptions(); // 최대 플레이어 수와 방 제목을 설정하기 위한 변수
         roomOptions.MaxPlayers = 2; // 최대 플레이어 수 설정
@@ -78,8 +82,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         {
             { "Title", roomTitle }  // "Title"이라는 키에 방 제목 저장
         };
-        
-        if(PhotonNetwork.CreateRoom(roomName, roomOptions)){
+
+        if (PhotonNetwork.CreateRoom(roomName, roomOptions))
+        {
             Debug.Log("Created room with name: " + roomName + " and room title: " + roomTitle);
         }
     }
@@ -87,29 +92,43 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     //player가 방을 떠날 때 콜백되는 함수
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 0){
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
+        {
             Debug.Log("No player left");
             PhotonNetwork.LeaveRoom();
         }
     }
 
-    public override void OnLeftRoom(){
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 0){
+    void OnApplicationQuit()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();  // 게임 종료 시 방을 떠나는 처리를 추가
+        }
+    }
+
+    public override void OnLeftRoom()
+    {
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
+        {
             Debug.Log("No player left");
             PhotonNetwork.LeaveRoom();
         }
     }
 
-    public List<RoomInfo> GetRoomInfos(){
-        return _roomList; 
+    public List<RoomInfo> GetRoomInfos()
+    {
+        return _roomList;
     }
 
-    public void JoinRoom(RoomInfo room){
+    public void JoinRoom(RoomInfo room)
+    {
         PhotonNetwork.JoinRoom(room.Name);
     }
 
     //방에 있는 유저들의 씬을 게임씬으로 변경
-    public void StartGame(){
+    public void StartGame()
+    {
         PhotonNetwork.LoadLevel("GameScene");
     }
 
