@@ -7,16 +7,16 @@ public class UnitController : MonoBehaviour
     public List<Unit> unitList = new List<Unit>();
     // public GameObject unitPref;
     private Dictionary<string, GameObject> unitPrefabs = new Dictionary<string, GameObject>();
-    private int _unitCount;
+    // private int _unitCount;
     private string TeamID;
 
     public void Start()
     {
-        _unitCount = 0;
+        // _unitCount = 0;
         TeamID = GameStatus.instance.teamID;
         Debug.Log(TeamID);
-        List<GameObject> unitList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Units/{TeamID}TeamUnits"));
-        foreach (GameObject unit in unitList)
+        List<GameObject> l_unitPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Units/{TeamID}TeamUnits"));
+        foreach (GameObject unit in l_unitPrefabsList)
         {
             if (!unitPrefabs.ContainsKey(unit.name))
             {
