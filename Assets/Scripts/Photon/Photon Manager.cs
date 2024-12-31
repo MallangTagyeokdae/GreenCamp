@@ -84,6 +84,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         }
     }
 
+    //player가 방을 떠날 때 콜백되는 함수
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if(PhotonNetwork.CurrentRoom.PlayerCount == 0){
+            Debug.Log("No player left");
+            PhotonNetwork.LeaveRoom();
+        }
+    }
+
     public List<RoomInfo> GetRoomInfos(){
         return _roomList; 
     }
