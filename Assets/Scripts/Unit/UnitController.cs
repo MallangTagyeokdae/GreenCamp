@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
-    public List<Unit> unitList = new List<Unit>(); // unitList 초기화
+    public Dictionary<int, Unit> unitDictionary = new Dictionary<int, Unit>(); // unitList 초기화
 
     // public GameObject unitPref; -> unity에서 직접 끌어 쓸 때 사용
 
     // 본인 팀의 unitPrefab들을 unit 직업을 key값으로 받는 Dictionary로 저장
-    private Dictionary<string, GameObject> unitPrefabs = new Dictionary<string, GameObject>(); 
+    private Dictionary<string, GameObject> unitPrefabs = new Dictionary<string, GameObject>();
 
     // private int _unitCount; -> GameStatus에서 관리하기로 함
-    private string TeamID; // 본인 TeamID
+    private string _teamID; // 본인 TeamID
+    private int _unitID;
 
     public void Start()
     {
         // _unitCount = 0;
-        TeamID = GameStatus.instance.teamID; // 본인 TeamID를 GameStatus에서 instance로 받아옴.
-        Debug.Log(TeamID); 
+        _teamID = GameStatus.instance.teamID; // 본인 TeamID를 GameStatus에서 instance로 받아옴.
+        Debug.Log(_teamID);
+
+        // unit 고유 id 초기화
+        _unitID = 0;
 
         // 폴더 경로에 있는 모든 GameObject를 Load해 unitPrefabsList에 임시로 저장
-        List<GameObject> unitPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Units/{TeamID}TeamUnits"));
+        List<GameObject> unitPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Units/{_teamID}TeamUnits"));
 
         // foreach문으로 List 안에 있는 unit 객체들을 다시 Dictionary로 저장
         foreach (GameObject unit in unitPrefabsList)
@@ -45,29 +49,35 @@ public class UnitController : MonoBehaviour
         switch (unitType)
         {
             case "Archer":
-                Archer newArcher = new(TeamID, 0, unitLocation);
-                unitList.Add(newArcher);
+                Archer newArcher = new(_teamID, _unitID, unitLocation);
+                unitDictionary.Add(_unitID, newArcher);
                 break;
             case "Soldier":
-                Soldier newSoldier = new(TeamID, 0, unitLocation);
-                unitList.Add(newSoldier);
+                Soldier newSoldier = new(_teamID, _unitID, unitLocation);
+                unitDictionary.Add(_unitID, newSoldier);
                 break;
             case "Tanker":
-                Tanker newTanker = new(TeamID, 0, unitLocation);
-                unitList.Add(newTanker);
+                Tanker newTanker = new(_teamID, _unitID, unitLocation);
+                unitDictionary.Add(_unitID, newTanker);
                 break;
             case "Healer":
-                Healer newHealer = new(TeamID, 0, unitLocation);
-                unitList.Add(newHealer);
+                Healer newHealer = new(_teamID, _unitID, unitLocation);
+                unitDictionary.Add(_unitID, newHealer);
                 break;
             default:
                 Debug.Log("unitType을 찾을 수 없습니다");
+                _unitID--;
                 break;
         }
+        // foreach (var kvp in unitDictionary)
+        // {
+        //     Debug.Log($"Key: {kvp.Key}, Value: {kvp.Value.unitID}");
+        // }
+        _unitID++;
     }
     public void unitAttacked(int unitID, int damage)
     {
-        Unit selectedUnit = unitList[unitID];
+        Unit selectedUnit = unitDictionary[unitID];
     }
 
     public void destroyUnit(int unitID)
