@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -27,18 +28,26 @@ public class GameManager : MonoBehaviour
     //------------ 준현 ------------
     public BuildingController buildingController; // 준현
     public Building selectedBuilding; // 준현
+    public String buildingType;
+    public GameObject grid;
     //-----------------------------
     
-    public GameObject grid;
+    //---------------- 준현 --------------------
     public void createBuilding(Vector3 buildingPos)
     {
         // if(GameStatus.instance.canCreateBuilding(selectedBuilding))
         // { // 건물을 생성할 수 있음
         Debug.Log(buildingPos);
-        buildingController.createBuilding(buildingPos,"Command");
+        buildingController.createBuilding(buildingPos, buildingType);
         grid.SetActive(false);
         // }
+    }
+
+    public void setBuildingType(string buildingType)
+    {
+        this.buildingType = buildingType;
     }   
+    //------------------------------------
     public void createUnit(Vector3 unitPos) // 해윤
     {
         unitController.createUnit(unitPos, "Archer");
