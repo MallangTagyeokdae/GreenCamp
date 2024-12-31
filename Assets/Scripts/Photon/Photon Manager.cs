@@ -96,12 +96,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         {
             Debug.Log("No player left");
             PhotonNetwork.LeaveRoom();
+            PhotonNetwork.JoinLobby();
         }
     }
 
    private void OnApplicationQuit() {
+        Debug.Log($"check leave 1 {PhotonNetwork.CountOfRooms}");
         PhotonNetwork.LeaveRoom();
-        Debug.Log("check leave");
+        PhotonNetwork.JoinLobby();
+        Debug.Log($"check leave 2 {PhotonNetwork.CountOfRooms}");
    }
 
 
