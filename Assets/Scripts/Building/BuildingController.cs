@@ -43,7 +43,6 @@ public class BuildingController : MonoBehaviour
             case "Barrack":
                 Barrack newBarrack = new Barrack("Blue", 0, buildingLocation);
                 buildingList.Add(_buildingID, newBarrack);
-            
                 break;
         }
         _buildingID ++;
