@@ -15,8 +15,8 @@ public class UnitController : MonoBehaviour
         // _unitCount = 0;
         TeamID = GameStatus.instance.teamID;
         Debug.Log(TeamID);
-        List<GameObject> l_unitPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Units/{TeamID}TeamUnits"));
-        foreach (GameObject unit in l_unitPrefabsList)
+        List<GameObject> unitPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Units/{TeamID}TeamUnits"));
+        foreach (GameObject unit in unitPrefabsList)
         {
             if (!unitPrefabs.ContainsKey(unit.name))
             {
@@ -30,25 +30,25 @@ public class UnitController : MonoBehaviour
     }
     public void createUnit(Vector3 unitLocation, string unitType)
     {
-        GameObject l_unitInstance = Instantiate(unitPrefabs[unitType], unitLocation, Quaternion.identity);
+        GameObject unitInstance = Instantiate(unitPrefabs[unitType], unitLocation, Quaternion.identity);
 
         switch (unitType)
         {
             case "Archer":
-                Archer l_newArcher = new(TeamID, 0, unitLocation);
-                unitList.Add(l_newArcher);
+                Archer newArcher = new(TeamID, 0, unitLocation);
+                unitList.Add(newArcher);
                 break;
             case "Soldier":
-                Soldier l_newSoldier = new(TeamID, 0, unitLocation);
-                unitList.Add(l_newSoldier);
+                Soldier newSoldier = new(TeamID, 0, unitLocation);
+                unitList.Add(newSoldier);
                 break;
             case "Tanker":
-                Tanker l_newTanker = new(TeamID, 0, unitLocation);
-                unitList.Add(l_newTanker);
+                Tanker newTanker = new(TeamID, 0, unitLocation);
+                unitList.Add(newTanker);
                 break;
             case "Healer":
-                Healer l_newHealer = new(TeamID, 0, unitLocation);
-                unitList.Add(l_newHealer);
+                Healer newHealer = new(TeamID, 0, unitLocation);
+                unitList.Add(newHealer);
                 break;
             default:
                 Debug.Log("unitType을 찾을 수 없습니다");
