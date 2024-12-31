@@ -16,19 +16,44 @@ public class LobbyController : MonoBehaviour
     public ScrollRect scrollRect;
     public GameObject prefab;
     public Transform parent;
+    private List<string> _roomList;
     // Start is called before the first frame update
+    void Start()
+    {
+        _roomList = new List<string>();
+    }
 
-    public void LogIn(){
+    public void LogIn()
+    {
         loggedIn.Invoke();
     }
 
-    public void updateRoomList(List<RoomInfo> roomList){
-        foreach(RoomInfo roomInfo in roomList)
-        {   
-
-            GameObject room = Instantiate(prefab, parent);
-            room.transform.Find("Title").gameObject.GetComponent<TextMeshPro>().text = roomInfo.Name;
+    public void updateRoomList(List<RoomInfo> roomList)
+    {
+        List<string> rooms = new List<string>();
+        foreach (RoomInfo roomInfo in roomList)
+        {
+            rooms.Add(roomInfo.Name);
+            if (!_roomList.Contains(roomInfo.Name))
+            {
+                GameObject room = Instantiate(prefab, parent);
+                room.name = roomInfo.Name;
+                Debug.Log(room.transform.Find("Title").gameObject);//.GetComponent<TextMeshPro>().text = roomInfo.Name;
+            }
         }
+
+        foreach (string roomName in _roomList)
+        {
+            if (!rooms.Contains(roomName))
+            {
+                GameObject go = parent.Find($"{roomName}").gameObject;
+                if (go != null)
+                {
+                    Destroy(go); // 해당 룸 네임을 가진 방을 파괴
+                }
+            }
+        }
+        _roomList = rooms;
     }
 
 }
