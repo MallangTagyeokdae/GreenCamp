@@ -15,6 +15,7 @@ public class LobbyController : MonoBehaviour
     public UnityEvent loggedIn;
     public ScrollRect scrollRect;
     public GameObject prefab;
+    public Transform parent;
     // Start is called before the first frame update
 
     public void LogIn(){
@@ -22,8 +23,10 @@ public class LobbyController : MonoBehaviour
     }
 
     public void updateRoomList(List<RoomInfo> roomList){
-        foreach(RoomInfo roomInfo in roomList){
-            GameObject room = Instantiate(prefab);
+        foreach(RoomInfo roomInfo in roomList)
+        {   
+
+            GameObject room = Instantiate(prefab, parent);
             room.transform.Find("Title").gameObject.GetComponent<TextMeshPro>().text = roomInfo.Name;
         }
     }

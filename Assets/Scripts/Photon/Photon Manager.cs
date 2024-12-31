@@ -61,6 +61,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         Debug.Log("check update");
+        Debug.Log(roomList.Count);
         _roomList = roomList;
         lobbyController.updateRoomList(_roomList);
         //base.OnRoomListUpdate(roomList);
