@@ -91,6 +91,10 @@ public class ClickManager : MonoBehaviour
         {
             action?.Invoke(hit.collider.gameObject, hit.point);
         }
+        if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Barrack"))
+        {
+            Debug.Log("배럭 선택됨");
+        }
     }
 
 
