@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro.Examples;
 
-public class PhotonManager : MonoBehaviourPunCallbacks
+public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviour > MonoBehaviourPunCallbacks로 변경(MonoBehaviour에서 photon 관련 behavior가 추가된 버전)
 {   
     private static PhotonManager _instance;
     public static PhotonManager instance{
@@ -38,7 +38,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = userId;
         //포톤 서버와 통신횟수 설정. 초당 30회
         Debug.Log(PhotonNetwork.SendRate);
-        //Debug.Log(userId);
         //서버 접속
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -58,6 +57,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
     }
 
+    //RoomList가 update될 때마다 실행
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         Debug.Log("check update");
@@ -71,8 +71,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         string roomName = "Room_" + System.Guid.NewGuid().ToString();
         
         // 룸 생성
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 2; // 예시: 최대 플레이어 수 설정
+        RoomOptions roomOptions = new RoomOptions(); // 최대 플레이어 수와 방 제목을 설정하기 위한 변수
+        roomOptions.MaxPlayers = 2; // 최대 플레이어 수 설정
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
         {
             { "Title", roomTitle }  // "Title"이라는 키에 방 제목 저장
@@ -91,6 +91,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(room.Name);
     }
 
+    //방에 있는 유저들의 씬을 게임씬으로 변경
     public void StartGame(){
         PhotonNetwork.LoadLevel("GameScene");
     }

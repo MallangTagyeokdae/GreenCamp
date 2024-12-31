@@ -44,25 +44,26 @@ public class ClickManager : MonoBehaviour
         //Mouse Button Down
         if (Input.GetMouseButtonDown(0)) //좌클릭
         {
-            Click(0, (go, position) => { go.GetComponent<ClickEventHandler>().LeftClickDown(position); });
+            Click(0, (go, position) => { go.GetComponent<ClickEventHandler>().LeftClickDown(position); });  //입력 받은 오브젝트가 가지고 있는 콜백함수를 실행
         }
 
         if (Input.GetMouseButtonDown(1))  //우클릭
         {
-            Click(1, (go, position) => { go.GetComponent<ClickEventHandler>().RightClickDown(position); });
+            Click(1, (go, position) => { go.GetComponent<ClickEventHandler>().RightClickDown(position); }); //입력 받은 오브젝트가 가지고 있는 콜백함수를 실행
         }
 
         //Mouse Button Up
         if (Input.GetMouseButtonUp(0)) //좌클릭
         {
-            Click(0, (go, position) => { go.GetComponent<ClickEventHandler>().LeftClickUp(position); });
+            Click(0, (go, position) => { go.GetComponent<ClickEventHandler>().LeftClickUp(position); });    //입력 받은 오브젝트가 가지고 있는 콜백함수를 실행
         }
-        if (Input.GetMouseButtonUp(1)) //우클릭릭
+        if (Input.GetMouseButtonUp(1)) //우클릭
         {
-            Click(1, (go, position) => { go.GetComponent<ClickEventHandler>().RightClickUp(position); });
+            Click(1, (go, position) => { go.GetComponent<ClickEventHandler>().RightClickUp(position); });   //입력 받은 오브젝트가 가지고 있는 콜백함수를 실행
         }
 
-        Drag();
+        Drag(); //드래그
+
         //hover
         MouseHover();
     }
@@ -70,6 +71,9 @@ public class ClickManager : MonoBehaviour
 
     private void Click(int side, Action<GameObject, Vector3> action)    //클릭 시에 ray cast
     {
+        //화면 밖의 클릭은 아무런 동작하지 않도록 하기 위한 변수 및 조건문
+        #region 화면 밖에 대한 변수 및 조건문
+
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
 
@@ -79,17 +83,19 @@ public class ClickManager : MonoBehaviour
             return;
         }
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        #endregion
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 메인카메라 위치로부터 마우스 위치까지 ray를 생성
         RaycastHit hit;
 
-        if (drawRay)
+        if (drawRay) // drawRay가 true인 경우 scene에 ray를 그림
         {
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
         }
 
         if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
         {
-            action?.Invoke(hit.collider.gameObject, hit.point);
+            action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
         }
     }
 
@@ -119,7 +125,7 @@ public class ClickManager : MonoBehaviour
         }
     }
 
-    public void Drag()
+    public void Drag()  //미완성
     {
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
