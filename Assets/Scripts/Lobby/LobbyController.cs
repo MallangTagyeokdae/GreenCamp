@@ -8,6 +8,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
+using Doozy.Runtime.UIManager.Listeners;
+using Doozy.Runtime.UIManager.Components;
+using Doozy.Runtime.UIManager;
 
 public class LobbyController : MonoBehaviour
 {
@@ -37,6 +40,8 @@ public class LobbyController : MonoBehaviour
             if (!_roomList.Contains(roomInfo.Name))
             {
                 GameObject room = Instantiate(prefab, parent);
+                room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => PhotonManager.instance.JoinRoom(roomInfo));
+                room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => {Debug.Log("test pressed button!");});
                 room.name = roomInfo.Name;
                 Debug.Log(room.transform.Find("Title").gameObject);//.GetComponent<TextMeshPro>().text = roomInfo.Name;
             }

@@ -54,10 +54,10 @@ public class GameManager : MonoBehaviour
         this.buildingType = buildingType;
     }   
 
-    public void ChangeUI(UIContainer selectedUI)
+    public void ChangeUI(int UIindex)
     {
         // currentUI = uIController.setUI(selectedUI.GetComponent<UIContainer>());
-        currentUI = uIController.setUI(selectedUI);
+        currentUI = uIController.setUI(UIindex);
     }
 
     //------------------------------------

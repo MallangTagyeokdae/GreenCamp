@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro.Examples;
+using Unity.VisualScripting;
 
 public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviour > MonoBehaviourPunCallbacks로 변경(MonoBehaviour에서 photon 관련 behavior가 추가된 버전)
 {
@@ -56,10 +57,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     }
 
     //로비에 접속 후 호출되는 콜백함수
-    public override void OnJoinedLobby()
+    /*public override void OnJoinedLobby()
     {
         Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
-    }
+    }*/
 
     //RoomList가 update될 때마다 실행
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -101,12 +102,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         }
     }
 
-   private void OnApplicationQuit() {
+    private void OnApplicationQuit()
+    {
         Debug.Log($"check leave 1 {PhotonNetwork.CountOfRooms}");
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
         Debug.Log($"check leave 2 {PhotonNetwork.CountOfRooms}");
-   }
+    }
 
 
 
@@ -126,20 +128,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
 
     public void JoinRoom(RoomInfo room)
     {
-        bool join = false;
-        join = PhotonNetwork.JoinRoom(room.Name);
-        if(join){
-            userInfo.currentRoom = room.Name;
-        }
-        else{
-            Debug.Log("failed to join room");
-            PhotonNetwork.JoinLobby();
-        }
+        PhotonNetwork.JoinRoom(room.Name);
+    }
 
+    public override void OnJoinedRoom()
+    {
+        Debug.Log($"join room: {PhotonNetwork.CurrentRoom.Name} Successed");
+        userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log($"failed to join room, available rooms: {PhotonNetwork.CountOfRooms}");
+        PhotonNetwork.NetworkingClient.State = ClientState.ConnectedToMasterServer;
+        PhotonNetwork.JoinLobby();
     }
 
 
-    public void LeaveRoom(){
+
+
+    public void LeaveRoom()
+    {
         userInfo.InitUserInfo();
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
@@ -148,7 +157,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     //방에 있는 유저들의 씬을 게임씬으로 변경
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel("GameScene");
+        if(PhotonNetwork.InRoom){
+            PhotonNetwork.LoadLevel("GameScene");
+        }
+        /*if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            PhotonNetwork.LoadLevel("GameScene");
+        }*/
     }
 
 }

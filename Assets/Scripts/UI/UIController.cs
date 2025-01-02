@@ -10,8 +10,9 @@ public class UIController : MonoBehaviour
     }
 
     // UI 변경하는 함수
-    public UIContainer setUI(UIContainer selectedUI)
+    public UIContainer setUI(int UIindex)
     {
+        UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
         Debug.Log("UI 변경 확인");
 
