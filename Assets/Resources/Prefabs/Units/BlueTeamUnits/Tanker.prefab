@@ -13038,9 +13038,10 @@ GameObject:
   - component: {fileID: 7938499591172844252}
   - component: {fileID: 8191409468101259558}
   - component: {fileID: -9120425040889932347}
+  - component: {fileID: 6131568898489448432}
   m_Layer: 0
   m_Name: Tanker
-  m_TagString: Untagged
+  m_TagString: Clickable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13164,6 +13165,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.64120865, y: 1.7854652, z: 0.70908713}
   m_Center: {x: -0.00484848, y: 0.8872843, z: -0.029091358}
+--- !u!114 &6131568898489448432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154791723814996376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25285cb8ec0fab4b9927c834f52d504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leftClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  mouseHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6189645890645135008
 GameObject:
   m_ObjectHideFlags: 0

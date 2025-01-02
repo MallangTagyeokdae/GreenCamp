@@ -14568,9 +14568,10 @@ GameObject:
   - component: {fileID: 5375404808022889564}
   - component: {fileID: 2914513158251056863}
   - component: {fileID: -814812013677233667}
+  - component: {fileID: 4939225628254984557}
   m_Layer: 0
   m_Name: Archer
-  m_TagString: Untagged
+  m_TagString: Clickable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14694,6 +14695,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.69283485, y: 1.5742271, z: 0.8448465}
   m_Center: {x: -0.011267662, y: 0.7719761, z: -0.067880124}
+--- !u!114 &4939225628254984557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6856062543441048699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25285cb8ec0fab4b9927c834f52d504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leftClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  mouseHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6891362933588044005
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,9 +8,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    public static GameManager instance{
-        get{
-            if(_instance == null){
+    public static GameManager instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
                 _instance = FindObjectOfType<GameManager>();
                 return _instance;
             }
@@ -19,21 +22,23 @@ public class GameManager : MonoBehaviour
         }
     }
     public List<GameObject> gameStates;
-    
+
     //------------ 해윤 ------------
     public UIController uIController;
     public UnitController unitController;
+    public GameObject selectedObject;
     public Unit selectedUnit;
+    public string unitType;
     //-----------------------------
-    
+
     //------------ 준현 ------------
     public BuildingController buildingController; // 준현
     public Building selectedBuilding; // 준현
     public String buildingType;
     public GameObject grid;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
-    //-----------------------------
-    
+                                  //-----------------------------
+
     //---------------- 준현 --------------------
     void Start()
     {
@@ -52,7 +57,7 @@ public class GameManager : MonoBehaviour
     public void SetBuildingType(string buildingType)
     {
         this.buildingType = buildingType;
-    }   
+    }
 
     public void ChangeUI(int UIindex)
     {
@@ -61,8 +66,20 @@ public class GameManager : MonoBehaviour
     }
 
     //------------------------------------
-    public void createUnit(Vector3 unitPos) // 해윤
+    public void SetUnitType(string unitType)
     {
-        unitController.createUnit(unitPos, "Archer");
+        this.unitType = unitType;
+    }
+    public void CreateUnit(Vector3 unitPos) // 해윤
+    {
+        unitController.createUnit(unitPos, unitType);
+    }
+    public void SetUnitInfo(int unitID)
+    {
+        Debug.Log(unitController.unitDictionary.ContainsKey(unitID));
+        selectedUnit = unitController.unitDictionary[unitID];  // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
+        uIController.DisplayUnitInfo(unitID);  // UI에 유닛 정보를 표시
+        Debug.Log("유닛생성 성공");
+
     }
 }

@@ -44,7 +44,7 @@ public class ClickManager : MonoBehaviour
         //Mouse Button Down
         if (Input.GetMouseButtonDown(0)) //좌클릭
         {
-            Click(0, (go, position) => { go.GetComponent<ClickEventHandler>().LeftClickDown(position); });  //입력 받은 오브젝트가 가지고 있는 콜백함수를 실행
+            Click(0, (go, position) => { go.GetComponent<ClickEventHandler>().LeftClickDown(position); GameManager.instance.selectedObject = go; });  //입력 받은 오브젝트가 가지고 있는 콜백함수를 실행
         }
 
         if (Input.GetMouseButtonDown(1))  //우클릭
