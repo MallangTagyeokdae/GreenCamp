@@ -28,25 +28,22 @@ public class UIController : MonoBehaviour
         Debug.Log("UI 변경 확인");
 
         // ---------------------- 준현 --------------------
+        if(UIindex == 1)
+        {
+            int key = clickedObject.GetComponent<BuildingID>().GetKey();
+            Building selectedBarrack = buildingController.buildingList[key];
+            _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
+            _level.text = selectedBarrack.buildingLevel.ToString();
+        } else if(UIindex == 2)
+        {
+            
+        }
         if(currentUI != selectedUI)
-        { // 현재 UI랑 바뀌어질 UI가 다르면 UI를 바꾸고 바뀐 UI를 리턴
-            if(UIindex == 1) // 선택된 UI가 병영이면
-            {
-                int key = clickedObject.GetComponent<BuildingID>().GetKey();
-                Debug.Log(key);
-                Building selectedBarrack = buildingController.buildingList[key];
-                _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
-                _level.text = selectedBarrack.buildingLevel.ToString();
-            }
+        {
             currentUI.Hide();
             selectedUI.Show();
             return selectedUI;
             Debug.Log("UI 변경됨");
-        } else {
-            int key = clickedObject.GetComponent<BuildingID>().GetKey();
-            Building selectedBarrack = buildingController.buildingList[key];
-                _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
-                _level.text = selectedBarrack.buildingLevel.ToString();
         }
         // ----------------------------------------------
         // 현재 UI랑 바뀔 Ui가 같으면 현재 UI를 리턴
