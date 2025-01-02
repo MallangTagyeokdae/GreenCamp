@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BuildingController : MonoBehaviour
 {
@@ -41,6 +42,7 @@ public class BuildingController : MonoBehaviour
                 buildingList.Add(_buildingID, _newCommand);
                 break;
             case "Barrack":
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(1));
                 Barrack _newBarrack = new Barrack(_teamID, 0, buildingLocation);
                 buildingList.Add(_buildingID, _newBarrack);
                 break;

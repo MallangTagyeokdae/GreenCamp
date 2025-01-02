@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 7036859d28e2cb84c9948a1fcf49fe95, type: 3}
       propertyPath: m_TagString
-      value: Barrack
+      value: Clickable
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7036859d28e2cb84c9948a1fcf49fe95, type: 3}
       propertyPath: m_LocalPosition.x
@@ -63,6 +63,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 7036859d28e2cb84c9948a1fcf49fe95, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4972802099637049643}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 7036859d28e2cb84c9948a1fcf49fe95, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8515307855472878936}
   m_SourcePrefab: {fileID: 100100000, guid: 7036859d28e2cb84c9948a1fcf49fe95, type: 3}
 --- !u!1 &1856497004635135170 stripped
 GameObject:
@@ -90,3 +93,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.197476, y: 8.341957, z: 10.65098}
   m_Center: {x: 0.06949116, y: -0.1694838, z: 5.110935}
+--- !u!114 &8515307855472878936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856497004635135170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25285cb8ec0fab4b9927c834f52d504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leftClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  mouseHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
