@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Doozy.Runtime.UIManager.Containers;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -30,10 +31,15 @@ public class GameManager : MonoBehaviour
     public Building selectedBuilding; // 준현
     public String buildingType;
     public GameObject grid;
+    public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
     //-----------------------------
     
     //---------------- 준현 --------------------
-    public void createBuilding(Vector3 buildingPos)
+    void Start()
+    {
+        currentUI.Show();
+    }
+    public void CreateBuilding(Vector3 buildingPos)
     {
         // if(GameStatus.instance.canCreateBuilding(selectedBuilding))
         // { // 건물을 생성할 수 있음
@@ -43,10 +49,17 @@ public class GameManager : MonoBehaviour
         // }
     }
 
-    public void setBuildingType(string buildingType)
+    public void SetBuildingType(string buildingType)
     {
         this.buildingType = buildingType;
     }   
+
+    public void ChangeUI(UIContainer selectedUI)
+    {
+        // currentUI = uIController.setUI(selectedUI.GetComponent<UIContainer>());
+        currentUI = uIController.setUI(selectedUI);
+    }
+
     //------------------------------------
     public void createUnit(Vector3 unitPos) // 해윤
     {

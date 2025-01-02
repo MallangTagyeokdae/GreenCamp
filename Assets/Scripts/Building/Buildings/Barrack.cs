@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Barrack : Building
 {
-    
     public Barrack(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
         teamID,
