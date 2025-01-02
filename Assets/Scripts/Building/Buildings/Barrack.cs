@@ -11,7 +11,8 @@ public class Barrack : Building
         buildingType : "Barrack",
         buildingLocation,
         buildingHealth : 500,
-        buildingCost : 50
+        buildingCost : 50,
+        buildingLevel : 1
         )
     {}
 }

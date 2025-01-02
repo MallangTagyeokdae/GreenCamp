@@ -10,6 +10,7 @@ public class BuildingController : MonoBehaviour
     private int _buildingID;
     private string _teamID;
     private Dictionary<string, GameObject> _buildingPrefabs = new Dictionary<string, GameObject>();
+    public GameObject buildingObject;
     public void Start()
     {
         _buildingID = 0;
@@ -30,10 +31,13 @@ public class BuildingController : MonoBehaviour
         
     }
 
-    public void createBuilding(Vector3 buildingLocation, string buildingType)
+    public void CreateBuilding(Vector3 buildingLocation, string buildingType)
     // 건물 생성
     {
-        GameObject buildingObject = Instantiate(_buildingPrefabs[buildingType],buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
+        buildingObject = Instantiate(_buildingPrefabs[buildingType],buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
+        buildingObject.AddComponent<BuildingID>().SetKey(_buildingID);
+        buildingObject.name = "buildingType" + _buildingID;
+        GameObject gameObject = buildingObject;
         switch(buildingType)
         {
             case "Command":
@@ -42,6 +46,7 @@ public class BuildingController : MonoBehaviour
                 buildingList.Add(_buildingID, _newCommand);
                 break;
             case "Barrack":
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetClickedObject(gameObject));
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(1));
                 Barrack _newBarrack = new Barrack(_teamID, 0, buildingLocation);
                 buildingList.Add(_buildingID, _newBarrack);
@@ -60,27 +65,32 @@ public class BuildingController : MonoBehaviour
                 break;
         }
         _buildingID ++;
+        // printList(buildingList);
     }
 
-    public void buildingAttacked(int buildingID, int damage)
+    // 디버깅용
+    public void PrintList(Dictionary<int, Building> buildings)
+    {
+        for(int i=0; i<_buildingID; i++)
+        {
+            Debug.Log(buildings[i].buildingType);
+        }
+    }
+
+    public void BuildingAttacked(int buildingID, int damage)
     {
         Building selectedBuilding = buildingList[buildingID];
 
     }
 
-    public void destroyBuilding(int buildingID)
+    public void DestroyBuilding(int buildingID)
     {
 
     }
     
-    public void upgradeBuilding(int buildingID)
+    public void UpgradeBuilding()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Building building = buildingList[GameManager.instance.clickedObject.GetComponent<BuildingID>().GetKey()];
+        building.buildingLevel++;
     }
 }

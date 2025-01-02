@@ -93,7 +93,7 @@ public class ClickManager : MonoBehaviour
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
         }
 
-        if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
+        if (Physics.Raycast(ray, out hit, _distance) && (hit.collider.CompareTag("Clickable")))
         {
             action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
             Debug.Log($"{hit.collider.gameObject.name}, {hit.point}");

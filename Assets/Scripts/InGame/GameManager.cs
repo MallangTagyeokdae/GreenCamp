@@ -33,12 +33,13 @@ public class GameManager : MonoBehaviour
 
     //------------ 준현 ------------
     public BuildingController buildingController; // 준현
-    public Building selectedBuilding; // 준현
-    public String buildingType;
+    public string buildingType;
     public GameObject grid;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
-                                  //-----------------------------
-
+    public GameObject clickedObject; // 현재 선택된 게임 Object
+    //-----------------------------
+    
+    
     //---------------- 준현 --------------------
     void Start()
     {
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
         // if(GameStatus.instance.canCreateBuilding(selectedBuilding))
         // { // 건물을 생성할 수 있음
         Debug.Log(buildingPos);
-        buildingController.createBuilding(buildingPos, buildingType);
+        buildingController.CreateBuilding(buildingPos, buildingType);
         grid.SetActive(false);
         // }
     }
@@ -59,10 +60,21 @@ public class GameManager : MonoBehaviour
         this.buildingType = buildingType;
     }
 
+    public void SetClickedObject(GameObject gameObject)
+    {
+        clickedObject = gameObject;
+        Debug.Log("선택된건물 업데이트 됨");
+    }
+
     public void ChangeUI(int UIindex)
     {
-        // currentUI = uIController.setUI(selectedUI.GetComponent<UIContainer>());
-        currentUI = uIController.setUI(UIindex);
+        currentUI = uIController.SetUI(UIindex, clickedObject);
+    }
+
+    public void LevelUpBuilding()
+    {
+        buildingController.UpgradeBuilding();
+        uIController.UpdateLevel(currentUI, clickedObject);
     }
 
     //------------------------------------
