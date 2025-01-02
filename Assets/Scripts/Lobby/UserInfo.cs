@@ -6,5 +6,9 @@ using UnityEngine;
 public class UserInfo : ScriptableObject
 {
     public string user;
+    public string currentRoom;
 
+    public void InitUserInfo(){
+        currentRoom = null;
+    }
 }

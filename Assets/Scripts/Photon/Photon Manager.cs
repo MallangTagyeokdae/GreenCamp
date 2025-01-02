@@ -78,6 +78,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         // 룸 생성
         RoomOptions roomOptions = new RoomOptions(); // 최대 플레이어 수와 방 제목을 설정하기 위한 변수
         roomOptions.MaxPlayers = 2; // 최대 플레이어 수 설정
+        roomOptions.EmptyRoomTtl = 1000;
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
         {
             { "Title", roomTitle }  // "Title"이라는 키에 방 제목 저장
@@ -125,7 +126,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
 
     public void JoinRoom(RoomInfo room)
     {
-        PhotonNetwork.JoinRoom(room.Name);
+        bool join = false;
+        join = PhotonNetwork.JoinRoom(room.Name);
+        if(join){
+            userInfo.currentRoom = room.Name;
+        }
+        else{
+            Debug.Log("failed to join room");
+            PhotonNetwork.JoinLobby();
+        }
+
+    }
+
+
+    public void LeaveRoom(){
+        userInfo.InitUserInfo();
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.JoinLobby();
     }
 
     //방에 있는 유저들의 씬을 게임씬으로 변경
