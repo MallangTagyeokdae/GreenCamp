@@ -41,6 +41,7 @@ public class LobbyController : MonoBehaviour
             {
                 GameObject room = Instantiate(prefab, parent);
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => PhotonManager.instance.JoinRoom(roomInfo));
+                room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => {Debug.Log("test pressed button!");});
                 room.name = roomInfo.Name;
                 Debug.Log(room.transform.Find("Title").gameObject);//.GetComponent<TextMeshPro>().text = roomInfo.Name;
             }
