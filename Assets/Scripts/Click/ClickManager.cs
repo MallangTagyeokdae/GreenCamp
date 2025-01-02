@@ -97,10 +97,10 @@ public class ClickManager : MonoBehaviour
         {
             action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
         }
-        if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Barrack"))
-        {
-            Debug.Log("배럭 선택됨");
-        }
+        // if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Barrack"))
+        // {
+        //     Debug.Log("배럭 선택됨");
+        // }
     }
 
 
