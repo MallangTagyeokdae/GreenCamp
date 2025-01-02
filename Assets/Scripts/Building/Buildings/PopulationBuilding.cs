@@ -11,7 +11,8 @@ public class PopulationBuilding : Building
         buildingType : "PopulationBuilding",
         buildingLocation,
         buildingHealth : 500,
-        buildingCost : 0
+        buildingCost : 0,
+        buildingLevel : 1
         )
     {
     }

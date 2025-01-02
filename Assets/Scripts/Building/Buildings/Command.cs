@@ -14,7 +14,8 @@ public class Command : Building
         buildingType : "Command",
         buildingLocation,
         buildingHealth : 500,
-        buildingCost : 0
+        buildingCost : 0,
+        buildingLevel : 1
         )
     {
         attackPower = 10;
