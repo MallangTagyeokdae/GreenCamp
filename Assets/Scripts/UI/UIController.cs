@@ -9,14 +9,17 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public string unitInfo;
+    // public TMP_Text text;
     public List<UIContainer> UILists;
     public BuildingController buildingController;
     private TMP_Text _level;
     
-    public void ShowBottomNavigaionBar() {
-        
+    public void DisplayUnitInfo(int unitID)
+    {
+        TMP_Text text = UILists[3].transform.Find("UnitInfoText").GetComponent<TMP_Text>();
+        text.text = "asdf";
     }
-
     // UI 변경하는 함수
     public UIContainer SetUI(int UIindex, GameObject clickedObject)
     {

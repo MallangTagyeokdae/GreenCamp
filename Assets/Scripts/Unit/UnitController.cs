@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnitController : MonoBehaviour
@@ -43,9 +44,11 @@ public class UnitController : MonoBehaviour
     }
     public void createUnit(Vector3 unitLocation, string unitType) // 유닛 생성 함수
     {
+        int getCurrentUnitID = _unitID;
         GameObject unitInstance = Instantiate(unitPrefabs[unitType], unitLocation, Quaternion.identity); // unit instance 생성
 
-        // switch문으로 unit을 List에 저장 -> Dictionary로 바꿀 예정
+
+        // switch문으로 unit을 Dictionary에 저장
         switch (unitType)
         {
             case "Archer":
@@ -69,10 +72,16 @@ public class UnitController : MonoBehaviour
                 _unitID--;
                 break;
         }
-        // foreach (var kvp in unitDictionary)
-        // {
-        //     Debug.Log($"Key: {kvp.Key}, Value: {kvp.Value.unitID}");
-        // }
+
+        foreach (var kvp in unitDictionary.Keys)
+        {
+            Debug.Log($"Key: {kvp}");
+        }
+        unitInstance.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
+        {
+            GameManager.instance.SetUnitInfo(getCurrentUnitID);
+            GameManager.instance.ChangeUI(3);
+        });
         _unitID++;
     }
     public void unitAttacked(int unitID, int damage)

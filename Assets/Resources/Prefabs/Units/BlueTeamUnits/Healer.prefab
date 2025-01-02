@@ -5712,9 +5712,10 @@ GameObject:
   - component: {fileID: 2382410393807638316}
   - component: {fileID: 8209581391068792987}
   - component: {fileID: 9169303230473134441}
+  - component: {fileID: -3239206786477960370}
   m_Layer: 0
   m_Name: Healer
-  m_TagString: Untagged
+  m_TagString: Clickable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5838,6 +5839,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.82790756, y: 1.8537213, z: 0.88787246}
   m_Center: {x: 0.00013160706, y: 0.9147014, z: 0.022825748}
+--- !u!114 &-3239206786477960370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3135998574298575499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25285cb8ec0fab4b9927c834f52d504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leftClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  mouseHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3178201230277339484
 GameObject:
   m_ObjectHideFlags: 0
