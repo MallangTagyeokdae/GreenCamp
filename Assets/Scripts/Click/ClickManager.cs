@@ -96,14 +96,9 @@ public class ClickManager : MonoBehaviour
         if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
         {
             action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
+            Debug.Log($"{hit.collider.gameObject.name}, {hit.point}");
         }
-        // if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Barrack"))
-        // {
-        //     Debug.Log("배럭 선택됨");
-        // }
     }
-
-
     private void MouseHover()   //항상 ray cast
     {
         float screenWidth = Screen.width;
@@ -116,17 +111,17 @@ public class ClickManager : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        // RaycastHit hit;
 
         if (drawRay)
         {
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.green);
         }
 
-        if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
-        {
-            hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
-        }
+        // if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
+        // {
+        //     hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
+        // }
     }
 
     public void Drag()  //미완성
