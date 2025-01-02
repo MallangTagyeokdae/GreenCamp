@@ -11,7 +11,8 @@ public class ResourceBuilding : Building
         buildingType : "ResourceBuilding",
         buildingLocation,
         buildingHealth : 500,
-        buildingCost : 0
+        buildingCost : 0,
+        buildingLevel : 1
         )
     {
     }
