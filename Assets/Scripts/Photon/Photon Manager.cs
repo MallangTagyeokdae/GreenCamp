@@ -56,10 +56,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     }
 
     //로비에 접속 후 호출되는 콜백함수
-    public override void OnJoinedLobby()
+    /*public override void OnJoinedLobby()
     {
         Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
-    }
+    }*/
 
     //RoomList가 update될 때마다 실행
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -101,12 +101,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         }
     }
 
-   private void OnApplicationQuit() {
+    private void OnApplicationQuit()
+    {
         Debug.Log($"check leave 1 {PhotonNetwork.CountOfRooms}");
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
         Debug.Log($"check leave 2 {PhotonNetwork.CountOfRooms}");
-   }
+    }
 
 
 
@@ -126,20 +127,30 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
 
     public void JoinRoom(RoomInfo room)
     {
-        bool join = false;
-        join = PhotonNetwork.JoinRoom(room.Name);
-        if(join){
+        PhotonNetwork.JoinRoom(room.Name);
+        Debug.Log("JoinRoom executed");
+        Debug.Log($"client State: {PhotonNetwork.NetworkClientState}");
+        if (PhotonNetwork.InRoom)
+        {
+            Debug.Log($"join room{room.Name} Successed");
             userInfo.currentRoom = room.Name;
         }
-        else{
-            Debug.Log("failed to join room");
-            PhotonNetwork.JoinLobby();
-        }
+    }
 
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log($"failed to join room, available rooms: {PhotonNetwork.CountOfRooms}");
+        //PhotonNetwork.LeaveRoom();
+        //Debug.Log($"client State: {PhotonNetwork.NetworkClientState}");
+        PhotonNetwork.NetworkingClient.State = ClientState.ConnectedToMasterServer;
+        PhotonNetwork.JoinLobby();
     }
 
 
-    public void LeaveRoom(){
+
+
+    public void LeaveRoom()
+    {
         userInfo.InitUserInfo();
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
