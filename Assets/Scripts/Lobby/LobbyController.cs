@@ -40,7 +40,7 @@ public class LobbyController : MonoBehaviour
             if (!_roomList.Contains(roomInfo.Name))
             {
                 GameObject room = Instantiate(prefab, parent);
-                room.GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => PhotonManager.instance.JoinRoom(roomInfo));
+                room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => PhotonManager.instance.JoinRoom(roomInfo));
                 room.name = roomInfo.Name;
                 Debug.Log(room.transform.Find("Title").gameObject);//.GetComponent<TextMeshPro>().text = roomInfo.Name;
             }
