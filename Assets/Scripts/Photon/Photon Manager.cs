@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro.Examples;
+using Unity.VisualScripting;
 
 public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviour > MonoBehaviourPunCallbacks로 변경(MonoBehaviour에서 photon 관련 behavior가 추가된 버전)
 {
@@ -128,20 +129,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     public void JoinRoom(RoomInfo room)
     {
         PhotonNetwork.JoinRoom(room.Name);
-        Debug.Log("JoinRoom executed");
-        Debug.Log($"client State: {PhotonNetwork.NetworkClientState}");
-        if (PhotonNetwork.InRoom)
-        {
-            Debug.Log($"join room{room.Name} Successed");
-            userInfo.currentRoom = room.Name;
-        }
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log($"join room: {PhotonNetwork.CurrentRoom.Name} Successed");
+        userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.Log($"failed to join room, available rooms: {PhotonNetwork.CountOfRooms}");
-        //PhotonNetwork.LeaveRoom();
-        //Debug.Log($"client State: {PhotonNetwork.NetworkClientState}");
         PhotonNetwork.NetworkingClient.State = ClientState.ConnectedToMasterServer;
         PhotonNetwork.JoinLobby();
     }
@@ -159,7 +157,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     //방에 있는 유저들의 씬을 게임씬으로 변경
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel("GameScene");
+        if(PhotonNetwork.InRoom){
+            PhotonNetwork.LoadLevel("GameScene");
+        }
+        /*if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        {
+            PhotonNetwork.LoadLevel("GameScene");
+        }*/
     }
 
 }
