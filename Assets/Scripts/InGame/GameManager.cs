@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -35,8 +36,8 @@ public class GameManager : MonoBehaviour
     public string buildingType;
     public GameObject grid;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
-    public GameObject clickedObject; // 현재 선택된 게임 Object
-                                     //-----------------------------
+    public List<GameObject> clickedObject; // 현재 선택된 게임 Object
+    //-----------------------------
 
 
     //---------------- 준현 --------------------
@@ -72,19 +73,19 @@ public class GameManager : MonoBehaviour
 
     public void SetClickedObject(GameObject gameObject)
     {
-        clickedObject = gameObject;
-        Debug.Log("선택된건물 업데이트 됨");
+        clickedObject.Clear();
+        clickedObject.Add(gameObject);
     }
 
     public void ChangeUI(int UIindex)
     {
-        currentUI = uIController.SetUI(UIindex, clickedObject);
+        currentUI = uIController.SetBuildingUI(UIindex, clickedObject[0]);
     }
 
     public void LevelUpBuilding()
     {
         buildingController.UpgradeBuilding();
-        uIController.UpdateLevel(currentUI, clickedObject);
+        uIController.UpdateLevel(currentUI, clickedObject[0]);
     }
 
     //------------------------------------
@@ -92,21 +93,31 @@ public class GameManager : MonoBehaviour
     {
         this.unitType = unitType;
     }
-    public void CreateUnit(Vector3 unitPos) // 해윤
+    public void CreateUnit() // 해윤
     {
-        unitController.createUnit(unitPos, unitType);
+        Vector3 buildingPos = clickedObject[0].GetComponent<Barrack>().transform.position;
+        Vector3 destination = clickedObject[0].GetComponent<Barrack>()._sponPos;
+        buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
+        Unit createdUnit = unitController.CreateUnit(buildingPos, unitType);
+        // 유닛을 destination으로 이동명령 내리기
+        createdUnit.Move(destination);
     }
     public void SetUnitInfo(int unitID)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        uIController.DisplayUnitInfo(unitID);
+        uIController.SetUnitUI
+        
+        (unitID);
     }
     public void MoveUnit(Vector3 newLocation)
     {
-        if (unitController.currentMoveCoroutine.ContainsKey(clickedObject))
+        if (clickedObject[0].name.Contains("Barrack")) clickedObject[0].GetComponent<Barrack>().SetSponPos(newLocation);
+        else if (unitController.currentMoveCoroutine.ContainsKey(clickedObject))
         {
             StopCoroutine(unitController.currentMoveCoroutine[clickedObject]);
             unitController.currentMoveCoroutine.Remove(clickedObject);
         }
         unitController.currentMoveCoroutine.Add(clickedObject, StartCoroutine(unitController.MoveUnit(clickedObject, newLocation)));
+
+    }
     }
 }
