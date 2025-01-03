@@ -30,8 +30,7 @@ public class UIController : MonoBehaviour
         // ---------------------- 준현 --------------------
         if(UIindex == 1)
         {
-            int key = clickedObject.GetComponent<BuildingID>().GetKey();
-            Building selectedBarrack = buildingController.buildingList[key];
+            Building selectedBarrack = clickedObject.GetComponent<Barrack>();
             _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
             _level.text = selectedBarrack.buildingLevel.ToString();
         } else if(UIindex == 2)
@@ -54,7 +53,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateLevel(UIContainer currentUI, GameObject clickedObject)
     {
-        int level = buildingController.buildingList[clickedObject.GetComponent<BuildingID>().GetKey()].buildingLevel;
+        int level = clickedObject.GetComponent<Building>().buildingLevel;
         SetLevel(currentUI, level);
     }
     

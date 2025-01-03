@@ -59,6 +59,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 520e20395d1150a4c94174228bde0499, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5282281350536615715}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 520e20395d1150a4c94174228bde0499, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1079326836089105715}
   m_SourcePrefab: {fileID: 100100000, guid: 520e20395d1150a4c94174228bde0499, type: 3}
 --- !u!1 &7725685943264554975 stripped
 GameObject:
@@ -86,3 +89,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6.736253, y: 6.657968, z: 4.695601}
   m_Center: {x: 0.072093606, y: -0.03884519, z: 1.6146704}
+--- !u!114 &-1079326836089105715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725685943264554975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
