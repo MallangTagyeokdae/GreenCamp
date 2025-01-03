@@ -16,25 +16,24 @@ public class UIController : MonoBehaviour
     private TMP_Text _level;
 
     private TMP_Text _health;
-    public void DisplayUnitInfo(int unitID)
+    public void SetUnitUI(int unitID)
     {
         TMP_Text unitType = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
         TMP_Text unitPower = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
         TMP_Text unitPowerRange = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
         TMP_Text unitMoveSpeed = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
-        Debug.Log($"선택된 유닛: " + GameManager.instance.clickedObject.GetComponent<Unit>());
+        
         unitType.text = GameManager.instance.clickedObject.GetComponent<Unit>().unitType;
         unitPower.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitPower}";
         unitPowerRange.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitPowerRange}";
         unitMoveSpeed.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitMoveSpeed}";
     }
     // UI 변경하는 함수
-    public UIContainer SetUI(int UIindex, GameObject clickedObject)
+    public UIContainer SetBuildingUI(int UIindex, GameObject clickedObject)
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
         Building clickedBuidling = clickedObject.GetComponent<Building>();
-        Debug.Log("UI 변경 확인");
 
         // ---------------------- 준현 --------------------
         if (UIindex >= 1 && UIindex <= 5)
@@ -56,16 +55,11 @@ public class UIController : MonoBehaviour
         {
 
         }
-        else if (UIindex == 6)
-        {
-            // DisplayUnitInfo(GameManager.instance.selectedObject.GetComponent<Unit>().unitID);
-        }
         if (currentUI != selectedUI)
         {
             currentUI.Hide();
             selectedUI.Show();
             return selectedUI;
-            Debug.Log("UI 변경됨");
         }
         // ----------------------------------------------
         // 현재 UI랑 바뀔 Ui가 같으면 현재 UI를 리턴

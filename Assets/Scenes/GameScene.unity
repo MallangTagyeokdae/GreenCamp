@@ -5601,18 +5601,6 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 2106082650}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 1
-            m_CallState: 2
           - m_Target: {fileID: 1622400080}
             m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
             m_MethodName: SetUnitType
@@ -5623,6 +5611,18 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Tanker
+              m_BoolArgument: 1
+            m_CallState: 2
+          - m_Target: {fileID: 1622400080}
+            m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+            m_MethodName: CreateUnit
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 72797151}
@@ -8168,18 +8168,6 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 2106082650}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 1
-            m_CallState: 2
           - m_Target: {fileID: 1622400080}
             m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
             m_MethodName: SetUnitType
@@ -8190,6 +8178,18 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Healer
+              m_BoolArgument: 1
+            m_CallState: 2
+          - m_Target: {fileID: 1622400080}
+            m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+            m_MethodName: CreateUnit
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 72797151}
@@ -28126,18 +28126,6 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 2106082650}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 1
-            m_CallState: 2
           - m_Target: {fileID: 1622400080}
             m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
             m_MethodName: SetUnitType
@@ -28148,7 +28136,19 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Soldier
-              m_BoolArgument: 1
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 1622400080}
+            m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+            m_MethodName: CreateUnit
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Soldier
+              m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 72797151}
             m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -28159,7 +28159,7 @@ MonoBehaviour:
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
-              m_StringArgument: 
+              m_StringArgument: Soldier
               m_BoolArgument: 1
             m_CallState: 2
   DisabledState:
@@ -35656,18 +35656,6 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 2106082650}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 1
-            m_CallState: 2
           - m_Target: {fileID: 1622400080}
             m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
             m_MethodName: SetUnitType
@@ -35678,6 +35666,18 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Archer
+              m_BoolArgument: 1
+            m_CallState: 2
+          - m_Target: {fileID: 1622400080}
+            m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+            m_MethodName: CreateUnit
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 72797151}
@@ -35774,31 +35774,7 @@ MonoBehaviour:
       m_Calls: []
   rightClickDownEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1622400080}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: CreateUnit
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2106082650}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   rightClickUpEvent:
     m_PersistentCalls:
       m_Calls: []
