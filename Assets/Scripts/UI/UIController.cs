@@ -22,11 +22,11 @@ public class UIController : MonoBehaviour
         TMP_Text unitPower = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
         TMP_Text unitPowerRange = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
         TMP_Text unitMoveSpeed = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
-        
-        unitType.text = GameManager.instance.clickedObject.GetComponent<Unit>().unitType;
-        unitPower.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitPower}";
-        unitPowerRange.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitPowerRange}";
-        unitMoveSpeed.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitMoveSpeed}";
+
+        unitType.text = GameManager.instance.clickedObject[0].GetComponent<Unit>().unitType;
+        unitPower.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitPower}";
+        unitPowerRange.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitPowerRange}";
+        unitMoveSpeed.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitMoveSpeed}";
     }
     // UI 변경하는 함수
     public UIContainer SetBuildingUI(int UIindex, GameObject clickedObject)

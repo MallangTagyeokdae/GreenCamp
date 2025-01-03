@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public string buildingType;
     public GameObject grid;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
-    public GameObject clickedObject; // 현재 선택된 게임 Object
+    public List<GameObject> clickedObject; // 현재 선택된 게임 Object
     //-----------------------------
 
 
@@ -61,18 +61,19 @@ public class GameManager : MonoBehaviour
 
     public void SetClickedObject(GameObject gameObject)
     {
-        clickedObject = gameObject;
+        clickedObject.Clear();
+        clickedObject.Add(gameObject);
     }
 
     public void ChangeUI(int UIindex)
     {
-        currentUI = uIController.SetBuildingUI(UIindex, clickedObject);
+        currentUI = uIController.SetBuildingUI(UIindex, clickedObject[0]);
     }
 
     public void LevelUpBuilding()
     {
         buildingController.UpgradeBuilding();
-        uIController.UpdateLevel(currentUI, clickedObject);
+        uIController.UpdateLevel(currentUI, clickedObject[0]);
     }
 
     //------------------------------------
@@ -82,8 +83,8 @@ public class GameManager : MonoBehaviour
     }
     public void CreateUnit() // 해윤
     {
-        Vector3 buildingPos = clickedObject.GetComponent<Barrack>().transform.position;
-        Vector3 destination = clickedObject.GetComponent<Barrack>()._sponPos;
+        Vector3 buildingPos = clickedObject[0].GetComponent<Barrack>().transform.position;
+        Vector3 destination = clickedObject[0].GetComponent<Barrack>()._sponPos;
         buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
         Unit createdUnit = unitController.CreateUnit(buildingPos, unitType);
         // 유닛을 destination으로 이동명령 내리기
@@ -95,13 +96,15 @@ public class GameManager : MonoBehaviour
         
         (unitID);
     }
+    // -------------- 준현 수정 -------------------
     public void MoveUnit(Vector3 newLocation)
     {
         // 수정해야할 부분 유닛이 선택되었을 때만 이동명령이 내려지도록 수정해야함
         // 지금은 건물 선택되어도 이동명령이 내려짐
-        if (clickedObject.name.Contains("Barrack")) clickedObject.GetComponent<Barrack>().SetSponPos(newLocation);
-        else if (clickedObject.name != "Ground") unitController.MoveUnit(newLocation);
+        if (clickedObject[0].name.Contains("Barrack")) clickedObject[0].GetComponent<Barrack>().SetSponPos(newLocation);
+        else if (clickedObject[0].name != "Ground") unitController.MoveUnit(newLocation);
     }
+    // ------------------------------------------
 
     private async Task StartTimer(float time, Action<float> update)
     {
