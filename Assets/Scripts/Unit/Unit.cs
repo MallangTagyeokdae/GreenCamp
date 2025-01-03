@@ -14,7 +14,7 @@ public abstract class Unit : MonoBehaviour
     public int unitPowerRange { get; set; }
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
-    public void Move(Vector3 newLocation) { unitLocation = newLocation; }
+    public void Move(Vector3 newLocation) { transform.position = newLocation; }
     public Unit(string teamID,
                 int unitID,
                 string unitType,
@@ -29,7 +29,7 @@ public abstract class Unit : MonoBehaviour
         this.teamID = teamID;
         this.unitID = unitID;
         this.unitType = unitType;
-        this.unitLocation = unitLocation;
+        transform.position = unitLocation;
         this.unitHealth = unitHealth;
         this.unitCost = unitCost;
         this.unitPower = unitPower;

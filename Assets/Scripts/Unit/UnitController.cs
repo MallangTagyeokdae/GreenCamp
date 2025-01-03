@@ -84,10 +84,8 @@ public class UnitController : MonoBehaviour
             GameManager.instance.SetClickedObject(gameObject);
             GameManager.instance.ChangeUI(6);
             GameManager.instance.SetUnitInfo(gameObject.GetComponent<Unit>().unitID);
-            GameManager.instance.selectedUnit.GetComponent<ClickEventHandler>().rightClickDownEvent.AddListener((Vector3 pos) =>
-            GameManager.instance.selectedUnit.Move(pos)
+        }
         );
-        });
         _unitID++;
     }
     public void unitAttacked(int unitID, int damage)
@@ -100,9 +98,6 @@ public class UnitController : MonoBehaviour
     }
     public void MoveUnit(Vector3 newLocation)
     {
-        GameManager.instance.selectedUnit.GetComponent<ClickEventHandler>().rightClickDownEvent.AddListener((Vector3 pos) =>
-            GameManager.instance.selectedUnit.Move(pos)
-        );
-
+        GameManager.instance.clickedObject.GetComponent<Unit>().Move(newLocation);
     }
 }

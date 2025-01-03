@@ -28901,6 +28901,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1622400080}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetClickedObject
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1621207327}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   leftClickUpEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -28910,7 +28922,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1622400080}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: MoveUnit
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -28957,8 +28969,6 @@ MonoBehaviour:
   gameStates: []
   uIController: {fileID: 388116729}
   unitController: {fileID: 1126319374}
-  selectedObject: {fileID: 0}
-  selectedUnit: {fileID: 0}
   unitType: 
   buildingController: {fileID: 2039133045}
   buildingType: 
@@ -29009,8 +29019,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1621207333}
   - {fileID: 2106082656}
+  - {fileID: 1621207333}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1628892195
