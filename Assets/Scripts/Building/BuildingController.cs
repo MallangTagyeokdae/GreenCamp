@@ -9,16 +9,17 @@ using UnityEngine.UIElements;
 
 public class BuildingController : MonoBehaviour
 {
-    public Dictionary<int ,Building> buildingList = new Dictionary<int, Building>();
-    private int _buildingID;
-    private string _teamID;
+    //--------- 변수 선언 위치 변경 (해윤) ---------//
+    public Dictionary<int, Building> buildingDictionary = new Dictionary<int, Building>();
     private Dictionary<string, GameObject> _buildingPrefabs = new Dictionary<string, GameObject>();
+    private string _teamID;
+    private int _buildingID;
+    //---------------------------------------//
     public GameObject buildingObject;
     public void Start()
     {
-        _buildingID = 0;
-
         _teamID = GameStatus.instance.teamID;
+        _buildingID = 0;
 
         // 폴더 경로에 있는 모든 GameObject를 Load해 unitPrefabsList에 임시로 저장
         List<GameObject> buildingPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Buildings/{_teamID}TeamBuildings"));
@@ -31,19 +32,19 @@ public class BuildingController : MonoBehaviour
                 _buildingPrefabs.Add(building.name, building);
             }
         }
-        
+
     }
 
     public void CreateBuilding(Vector3 buildingLocation, string buildingType)
     // 건물 생성
     {
         // 객체 생성
-        buildingObject = PhotonNetwork.Instantiate($"Prefabs/Buildings/{_teamID}TeamBuildings/{buildingType}",buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
+        buildingObject = PhotonNetwork.Instantiate($"Prefabs/Buildings/{_teamID}TeamBuildings/{buildingType}", buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
         buildingObject.name = buildingType + _buildingID.ToString(); // 새로 생성될 오브젝트에 고유한 이름을 붙여줌
         GameObject gameObject = buildingObject; // SetClickedObject에 넣을 임의 변수 만듦 -> call by value로 되기 떄문에 buildingObject가 바뀌어도 값이 안바뀜
         // 좌클릭 했을 때 callback 함수 넣어줌
         buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetClickedObject(gameObject));
-        switch(buildingType)
+        switch (buildingType)
         {
             case "Command":
                 // UI 바뀌는 callback 함수 넣어줌
@@ -53,9 +54,9 @@ public class BuildingController : MonoBehaviour
                 Command _newCommand = buildingObject.AddComponent<Command>();
                 // Command 정보 초기화
                 _newCommand.Init(_teamID, _buildingID, buildingLocation);
-                
+
                 // Dictionary에 추가
-                buildingList.Add(_buildingID, _newCommand);
+                buildingDictionary.Add(_buildingID, _newCommand);
                 break;
             case "Barrack":
                 // UI 바뀌는 callback 함수 넣어줌
@@ -65,9 +66,9 @@ public class BuildingController : MonoBehaviour
                 Barrack _newBarrack = buildingObject.AddComponent<Barrack>();
                 // 배럭 정보 초기화
                 _newBarrack.Init(_teamID, _buildingID, buildingLocation);
-                
+
                 // Dictionary에 추가
-                buildingList.Add(_buildingID, _newBarrack);
+                buildingDictionary.Add(_buildingID, _newBarrack);
                 break;
             case "PopulationBuilding":
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(3));
@@ -75,31 +76,31 @@ public class BuildingController : MonoBehaviour
                 PopulationBuilding _newPop = buildingObject.AddComponent<PopulationBuilding>();
                 _newPop.Init(_teamID, _buildingID, buildingLocation);
 
-                buildingList.Add(_buildingID, _newPop);
+                buildingDictionary.Add(_buildingID, _newPop);
                 break;
             case "ResourceBuilding":
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(4));
 
                 ResourceBuilding _newResource = buildingObject.AddComponent<ResourceBuilding>();
                 _newResource.Init(_teamID, _buildingID, buildingLocation);
-                buildingList.Add(_buildingID, _newResource);
+                buildingDictionary.Add(_buildingID, _newResource);
                 break;
             case "Defender":
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(5));
 
                 Defender _newDefender = buildingObject.AddComponent<Defender>();
                 _newDefender.Init(_teamID, _buildingID, buildingLocation);
-                buildingList.Add(_buildingID, _newDefender);
+                buildingDictionary.Add(_buildingID, _newDefender);
                 break;
         }
-        _buildingID ++;
-        // printList(buildingList);
+        _buildingID++;
+        // printList(buildingDictionary);
     }
 
     // 디버깅용
     public void PrintList(Dictionary<int, Building> buildings)
     {
-        for(int i=0; i<_buildingID; i++)
+        for (int i = 0; i < _buildingID; i++)
         {
             Debug.Log(buildings[i].buildingType);
         }
@@ -107,7 +108,7 @@ public class BuildingController : MonoBehaviour
 
     public void BuildingAttacked(int buildingID, int damage)
     {
-        Building selectedBuilding = buildingList[buildingID];
+        Building selectedBuilding = buildingDictionary[buildingID];
 
     }
 
@@ -115,7 +116,7 @@ public class BuildingController : MonoBehaviour
     {
 
     }
-    
+
     public void UpgradeBuilding()
     {
         Building building = GameManager.instance.selectedObject.GetComponent<Building>();

@@ -5401,6 +5401,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1207655761}
     m_Modifications:
+    - target: {fileID: -8199964646472358792, guid: 623c6587162144caeb68cfefa087a8b5, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1856497004635135170, guid: 623c6587162144caeb68cfefa087a8b5, type: 3}
       propertyPath: m_Name
       value: Barrack

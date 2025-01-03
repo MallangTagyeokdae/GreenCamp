@@ -1,7 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using ExitGames.Client.Photon.StructWrapping;
+using Photon.Pun;
+using TMPro.EditorUtilities;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class UnitController : MonoBehaviour
 {
@@ -15,20 +19,16 @@ public class UnitController : MonoBehaviour
     // private int _unitCount; -> GameStatus에서 관리하기로 함
     private string _teamID; // 본인 TeamID
     private int _unitID;
-
+    public GameObject unitObject;
     public void Start()
     {
-        // _unitCount = 0;
         _teamID = GameStatus.instance.teamID; // 본인 TeamID를 GameStatus에서 instance로 받아옴.
-        Debug.Log(_teamID);
-
-        // unit 고유 id 초기화
-        _unitID = 0;
+        _unitID = 0; // unit 고유 id 초기화
 
         // 폴더 경로에 있는 모든 GameObject를 Load해 unitPrefabsList에 임시로 저장
         List<GameObject> unitPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Units/{_teamID}TeamUnits"));
 
-        // foreach문으로 List 안에 있는 unit 객체들을 다시 Dictionary로 저장
+        // // foreach문으로 List 안에 있는 unit 객체들을 다시 Dictionary로 저장
         foreach (GameObject unit in unitPrefabsList)
         {
             if (!unitPrefabs.ContainsKey(unit.name))
@@ -36,35 +36,37 @@ public class UnitController : MonoBehaviour
                 unitPrefabs.Add(unit.name, unit);
             }
         }
-
-        // foreach (var kvp in unitPrefabs)
-        // {
-        //     Debug.Log($"Key: {kvp.Key}, Value: {kvp.Value.name}");
-        // }
     }
     public void createUnit(Vector3 unitLocation, string unitType) // 유닛 생성 함수
     {
-        int getCurrentUnitID = _unitID;
-        GameObject unitInstance = Instantiate(unitPrefabs[unitType], unitLocation, Quaternion.identity); // unit instance 생성
+        Debug.Log("asdf");
+        unitObject = PhotonNetwork.Instantiate($"Prefabs/Units/{_teamID}TeamUnits/{unitType}", unitLocation, Quaternion.Euler(new Vector3(0, 180, 0)));
+        Debug.Log("11111");
+        unitObject.name = unitType + _unitID.ToString();
+        GameObject gameObject = unitObject;
 
 
         // switch문으로 unit을 Dictionary에 저장
         switch (unitType)
         {
             case "Archer":
-                Archer newArcher = new(_teamID, _unitID, unitLocation);
+                Archer newArcher = unitObject.AddComponent<Archer>();
+                newArcher.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newArcher);
                 break;
             case "Soldier":
-                Soldier newSoldier = new(_teamID, _unitID, unitLocation);
+                Soldier newSoldier = unitObject.AddComponent<Soldier>();
+                newSoldier.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newSoldier);
                 break;
             case "Tanker":
-                Tanker newTanker = new(_teamID, _unitID, unitLocation);
+                Tanker newTanker = unitObject.AddComponent<Tanker>();
+                newTanker.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newTanker);
                 break;
             case "Healer":
-                Healer newHealer = new(_teamID, _unitID, unitLocation);
+                Healer newHealer = unitObject.AddComponent<Healer>();
+                newHealer.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newHealer);
                 break;
             default:
@@ -72,16 +74,12 @@ public class UnitController : MonoBehaviour
                 _unitID--;
                 break;
         }
-
-        foreach (var kvp in unitDictionary.Keys)
-        {
-            Debug.Log($"Key: {kvp}");
-        }
-        unitInstance.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
-        {
-            GameManager.instance.SetUnitInfo(getCurrentUnitID);
-            GameManager.instance.ChangeUI(3);
-        });
+        // unitInstance.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
+        // {
+        //     GameManager.instance.SetUnitInfo(getCurrentUnitID);
+        //     GameManager.instance.ChangeUI(3);
+        // });
+        unitObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => { GameManager.instance.SetClickedObject(gameObject); GameManager.instance.ChangeUI(6); GameManager.instance.SetUnitInfo(gameObject.GetComponent<Unit>().unitID); });
         _unitID++;
     }
     public void unitAttacked(int unitID, int damage)

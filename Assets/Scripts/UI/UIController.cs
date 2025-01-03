@@ -14,14 +14,15 @@ public class UIController : MonoBehaviour
     public List<UIContainer> UILists;
     public BuildingController buildingController;
     private TMP_Text _level;
-    
+
     private TMP_Text _health;
     public void DisplayUnitInfo(int unitID)
     {
-        TMP_Text unitType = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
-        TMP_Text unitPower = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
-        TMP_Text unitPowerRange = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
-        TMP_Text unitMoveSpeed = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
+        Debug.Log("asdf");
+        TMP_Text unitType = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
+        TMP_Text unitPower = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
+        TMP_Text unitPowerRange = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
+        TMP_Text unitMoveSpeed = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
 
         unitType.text = GameManager.instance.selectedUnit.unitType;
         unitPower.text = $"{GameManager.instance.selectedUnit.unitPower}";
@@ -37,7 +38,7 @@ public class UIController : MonoBehaviour
         Debug.Log("UI 변경 확인");
 
         // ---------------------- 준현 --------------------
-        if(UIindex != 0)
+        if (UIindex >= 1 && UIindex <= 5)
         {
             // 레벨 설정
             _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
@@ -48,12 +49,17 @@ public class UIController : MonoBehaviour
             _health.text = clickedBuidling.buildingHealth.ToString();
         }
 
-        if(UIindex == 1)
-        {
-            
-        } else if(UIindex == 2)
+        if (UIindex == 1)
         {
 
+        }
+        else if (UIindex == 2)
+        {
+
+        }
+        else if (UIindex == 6)
+        {
+            // DisplayUnitInfo(GameManager.instance.selectedObject.GetComponent<Unit>().unitID);
         }
         if (currentUI != selectedUI)
         {
@@ -83,7 +89,7 @@ public class UIController : MonoBehaviour
 
     public void SetHealth(UIContainer currentUI, int currentHealth)
     {
-        
+
     }
 
     // ----------------------------------------

@@ -37,9 +37,9 @@ public class GameManager : MonoBehaviour
     public GameObject grid;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
     public GameObject clickedObject; // 현재 선택된 게임 Object
-    //-----------------------------
-    
-    
+                                     //-----------------------------
+
+
     //---------------- 준현 --------------------
     void Start()
     {
@@ -92,6 +92,5 @@ public class GameManager : MonoBehaviour
         selectedUnit = unitController.unitDictionary[unitID];  // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
         uIController.DisplayUnitInfo(unitID);  // UI에 유닛 정보를 표시
         // Debug.Log("유닛생성 성공");
-
     }
 }
