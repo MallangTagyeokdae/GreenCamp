@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour
     //------------ 해윤 ------------
     public UIController uIController;
     public UnitController unitController;
-    public GameObject selectedObject;
-    public Unit selectedUnit;
     public string unitType;
     //-----------------------------
 
@@ -87,14 +85,11 @@ public class GameManager : MonoBehaviour
         unitController.createUnit(unitPos, unitType);
     }
     public void SetUnitInfo(int unitID)
-    {
-        // Debug.Log(unitController.unitDictionary.ContainsKey(unitID));
-        selectedUnit = unitController.unitDictionary[unitID];  // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        uIController.DisplayUnitInfo(unitID);  // UI에 유닛 정보를 표시
-        // Debug.Log("유닛생성 성공");
+    { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
+        uIController.DisplayUnitInfo(unitID);
     }
     public void MoveUnit(Vector3 newLocation)
     {
-        unitController.MoveUnit(newLocation);
+        if (clickedObject.name != "Ground") unitController.MoveUnit(newLocation);
     }
 }

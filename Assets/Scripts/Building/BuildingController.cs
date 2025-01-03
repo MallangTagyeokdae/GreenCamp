@@ -119,7 +119,7 @@ public class BuildingController : MonoBehaviour
 
     public void UpgradeBuilding()
     {
-        Building building = GameManager.instance.selectedObject.GetComponent<Building>();
+        Building building = GameManager.instance.clickedObject.GetComponent<Building>();
         building.buildingLevel++;
     }
 }

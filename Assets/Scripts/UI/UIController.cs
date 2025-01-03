@@ -18,16 +18,15 @@ public class UIController : MonoBehaviour
     private TMP_Text _health;
     public void DisplayUnitInfo(int unitID)
     {
-        Debug.Log("asdfggg");
         TMP_Text unitType = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
         TMP_Text unitPower = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
         TMP_Text unitPowerRange = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
         TMP_Text unitMoveSpeed = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
-
-        unitType.text = GameManager.instance.selectedUnit.unitType;
-        unitPower.text = $"{GameManager.instance.selectedUnit.unitPower}";
-        unitPowerRange.text = $"{GameManager.instance.selectedUnit.unitPowerRange}";
-        unitMoveSpeed.text = $"{GameManager.instance.selectedUnit.unitMoveSpeed}";
+        Debug.Log($"선택된 유닛: " + GameManager.instance.clickedObject.GetComponent<Unit>());
+        unitType.text = GameManager.instance.clickedObject.GetComponent<Unit>().unitType;
+        unitPower.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitPower}";
+        unitPowerRange.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitPowerRange}";
+        unitMoveSpeed.text = $"{GameManager.instance.clickedObject.GetComponent<Unit>().unitMoveSpeed}";
     }
     // UI 변경하는 함수
     public UIContainer SetUI(int UIindex, GameObject clickedObject)
