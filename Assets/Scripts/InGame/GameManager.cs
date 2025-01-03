@@ -129,4 +129,5 @@ public class GameManager : MonoBehaviour
         Debug.Log($"check time: {building.time}");
     }
     }
+    }
 }
