@@ -14,7 +14,8 @@ public class UIController : MonoBehaviour
     public List<UIContainer> UILists;
     public BuildingController buildingController;
     private TMP_Text _level;
-
+    
+    private TMP_Text _health;
     public void DisplayUnitInfo(int unitID)
     {
         TMP_Text unitType = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
@@ -32,17 +33,25 @@ public class UIController : MonoBehaviour
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
+        Building clickedBuidling = clickedObject.GetComponent<Building>();
         Debug.Log("UI 변경 확인");
 
         // ---------------------- 준현 --------------------
-        if (UIindex == 1)
+        if(UIindex != 0)
         {
-            int key = clickedObject.GetComponent<BuildingID>().GetKey();
-            Building selectedBarrack = buildingController.buildingList[key];
+            // 레벨 설정
             _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
-            _level.text = selectedBarrack.buildingLevel.ToString();
+            _level.text = clickedBuidling.buildingLevel.ToString();
+
+            // 체력 설정
+            _health = selectedUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
+            _health.text = clickedBuidling.buildingHealth.ToString();
         }
-        else if (UIindex == 2)
+
+        if(UIindex == 1)
+        {
+            
+        } else if(UIindex == 2)
         {
 
         }
@@ -62,7 +71,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateLevel(UIContainer currentUI, GameObject clickedObject)
     {
-        int level = buildingController.buildingList[clickedObject.GetComponent<BuildingID>().GetKey()].buildingLevel;
+        int level = clickedObject.GetComponent<Building>().buildingLevel;
         SetLevel(currentUI, level);
     }
 
@@ -72,6 +81,10 @@ public class UIController : MonoBehaviour
         _level.text = currentLevel.ToString();
     }
 
+    public void SetHealth(UIContainer currentUI, int currentHealth)
+    {
+        
+    }
 
     // ----------------------------------------
 }
