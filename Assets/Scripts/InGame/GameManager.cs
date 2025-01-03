@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
         // if(GameStatus.instance.canCreateBuilding(selectedBuilding))
         // { // 건물을 생성할 수 있음
         Debug.Log(buildingPos);
-        buildingController.CreateBuilding(buildingPos, buildingType);
+        //buildingController.CreateBuilding(buildingPos, buildingType);
+        DelayAction(10f, buildingPos);
         grid.SetActive(false);
         // }
     }
@@ -105,9 +106,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private async Task DelayAction(float time, Action action, Action<float> update)
+    private async Task DelayAction(float time, Vector3 buildingPos)
     {
-        await StartTimer(time, update);
-        action?.Invoke();
+        Building building = buildingController.CreateBuilding(buildingPos, buildingType);
+        Type actualType = building.GetType();
+        (actualType)building.InitTime();
+        await StartTimer(time, building.UpdateTime);
+        Debug.Log($"check time: {building.time}");
     }
 }
