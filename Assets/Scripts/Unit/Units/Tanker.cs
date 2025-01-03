@@ -8,7 +8,7 @@ public class Tanker : Unit
                 : base (
                 teamID,
                 unitID,
-                unitType: 0,
+                unitType: "Tanker",
                 unitLocation, 
                 unitHealth: 0, 
                 unitCost: 0, 

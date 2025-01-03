@@ -8,7 +8,7 @@ public class Soldier : Unit
                 : base (
                 teamID,
                 unitID,
-                unitType: 0,
+                unitType: "Soldier",
                 unitLocation, 
                 unitHealth: 0, 
                 unitCost: 0, 

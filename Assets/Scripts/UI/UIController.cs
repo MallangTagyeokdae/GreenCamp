@@ -10,16 +10,23 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     public string unitInfo;
-    // public TMP_Text text;
+
     public List<UIContainer> UILists;
     public BuildingController buildingController;
     private TMP_Text _level;
-    private TMP_Text _health;
     
+    private TMP_Text _health;
     public void DisplayUnitInfo(int unitID)
     {
-        TMP_Text text = UILists[3].transform.Find("UnitInfoText").GetComponent<TMP_Text>();
-        text.text = "asdf";
+        TMP_Text unitType = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
+        TMP_Text unitPower = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
+        TMP_Text unitPowerRange = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
+        TMP_Text unitMoveSpeed = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
+
+        unitType.text = GameManager.instance.selectedUnit.unitType;
+        unitPower.text = $"{GameManager.instance.selectedUnit.unitPower}";
+        unitPowerRange.text = $"{GameManager.instance.selectedUnit.unitPowerRange}";
+        unitMoveSpeed.text = $"{GameManager.instance.selectedUnit.unitMoveSpeed}";
     }
     // UI 변경하는 함수
     public UIContainer SetUI(int UIindex, GameObject clickedObject)
@@ -46,9 +53,9 @@ public class UIController : MonoBehaviour
             
         } else if(UIindex == 2)
         {
-            
+
         }
-        if(currentUI != selectedUI)
+        if (currentUI != selectedUI)
         {
             currentUI.Hide();
             selectedUI.Show();
@@ -67,7 +74,7 @@ public class UIController : MonoBehaviour
         int level = clickedObject.GetComponent<Building>().buildingLevel;
         SetLevel(currentUI, level);
     }
-    
+
     public void SetLevel(UIContainer currentUI, int currentLevel)
     {
         _level = currentUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
