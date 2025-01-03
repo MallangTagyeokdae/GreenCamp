@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,6 +44,17 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentUI.Show();
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (clickedObject.TryGetComponent<Unit>(out Unit unit))
+            {
+                StopCoroutine(unitController.currentMoveCoroutine[clickedObject]);
+                unitController.currentMoveCoroutine.Remove(clickedObject);
+            }
+        }
     }
     public void CreateBuilding(Vector3 buildingPos)
     {
@@ -96,30 +108,16 @@ public class GameManager : MonoBehaviour
         
         (unitID);
     }
-    // -------------- 준현 수정 -------------------
     public void MoveUnit(Vector3 newLocation)
     {
-        // 수정해야할 부분 유닛이 선택되었을 때만 이동명령이 내려지도록 수정해야함
-        // 지금은 건물 선택되어도 이동명령이 내려짐
         if (clickedObject[0].name.Contains("Barrack")) clickedObject[0].GetComponent<Barrack>().SetSponPos(newLocation);
-        else if (clickedObject[0].name != "Ground") unitController.MoveUnit(newLocation);
-    }
-    // ------------------------------------------
-
-    private async Task StartTimer(float time, Action<float> update)
-    {
-        float start = 0f;
-        while (start < time)
+        else if (unitController.currentMoveCoroutine.ContainsKey(clickedObject))
         {
-            start += Time.deltaTime;
-            update.Invoke(start);
-            await Task.Yield();
+            StopCoroutine(unitController.currentMoveCoroutine[clickedObject]);
+            unitController.currentMoveCoroutine.Remove(clickedObject);
         }
-    }
+        unitController.currentMoveCoroutine.Add(clickedObject, StartCoroutine(unitController.MoveUnit(clickedObject, newLocation)));
 
-    private async Task DelayAction(float time, Action action, Action<float> update)
-    {
-        await StartTimer(time, update);
-        action?.Invoke();
+    }
     }
 }

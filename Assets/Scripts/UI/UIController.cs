@@ -10,11 +10,9 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     public string unitInfo;
-
     public List<UIContainer> UILists;
     public BuildingController buildingController;
     private TMP_Text _level;
-
     private TMP_Text _health;
     public void SetUnitUI(int unitID)
     {
