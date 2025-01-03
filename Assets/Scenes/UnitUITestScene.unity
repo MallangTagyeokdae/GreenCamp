@@ -1843,7 +1843,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145121484}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
 --- !u!1 &274026469
 GameObject:
   m_ObjectHideFlags: 0
@@ -3407,8 +3406,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-=======
->>>>>>> Stashed changes
 --- !u!1 &292337903
 GameObject:
   m_ObjectHideFlags: 0
@@ -5239,15 +5236,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027425fee9066e44aa0ea41804b4fa83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitInfo: 
   UILists:
   - {fileID: 1346158155}
   - {fileID: 648798559}
-<<<<<<< Updated upstream
   - {fileID: 736689827}
   - {fileID: 919972036}
-=======
-  - {fileID: 892398416}
->>>>>>> Stashed changes
+  buildingController: {fileID: 0}
 --- !u!4 &388116730
 Transform:
   m_ObjectHideFlags: 0
@@ -5319,12 +5314,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
     m_RemovedComponents:
     - {fileID: 8515307855472878936, guid: 623c6587162144caeb68cfefa087a8b5, type: 3}
-=======
-    m_RemovedComponents: []
->>>>>>> Stashed changes
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -5332,7 +5323,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 800771869}
   m_SourcePrefab: {fileID: 100100000, guid: 623c6587162144caeb68cfefa087a8b5, type: 3}
-<<<<<<< Updated upstream
 --- !u!1 &403955614
 GameObject:
   m_ObjectHideFlags: 0
@@ -6896,8 +6886,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-=======
->>>>>>> Stashed changes
 --- !u!1 &477420582
 GameObject:
   m_ObjectHideFlags: 0
@@ -7282,7 +7270,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-<<<<<<< Updated upstream
 --- !u!1 &579047710
 GameObject:
   m_ObjectHideFlags: 0
@@ -7374,8 +7361,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-=======
->>>>>>> Stashed changes
 --- !u!1 &595803984
 GameObject:
   m_ObjectHideFlags: 3
@@ -7603,11 +7588,7 @@ MonoBehaviour:
   UseCustomStartPosition: 1
   AutoHideAfterShow: 0
   AutoHideAfterShowDelay: 0
-<<<<<<< Updated upstream
   DisableGameObjectWhenHidden: 1
-=======
-  DisableGameObjectWhenHidden: 0
->>>>>>> Stashed changes
   DisableCanvasWhenHidden: 1
   DisableGraphicRaycasterWhenHidden: 1
   ClearSelectedOnShow: 0
@@ -7626,7 +7607,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-<<<<<<< Updated upstream
 --- !u!1 &660837453
 GameObject:
   m_ObjectHideFlags: 0
@@ -7702,8 +7682,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660837453}
   m_CullTransparentMesh: 1
-=======
->>>>>>> Stashed changes
 --- !u!1 &674382753
 GameObject:
   m_ObjectHideFlags: 0
@@ -7779,44 +7757,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674382753}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
-=======
---- !u!1 &674831501
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 674831502}
-  m_Layer: 5
-  m_Name: RightSide
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &674831502
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 674831501}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 892398414}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 960, y: 0}
-  m_Pivot: {x: 1, y: 0.5}
->>>>>>> Stashed changes
 --- !u!1 &679513413
 GameObject:
   m_ObjectHideFlags: 0
@@ -9458,7 +9398,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
-<<<<<<< Updated upstream
 --- !u!1 &724526897
 GameObject:
   m_ObjectHideFlags: 0
@@ -9664,8 +9603,6 @@ RectTransform:
   m_AnchoredPosition: {x: -1886, y: -442}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
-=======
->>>>>>> Stashed changes
 --- !u!1 &752602342
 GameObject:
   m_ObjectHideFlags: 0
@@ -9678,10 +9615,7 @@ GameObject:
   - component: {fileID: 752602343}
   - component: {fileID: 752602347}
   - component: {fileID: 752602346}
-<<<<<<< Updated upstream
   - component: {fileID: 752602348}
-=======
->>>>>>> Stashed changes
   m_Layer: 0
   m_Name: UICamera
   m_TagString: Untagged
@@ -9799,7 +9733,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
-<<<<<<< Updated upstream
 --- !u!222 &752602348
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9808,8 +9741,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752602342}
   m_CullTransparentMesh: 1
-=======
->>>>>>> Stashed changes
 --- !u!1 &771188866
 GameObject:
   m_ObjectHideFlags: 0
@@ -9976,7 +9907,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-<<<<<<< Updated upstream
 --- !u!1 &788053089
 GameObject:
   m_ObjectHideFlags: 0
@@ -10013,8 +9943,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 960, y: 0}
   m_Pivot: {x: 1, y: 0.5}
-=======
->>>>>>> Stashed changes
 --- !u!1 &800771864 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1856497004635135170, guid: 623c6587162144caeb68cfefa087a8b5, type: 3}
@@ -10038,20 +9966,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1622400080}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ChangeUI
-<<<<<<< Updated upstream
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
-=======
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 648798559}
-          m_ObjectArgumentAssemblyTypeName: Doozy.Runtime.UIManager.Containers.UIContainer,
-            Assembly-CSharp
-          m_IntArgument: 0
->>>>>>> Stashed changes
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11636,11 +11555,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-<<<<<<< Updated upstream
 --- !u!1 &919972035
-=======
---- !u!1 &892398413
->>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11648,85 +11563,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream
   - component: {fileID: 919972039}
   - component: {fileID: 919972038}
   - component: {fileID: 919972036}
   - component: {fileID: 919972037}
   m_Layer: 5
   m_Name: UnitInfoUI
-=======
-  - component: {fileID: 892398414}
-  - component: {fileID: 892398417}
-  - component: {fileID: 892398416}
-  - component: {fileID: 892398415}
-  m_Layer: 5
-  m_Name: UnitUI
->>>>>>> Stashed changes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< Updated upstream
 --- !u!114 &919972036
-=======
---- !u!224 &892398414
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892398413}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000306, y: 1.0000306, z: 1.0000306}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1806243614}
-  - {fileID: 674831502}
-  m_Father: {fileID: 2081128439}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1660, y: -1077}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!223 &892398415
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892398413}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
---- !u!114 &892398416
->>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 919972035}
-=======
-  m_GameObject: {fileID: 892398413}
->>>>>>> Stashed changes
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b71aa88e9bf8432f89217a09c5a0b21c, type: 3}
@@ -11768,18 +11622,13 @@ MonoBehaviour:
   UseCustomStartPosition: 1
   AutoHideAfterShow: 0
   AutoHideAfterShowDelay: 0
-<<<<<<< Updated upstream
   DisableGameObjectWhenHidden: 1
-=======
-  DisableGameObjectWhenHidden: 0
->>>>>>> Stashed changes
   DisableCanvasWhenHidden: 1
   DisableGraphicRaycasterWhenHidden: 1
   ClearSelectedOnShow: 0
   ClearSelectedOnHide: 0
   AutoSelectAfterShow: 0
   AutoSelectTarget: {fileID: 0}
-<<<<<<< Updated upstream
 --- !u!223 &919972037
 Canvas:
   m_ObjectHideFlags: 0
@@ -11804,25 +11653,17 @@ Canvas:
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!225 &919972038
-=======
---- !u!225 &892398417
->>>>>>> Stashed changes
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 919972035}
-=======
-  m_GameObject: {fileID: 892398413}
->>>>>>> Stashed changes
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-<<<<<<< Updated upstream
 --- !u!224 &919972039
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11843,8 +11684,6 @@ RectTransform:
   m_AnchoredPosition: {x: -1851, y: -707}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
-=======
->>>>>>> Stashed changes
 --- !u!1 &983411976
 GameObject:
   m_ObjectHideFlags: 0
@@ -11957,7 +11796,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077209227}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
 --- !u!1 &1080021231
 GameObject:
   m_ObjectHideFlags: 0
@@ -12140,8 +11978,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-=======
->>>>>>> Stashed changes
 --- !u!1 &1176348924
 GameObject:
   m_ObjectHideFlags: 0
@@ -12249,7 +12085,6 @@ Transform:
   - {fileID: 800771873}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
-<<<<<<< Updated upstream
 --- !u!1 &1214635176
 GameObject:
   m_ObjectHideFlags: 0
@@ -13888,8 +13723,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221934938}
   m_CullTransparentMesh: 1
-=======
->>>>>>> Stashed changes
 --- !u!1 &1247849735
 GameObject:
   m_ObjectHideFlags: 0
@@ -15453,7 +15286,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-<<<<<<< Updated upstream
 --- !u!1 &1273515868
 GameObject:
   m_ObjectHideFlags: 0
@@ -15529,8 +15361,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273515868}
   m_CullTransparentMesh: 1
-=======
->>>>>>> Stashed changes
 --- !u!1 &1274084479
 GameObject:
   m_ObjectHideFlags: 0
@@ -17138,7 +16968,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
 --- !u!1 &1314042140
 GameObject:
   m_ObjectHideFlags: 0
@@ -17177,8 +17006,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.00018310547, y: 0}
   m_SizeDelta: {x: 960, y: 0}
   m_Pivot: {x: 0, y: 0.5}
-=======
->>>>>>> Stashed changes
 --- !u!1 &1346158151
 GameObject:
   m_ObjectHideFlags: 0
@@ -17255,11 +17082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MultiplayerInfo: {fileID: 0}
-<<<<<<< Updated upstream
   OnStartBehaviour: 2
-=======
-  OnStartBehaviour: 1
->>>>>>> Stashed changes
   OnShowCallback:
     EventName: OnShowCallback
     Runners: []
@@ -22331,18 +22154,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1622400080}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ChangeUI
-<<<<<<< Updated upstream
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-=======
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1346158155}
-          m_ObjectArgumentAssemblyTypeName: Doozy.Runtime.UIManager.Containers.UIContainer,
-            Assembly-CSharp
->>>>>>> Stashed changes
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -22392,14 +22207,13 @@ MonoBehaviour:
   gameStates: []
   uIController: {fileID: 388116729}
   unitController: {fileID: 1292895964}
-<<<<<<< Updated upstream
+  selectedObject: {fileID: 0}
   unitType: 
-=======
->>>>>>> Stashed changes
   buildingController: {fileID: 2039133045}
   buildingType: 
   grid: {fileID: 2106082650}
   currentUI: {fileID: 1346158155}
+  clickedObject: {fileID: 0}
 --- !u!4 &1622400081
 Transform:
   m_ObjectHideFlags: 0
@@ -22512,11 +22326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   edgeSize: 10
-<<<<<<< Updated upstream
   moveSpeed: 0
-=======
-  moveSpeed: 110
->>>>>>> Stashed changes
   xBounds: {x: -250, y: 250}
   zBounds: {x: -250, y: 250}
 --- !u!114 &1640098280
@@ -22542,7 +22352,6 @@ MonoBehaviour:
   minZoomTOOY: 30
   maxZoomTOOX: 50
   maxZoomTOOY: 12.5
-<<<<<<< Updated upstream
 --- !u!1 &1660231476
 GameObject:
   m_ObjectHideFlags: 0
@@ -22555,7 +22364,7 @@ GameObject:
   - component: {fileID: 1660231479}
   - component: {fileID: 1660231478}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: UnitInfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22677,8 +22486,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660231476}
   m_CullTransparentMesh: 1
-=======
->>>>>>> Stashed changes
 --- !u!1 &1710460820
 GameObject:
   m_ObjectHideFlags: 0
@@ -22889,11 +22696,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732709439}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
 --- !u!1 &1774245180
-=======
---- !u!1 &1806243613
->>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22901,7 +22704,6 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream
   - component: {fileID: 1774245181}
   - component: {fileID: 1774245184}
   - component: {fileID: 1774245183}
@@ -22909,27 +22711,16 @@ GameObject:
   m_Layer: 5
   m_Name: HealerCreateBtn
   m_TagString: Clickable
-=======
-  - component: {fileID: 1806243614}
-  m_Layer: 5
-  m_Name: LeftSide
-  m_TagString: Untagged
->>>>>>> Stashed changes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< Updated upstream
 --- !u!224 &1774245181
-=======
---- !u!224 &1806243614
->>>>>>> Stashed changes
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 1774245180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -24468,21 +24259,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-=======
-  m_GameObject: {fileID: 1806243613}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 892398414}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -0.00018310547, y: 0}
-  m_SizeDelta: {x: 960, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
->>>>>>> Stashed changes
 --- !u!1 &1869076341
 GameObject:
   m_ObjectHideFlags: 0
@@ -24868,7 +24644,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937778494}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
 --- !u!1 &1983074779
 GameObject:
   m_ObjectHideFlags: 0
@@ -24960,8 +24735,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
-=======
->>>>>>> Stashed changes
 --- !u!1 &1990047278
 GameObject:
   m_ObjectHideFlags: 0
@@ -25252,6 +25025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa09b1474c6348199e3167518594b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buildingObject: {fileID: 0}
 --- !u!4 &2039133046
 Transform:
   m_ObjectHideFlags: 0
@@ -25300,12 +25074,8 @@ RectTransform:
   m_Children:
   - {fileID: 1346158152}
   - {fileID: 648798556}
-<<<<<<< Updated upstream
   - {fileID: 736689830}
   - {fileID: 919972039}
-=======
-  - {fileID: 892398414}
->>>>>>> Stashed changes
   m_Father: {fileID: 706762094}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -27184,11 +26954,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1622400080}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-<<<<<<< Updated upstream
         m_MethodName: CreateUnit
-=======
-        m_MethodName: createUnit
->>>>>>> Stashed changes
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27309,66 +27075,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< Updated upstream
-=======
---- !u!1001 &7629295071356071781
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 367.48392
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 26.136314
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -30.386988
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.21297924
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.97705674
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -155.406
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375404808022889564, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6856062543441048699, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
-      propertyPath: m_Name
-      value: Archer
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
->>>>>>> Stashed changes
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -27389,7 +27095,3 @@ SceneRoots:
   - {fileID: 388116730}
   - {fileID: 1292895965}
   - {fileID: 2039133046}
-<<<<<<< Updated upstream
-=======
-  - {fileID: 7629295071356071781}
->>>>>>> Stashed changes
