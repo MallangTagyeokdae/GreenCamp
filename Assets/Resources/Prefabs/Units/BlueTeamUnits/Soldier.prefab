@@ -2532,6 +2532,8 @@ GameObject:
   - component: {fileID: 2881834226245688775}
   - component: {fileID: 2025189397594433314}
   - component: {fileID: 2791682153865565216}
+  - component: {fileID: -4068318868690271376}
+  - component: {fileID: -2557456136307159502}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: Clickable
@@ -2685,6 +2687,45 @@ MonoBehaviour:
   mouseHoverEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-4068318868690271376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2881834226238106485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: -2557456136307159502}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-2557456136307159502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2881834226238106485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2881834226238107007
 GameObject:
   m_ObjectHideFlags: 0

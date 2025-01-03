@@ -21,7 +21,7 @@ public class Healer : Unit
     {
         this.teamID = teamID;
         this.unitID = unitID;
-        this.unitType = unitType;
+        this.unitType = "Healer";
         this.unitLocation = unitLocation;
         this.unitHealth = 0;
         this.unitCost = 0;

@@ -5623,7 +5623,7 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Tanker
-              m_BoolArgument: 0
+              m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 72797151}
             m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -8190,7 +8190,7 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Healer
-              m_BoolArgument: 0
+              m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 72797151}
             m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -17843,6 +17843,51 @@ RectTransform:
   m_AnchoredPosition: {x: -479.99994, y: 0}
   m_SizeDelta: {x: -960, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1126319372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1126319373}
+  - component: {fileID: 1126319374}
+  m_Layer: 0
+  m_Name: UnitController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1126319373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126319372}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1181049378}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1126319374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126319372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17026e5b236894e5bb366c4362bb91b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitObject: {fileID: 0}
 --- !u!1 &1162472777
 GameObject:
   m_ObjectHideFlags: 0
@@ -18556,6 +18601,7 @@ Transform:
   m_Children:
   - {fileID: 2039133046}
   - {fileID: 388116730}
+  - {fileID: 1126319373}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1182296709
@@ -28068,6 +28114,18 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
+          - m_Target: {fileID: 72797151}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
           - m_Target: {fileID: 2106082650}
             m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
             m_MethodName: SetActive
@@ -28090,9 +28148,9 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Soldier
-              m_BoolArgument: 0
+              m_BoolArgument: 1
             m_CallState: 2
-          - m_Target: {fileID: 2106082650}
+          - m_Target: {fileID: 72797151}
             m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
             m_MethodName: SetActive
             m_Mode: 6
@@ -28102,7 +28160,7 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
-              m_BoolArgument: 0
+              m_BoolArgument: 1
             m_CallState: 2
   DisabledState:
     StateType: 4
@@ -28886,8 +28944,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameStates: []
   uIController: {fileID: 388116729}
-  unitController: {fileID: 0}
+  unitController: {fileID: 1126319374}
   selectedObject: {fileID: 0}
+  selectedUnit: {fileID: 0}
   unitType: 
   buildingController: {fileID: 2039133045}
   buildingType: 
@@ -35597,7 +35656,7 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: Archer
-              m_BoolArgument: 0
+              m_BoolArgument: 1
             m_CallState: 2
           - m_Target: {fileID: 72797151}
             m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -35698,6 +35757,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: CreateUnit
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2106082650}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

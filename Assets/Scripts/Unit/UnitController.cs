@@ -28,7 +28,7 @@ public class UnitController : MonoBehaviour
         // 폴더 경로에 있는 모든 GameObject를 Load해 unitPrefabsList에 임시로 저장
         List<GameObject> unitPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Units/{_teamID}TeamUnits"));
 
-        // foreach문으로 List 안에 있는 unit 객체들을 다시 Dictionary로 저장
+        // // foreach문으로 List 안에 있는 unit 객체들을 다시 Dictionary로 저장
         foreach (GameObject unit in unitPrefabsList)
         {
             if (!unitPrefabs.ContainsKey(unit.name))
@@ -39,12 +39,13 @@ public class UnitController : MonoBehaviour
     }
     public void createUnit(Vector3 unitLocation, string unitType) // 유닛 생성 함수
     {
-        // int getCurrentUnitID = _unitID;
-        // GameObject unitInstance = Instantiate(unitPrefabs[unitType], unitLocation, Quaternion.identity); // unit instance 생성
+        Debug.Log("asdf");
         unitObject = PhotonNetwork.Instantiate($"Prefabs/Units/{_teamID}TeamUnits/{unitType}", unitLocation, Quaternion.Euler(new Vector3(0, 180, 0)));
+        Debug.Log("11111");
         unitObject.name = unitType + _unitID.ToString();
         GameObject gameObject = unitObject;
-        unitObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => { GameManager.instance.SetClickedObject(gameObject); GameManager.instance.ChangeUI(6); });
+
+
         // switch문으로 unit을 Dictionary에 저장
         switch (unitType)
         {
@@ -78,6 +79,7 @@ public class UnitController : MonoBehaviour
         //     GameManager.instance.SetUnitInfo(getCurrentUnitID);
         //     GameManager.instance.ChangeUI(3);
         // });
+        unitObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => { GameManager.instance.SetClickedObject(gameObject); GameManager.instance.ChangeUI(6); GameManager.instance.SetUnitInfo(gameObject.GetComponent<Unit>().unitID); });
         _unitID++;
     }
     public void unitAttacked(int unitID, int damage)
