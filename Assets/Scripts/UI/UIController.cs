@@ -18,7 +18,7 @@ public class UIController : MonoBehaviour
     private TMP_Text _health;
     public void DisplayUnitInfo(int unitID)
     {
-        Debug.Log("asdf");
+        Debug.Log("asdfggg");
         TMP_Text unitType = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
         TMP_Text unitPower = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
         TMP_Text unitPowerRange = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();

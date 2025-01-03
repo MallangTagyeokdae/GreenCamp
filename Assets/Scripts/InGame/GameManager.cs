@@ -93,4 +93,8 @@ public class GameManager : MonoBehaviour
         uIController.DisplayUnitInfo(unitID);  // UI에 유닛 정보를 표시
         // Debug.Log("유닛생성 성공");
     }
+    public void MoveUnit(Vector3 newLocation)
+    {
+        unitController.MoveUnit(newLocation);
+    }
 }

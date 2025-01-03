@@ -14,6 +14,7 @@ public abstract class Unit : MonoBehaviour
     public int unitPowerRange { get; set; }
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
+    public void Move(Vector3 newLocation) { unitLocation = newLocation; }
     public Unit(string teamID,
                 int unitID,
                 string unitType,
