@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -34,9 +36,8 @@ public class BuildingController : MonoBehaviour
     public void CreateBuilding(Vector3 buildingLocation, string buildingType)
     // 건물 생성
     {
-        buildingObject = Instantiate(_buildingPrefabs[buildingType],buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
-        buildingObject.AddComponent<BuildingID>().SetKey(_buildingID);
-        buildingObject.name = "buildingType" + _buildingID;
+        buildingObject = PhotonNetwork.Instantiate($"Prefabs/Buildings/{_teamID}TeamBuildings/{buildingType}",buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 0)));
+        buildingObject.name = buildingType + _buildingID.ToString();
         GameObject gameObject = buildingObject;
         switch(buildingType)
         {
@@ -48,7 +49,11 @@ public class BuildingController : MonoBehaviour
             case "Barrack":
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetClickedObject(gameObject));
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(1));
-                Barrack _newBarrack = new Barrack(_teamID, 0, buildingLocation);
+
+                // Barrack _newBarrack = new Barrack(_teamID, 0, buildingLocation);
+                Barrack _newBarrack = buildingObject.AddComponent<Barrack>();
+                _newBarrack.Init(_teamID, _buildingID, buildingLocation);
+                
                 buildingList.Add(_buildingID, _newBarrack);
                 break;
             case "PopulationBuilding":
@@ -90,7 +95,7 @@ public class BuildingController : MonoBehaviour
     
     public void UpgradeBuilding()
     {
-        Building building = buildingList[GameManager.instance.clickedObject.GetComponent<BuildingID>().GetKey()];
+        Building building = GameManager.instance.selectedObject.GetComponent<Building>();
         building.buildingLevel++;
     }
 }

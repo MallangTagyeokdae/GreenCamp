@@ -4676,6 +4676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027425fee9066e44aa0ea41804b4fa83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitInfo: 
   UILists:
   - {fileID: 1346158155}
   - {fileID: 648798559}
@@ -6771,6 +6772,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1207655761}
     m_Modifications:
+    - target: {fileID: -8199964646472358792, guid: 623c6587162144caeb68cfefa087a8b5, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1856497004635135170, guid: 623c6587162144caeb68cfefa087a8b5, type: 3}
       propertyPath: m_Name
       value: Barrack
@@ -9374,6 +9379,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1207655761}
     m_Modifications:
+    - target: {fileID: -1079326836089105715, guid: 21c96d2102cea476a9a7edaec5c5ddf0, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7725685943264554975, guid: 21c96d2102cea476a9a7edaec5c5ddf0, type: 3}
       propertyPath: m_Name
       value: ResourceBuilding
@@ -12732,6 +12741,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1207655761}
     m_Modifications:
+    - target: {fileID: -24312675276253883, guid: 9ba17f39d27a84e578312c4d6585e9aa, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3850242999581741051, guid: 9ba17f39d27a84e578312c4d6585e9aa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.6445746
@@ -14655,6 +14668,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1207655761}
     m_Modifications:
+    - target: {fileID: -6744043205098766824, guid: 13283f29131a14b98893772829b6e5e9, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1631118528069862760, guid: 13283f29131a14b98893772829b6e5e9, type: 3}
       propertyPath: m_Name
       value: Defender
@@ -18150,6 +18167,8 @@ MonoBehaviour:
   gameStates: []
   uIController: {fileID: 388116729}
   unitController: {fileID: 0}
+  selectedObject: {fileID: 0}
+  unitType: 
   buildingController: {fileID: 2039133045}
   buildingType: 
   grid: {fileID: 2106082650}
@@ -18925,6 +18944,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1207655761}
     m_Modifications:
+    - target: {fileID: -5617368362746634423, guid: 91fb5e91d49b449cfb27c47deb9d4c11, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: -2298696398026779216, guid: 91fb5e91d49b449cfb27c47deb9d4c11, type: 3}
       propertyPath: m_Size.x
       value: 8.197476
