@@ -49,10 +49,10 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            if (clickedObject[0].TryGetComponent<Unit>(out Unit unit))
+            if (clickedObject.TryGetComponent<Unit>(out Unit unit))
             {
-                StopCoroutine(unitController.currentMoveCoroutine[clickedObject[0]]);
-                unitController.currentMoveCoroutine.Remove(clickedObject[0]);
+                StopCoroutine(unitController.currentMoveCoroutine[clickedObject]);
+                unitController.currentMoveCoroutine.Remove(clickedObject);
             }
         }
     }
@@ -100,9 +100,8 @@ public class GameManager : MonoBehaviour
         Vector3 destination = clickedObject[0].GetComponent<Barrack>()._sponPos;
         buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
         Unit createdUnit = unitController.CreateUnit(buildingPos, unitType);
-        GameObject gameObject = createdUnit.gameObject;
         // 유닛을 destination으로 이동명령 내리기
-        unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
+        createdUnit.Move(destination);
     }
     public void SetUnitInfo(int unitID)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
@@ -113,12 +112,12 @@ public class GameManager : MonoBehaviour
     public void MoveUnit(Vector3 newLocation)
     {
         if (clickedObject[0].name.Contains("Barrack")) clickedObject[0].GetComponent<Barrack>().SetSponPos(newLocation);
-        else if (unitController.currentMoveCoroutine.ContainsKey(clickedObject[0]))
+        else if (unitController.currentMoveCoroutine.ContainsKey(clickedObject))
         {
-            StopCoroutine(unitController.currentMoveCoroutine[clickedObject[0]]);
-            unitController.currentMoveCoroutine.Remove(clickedObject[0]);
+            StopCoroutine(unitController.currentMoveCoroutine[clickedObject]);
+            unitController.currentMoveCoroutine.Remove(clickedObject);
         }
-        unitController.currentMoveCoroutine.Add(clickedObject[0], StartCoroutine(unitController.MoveUnit(clickedObject[0], newLocation)));
+        unitController.currentMoveCoroutine.Add(clickedObject, StartCoroutine(unitController.MoveUnit(clickedObject, newLocation)));
 
 
     private async Task DelayAction(float time, Vector3 buildingPos)
@@ -128,5 +127,6 @@ public class GameManager : MonoBehaviour
         (actualType)building.InitTime();
         await StartTimer(time, building.UpdateTime);
         Debug.Log($"check time: {building.time}");
+    }
     }
 }
