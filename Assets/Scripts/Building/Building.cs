@@ -22,7 +22,10 @@ public abstract class Building : MonoBehaviour
 
     //------------조영리------------------
     public float time { get; set; }
+    public float loadingTime{get; set;}
     public BuildingState buildingState = BuildingState.InProgress;
+    public Mesh progressMesh;
+    public Mesh completeMesh;
     //------------------------------------------
 
     public Building(string teamID, int buildingID, string buildingType, Vector3 buildingLocation,
@@ -35,15 +38,18 @@ public abstract class Building : MonoBehaviour
         this.buildingHealth = buildingHealth;
         this.buildingCost = buildingCost;
         this.buildingLevel = buildingLevel;
+        this.time = 0f;
+        this.loadingTime = 10f;
     }
 
     //------------조영리------------------
-    public void InitTime(){
-        this.time = 0f;
+    public virtual void InitTime(){
     }
 
-    public void UpdateTime(float update){
-        this.time += update;
+    public virtual void UpdateTime(float update){
+    }
+
+    public virtual void UpdateMesh(){
     }
     //------------------------------------------
 

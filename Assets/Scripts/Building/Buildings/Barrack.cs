@@ -9,13 +9,13 @@ public class Barrack : Building
      : base(
         teamID,
         buildingID,
-        buildingType : "Barrack",
+        buildingType: "Barrack",
         buildingLocation,
-        buildingHealth : 500,
-        buildingCost : 50,
-        buildingLevel : 1
+        buildingHealth: 500,
+        buildingCost: 50,
+        buildingLevel: 1
         )
-    {}
+    { }
 
     public void Init(string teamID, int buildingID, Vector3 buildingLocation)
     {
@@ -32,5 +32,24 @@ public class Barrack : Building
     public void SetSponPos(Vector3 setSponPos)
     {
         this._sponPos = setSponPos;
+    }
+
+
+    public override void InitTime()
+    {
+        time = 0f;
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh;
+    }
+
+    public override void UpdateTime(float update)
+    {
+        time = update;
+    }
+    public override void UpdateMesh()
+    {
+        if (time > loadingTime)
+        {
+            this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
+        }
     }
 }
