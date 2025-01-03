@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -92,5 +93,22 @@ public class GameManager : MonoBehaviour
         selectedUnit = unitController.unitDictionary[unitID];  // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
         uIController.DisplayUnitInfo(unitID);  // UI에 유닛 정보를 표시
         // Debug.Log("유닛생성 성공");
+    }
+
+    private async Task StartTimer(float time, Action<float> update)
+    {
+        float start = 0f;
+        while (start < time)
+        {
+            start += Time.deltaTime;
+            update.Invoke(start);
+            await Task.Yield();
+        }
+    }
+
+    private async Task DelayAction(float time, Action action, Action<float> update)
+    {
+        await StartTimer(time, update);
+        action?.Invoke();
     }
 }
