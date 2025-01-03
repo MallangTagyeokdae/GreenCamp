@@ -19,6 +19,7 @@ public class UnitController : MonoBehaviour
     // private int _unitCount; -> GameStatus에서 관리하기로 함
     private string _teamID; // 본인 TeamID
     private int _unitID;
+    private Unit _createdUnit;
     public GameObject unitObject;
     public void Start()
     {
@@ -37,14 +38,12 @@ public class UnitController : MonoBehaviour
             }
         }
     }
-    public void createUnit(Vector3 unitLocation, string unitType) // 유닛 생성 함수
+    public Unit CreateUnit(Vector3 unitLocation, string unitType) // 유닛 생성 함수
     {
-        Debug.Log("asdf");
         unitObject = PhotonNetwork.Instantiate($"Prefabs/Units/{_teamID}TeamUnits/{unitType}", unitLocation, Quaternion.Euler(new Vector3(0, 180, 0)));
-        Debug.Log("11111");
         unitObject.name = unitType + _unitID.ToString();
         GameObject gameObject = unitObject;
-
+        Debug.Log(unitLocation);
 
         // switch문으로 unit을 Dictionary에 저장
         switch (unitType)
@@ -53,21 +52,25 @@ public class UnitController : MonoBehaviour
                 Archer newArcher = unitObject.AddComponent<Archer>();
                 newArcher.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newArcher);
+                _createdUnit = newArcher;
                 break;
             case "Soldier":
                 Soldier newSoldier = unitObject.AddComponent<Soldier>();
                 newSoldier.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newSoldier);
+                _createdUnit = newSoldier;
                 break;
             case "Tanker":
                 Tanker newTanker = unitObject.AddComponent<Tanker>();
                 newTanker.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newTanker);
+                _createdUnit = newTanker;
                 break;
             case "Healer":
                 Healer newHealer = unitObject.AddComponent<Healer>();
                 newHealer.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newHealer);
+                _createdUnit = newHealer;
                 break;
             default:
                 Debug.Log("unitType을 찾을 수 없습니다");
@@ -87,6 +90,8 @@ public class UnitController : MonoBehaviour
         }
         );
         _unitID++;
+        return _createdUnit;
+        
     }
     public void unitAttacked(int unitID, int damage)
     {

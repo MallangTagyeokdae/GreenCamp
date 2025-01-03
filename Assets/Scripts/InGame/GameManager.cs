@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public GameObject grid;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
     public GameObject clickedObject; // 현재 선택된 게임 Object
-                                     //-----------------------------
+    //-----------------------------
 
 
     //---------------- 준현 --------------------
@@ -62,12 +62,11 @@ public class GameManager : MonoBehaviour
     public void SetClickedObject(GameObject gameObject)
     {
         clickedObject = gameObject;
-        Debug.Log("선택된건물 업데이트 됨");
     }
 
     public void ChangeUI(int UIindex)
     {
-        currentUI = uIController.SetUI(UIindex, clickedObject);
+        currentUI = uIController.SetBuildingUI(UIindex, clickedObject);
     }
 
     public void LevelUpBuilding()
@@ -81,17 +80,27 @@ public class GameManager : MonoBehaviour
     {
         this.unitType = unitType;
     }
-    public void CreateUnit(Vector3 unitPos) // 해윤
+    public void CreateUnit() // 해윤
     {
-        unitController.createUnit(unitPos, unitType);
+        Vector3 buildingPos = clickedObject.GetComponent<Barrack>().transform.position;
+        Vector3 destination = clickedObject.GetComponent<Barrack>()._sponPos;
+        buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
+        Unit createdUnit = unitController.CreateUnit(buildingPos, unitType);
+        // 유닛을 destination으로 이동명령 내리기
+        createdUnit.Move(destination);
     }
     public void SetUnitInfo(int unitID)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        uIController.DisplayUnitInfo(unitID);
+        uIController.SetUnitUI
+        
+        (unitID);
     }
     public void MoveUnit(Vector3 newLocation)
     {
-        if (clickedObject.name != "Ground") unitController.MoveUnit(newLocation);
+        // 수정해야할 부분 유닛이 선택되었을 때만 이동명령이 내려지도록 수정해야함
+        // 지금은 건물 선택되어도 이동명령이 내려짐
+        if (clickedObject.name.Contains("Barrack")) clickedObject.GetComponent<Barrack>().SetSponPos(newLocation);
+        else if (clickedObject.name != "Ground") unitController.MoveUnit(newLocation);
     }
 
     private async Task StartTimer(float time, Action<float> update)
