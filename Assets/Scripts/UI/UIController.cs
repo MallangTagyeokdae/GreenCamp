@@ -18,10 +18,10 @@ public class UIController : MonoBehaviour
     private TMP_Text _health;
     public void DisplayUnitInfo(int unitID)
     {
-        TMP_Text unitType = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
-        TMP_Text unitPower = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
-        TMP_Text unitPowerRange = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
-        TMP_Text unitMoveSpeed = UILists[3].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
+        TMP_Text unitType = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
+        TMP_Text unitPower = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
+        TMP_Text unitPowerRange = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
+        TMP_Text unitMoveSpeed = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
 
         unitType.text = GameManager.instance.selectedUnit.unitType;
         unitPower.text = $"{GameManager.instance.selectedUnit.unitPower}";
