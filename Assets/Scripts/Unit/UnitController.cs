@@ -19,8 +19,10 @@ public class UnitController : MonoBehaviour
     // private int _unitCount; -> GameStatus에서 관리하기로 함
     private string _teamID; // 본인 TeamID
     private int _unitID;
+    private Unit _createdUnit;
     public GameObject unitObject;
-    public void Start()
+    public Dictionary<GameObject, Coroutine> currentMoveCoroutine = new Dictionary<GameObject, Coroutine>();
+    private void Start()
     {
         _teamID = GameStatus.instance.teamID; // 본인 TeamID를 GameStatus에서 instance로 받아옴.
         _unitID = 0; // unit 고유 id 초기화
@@ -37,14 +39,13 @@ public class UnitController : MonoBehaviour
             }
         }
     }
-    public void createUnit(Vector3 unitLocation, string unitType) // 유닛 생성 함수
+
+    public Unit CreateUnit(Vector3 unitLocation, string unitType) // 유닛 생성 함수
     {
-        Debug.Log("asdf");
         unitObject = PhotonNetwork.Instantiate($"Prefabs/Units/{_teamID}TeamUnits/{unitType}", unitLocation, Quaternion.Euler(new Vector3(0, 180, 0)));
-        Debug.Log("11111");
         unitObject.name = unitType + _unitID.ToString();
         GameObject gameObject = unitObject;
-
+        Debug.Log(unitLocation);
 
         // switch문으로 unit을 Dictionary에 저장
         switch (unitType)
@@ -53,32 +54,31 @@ public class UnitController : MonoBehaviour
                 Archer newArcher = unitObject.AddComponent<Archer>();
                 newArcher.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newArcher);
+                _createdUnit = newArcher;
                 break;
             case "Soldier":
                 Soldier newSoldier = unitObject.AddComponent<Soldier>();
                 newSoldier.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newSoldier);
+                _createdUnit = newSoldier;
                 break;
             case "Tanker":
                 Tanker newTanker = unitObject.AddComponent<Tanker>();
                 newTanker.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newTanker);
+                _createdUnit = newTanker;
                 break;
             case "Healer":
                 Healer newHealer = unitObject.AddComponent<Healer>();
                 newHealer.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newHealer);
+                _createdUnit = newHealer;
                 break;
             default:
                 Debug.Log("unitType을 찾을 수 없습니다");
                 _unitID--;
                 break;
         }
-        // unitInstance.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
-        // {
-        //     GameManager.instance.SetUnitInfo(getCurrentUnitID);
-        //     GameManager.instance.ChangeUI(3);
-        // });
         unitObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
         {
             GameManager.instance.SetClickedObject(gameObject);
@@ -87,6 +87,8 @@ public class UnitController : MonoBehaviour
         }
         );
         _unitID++;
+        return _createdUnit;
+        
     }
     public void unitAttacked(int unitID, int damage)
     {
@@ -96,8 +98,22 @@ public class UnitController : MonoBehaviour
     {
 
     }
-    public void MoveUnit(Vector3 newLocation)
+    public IEnumerator MoveUnit(GameObject unitObject, Vector3 newLocation)
     {
-        GameManager.instance.clickedObject.GetComponent<Unit>().Move(newLocation);
+        Unit unit = unitObject.GetComponent<Unit>();
+
+        while (Vector3.Distance(unitObject.transform.position, newLocation) > 0.01f)
+        {
+            unit.transform.position = Vector3.MoveTowards(
+                unit.transform.position,
+                newLocation,
+                unit.unitMoveSpeed * Time.deltaTime
+            );
+
+            yield return null;
+        }
+        unit.transform.position = newLocation;
+        currentMoveCoroutine.Remove(unitObject);
     }
+
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Barrack : Building
 {
+    public Vector3 _sponPos { get; set; }
     public Barrack(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
         teamID,
@@ -25,6 +26,12 @@ public class Barrack : Building
         this.buildingHealth = 500;
         this.buildingLevel = 1;
         this.buildingCost = 50;
+        this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 4f);
+    }
+
+    public void SetSponPos(Vector3 setSponPos)
+    {
+        this._sponPos = setSponPos;
     }
 
 
