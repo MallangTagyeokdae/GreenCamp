@@ -21,4 +21,17 @@ public class Defender : Building
         attackPower = 20;
         attackRange = 10;
     }
+
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation)
+    {
+        this.teamID = teamID;
+        this.buildingID = buildingID;
+        this.buildingType = "Defender";
+        this.buildingLocation = buildingLocation;
+        this.buildingHealth = 500;
+        this.buildingLevel = 1;
+        this.buildingCost = 0;
+        this.attackPower = 20;
+        this.attackRange = 10;
+    }
 }
