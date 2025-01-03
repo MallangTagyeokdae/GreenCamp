@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -91,5 +92,22 @@ public class GameManager : MonoBehaviour
     public void MoveUnit(Vector3 newLocation)
     {
         if (clickedObject.name != "Ground") unitController.MoveUnit(newLocation);
+    }
+
+    private async Task StartTimer(float time, Action<float> update)
+    {
+        float start = 0f;
+        while (start < time)
+        {
+            start += Time.deltaTime;
+            update.Invoke(start);
+            await Task.Yield();
+        }
+    }
+
+    private async Task DelayAction(float time, Action action, Action<float> update)
+    {
+        await StartTimer(time, update);
+        action?.Invoke();
     }
 }
