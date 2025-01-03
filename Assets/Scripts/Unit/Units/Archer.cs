@@ -33,7 +33,7 @@ public class Archer : Unit
         this.unitCost = 0;
         this.unitPower = 0;
         this.unitPowerRange = 0;
-        this.unitMoveSpeed = 0;
+        this.unitMoveSpeed = 3;
         this.populationCost = 0;
     }
 }

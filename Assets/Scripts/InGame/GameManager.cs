@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Containers;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,6 +43,17 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentUI.Show();
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (clickedObject.TryGetComponent<Unit>(out Unit unit))
+            {
+                StopCoroutine(unitController.currentMoveCoroutine[clickedObject]);
+                unitController.currentMoveCoroutine.Remove(clickedObject);
+            }
+        }
     }
     public void CreateBuilding(Vector3 buildingPos)
     {
@@ -90,6 +102,11 @@ public class GameManager : MonoBehaviour
     }
     public void MoveUnit(Vector3 newLocation)
     {
-        if (clickedObject.name != "Ground") unitController.MoveUnit(newLocation);
+        if (unitController.currentMoveCoroutine.ContainsKey(clickedObject))
+        {
+            StopCoroutine(unitController.currentMoveCoroutine[clickedObject]);
+            unitController.currentMoveCoroutine.Remove(clickedObject);
+        }
+        unitController.currentMoveCoroutine.Add(clickedObject, StartCoroutine(unitController.MoveUnit(clickedObject, newLocation)));
     }
 }

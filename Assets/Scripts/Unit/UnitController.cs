@@ -20,7 +20,8 @@ public class UnitController : MonoBehaviour
     private string _teamID; // 본인 TeamID
     private int _unitID;
     public GameObject unitObject;
-    public void Start()
+    public Dictionary<GameObject, Coroutine> currentMoveCoroutine = new Dictionary<GameObject, Coroutine>();
+    private void Start()
     {
         _teamID = GameStatus.instance.teamID; // 본인 TeamID를 GameStatus에서 instance로 받아옴.
         _unitID = 0; // unit 고유 id 초기화
@@ -37,11 +38,10 @@ public class UnitController : MonoBehaviour
             }
         }
     }
+
     public void createUnit(Vector3 unitLocation, string unitType) // 유닛 생성 함수
     {
-        Debug.Log("asdf");
         unitObject = PhotonNetwork.Instantiate($"Prefabs/Units/{_teamID}TeamUnits/{unitType}", unitLocation, Quaternion.Euler(new Vector3(0, 180, 0)));
-        Debug.Log("11111");
         unitObject.name = unitType + _unitID.ToString();
         GameObject gameObject = unitObject;
 
@@ -74,11 +74,6 @@ public class UnitController : MonoBehaviour
                 _unitID--;
                 break;
         }
-        // unitInstance.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
-        // {
-        //     GameManager.instance.SetUnitInfo(getCurrentUnitID);
-        //     GameManager.instance.ChangeUI(3);
-        // });
         unitObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
         {
             GameManager.instance.SetClickedObject(gameObject);
@@ -96,8 +91,22 @@ public class UnitController : MonoBehaviour
     {
 
     }
-    public void MoveUnit(Vector3 newLocation)
+    public IEnumerator MoveUnit(GameObject unitObject, Vector3 newLocation)
     {
-        GameManager.instance.clickedObject.GetComponent<Unit>().Move(newLocation);
+        Unit unit = unitObject.GetComponent<Unit>();
+
+        while (Vector3.Distance(unitObject.transform.position, newLocation) > 0.01f)
+        {
+            unit.transform.position = Vector3.MoveTowards(
+                unit.transform.position,
+                newLocation,
+                unit.unitMoveSpeed * Time.deltaTime
+            );
+
+            yield return null;
+        }
+        unit.transform.position = newLocation;
+        currentMoveCoroutine.Remove(unitObject);
     }
+
 }
