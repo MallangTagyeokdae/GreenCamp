@@ -103,6 +103,6 @@ public class UnitController : MonoBehaviour
     }
     public void MoveUnit(Vector3 newLocation)
     {
-        GameManager.instance.clickedObject.GetComponent<Unit>().Move(newLocation);
+        GameManager.instance.clickedObject[0].GetComponent<Unit>().Move(newLocation);
     }
 }
