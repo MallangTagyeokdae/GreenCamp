@@ -12,7 +12,7 @@ public class Archer : Unit
                 : base (
                 teamID,
                 unitID,
-                unitType: 0,
+                unitType: "Archer",
                 unitLocation, 
                 unitHealth: 0, 
                 unitCost: 0, 

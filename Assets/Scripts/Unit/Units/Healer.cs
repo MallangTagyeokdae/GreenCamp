@@ -8,7 +8,7 @@ public class Healer : Unit
                 : base (
                 teamID,
                 unitID,
-                unitType: 0,
+                unitType: "Healer",
                 unitLocation, 
                 unitHealth: 0, 
                 unitCost: 0, 

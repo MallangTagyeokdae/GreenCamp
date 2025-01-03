@@ -88,10 +88,10 @@ public class GameManager : MonoBehaviour
     }
     public void SetUnitInfo(int unitID)
     {
-        Debug.Log(unitController.unitDictionary.ContainsKey(unitID));
+        // Debug.Log(unitController.unitDictionary.ContainsKey(unitID));
         selectedUnit = unitController.unitDictionary[unitID];  // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
         uIController.DisplayUnitInfo(unitID);  // UI에 유닛 정보를 표시
-        Debug.Log("유닛생성 성공");
+        // Debug.Log("유닛생성 성공");
 
     }
 }

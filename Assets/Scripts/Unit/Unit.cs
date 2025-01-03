@@ -6,7 +6,7 @@ public abstract class Unit
 {
     public string teamID {get; set;}
     public int unitID {get; set;}
-    public int unitType {get; set;}
+    public string unitType {get; set;}
     Vector3 unitLocation{get; set;}
     public int unitHealth{get; set;}
     public int unitCost{get; set;}
@@ -16,7 +16,7 @@ public abstract class Unit
     public int populationCost{get; set;}
     public Unit(string teamID,
                 int unitID,
-                int unitType,
+                string unitType,
                 Vector3 unitLocation, 
                 int unitHealth, 
                 int unitCost,
