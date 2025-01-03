@@ -16,4 +16,15 @@ public class ResourceBuilding : Building
         )
     {
     }
+
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation)
+    {
+        this.teamID = teamID;
+        this.buildingID = buildingID;
+        this.buildingType = "ResourceBuilding";
+        this.buildingLocation = buildingLocation;
+        this.buildingHealth = 500;
+        this.buildingLevel = 1;
+        this.buildingCost = 0;
+    }
 }

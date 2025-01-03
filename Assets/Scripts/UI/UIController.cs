@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     public List<UIContainer> UILists;
     public BuildingController buildingController;
     private TMP_Text _level;
+    private TMP_Text _health;
     
     public void DisplayUnitInfo(int unitID)
     {
@@ -25,14 +26,24 @@ public class UIController : MonoBehaviour
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
+        Building clickedBuidling = clickedObject.GetComponent<Building>();
         Debug.Log("UI 변경 확인");
 
         // ---------------------- 준현 --------------------
+        if(UIindex != 0)
+        {
+            // 레벨 설정
+            _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
+            _level.text = clickedBuidling.buildingLevel.ToString();
+
+            // 체력 설정
+            _health = selectedUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
+            _health.text = clickedBuidling.buildingHealth.ToString();
+        }
+
         if(UIindex == 1)
         {
-            Building selectedBarrack = clickedObject.GetComponent<Barrack>();
-            _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
-            _level.text = selectedBarrack.buildingLevel.ToString();
+            
         } else if(UIindex == 2)
         {
             
@@ -63,6 +74,10 @@ public class UIController : MonoBehaviour
         _level.text = currentLevel.ToString();
     }
 
+    public void SetHealth(UIContainer currentUI, int currentHealth)
+    {
+        
+    }
 
     // ----------------------------------------
 }
