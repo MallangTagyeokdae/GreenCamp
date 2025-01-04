@@ -106,9 +106,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetUnitInfo(int unitID)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        uIController.SetUnitUI
-        
-        (unitID);
+        uIController.SetUnitUI(unitID);
     }
     public void MoveUnit(Vector3 newLocation)
     {   
