@@ -28974,7 +28974,9 @@ MonoBehaviour:
   buildingType: 
   grid: {fileID: 2106082650}
   currentUI: {fileID: 1346158155}
-  clickedObject: {fileID: 0}
+  clickedObject:
+  - {fileID: 0}
+  sponeffect: {fileID: 121774, guid: 928acf93bb759f74796c68fbd753048f, type: 3}
 --- !u!4 &1622400081
 Transform:
   m_ObjectHideFlags: 0

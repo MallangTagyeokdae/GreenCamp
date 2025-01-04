@@ -61,6 +61,8 @@ public class BuildingController : MonoBehaviour
                 // Dictionary에 추가
                 buildingDictionary.Add(_buildingID, _newCommand);
                 newBuilding = _newCommand;
+                newBuilding.progressMesh = _newCommand.progressMesh;
+                newBuilding.completeMesh = _newCommand.completeMesh;
                 break;
 
             case "Barrack":
@@ -68,13 +70,15 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(2));
 
                 // Barrack 객체를 넣어준다. -> 오브젝트를 통해서 건물의 정보를 알 수 있게 하기위해
-                Barrack _newBarrack = buildingObject.AddComponent<Barrack>();
+                Barrack _newBarrack = buildingObject.GetComponent<Barrack>();//.AddComponent<Barrack>();
                 // 배럭 정보 초기화
                 _newBarrack.Init(_teamID, _buildingID, buildingLocation);
 
                 // Dictionary에 추가
                 buildingDictionary.Add(_buildingID, _newBarrack);
                 newBuilding = _newBarrack;
+                newBuilding.progressMesh = _newBarrack.progressMesh;
+                newBuilding.completeMesh = _newBarrack.completeMesh;
                 break;
             case "PopulationBuilding":
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(3));
@@ -84,6 +88,8 @@ public class BuildingController : MonoBehaviour
 
                 buildingDictionary.Add(_buildingID, _newPop);
                 newBuilding = _newPop;
+                newBuilding.progressMesh = _newPop.progressMesh;
+                newBuilding.completeMesh = _newPop.completeMesh;
                 break;
             case "ResourceBuilding":
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(4));
@@ -92,6 +98,8 @@ public class BuildingController : MonoBehaviour
                 _newResource.Init(_teamID, _buildingID, buildingLocation);
                 buildingDictionary.Add(_buildingID, _newResource);
                 newBuilding = _newResource;
+                newBuilding.progressMesh = _newResource.progressMesh;
+                newBuilding.completeMesh = _newResource.completeMesh;
                 break;
             case "Defender":
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(5));
@@ -100,6 +108,8 @@ public class BuildingController : MonoBehaviour
                 _newDefender.Init(_teamID, _buildingID, buildingLocation);
                 buildingDictionary.Add(_buildingID, _newDefender);
                 newBuilding = _newDefender;
+                newBuilding.progressMesh = _newDefender.progressMesh;
+                newBuilding.completeMesh = _newDefender.completeMesh;
                 break;
             default: //일단 초기화를 위해서 더미데이터를 넣음음
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.ChangeUI(5));

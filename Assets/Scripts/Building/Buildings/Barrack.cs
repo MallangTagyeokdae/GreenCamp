@@ -38,12 +38,14 @@ public class Barrack : Building
     public override void InitTime()
     {
         time = 0f;
+        loadingTime = 10f;
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh;
     }
 
     public override void UpdateTime(float update)
     {
         time = update;
+        UpdateMesh();
     }
     public override void UpdateMesh()
     {

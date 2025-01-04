@@ -21,7 +21,6 @@ public class UnitController : MonoBehaviour
     private int _unitID;
     private Unit _createdUnit;
     public GameObject unitObject;
-    public Dictionary<GameObject, Coroutine> currentMoveCoroutine = new Dictionary<GameObject, Coroutine>();
     private void Start()
     {
         _teamID = GameStatus.instance.teamID; // 본인 TeamID를 GameStatus에서 instance로 받아옴.
@@ -113,7 +112,6 @@ public class UnitController : MonoBehaviour
             yield return null;
         }
         unit.transform.position = newLocation;
-        currentMoveCoroutine.Remove(unitObject);
     }
 
 }

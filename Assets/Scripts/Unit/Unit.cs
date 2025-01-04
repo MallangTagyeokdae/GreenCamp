@@ -14,6 +14,7 @@ public abstract class Unit : MonoBehaviour
     public int unitPowerRange { get; set; }
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
+    public Coroutine unitBehaviour;
     public Unit(string teamID,
                 int unitID,
                 string unitType,
