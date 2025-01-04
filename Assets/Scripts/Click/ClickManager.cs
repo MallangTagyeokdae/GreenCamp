@@ -111,17 +111,17 @@ public class ClickManager : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        // RaycastHit hit;
+        RaycastHit hit;
 
         if (drawRay)
         {
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.green);
         }
 
-        // if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
-        // {
-        //     hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
-        // }
+         if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
+         {
+             hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
+         }
     }
 
     public void Drag()  //미완성
