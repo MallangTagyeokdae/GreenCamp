@@ -14,7 +14,23 @@ public abstract class Unit : MonoBehaviour
     public int unitPowerRange { get; set; }
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
+    public Animator unitAnimator;
+    private void Awake()
+    {
+        unitAnimator = GetComponent<Animator>();
+        Debug.Log(unitAnimator.name);
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) // 임시
+        {
+            if (unitType == "Healer") unitAnimator.SetTrigger("isHealing");
+            unitAnimator.SetTrigger("isAttacking");
+        }
+
+    }
     public Coroutine unitBehaviour;
+
     public Unit(string teamID,
                 int unitID,
                 string unitType,
