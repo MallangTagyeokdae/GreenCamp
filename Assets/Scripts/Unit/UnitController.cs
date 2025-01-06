@@ -81,7 +81,7 @@ public class UnitController : MonoBehaviour
         unitObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
         {
             GameManager.instance.SetClickedObject(gameObject);
-            GameManager.instance.ChangeUI(6);
+            GameManager.instance.SetBuildingInfo(7);
             GameManager.instance.SetUnitInfo(gameObject.GetComponent<Unit>().unitID);
         }
         );

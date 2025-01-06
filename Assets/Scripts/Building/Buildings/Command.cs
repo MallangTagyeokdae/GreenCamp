@@ -13,7 +13,7 @@ public class Command : Building
         buildingID,
         buildingType : "Command",
         buildingLocation,
-        buildingHealth : 500,
+        buildingMaxHealth : 500,
         buildingCost : 0,
         buildingLevel : 1
         )
@@ -28,10 +28,31 @@ public class Command : Building
         this.buildingID = buildingID;
         this.buildingType = "Command";
         this.buildingLocation = buildingLocation;
-        this.buildingHealth = 500;
+        this.buildingMaxHealth = 500;
+        this.buildingCurrentHealth = 0;
         this.buildingLevel = 1;
         this.buildingCost = 0;
         this.attackPower = 10;
         this.attackRange = 10;
+    }
+
+    public override void InitTime()
+    {
+        time = 0f;
+        loadingTime = 10f;
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+    }
+
+    public override void UpdateTime(float update)
+    {
+        time = update;
+        UpdateMesh();
+    }
+    public override void UpdateMesh()
+    {
+        if (time > loadingTime)
+        {
+            this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
+        }
     }
 }

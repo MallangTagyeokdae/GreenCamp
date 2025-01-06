@@ -59,15 +59,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-     public void SetClickedObject(GameObject gameObject)
+    public void SetClickedObject(GameObject gameObject)
     {
         clickedObject.Clear();
         clickedObject.Add(gameObject);
     }
 
-        public void ChangeUI(int UIindex)
+    public void SetBuildingListUI(int UIindex)
+    {
+        currentUI = uIController.SetBuildingListUI(UIindex);
+    }
+    public void SetBuildingInfo(int UIindex)
     {
         currentUI = uIController.SetBuildingUI(UIindex, clickedObject[0]);
+    }
+    public void SetUnitInfo(int unitID)
+    { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
+        uIController.SetUnitUI(unitID);
     }
 
     public void CreateBuilding(Vector3 buildingPos)
@@ -84,7 +92,7 @@ public class GameManager : MonoBehaviour
     public void LevelUpBuilding()
     {
         buildingController.UpgradeBuilding();
-        uIController.UpdateLevel(currentUI, clickedObject[0]);
+        uIController.UpdateLevel(currentUI, clickedObject[0].GetComponent<Building>());
     }
 
     //------------------------------------
@@ -104,10 +112,6 @@ public class GameManager : MonoBehaviour
         //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
         createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
     }
-    public void SetUnitInfo(int unitID)
-    { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        uIController.SetUnitUI(unitID);
-    }
     public void MoveUnit(Vector3 newLocation)
     {   
         Unit selectedUnit = clickedObject[0].GetComponent<Unit>();
@@ -119,7 +123,6 @@ public class GameManager : MonoBehaviour
         selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(clickedObject[0], newLocation));
     }
 
-    //---------------------------------조영리----------------------------------------
     private async Task StartTimer(float time, Action<float> action){
         float start = 0f;
         while(time > start){
@@ -133,18 +136,55 @@ public class GameManager : MonoBehaviour
     {
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType);
+        building.InitTime();
+        await StartTimer(building.loadingTime, (float time) => UpdateBuildingUI(building, time));
+
         //effect 동작만 되도록 막 넣음
         GameObject effect = Instantiate(sponeffect, building.gameObject.transform);
         effect.transform.localPosition = Vector3.zero;
         effect.transform.localScale = new Vector3(4,4,4);
-        effect.transform.localRotation = Quaternion.Euler(new Vector3(90, 0, 0));
+        effect.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         //----------------------------
-        building.InitTime();
-        await StartTimer(building.loadingTime, building.UpdateTime);
+
         //Destroy-----------------
         Destroy(effect, effect.GetComponent<ParticleSystem>().main.startLifetime.constant);
         //------------------------
         Debug.Log($"check time: {building.time}");
+        building.buildingState = Building.BuildingState.Built;
+        ReloadBuildingUI(building);
     }
-    //-------------------------------------------------------------------------
+
+    private void UpdateBuildingUI(Building building, float time)
+    { // 건물이 생성될 때 체력을 업데이트 해주는 함수
+        building.UpdateTime(time);
+        if(clickedObject[0].GetComponent<Building>() == building)
+        {
+            uIController.UpdateHealth(currentUI, building);
+        }
+    }
+
+    private void ReloadBuildingUI(Building building)
+    { // 건물이 생성완료 됐을 때 건물을 클릭하고 있으면 건물 UI로 바꿔준다.
+        if(clickedObject[0] == building)
+        {
+            switch(building.buildingType)
+            {
+                case "Command":
+                    uIController.SetBuildingUI(2, clickedObject[0]);
+                    break;
+                case "Barrack":
+                    uIController.SetBuildingUI(3, clickedObject[0]);
+                    break;
+                case "PopulationBuilding":
+                    uIController.SetBuildingUI(4, clickedObject[0]);
+                    break;
+                case "ResourceBuilding":
+                    uIController.SetBuildingUI(5, clickedObject[0]);
+                    break;
+                case "Defender":
+                    uIController.SetBuildingUI(6, clickedObject[0]);
+                    break;
+            }
+        }
+    }
 }

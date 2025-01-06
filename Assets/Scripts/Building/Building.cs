@@ -16,7 +16,8 @@ public abstract class Building : MonoBehaviour
     public int buildingID { get; set; }
     public string buildingType { get; set; }
     public Vector3 buildingLocation { get; set; }
-    public int buildingHealth { get; set; }
+    public int buildingMaxHealth { get; set; }
+    public int buildingCurrentHealth { get; set; }
     public int buildingCost { get; set; }
     public int buildingLevel { get; set; }
 
@@ -24,18 +25,19 @@ public abstract class Building : MonoBehaviour
     public float time { get; set; }
     public float loadingTime{get; set;}
     public BuildingState buildingState = BuildingState.InProgress;
-    public Mesh progressMesh;
+    public Mesh progressMesh1;
+    public Mesh progressMesh2;
     public Mesh completeMesh;
     //------------------------------------------
 
     public Building(string teamID, int buildingID, string buildingType, Vector3 buildingLocation,
-    int buildingHealth, int buildingCost, int buildingLevel)
+    int buildingMaxHealth, int buildingCost, int buildingLevel)
     {
         this.teamID = teamID;
         this.buildingID = buildingID;
         this.buildingType = buildingType;
         this.buildingLocation = buildingLocation;
-        this.buildingHealth = buildingHealth;
+        this.buildingMaxHealth = buildingMaxHealth;
         this.buildingCost = buildingCost;
         this.buildingLevel = buildingLevel;
         this.time = 0f;
