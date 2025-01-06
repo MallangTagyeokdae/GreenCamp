@@ -11,6 +11,7 @@ public class ClickManager : MonoBehaviour
     private Vector3 _dragStartPoint;
     private Vector3 _dragEndPoint;
     public bool drawRay = false;
+    private GameObject hoverObj;
 
     #region drag variable
     private bool _isDragging;
@@ -120,6 +121,10 @@ public class ClickManager : MonoBehaviour
 
          if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
          {
+            if(hoverObj != null){
+                hoverObj.GetComponent<ClickEventHandler>().DeMouseHover(hit.point);
+            }
+            hoverObj = hit.collider.gameObject;
              hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
          }
     }
