@@ -14,6 +14,9 @@ public abstract class Unit : MonoBehaviour
     public int unitPowerRange { get; set; }
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
+
+
+    [HideInInspector]
     public Animator unitAnimator;
     private void Awake()
     {
