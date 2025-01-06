@@ -72,6 +72,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 05035b78d90b21f43854dfe010ccd289, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1223268231721252536}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 05035b78d90b21f43854dfe010ccd289, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8416080156142566213}
   m_SourcePrefab: {fileID: 100100000, guid: 05035b78d90b21f43854dfe010ccd289, type: 3}
 --- !u!1 &3850242999582102491 stripped
 GameObject:
@@ -165,3 +168,19 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-8416080156142566213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850242999582102491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 564a028900423421fb4407dfad2f2063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingState: 0
+  progressMesh1: {fileID: 4300000, guid: c4bb27f050a2ef4439fb736e16b2bded, type: 3}
+  progressMesh2: {fileID: 4300000, guid: b1ff534b3931e674e8e475faa59eb659, type: 3}
+  completeMesh: {fileID: 4300000, guid: 05035b78d90b21f43854dfe010ccd289, type: 3}

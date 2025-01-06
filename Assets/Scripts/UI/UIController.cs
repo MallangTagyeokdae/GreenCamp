@@ -14,19 +14,32 @@ public class UIController : MonoBehaviour
     public BuildingController buildingController;
     private TMP_Text _level;
     private TMP_Text _health;
+    // Ground 눌렀을 때 건물 리스트 UI 나타내는 함수
+    public UIContainer SetBuildingListUI(int UIindex)
+    {
+        UIContainer selectedUI = UILists[UIindex];
+        UIContainer currentUI = GameManager.instance.currentUI;
+        if(selectedUI != currentUI)
+        {
+            currentUI.Hide();
+            selectedUI.Show();
+            return selectedUI;
+        }
+        return currentUI;
+    }
     public void SetUnitUI(int unitID)
     {
-        TMP_Text unitType = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
-        TMP_Text unitPower = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
-        TMP_Text unitPowerRange = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
-        TMP_Text unitMoveSpeed = UILists[6].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
+        TMP_Text unitType = UILists[7].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
+        TMP_Text unitPower = UILists[7].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
+        TMP_Text unitPowerRange = UILists[7].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
+        TMP_Text unitMoveSpeed = UILists[7].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
 
         unitType.text = GameManager.instance.clickedObject[0].GetComponent<Unit>().unitType;
         unitPower.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitPower}";
         unitPowerRange.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitPowerRange}";
         unitMoveSpeed.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitMoveSpeed}";
     }
-    // UI 변경하는 함수
+    // Building UI 변경하는 함수
     public UIContainer SetBuildingUI(int UIindex, GameObject clickedObject)
     {
         UIContainer selectedUI = UILists[UIindex];
@@ -34,25 +47,32 @@ public class UIController : MonoBehaviour
         Building clickedBuidling = clickedObject.GetComponent<Building>();
 
         // ---------------------- 준현 --------------------
-        if (UIindex >= 1 && UIindex <= 5)
+        if (clickedBuidling.buildingState == 0) // 건물이 생성중일 때
         {
-            // 레벨 설정
-            _level = selectedUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
-            _level.text = clickedBuidling.buildingLevel.ToString();
+            selectedUI = UILists[1];
+            UpdateHealth(selectedUI, clickedBuidling);
+        } else
+        {
+            if (UIindex >= 1 && UIindex <= 5)
+            {
+                // 레벨 설정
+                UpdateLevel(selectedUI, clickedBuidling);
 
-            // 체력 설정
-            _health = selectedUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
-            _health.text = clickedBuidling.buildingHealth.ToString();
+                // 체력 설정
+                _health = selectedUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
+                _health.text = clickedBuidling.buildingCurrentHealth.ToString();
+            }
+
+            if (UIindex == 1)
+            {
+
+            }
+            else if (UIindex == 2)
+            {
+
+            }
         }
 
-        if (UIindex == 1)
-        {
-
-        }
-        else if (UIindex == 2)
-        {
-
-        }
         if (currentUI != selectedUI)
         {
             currentUI.Hide();
@@ -66,7 +86,7 @@ public class UIController : MonoBehaviour
 
     // ---------------- 준현 ---------------------
 
-    public void UpdateLevel(UIContainer currentUI, GameObject clickedObject)
+    public void UpdateLevel(UIContainer currentUI, Building clickedObject)
     {
         int level = clickedObject.GetComponent<Building>().buildingLevel;
         SetLevel(currentUI, level);
@@ -78,9 +98,16 @@ public class UIController : MonoBehaviour
         _level.text = currentLevel.ToString();
     }
 
+    public void UpdateHealth(UIContainer currentUI, Building clickedObject)
+    {
+        int currentHealth = clickedObject.GetComponent<Building>().buildingCurrentHealth;
+        SetHealth(currentUI, currentHealth);
+    }
+
     public void SetHealth(UIContainer currentUI, int currentHealth)
     {
-
+        TMP_Text healthText = currentUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
+        healthText.text = currentHealth.ToString();
     }
 
     // ----------------------------------------

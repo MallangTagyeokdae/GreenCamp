@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Barrack : Building
@@ -11,7 +13,7 @@ public class Barrack : Building
         buildingID,
         buildingType: "Barrack",
         buildingLocation,
-        buildingHealth: 500,
+        buildingMaxHealth: 500,
         buildingCost: 50,
         buildingLevel: 1
         )
@@ -23,7 +25,8 @@ public class Barrack : Building
         this.buildingID = buildingID;
         this.buildingType = "Barrack";
         this.buildingLocation = buildingLocation;
-        this.buildingHealth = 500;
+        this.buildingMaxHealth = 500;
+        this.buildingCurrentHealth = 0;
         this.buildingLevel = 1;
         this.buildingCost = 50;
         this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 4f);
@@ -38,18 +41,21 @@ public class Barrack : Building
     public override void InitTime()
     {
         time = 0f;
-        loadingTime = 10f;
-        gameObject.GetComponent<MeshFilter>().mesh = progressMesh;
+        loadingTime = 30f;
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
     public override void UpdateTime(float update)
     {
         time = update;
+        this.buildingCurrentHealth = (int)Math.Round(time/loadingTime*buildingMaxHealth);
         UpdateMesh();
     }
     public override void UpdateMesh()
     {
-        if (time > loadingTime)
+        if (time > loadingTime/2 && time < loadingTime) {
+            this.gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
+        } else if (time > loadingTime)
         {
             this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
         }
