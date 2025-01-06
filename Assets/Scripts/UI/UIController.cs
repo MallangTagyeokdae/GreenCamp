@@ -15,10 +15,8 @@ public class UIController : MonoBehaviour
     private TMP_Text _level;
     private TMP_Text _health;
     // Ground 눌렀을 때 건물 리스트 UI 나타내는 함수
-    public UIContainer SetBuildingListUI(int UIindex)
-    {
-        UIContainer selectedUI = UILists[UIindex];
-        UIContainer currentUI = GameManager.instance.currentUI;
+    public UIContainer CheckUpdateUI(UIContainer selectedUI, UIContainer currentUI)
+    { // 현재 선택된 UI랑 GM에 있는 UI랑 같은지 확인해서 화면에 업데이트 하고, 선택된 UI를 리턴해줌
         if(selectedUI != currentUI)
         {
             currentUI.Hide();
@@ -27,17 +25,29 @@ public class UIController : MonoBehaviour
         }
         return currentUI;
     }
-    public void SetUnitUI(int unitID)
+    public UIContainer SetBuildingListUI(int UIindex)
     {
-        TMP_Text unitType = UILists[7].transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
-        TMP_Text unitPower = UILists[7].transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
-        TMP_Text unitPowerRange = UILists[7].transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
-        TMP_Text unitMoveSpeed = UILists[7].transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
+        UIContainer selectedUI = UILists[UIindex];
+        UIContainer currentUI = GameManager.instance.currentUI;
+        return CheckUpdateUI(selectedUI, currentUI);
+    }
+    public UIContainer SetUnitUI(int UIindex)
+    {
+        UIContainer selectedUI = UILists[UIindex];
+        UIContainer currentUI = GameManager.instance.currentUI;
+        Unit selectedUnit = GameManager.instance.clickedObject[0].GetComponent<Unit>();
 
-        unitType.text = GameManager.instance.clickedObject[0].GetComponent<Unit>().unitType;
-        unitPower.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitPower}";
-        unitPowerRange.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitPowerRange}";
-        unitMoveSpeed.text = $"{GameManager.instance.clickedObject[0].GetComponent<Unit>().unitMoveSpeed}";
+        TMP_Text unitType = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
+        TMP_Text unitPower = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
+        TMP_Text unitPowerRange = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
+        TMP_Text unitMoveSpeed = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
+
+        unitType.text = selectedUnit.unitType;
+        unitPower.text = $"{selectedUnit.unitPower}";
+        unitPowerRange.text = $"{selectedUnit.unitPowerRange}";
+        unitMoveSpeed.text = $"{selectedUnit.unitMoveSpeed}";
+
+        return CheckUpdateUI(selectedUI, currentUI);
     }
     // Building UI 변경하는 함수
     public UIContainer SetBuildingUI(int UIindex, GameObject clickedObject)
@@ -73,15 +83,7 @@ public class UIController : MonoBehaviour
             }
         }
 
-        if (currentUI != selectedUI)
-        {
-            currentUI.Hide();
-            selectedUI.Show();
-            return selectedUI;
-        }
-        // ----------------------------------------------
-        // 현재 UI랑 바뀔 Ui가 같으면 현재 UI를 리턴
-        return currentUI;
+        return CheckUpdateUI(selectedUI, currentUI);
     }
 
     // ---------------- 준현 ---------------------

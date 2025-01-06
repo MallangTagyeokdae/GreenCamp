@@ -43,7 +43,6 @@ public class GameManager : MonoBehaviour
     public GameObject sponeffect;
     //-----------------------------
 
-    //---------------- 준현 --------------------
     void Start()
     {
         currentUI.Show();
@@ -59,12 +58,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // ================== 클릭 관련 함수 ======================
     public void SetClickedObject(GameObject gameObject)
     {
         clickedObject.Clear();
         clickedObject.Add(gameObject);
     }
 
+    public void GroundEvent(Vector3 newLocation)
+    {
+        if(clickedObject[0].name.Contains("Barrack")) SetSponPos(newLocation);
+        else if(clickedObject[0].name.Contains("Archer")
+                || clickedObject[0].name.Contains("Healer")
+                || clickedObject[0].name.Contains("Soldier")
+                || clickedObject[0].name.Contains("Tanker"))
+        {
+            MoveUnit(newLocation);
+            Debug.Log("check");
+        }
+    }
+    // =====================================================
+
+
+    //=================== UI 변경 관련 함수들 ===================
     public void SetBuildingListUI(int UIindex)
     {
         currentUI = uIController.SetBuildingListUI(UIindex);
@@ -73,34 +89,19 @@ public class GameManager : MonoBehaviour
     {
         currentUI = uIController.SetBuildingUI(UIindex, clickedObject[0]);
     }
-    public void SetUnitInfo(int unitID)
+    public void SetUnitInfo(int UIindex)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        uIController.SetUnitUI(unitID);
+       currentUI = uIController.SetUnitUI(UIindex);
     }
+    // =====================================================
 
+
+    // =================== 객체 생성 함수들 ===================
     public void CreateBuilding(Vector3 buildingPos)
     {
         DelayBuildingCreation(buildingPos);
         grid.SetActive(false);
     }
-
-    public void SetBuildingType(string buildingType)
-    {
-        this.buildingType = buildingType;
-    }
-
-    public void LevelUpBuilding()
-    {
-        buildingController.UpgradeBuilding();
-        uIController.UpdateLevel(currentUI, clickedObject[0].GetComponent<Building>());
-    }
-
-    //------------------------------------
-    public void SetUnitType(string unitType)
-    {
-        this.unitType = unitType;
-    }
-    
     public void CreateUnit() // 해윤
     {
         Vector3 buildingPos = clickedObject[0].GetComponent<Barrack>().transform.position;
@@ -112,26 +113,19 @@ public class GameManager : MonoBehaviour
         //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
         createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
     }
-    public void MoveUnit(Vector3 newLocation)
-    {   
-        Unit selectedUnit = clickedObject[0].GetComponent<Unit>();
-        if (clickedObject[0].name.Contains("Barrack")) clickedObject[0].GetComponent<Barrack>().SetSponPos(newLocation);
-        else if(selectedUnit.unitBehaviour != null)
-        {
-            StopCoroutine(selectedUnit.unitBehaviour);
-        }
-        selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(clickedObject[0], newLocation));
-    }
+    // =====================================================
+    
 
-    private async Task StartTimer(float time, Action<float> action){
-        float start = 0f;
-        while(time > start){
-            start += Time.deltaTime;
-            action.Invoke(start);
-            await Task.Yield();
-        }
+    // =================== 건물 관리 함수들 ===================
+    public void SetBuildingType(string buildingType)
+    {
+        this.buildingType = buildingType;
     }
-
+    public void LevelUpBuilding()
+    {
+        buildingController.UpgradeBuilding();
+        uIController.UpdateLevel(currentUI, clickedObject[0].GetComponent<Building>());
+    }
     private async Task DelayBuildingCreation(Vector3 buildingPos)
     {
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
@@ -187,4 +181,43 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    private void SetSponPos(Vector3 newLocation)
+    {
+        clickedObject[0].GetComponent<Barrack>().SetSponPos(newLocation);
+    }
+
+    // =====================================================
+
+
+    // =================== 유닛 관리 함수들 =================== 
+    public void SetUnitType(string unitType)
+    {
+        this.unitType = unitType;
+    }
+    
+    
+    public void MoveUnit(Vector3 newLocation)
+    {   
+        Unit selectedUnit = clickedObject[0].GetComponent<Unit>();
+        if(selectedUnit.unitBehaviour != null)
+        {
+            StopCoroutine(selectedUnit.unitBehaviour);
+        }
+        selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(clickedObject[0], newLocation));
+    }
+    
+    // =====================================================
+
+
+    // =================== 타이머 함수 =================== 
+    private async Task StartTimer(float time, Action<float> action){
+        float start = 0f;
+        while(time > start){
+            start += Time.deltaTime;
+            action.Invoke(start);
+            await Task.Yield();
+        }
+    }
+    // =====================================================
 }
