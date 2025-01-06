@@ -24,7 +24,7 @@ public class ResourceBuilding : Building
         this.buildingID = buildingID;
         this.buildingType = "ResourceBuilding";
         this.buildingLocation = buildingLocation;
-        this.buildingMaxHealth = 500;
+        this.buildingMaxHealth = 250;
         this.buildingCurrentHealth = 0;
         this.buildingLevel = 1;
         this.buildingCost = 0;
@@ -33,7 +33,7 @@ public class ResourceBuilding : Building
     public override void InitTime()
     {
         time = 0f;
-        loadingTime = 25f;
+        loadingTime = 20f;
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 

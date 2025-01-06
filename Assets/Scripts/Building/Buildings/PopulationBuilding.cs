@@ -11,7 +11,7 @@ public class PopulationBuilding : Building
         buildingID,
         buildingType : "PopulationBuilding",
         buildingLocation,
-        buildingMaxHealth : 500,
+        buildingMaxHealth : 200,
         buildingCost : 0,
         buildingLevel : 1
         )
@@ -24,7 +24,7 @@ public class PopulationBuilding : Building
         this.buildingID = buildingID;
         this.buildingType = "PopulationBuilding";
         this.buildingLocation = buildingLocation;
-        this.buildingMaxHealth = 500;
+        this.buildingMaxHealth = 200;
         this.buildingCurrentHealth = 0;
         this.buildingLevel = 1;
         this.buildingCost = 0;
@@ -33,7 +33,7 @@ public class PopulationBuilding : Building
     public override void InitTime()
     {
         time = 0f;
-        loadingTime = 25f;
+        loadingTime = 15f;
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
