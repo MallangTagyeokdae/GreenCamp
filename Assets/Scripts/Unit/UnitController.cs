@@ -108,6 +108,14 @@ public class UnitController : MonoBehaviour
                 newLocation,
                 unit.unitMoveSpeed * Time.deltaTime
             );
+
+            Vector3 moveDirection = (newLocation - unit.transform.position).normalized;
+
+            if (moveDirection != Vector3.zero)
+            {
+                unit.transform.rotation = Quaternion.LookRotation(moveDirection);
+            }
+
             unit.unitAnimator.SetBool("isWalking", true);
 
             yield return null;
