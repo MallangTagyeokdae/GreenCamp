@@ -87,7 +87,7 @@ public class UnitController : MonoBehaviour
         );
         _unitID++;
         return _createdUnit;
-        
+
     }
     public void unitAttacked(int unitID, int damage)
     {
@@ -108,10 +108,12 @@ public class UnitController : MonoBehaviour
                 newLocation,
                 unit.unitMoveSpeed * Time.deltaTime
             );
+            unit.unitAnimator.SetBool("isWalking", true);
 
             yield return null;
         }
         unit.transform.position = newLocation;
+        unit.unitAnimator.SetBool("isWalking", false);
     }
 
 }
