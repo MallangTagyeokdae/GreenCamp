@@ -14,7 +14,7 @@ public class Defender : Building
         buildingID,
         buildingType : "Defender",
         buildingLocation,
-        buildingMaxHealth : 500,
+        buildingMaxHealth : 200,
         buildingCost : 0,
         buildingLevel : 1
         )
@@ -29,7 +29,7 @@ public class Defender : Building
         this.buildingID = buildingID;
         this.buildingType = "Defender";
         this.buildingLocation = buildingLocation;
-        this.buildingMaxHealth = 500;
+        this.buildingMaxHealth = 200;
         this.buildingCurrentHealth = 0;
         this.buildingLevel = 1;
         this.buildingCost = 0;
