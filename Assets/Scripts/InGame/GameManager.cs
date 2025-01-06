@@ -69,11 +69,12 @@ public class GameManager : MonoBehaviour
     {
         if(clickedObject[0].name.Contains("Barrack")) SetSponPos(newLocation);
         else if(clickedObject[0].name.Contains("Archer")
-                && clickedObject[0].name.Contains("Healer")
-                && clickedObject[0].name.Contains("Soldier")
-                && clickedObject[0].name.Contains("Tanker"))
+                || clickedObject[0].name.Contains("Healer")
+                || clickedObject[0].name.Contains("Soldier")
+                || clickedObject[0].name.Contains("Tanker"))
         {
             MoveUnit(newLocation);
+            Debug.Log("check");
         }
     }
     // =====================================================
