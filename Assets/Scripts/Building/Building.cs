@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Building : MonoBehaviour
 {
@@ -17,9 +18,12 @@ public abstract class Building : MonoBehaviour
     public string buildingType { get; set; }
     public Vector3 buildingLocation { get; set; }
     public int buildingMaxHealth { get; set; }
-    public int buildingCurrentHealth { get; set; }
+    public float buildingCurrentHealth { get; set; }
+    public float buildingProgress { get; set; }
     public int buildingCost { get; set; }
     public int buildingLevel { get; set; }
+    public Slider buildingHealthBar { get; set; }
+    public Slider buildingProgressBar { get; set; }
 
     //------------조영리------------------
     public float time { get; set; }
