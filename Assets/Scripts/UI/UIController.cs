@@ -105,7 +105,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateHealth(UIContainer currentUI, Building clickedObject)
     {
-        int currentHealth = clickedObject.GetComponent<Building>().buildingCurrentHealth;
+        int currentHealth = (int)Math.Round(clickedObject.GetComponent<Building>().buildingCurrentHealth);
         int maxHealth = clickedObject.GetComponent<Building>().buildingMaxHealth;
         SetHealth(currentUI, currentHealth, maxHealth);
     }
