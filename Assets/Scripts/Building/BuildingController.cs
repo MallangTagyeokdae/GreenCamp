@@ -47,9 +47,9 @@ public class BuildingController : MonoBehaviour
         // 좌클릭 했을 때 callback 함수 넣어줌
         buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetClickedObject(gameObject));
         Slider buildingHealthBar = buildingObject.transform.Find("HealthUI/CurrentHealth").GetComponent<Slider>();
-        if(buildingHealthBar == null) Debug.Log("buildingHealthBar 못찾음");
         Slider buildingProgressBar = buildingObject.transform.Find("ProgressUI/CurrentProgress").GetComponent<Slider>();
-        if(buildingHealthBar == null) Debug.Log("progressBar 못찾음");
+        buildingHealthBar.gameObject.SetActive(true);
+        buildingProgressBar.gameObject.SetActive(true);
         Building newBuilding;
         switch (buildingType)
         {
