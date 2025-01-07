@@ -17,7 +17,8 @@ public abstract class Building : MonoBehaviour
     public string buildingType { get; set; }
     public Vector3 buildingLocation { get; set; }
     public int buildingMaxHealth { get; set; }
-    public int buildingCurrentHealth { get; set; }
+    public float buildingCurrentHealth { get; set; }
+    public int buildingProgress { get; set; }
     public int buildingCost { get; set; }
     public int buildingLevel { get; set; }
 

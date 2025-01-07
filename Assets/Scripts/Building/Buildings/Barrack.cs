@@ -47,8 +47,10 @@ public class Barrack : Building
 
     public override void UpdateTime(float update)
     {
+        float incrementPerSec = buildingMaxHealth / loadingTime;
         time = update;
-        this.buildingCurrentHealth = (int)Math.Round(time/loadingTime*buildingMaxHealth);
+        this.buildingCurrentHealth += (int)incrementPerSec;
+        this.buildingProgress = (int)Math.Round(loadingTime/update);
         UpdateMesh();
     }
     public override void UpdateMesh()

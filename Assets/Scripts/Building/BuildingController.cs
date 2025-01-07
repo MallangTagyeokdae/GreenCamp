@@ -9,12 +9,10 @@ using UnityEngine.UIElements;
 
 public class BuildingController : MonoBehaviour
 {
-    //--------- 변수 선언 위치 변경 (해윤) ---------//
     public Dictionary<int, Building> buildingDictionary = new Dictionary<int, Building>();
     private Dictionary<string, GameObject> _buildingPrefabs = new Dictionary<string, GameObject>();
     private string _teamID;
     private int _buildingID;
-    //---------------------------------------//
     public GameObject buildingObject;
     public void Start()
     {
@@ -35,8 +33,6 @@ public class BuildingController : MonoBehaviour
 
     }
 
-
-    //-------------------------------------------조영리 수정------------------------------------------------------------------------
     public Building CreateBuilding(Vector3 buildingLocation, string buildingType)
     // 건물 생성
     {
@@ -126,7 +122,7 @@ public class BuildingController : MonoBehaviour
         _buildingID++;
         return newBuilding;
     }
-    //-----------------------------------------------------------------------------------------------------------------------------------
+
     public void UpdateBuilding(Vector3 buildingLocation, string buildingType){}
     
 
