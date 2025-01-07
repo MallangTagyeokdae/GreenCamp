@@ -4,14 +4,25 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System;
 using UnityEngine.UIElements;
+using UnityEditor.Overlays;
 
 public class ClickManager : MonoBehaviour
 {
+    struct DragBox
+    {
+        public Vector3 topLeft { get; set; }  // 왼쪽 상단
+        public Vector3 topRight { get; set; } // 오른쪽 상단
+        public Vector3 bottomLeft { get; set; } // 왼쪽 하단
+        public Vector3 bottomRight { get; set; } // 오른쪽 하단
+
+    };
+
     private float _distance = 300f;
     private Vector3 _dragStartPoint;
     private Vector3 _dragEndPoint;
     public bool drawRay = false;
     private GameObject hoverObj;
+    public bool _overlay = true;
 
     #region drag variable
     private bool _isDragging;
@@ -40,15 +51,16 @@ public class ClickManager : MonoBehaviour
         }
     }
 
-    private GameObject lineObject;
-    private Vector3 previousEndPos;
+    private GameObject _lineObject;
+    private Vector3 _previousEndPos;
+    private DragBox _dragBox;
     #endregion end drag variable
     void Update()
     {
         //Mouse Button Down
         if (Input.GetMouseButtonDown(0)) //좌클릭
         {
-            Click(0, (go, position) => { go.GetComponent<ClickEventHandler>().LeftClickDown(position);});  //입력 받은 오브젝트가 가지고 있는 콜백함수를 실행
+            Click(0, (go, position) => { go.GetComponent<ClickEventHandler>().LeftClickDown(position); });  //입력 받은 오브젝트가 가지고 있는 콜백함수를 실행
         }
 
         if (Input.GetMouseButtonDown(1))  //우클릭
@@ -122,16 +134,18 @@ public class ClickManager : MonoBehaviour
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.green);
         }
 
-         if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
-         {
-            if(hoverObj != hit.collider.gameObject){
-                if(hoverObj != null){
+        if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
+        {
+            if (hoverObj != hit.collider.gameObject)
+            {
+                if (hoverObj != null)
+                {
                     hoverObj.GetComponent<ClickEventHandler>().DeMouseHover(hit.point);
-                }                
+                }
                 hoverObj = hit.collider.gameObject;
             }
-             hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
-         }
+            hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
+        }
     }
 
     public void Drag()  //미완성
@@ -146,93 +160,115 @@ public class ClickManager : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
+        /*if(_isDragging == true){
+            _overlay = true;
+        }*/
+
+
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(ray, out hit, _distance) && hit.collider.gameObject.CompareTag("Clickable"))
+            foreach (RaycastHit hit in hits)
             {
-                startPos = hit.point;
-                _isDragging = true;
+                if (hit.collider.name == "Ground" && hit.collider.gameObject.CompareTag("Clickable"))
+                {
+                    startPos = hit.point;
+                    _isDragging = true;
+                }
             }
+
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (Physics.Raycast(ray, out hit, _distance) && hit.collider.gameObject.CompareTag("Clickable"))
+            foreach (RaycastHit hit in hits)
             {
-                DestroyDragBox();
-                endPos = hit.point;
-                Collider[] colliders = startPos!=endPos? SelectObjectInBox(): null;
-                _isDragging = false;
-            }
-        }
-
-        if (_isDragging)
-        {
-            if (Physics.Raycast(ray, out hit, _distance) && hit.collider.gameObject.CompareTag("Clickable"))
-            {
-                endPos = hit.point;
-                DrawDebugDragBox(startPos, endPos);
-                if(endPos != previousEndPos){
+                if (hit.collider.name == "Ground" && hit.collider.gameObject.CompareTag("Clickable"))
+                {
                     DestroyDragBox();
-                    DrawDragBox(startPos, endPos);
+                    endPos = hit.point;
+                    Collider[] colliders = startPos != endPos ? SelectObjectInBox() : null;
+                    _isDragging = false;
                 }
             }
+
+        }
+
+        if (_isDragging) //end position을 갱신
+        {
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.name == "Ground" && hit.collider.gameObject.CompareTag("Clickable"))
+                {
+                    _previousEndPos = endPos;
+                    endPos = hit.point;
+                    if (endPos != _previousEndPos)
+                    {
+                        UpdateDragBox(startPos, endPos);
+                        DestroyDragBox();
+                        DrawDebugDragBox();
+                        DrawDragBox();
+                    }
+                }
+            }
+
         }
     }
 
-    private void DrawDebugDragBox(Vector3 start, Vector3 end)
+    private void UpdateDragBox(Vector3 start, Vector3 end)
     {
-        Vector3 topLeft = new Vector3(Mathf.Min(start.x, end.x), Mathf.Max(start.y, end.y), Mathf.Max(start.z, end.z));  // 왼쪽 상단
-        Vector3 topRight = new Vector3(Mathf.Max(start.x, end.x), Mathf.Max(start.y, end.y), Mathf.Max(start.z, end.z)); // 오른쪽 상단
-        Vector3 bottomLeft = new Vector3(Mathf.Min(start.x, end.x), Mathf.Min(start.y, end.y), Mathf.Min(start.z, end.z)); // 왼쪽 하단
-        Vector3 bottomRight = new Vector3(Mathf.Max(start.x, end.x), Mathf.Min(start.y, end.y), Mathf.Min(start.z, end.z)); // 오른쪽 하단
-
-        Debug.DrawLine(topLeft, topRight, Color.red);   // 왼쪽 상단 -> 오른쪽 상단
-        Debug.DrawLine(topRight, bottomRight, Color.red); // 오른쪽 상단 -> 오른쪽 하단
-        Debug.DrawLine(bottomRight, bottomLeft, Color.red); // 오른쪽 하단 -> 왼쪽 하단
-        Debug.DrawLine(bottomLeft, topLeft, Color.red); // 왼쪽 하단 -> 왼쪽 상단
+        _dragBox.topLeft = new Vector3(Mathf.Min(start.x, end.x), Mathf.Max(start.y, end.y), Mathf.Max(start.z, end.z));
+        _dragBox.topRight = new Vector3(Mathf.Max(start.x, end.x), Mathf.Max(start.y, end.y), Mathf.Max(start.z, end.z));
+        _dragBox.bottomLeft = new Vector3(Mathf.Min(start.x, end.x), Mathf.Min(start.y, end.y), Mathf.Min(start.z, end.z));
+        _dragBox.bottomRight = new Vector3(Mathf.Max(start.x, end.x), Mathf.Min(start.y, end.y), Mathf.Min(start.z, end.z));
     }
 
-    private void DrawDragBox(Vector3 start, Vector3 end){
-        lineObject = new GameObject();
-        lineObject.AddComponent<LineRenderer>();
-        LineRenderer lineRenderer = lineObject.GetComponent<LineRenderer>();
+    private void DrawDebugDragBox()
+    {
+        Debug.DrawLine(_dragBox.topLeft, _dragBox.topRight, Color.red);   // 왼쪽 상단 -> 오른쪽 상단
+        Debug.DrawLine(_dragBox.topRight, _dragBox.bottomRight, Color.red); // 오른쪽 상단 -> 오른쪽 하단
+        Debug.DrawLine(_dragBox.bottomRight, _dragBox.bottomLeft, Color.red); // 오른쪽 하단 -> 왼쪽 하단
+        Debug.DrawLine(_dragBox.bottomLeft, _dragBox.topLeft, Color.red); // 왼쪽 하단 -> 왼쪽 상단
+    }
+
+    private void DrawDragBox()
+    {
+        _lineObject = new GameObject();
+        _lineObject.AddComponent<LineRenderer>();
+        LineRenderer lineRenderer = _lineObject.GetComponent<LineRenderer>();
+        lineRenderer.sortingOrder = 100;  // 렌더링 순서 설정
 
         /*lineRenderer.startColor = Color.green;
         lineRenderer.endColor = Color.green;*/
         lineRenderer.positionCount = 5;
-        lineRenderer.startWidth = 0.5f;
-        lineRenderer.endWidth = 0.5f;
+        lineRenderer.startWidth = 0.3f;
+        lineRenderer.endWidth = 0.3f;
         lineRenderer.material = new Material(Shader.Find("Unlit/Color"));
         lineRenderer.material.SetColor("_Color", Color.green);
 
-
-        Vector3 topLeft = new Vector3(Mathf.Min(start.x, end.x), Mathf.Max(start.y, end.y), Mathf.Max(start.z, end.z));  // 왼쪽 상단
-        Vector3 topRight = new Vector3(Mathf.Max(start.x, end.x), Mathf.Max(start.y, end.y), Mathf.Max(start.z, end.z)); // 오른쪽 상단
-        Vector3 bottomLeft = new Vector3(Mathf.Min(start.x, end.x), Mathf.Min(start.y, end.y), Mathf.Min(start.z, end.z)); // 왼쪽 하단
-        Vector3 bottomRight = new Vector3(Mathf.Max(start.x, end.x), Mathf.Min(start.y, end.y), Mathf.Min(start.z, end.z)); // 오른쪽 하단
-
-        lineRenderer.SetPosition(0, topLeft);
-        lineRenderer.SetPosition(1, bottomLeft);
-        lineRenderer.SetPosition(2, bottomRight);
-        lineRenderer.SetPosition(3, topRight);
-        lineRenderer.SetPosition(4, topLeft);
+        lineRenderer.SetPosition(0, _dragBox.topLeft + new Vector3(0, 0.08f, 0));
+        lineRenderer.SetPosition(1, _dragBox.bottomLeft + new Vector3(0, 0.08f, 0));
+        lineRenderer.SetPosition(2, _dragBox.bottomRight + new Vector3(0, 0.08f, 0));
+        lineRenderer.SetPosition(3, _dragBox.topRight + new Vector3(0, 0.08f, 0));
+        lineRenderer.SetPosition(4, _dragBox.topLeft + new Vector3(0, 0.08f, 0));
     }
 
-    private void DestroyDragBox(){
-         Destroy(lineObject);
+    private void DestroyDragBox()
+    {
+        Destroy(_lineObject);
     }
 
     private Collider[] SelectObjectInBox()
     {
         Collider[] colliders = Physics.OverlapBox((startPos + endPos) / 2, new Vector3(
             Mathf.Abs(startPos.x - endPos.x),
-            Mathf.Abs(startPos.y - endPos.y),
+            Mathf.Abs(100),
             Mathf.Abs(startPos.z - endPos.z)
         ) / 2, Quaternion.identity);
 
-        Debug.Log(colliders);
+        foreach(Collider collider in colliders){
+            Debug.Log(collider.name);
+        }
         return colliders;
     }
 }
