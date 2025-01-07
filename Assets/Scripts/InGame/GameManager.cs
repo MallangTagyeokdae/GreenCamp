@@ -160,24 +160,24 @@ public class GameManager : MonoBehaviour
 
     private void ReloadBuildingUI(Building building)
     { // 건물이 생성완료 됐을 때 건물을 클릭하고 있으면 건물 UI로 바꿔준다.
-        if(clickedObject[0] == building)
+        if(clickedObject[0].name == building.name)
         {
             switch(building.buildingType)
             {
                 case "Command":
-                    uIController.SetBuildingUI(2, clickedObject[0]);
+                    SetBuildingInfo(2);
                     break;
                 case "Barrack":
-                    uIController.SetBuildingUI(3, clickedObject[0]);
+                    SetBuildingInfo(3);
                     break;
                 case "PopulationBuilding":
-                    uIController.SetBuildingUI(4, clickedObject[0]);
+                    SetBuildingInfo(4);
                     break;
                 case "ResourceBuilding":
-                    uIController.SetBuildingUI(5, clickedObject[0]);
+                    SetBuildingInfo(5);
                     break;
                 case "Defender":
-                    uIController.SetBuildingUI(6, clickedObject[0]);
+                    SetBuildingInfo(6);
                     break;
             }
         }

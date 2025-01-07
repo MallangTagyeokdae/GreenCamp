@@ -106,13 +106,16 @@ public class UIController : MonoBehaviour
     public void UpdateHealth(UIContainer currentUI, Building clickedObject)
     {
         int currentHealth = clickedObject.GetComponent<Building>().buildingCurrentHealth;
-        SetHealth(currentUI, currentHealth);
+        int maxHealth = clickedObject.GetComponent<Building>().buildingMaxHealth;
+        SetHealth(currentUI, currentHealth, maxHealth);
     }
 
-    public void SetHealth(UIContainer currentUI, int currentHealth)
+    public void SetHealth(UIContainer currentUI, int currentHealth, int maxHealth)
     {
         TMP_Text healthText = currentUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
+        Slider healthBar = currentUI.transform.Find("LeftSide/BuildingCurrentHealth").GetComponent<Slider>();
         healthText.text = currentHealth.ToString();
+        healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
     }
 
     // ----------------------------------------
