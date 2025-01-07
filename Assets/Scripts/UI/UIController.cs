@@ -41,15 +41,13 @@ public class UIController : MonoBehaviour
         TMP_Text unitPower = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
         TMP_Text unitPowerRange = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
         TMP_Text unitMoveSpeed = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
-        RectTransform unitCurrentHealth = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitHealthField/UnitCurrentHealth").GetComponent<RectTransform>();
-        RectTransform unitMaxHealth = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitHealthField/UnitMaxHealth").GetComponent<RectTransform>();
-        unitCurrentHealth.sizeDelta = unitMaxHealth.sizeDelta;
+        Slider unitCurrentHealth = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitHealthField/UnitCurrentHealth").GetComponent<Slider>();
 
         unitType.text = selectedUnit.unitType;
         unitPower.text = $"{selectedUnit.unitPower}";
         unitPowerRange.text = $"{selectedUnit.unitPowerRange}";
         unitMoveSpeed.text = $"{selectedUnit.unitMoveSpeed}";
-        unitCurrentHealth.sizeDelta = new Vector2(unitCurrentHealth.sizeDelta.x * (float)((selectedUnit.unitCurrentHealth * 1.0 / selectedUnit.unitMaxHealth)), unitCurrentHealth.sizeDelta.y);
+        unitCurrentHealth.value = (float)(selectedUnit.unitCurrentHealth * 1.0 / selectedUnit.unitMaxHealth);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
