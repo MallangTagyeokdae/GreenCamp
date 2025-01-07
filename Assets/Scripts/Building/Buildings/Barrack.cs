@@ -57,9 +57,7 @@ public class Barrack : Building
         this.buildingProgress = time/loadingTime*100;
 
         this.buildingHealthBar.value = (float)(buildingCurrentHealth * 1.0 / buildingMaxHealth);
-        Debug.Log(buildingHealthBar.value);
-        this.buildingProgressBar.value = (float)this.buildingProgress;
-        Debug.Log(buildingProgressBar.value);
+        this.buildingProgressBar.value = (float)this.buildingProgress / 100;
         UpdateMesh();
     }
     public override void UpdateMesh()

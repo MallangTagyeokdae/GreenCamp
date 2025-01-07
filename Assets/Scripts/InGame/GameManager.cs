@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour
         //------------------------
         Debug.Log($"check time: {building.time}");
         building.buildingState = Building.BuildingState.Built;
+        building.buildingCurrentHealth = Mathf.FloorToInt(building.buildingCurrentHealth); // 소수점 아래자리 버리기
         ReloadBuildingUI(building);
     }
 
