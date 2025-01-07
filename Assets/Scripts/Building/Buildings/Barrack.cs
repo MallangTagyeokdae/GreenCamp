@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Barrack : Building
 {
@@ -19,7 +20,7 @@ public class Barrack : Building
         )
     { }
 
-    public void Init(string teamID, int buildingID, Vector3 buildingLocation)
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar)
     {
         this.teamID = teamID;
         this.buildingID = buildingID;
@@ -27,9 +28,12 @@ public class Barrack : Building
         this.buildingLocation = buildingLocation;
         this.buildingMaxHealth = 500;
         this.buildingCurrentHealth = 0;
+        this.buildingProgress = 0;
         this.buildingLevel = 1;
         this.buildingCost = 50;
         this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 4f);
+        this.buildingHealthBar = buildingHealthBar;
+        this.buildingProgressBar = buildingProgressBar;
     }
 
     public void SetSponPos(Vector3 setSponPos)
@@ -47,8 +51,15 @@ public class Barrack : Building
 
     public override void UpdateTime(float update)
     {
+        float incrementPerSec = buildingMaxHealth / loadingTime;
         time = update;
-        this.buildingCurrentHealth = (int)Math.Round(time/loadingTime*buildingMaxHealth);
+        this.buildingCurrentHealth += incrementPerSec * Time.deltaTime;
+        this.buildingProgress = time/loadingTime*100;
+
+        this.buildingHealthBar.value = (float)(buildingCurrentHealth * 1.0 / buildingMaxHealth);
+        Debug.Log(buildingHealthBar.value);
+        this.buildingProgressBar.value = (float)this.buildingProgress;
+        Debug.Log(buildingProgressBar.value);
         UpdateMesh();
     }
     public override void UpdateMesh()
