@@ -88,7 +88,7 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(4));
 
                 PopulationBuilding _newPop = buildingObject.GetComponent<PopulationBuilding>();
-                _newPop.Init(_teamID, _buildingID, buildingLocation);
+                _newPop.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
 
                 buildingDictionary.Add(_buildingID, _newPop);
                 newBuilding = _newPop;
@@ -99,7 +99,7 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(5));
 
                 ResourceBuilding _newResource = buildingObject.GetComponent<ResourceBuilding>();
-                _newResource.Init(_teamID, _buildingID, buildingLocation);
+                _newResource.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
 
                 buildingDictionary.Add(_buildingID, _newResource);
                 newBuilding = _newResource;
@@ -110,7 +110,7 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6));
 
                 Defender _newDefender = buildingObject.GetComponent<Defender>();
-                _newDefender.Init(_teamID, _buildingID, buildingLocation);
+                _newDefender.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
                 
                 buildingDictionary.Add(_buildingID, _newDefender);
                 newBuilding = _newDefender;
@@ -121,7 +121,7 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6));
 
                 Defender defautBuilding = buildingObject.AddComponent<Defender>();
-                defautBuilding.Init(_teamID, _buildingID, buildingLocation);
+                defautBuilding.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
                 buildingDictionary.Add(_buildingID, defautBuilding);
                 newBuilding = defautBuilding;
                 break;

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResourceBuilding : Building
 {
@@ -18,7 +19,7 @@ public class ResourceBuilding : Building
     {
     }
 
-    public void Init(string teamID, int buildingID, Vector3 buildingLocation)
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar)
     {
         this.teamID = teamID;
         this.buildingID = buildingID;
@@ -28,6 +29,8 @@ public class ResourceBuilding : Building
         this.buildingCurrentHealth = 0;
         this.buildingLevel = 1;
         this.buildingCost = 0;
+        this.buildingHealthBar = buildingHealthBar;
+        this.buildingProgressBar = buildingProgressBar;
     }
 
     public override void InitTime()
@@ -39,8 +42,13 @@ public class ResourceBuilding : Building
 
     public override void UpdateTime(float update)
     {
+        float incrementPerSec = buildingMaxHealth / loadingTime;
         time = update;
-        this.buildingCurrentHealth = (int)Math.Round(time/loadingTime*buildingMaxHealth);
+        this.buildingCurrentHealth += incrementPerSec * Time.deltaTime;
+        this.buildingProgress = time/loadingTime*100;
+
+        this.buildingHealthBar.value = (float)(buildingCurrentHealth * 1.0 / buildingMaxHealth);
+        this.buildingProgressBar.value = (float)this.buildingProgress / 100;
         UpdateMesh();
     }
     public override void UpdateMesh()
