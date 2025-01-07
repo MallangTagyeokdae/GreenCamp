@@ -17,7 +17,7 @@ public class UIController : MonoBehaviour
     // Ground 눌렀을 때 건물 리스트 UI 나타내는 함수
     public UIContainer CheckUpdateUI(UIContainer selectedUI, UIContainer currentUI)
     { // 현재 선택된 UI랑 GM에 있는 UI랑 같은지 확인해서 화면에 업데이트 하고, 선택된 UI를 리턴해줌
-        if(selectedUI != currentUI)
+        if (selectedUI != currentUI)
         {
             currentUI.Hide();
             selectedUI.Show();
@@ -41,11 +41,15 @@ public class UIController : MonoBehaviour
         TMP_Text unitPower = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
         TMP_Text unitPowerRange = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
         TMP_Text unitMoveSpeed = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
+        RectTransform unitCurrentHealth = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitHealthField/UnitCurrentHealth").GetComponent<RectTransform>();
+        RectTransform unitMaxHealth = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitHealthField/UnitMaxHealth").GetComponent<RectTransform>();
+        unitCurrentHealth.sizeDelta = unitMaxHealth.sizeDelta;
 
         unitType.text = selectedUnit.unitType;
         unitPower.text = $"{selectedUnit.unitPower}";
         unitPowerRange.text = $"{selectedUnit.unitPowerRange}";
         unitMoveSpeed.text = $"{selectedUnit.unitMoveSpeed}";
+        unitCurrentHealth.sizeDelta = new Vector2(unitCurrentHealth.sizeDelta.x * (float)((selectedUnit.unitCurrentHealth * 1.0 / selectedUnit.unitMaxHealth)), unitCurrentHealth.sizeDelta.y);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
@@ -61,7 +65,8 @@ public class UIController : MonoBehaviour
         {
             selectedUI = UILists[1];
             UpdateHealth(selectedUI, clickedBuidling);
-        } else
+        }
+        else
         {
             if (UIindex >= 1 && UIindex <= 5)
             {

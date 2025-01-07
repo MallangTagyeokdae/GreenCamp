@@ -8,12 +8,14 @@ public abstract class Unit : MonoBehaviour
     public int unitID { get; set; }
     public string unitType { get; set; }
     public Vector3 unitLocation { get; set; }
-    public int unitHealth { get; set; }
+    public int unitMaxHealth { get; set; }
+    public int unitCurrentHealth { get; set; }
     public int unitCost { get; set; }
     public int unitPower { get; set; }
     public int unitPowerRange { get; set; }
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
+
 
 
     [HideInInspector]
@@ -38,7 +40,8 @@ public abstract class Unit : MonoBehaviour
                 int unitID,
                 string unitType,
                 Vector3 unitLocation,
-                int unitHealth,
+                int unitMaxHealth,
+                int unitCurrentHealth,
                 int unitCost,
                 int unitPower,
                 int unitPowerRange,
@@ -49,7 +52,8 @@ public abstract class Unit : MonoBehaviour
         this.unitID = unitID;
         this.unitType = unitType;
         transform.position = unitLocation;
-        this.unitHealth = unitHealth;
+        this.unitMaxHealth = unitMaxHealth;
+        this.unitCurrentHealth = unitCurrentHealth;
         this.unitCost = unitCost;
         this.unitPower = unitPower;
         this.unitPowerRange = unitPowerRange;

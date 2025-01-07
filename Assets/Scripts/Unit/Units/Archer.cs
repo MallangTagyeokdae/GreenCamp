@@ -14,7 +14,8 @@ public class Archer : Unit
                 unitID,
                 unitType: "Archer",
                 unitLocation,
-                unitHealth: 0,
+                unitMaxHealth: 500,
+                unitCurrentHealth: 300,
                 unitCost: 0,
                 unitPower: 0,
                 unitPowerRange: 0,
@@ -29,7 +30,8 @@ public class Archer : Unit
         this.unitID = unitID;
         this.unitType = "Archer";
         this.unitLocation = unitLocation;
-        this.unitHealth = 0;
+        this.unitMaxHealth = 500;
+        this.unitCurrentHealth = 300;
         this.unitCost = 0;
         this.unitPower = 0;
         this.unitPowerRange = 0;
