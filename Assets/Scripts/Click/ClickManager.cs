@@ -121,10 +121,12 @@ public class ClickManager : MonoBehaviour
 
          if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
          {
-            if(hoverObj != null){
-                hoverObj.GetComponent<ClickEventHandler>().DeMouseHover(hit.point);
+            if(hoverObj != hit.collider.gameObject){
+                if(hoverObj != null){
+                    hoverObj.GetComponent<ClickEventHandler>().DeMouseHover(hit.point);
+                }                
+                hoverObj = hit.collider.gameObject;
             }
-            hoverObj = hit.collider.gameObject;
              hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
          }
     }
