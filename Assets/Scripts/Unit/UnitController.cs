@@ -82,6 +82,8 @@ public class UnitController : MonoBehaviour
         {
             GameManager.instance.SetClickedObject(gameObject);
             GameManager.instance.SetUnitInfo(7);
+            Unit unit = gameObject.GetComponent<Unit>();
+            GameManager.instance.SetHealthBar(unit);
         }
         );
         _unitID++;
