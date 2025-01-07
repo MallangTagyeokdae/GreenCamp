@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public GameObject target;
     public float edgeSize = 10f; // 가장자리 감지 범위q
     public float moveSpeed = 110f; // 카메라 이동 속도
     public Vector2 xBounds = new Vector2(-250, 250); // x축으로 이동하는 범위
@@ -38,5 +39,10 @@ public class CameraMovement : MonoBehaviour
 
         // 카메라 위치 업데이트
         transform.position = pos;
+    }
+
+    public void SetTargetToClickedOBJ()
+    {
+        target.transform.position = GameManager.instance.clickedObject[0].transform.position;
     }
 }
