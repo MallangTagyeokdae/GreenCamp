@@ -10,8 +10,8 @@ public class Healer : Unit
                 unitID,
                 unitType: "Healer",
                 unitLocation,
-                unitMaxHealth: 200,
-                unitCurrentHealth: 200,
+                unitMaxHealth: 85,
+                unitCurrentHealth: 85,
                 unitCost: 0,
                 unitPower: 0,
                 unitPowerRange: 0,
@@ -24,8 +24,8 @@ public class Healer : Unit
         this.unitID = unitID;
         this.unitType = "Healer";
         this.unitLocation = unitLocation;
-        this.unitMaxHealth = 200;
-        this.unitCurrentHealth = 200;
+        this.unitMaxHealth = 85;
+        this.unitCurrentHealth = 85;
         this.unitCost = 0;
         this.unitPower = 0;
         this.unitPowerRange = 0;

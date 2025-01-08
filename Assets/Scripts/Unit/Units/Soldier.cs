@@ -10,10 +10,10 @@ public class Soldier : Unit
                 unitID,
                 unitType: "Soldier",
                 unitLocation,
-                unitMaxHealth: 600,
-                unitCurrentHealth: 600,
+                unitMaxHealth: 100,
+                unitCurrentHealth: 100,
                 unitCost: 0,
-                unitPower: 0,
+                unitPower: 30,
                 unitPowerRange: 0,
                 unitMoveSpeed: 0,
                 populationCost: 0)
@@ -24,10 +24,10 @@ public class Soldier : Unit
         this.unitID = unitID;
         this.unitType = "Soldier";
         this.unitLocation = unitLocation;
-        this.unitMaxHealth = 600;
-        this.unitCurrentHealth = 600;
+        this.unitMaxHealth = 100;
+        this.unitCurrentHealth = 100;
         this.unitCost = 0;
-        this.unitPower = 0;
+        this.unitPower = 30;
         this.unitPowerRange = 0;
         this.unitMoveSpeed = 2;
         this.populationCost = 0;

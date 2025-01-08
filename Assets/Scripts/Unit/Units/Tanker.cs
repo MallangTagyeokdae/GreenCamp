@@ -10,10 +10,10 @@ public class Tanker : Unit
                 unitID,
                 unitType: "Tanker",
                 unitLocation,
-                unitMaxHealth: 650,
-                unitCurrentHealth: 650,
+                unitMaxHealth: 150,
+                unitCurrentHealth: 150,
                 unitCost: 0,
-                unitPower: 0,
+                unitPower: 15,
                 unitPowerRange: 0,
                 unitMoveSpeed: 0,
                 populationCost: 0)
@@ -24,10 +24,10 @@ public class Tanker : Unit
         this.unitID = unitID;
         this.unitType = "Tanker";
         this.unitLocation = unitLocation;
-        this.unitMaxHealth = 650;
-        this.unitCurrentHealth = 650;
+        this.unitMaxHealth = 150;
+        this.unitCurrentHealth = 150;
         this.unitCost = 0;
-        this.unitPower = 0;
+        this.unitPower = 15;
         this.unitPowerRange = 0;
         this.unitMoveSpeed = 3;
         this.populationCost = 0;
