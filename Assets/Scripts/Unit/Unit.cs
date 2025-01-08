@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Unit : MonoBehaviour
 {
@@ -16,14 +17,15 @@ public abstract class Unit : MonoBehaviour
     // private Collider u
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
-
-
+    public Slider healthBar;
 
     [HideInInspector]
     public Animator unitAnimator;
     private void Awake()
     {
         unitAnimator = GetComponent<Animator>();
+        healthBar = gameObject.transform.Find("HealthBar/UnitCurrentHealth").GetComponent<Slider>();
+        healthBar.gameObject.SetActive(false);
         Debug.Log(unitAnimator.name);
     }
     private void Update()
@@ -34,6 +36,7 @@ public abstract class Unit : MonoBehaviour
             unitAnimator.SetTrigger("isAttacking");
         }
 
+        if (!GameManager.instance.clickedObject.Contains(gameObject)) { healthBar.gameObject.SetActive(false); }
     }
     public Coroutine unitBehaviour;
 
