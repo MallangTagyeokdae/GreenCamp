@@ -14,13 +14,13 @@ public class Archer : Unit
                 unitID,
                 unitType: "Archer",
                 unitLocation,
-                unitMaxHealth: 500,
-                unitCurrentHealth: 300,
+                unitMaxHealth: 50,
+                unitCurrentHealth: 50,
                 unitCost: 0,
-                unitPower: 0,
-                unitPowerRange: 0,
-                unitMoveSpeed: 0,
-                populationCost: 0)
+                unitPower: 35,
+                unitPowerRange: 3,
+                unitMoveSpeed: 3,
+                populationCost: 1)
     {
         // 추가 초기화 작업 수행 가능
     }
@@ -30,12 +30,12 @@ public class Archer : Unit
         this.unitID = unitID;
         this.unitType = "Archer";
         this.unitLocation = unitLocation;
-        this.unitMaxHealth = 500;
-        this.unitCurrentHealth = 300;
+        this.unitMaxHealth = 50;
+        this.unitCurrentHealth = 50;
         this.unitCost = 0;
-        this.unitPower = 0;
-        this.unitPowerRange = 0;
+        this.unitPower = 35;
+        this.unitPowerRange = 3;
         this.unitMoveSpeed = 3;
-        this.populationCost = 0;
+        this.populationCost = 1;
     }
 }

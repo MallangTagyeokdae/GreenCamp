@@ -10,13 +10,13 @@ public class Healer : Unit
                 unitID,
                 unitType: "Healer",
                 unitLocation,
-                unitMaxHealth: 200,
-                unitCurrentHealth: 200,
+                unitMaxHealth: 85,
+                unitCurrentHealth: 85,
                 unitCost: 0,
                 unitPower: 0,
-                unitPowerRange: 0,
-                unitMoveSpeed: 0,
-                populationCost: 0)
+                unitPowerRange: 2,
+                unitMoveSpeed: 1,
+                populationCost: 1)
     { }
     public void Init(string teamID, int unitID, Vector3 unitLocation)
     {
@@ -24,12 +24,12 @@ public class Healer : Unit
         this.unitID = unitID;
         this.unitType = "Healer";
         this.unitLocation = unitLocation;
-        this.unitMaxHealth = 200;
-        this.unitCurrentHealth = 200;
+        this.unitMaxHealth = 85;
+        this.unitCurrentHealth = 85;
         this.unitCost = 0;
         this.unitPower = 0;
-        this.unitPowerRange = 0;
+        this.unitPowerRange = 2;
         this.unitMoveSpeed = 1;
-        this.populationCost = 0;
+        this.populationCost = 1;
     }
 }
