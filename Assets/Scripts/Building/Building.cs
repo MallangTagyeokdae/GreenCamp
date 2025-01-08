@@ -6,57 +6,55 @@ using UnityEngine.UI;
 
 public abstract class Building : MonoBehaviour
 {
-    public enum BuildingState
+    public enum State
     {
-        InProgress,  // 건물이 진행 중인 상태
+        InCreated,  // 건물이 건설 중인 상태
         Built,   // 건물이 완료된 상태
+        InProgress,  // 건물이 진행 중인 상태
         Destroy
     }
 
     public string teamID { get; set; }
-    public int buildingID { get; set; }
-    public string buildingType { get; set; }
-    public Vector3 buildingLocation { get; set; }
-    public int buildingMaxHealth { get; set; }
-    public float buildingCurrentHealth { get; set; }
-    public float buildingProgress { get; set; }
-    public int buildingCost { get; set; }
-    public int buildingLevel { get; set; }
-    public Slider buildingHealthBar { get; set; }
-    public Slider buildingProgressBar { get; set; }
-
-    //------------조영리------------------
+    public int ID { get; set; }
+    public string type { get; set; }
+    public Vector3 location { get; set; }
+    public int maxHealth { get; set; }
+    public float currentHealth { get; set; }
+    public float progress { get; set; }
+    public int cost { get; set; }
+    public int level { get; set; }
+    public Slider healthBar { get; set; }
+    public Slider progressBar { get; set; }
     public float time { get; set; }
     public float loadingTime{get; set;}
-    public BuildingState buildingState = BuildingState.InProgress;
+    public State state = State.InCreated;
     public Mesh progressMesh1;
     public Mesh progressMesh2;
     public Mesh completeMesh;
-    //------------------------------------------
 
-    public Building(string teamID, int buildingID, string buildingType, Vector3 buildingLocation,
-    int buildingMaxHealth, int buildingCost, int buildingLevel)
+    public Building(string teamID, int ID, string type, Vector3 location,
+    int maxHealth, int cost, int level)
     {
         this.teamID = teamID;
-        this.buildingID = buildingID;
-        this.buildingType = buildingType;
-        this.buildingLocation = buildingLocation;
-        this.buildingMaxHealth = buildingMaxHealth;
-        this.buildingCost = buildingCost;
-        this.buildingLevel = buildingLevel;
+        this.ID = ID;
+        this.type = type;
+        this.location = location;
+        this.maxHealth = maxHealth;
+        this.cost = cost;
+        this.level = level;
         this.time = 0f;
         this.loadingTime = 10f;
     }
 
-    //------------조영리------------------
     public virtual void InitTime(){
     }
 
-    public virtual void UpdateTime(float update){
+    public virtual void UpdateCreateBuildingTime(float update){
     }
 
     public virtual void UpdateMesh(){
     }
-    //------------------------------------------
+    public virtual void InitOrderTime(float totalTime){} // 건물 생성 외 다른 명령을 내릴 떄 타이머 초기화
+    public virtual void UpdateOrderTime(float update){} // 건물 생성 외 다른 명령을 내릴 떄 타이머 업데이트
 
 }

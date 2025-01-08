@@ -13,11 +13,11 @@ public class Defender : Building
      : base(
         teamID,
         buildingID,
-        buildingType : "Defender",
+        type : "Defender",
         buildingLocation,
-        buildingMaxHealth : 200,
-        buildingCost : 0,
-        buildingLevel : 1
+        maxHealth : 200,
+        cost : 0,
+        level : 1
         )
     {
         attackPower = 20;
@@ -27,17 +27,17 @@ public class Defender : Building
     public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar)
     {
         this.teamID = teamID;
-        this.buildingID = buildingID;
-        this.buildingType = "Defender";
-        this.buildingLocation = buildingLocation;
-        this.buildingMaxHealth = 200;
-        this.buildingCurrentHealth = 0;
-        this.buildingLevel = 1;
-        this.buildingCost = 0;
+        this.ID = buildingID;
+        this.type = "Defender";
+        this.location = buildingLocation;
+        this.maxHealth = 200;
+        this.currentHealth = 0;
+        this.level = 1;
+        this.cost = 0;
         this.attackPower = 20;
         this.attackRange = 10;
-        this.buildingHealthBar = buildingHealthBar;
-        this.buildingProgressBar = buildingProgressBar;
+        this.healthBar = buildingHealthBar;
+        this.progressBar = buildingProgressBar;
     }
 
     public override void InitTime()
@@ -47,15 +47,15 @@ public class Defender : Building
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
-    public override void UpdateTime(float update)
+    public override void UpdateCreateBuildingTime(float update)
     {
-        float incrementPerSec = buildingMaxHealth / loadingTime;
+        float incrementPerSec = maxHealth / loadingTime;
         time = update;
-        this.buildingCurrentHealth += incrementPerSec * Time.deltaTime;
-        this.buildingProgress = time/loadingTime*100;
+        this.currentHealth += incrementPerSec * Time.deltaTime;
+        this.progress = time/loadingTime*100;
 
-        this.buildingHealthBar.value = (float)(buildingCurrentHealth * 1.0 / buildingMaxHealth);
-        this.buildingProgressBar.value = (float)this.buildingProgress / 100;
+        this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
+        this.progressBar.value = (float)this.progress / 100;
         UpdateMesh();
     }
     public override void UpdateMesh()
@@ -64,5 +64,17 @@ public class Defender : Building
         {
             this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
         }
+    }
+    public override void InitOrderTime(float totalTime)
+    {
+        this.state = State.InProgress;
+        time = 0f;
+        loadingTime = totalTime;
+    }
+    public override void UpdateOrderTime(float update)
+    {
+        time = update;
+        this.progress = time / loadingTime * 100;
+        this.progressBar.value = (float)this.progress / 100;
     }
 }

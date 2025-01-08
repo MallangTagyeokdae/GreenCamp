@@ -13,7 +13,7 @@ public abstract class Unit : MonoBehaviour
     public int unitCost { get; set; }
     public int unitPower { get; set; }
     public int unitPowerRange { get; set; }
-    private Collider u
+    // private Collider u
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
 

@@ -35,8 +35,6 @@ public class BuildingController : MonoBehaviour
 
     }
 
-
-    //-------------------------------------------조영리 수정------------------------------------------------------------------------
     public Building CreateBuilding(Vector3 buildingLocation, string buildingType)
     // 건물 생성
     {
@@ -46,10 +44,10 @@ public class BuildingController : MonoBehaviour
         GameObject gameObject = buildingObject; // SetClickedObject에 넣을 임의 변수 만듦 -> call by value로 되기 떄문에 buildingObject가 바뀌어도 값이 안바뀜
         // 좌클릭 했을 때 callback 함수 넣어줌
         buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetClickedObject(gameObject));
-        Slider buildingHealthBar = buildingObject.transform.Find("HealthUI/CurrentHealth").GetComponent<Slider>();
-        Slider buildingProgressBar = buildingObject.transform.Find("ProgressUI/CurrentProgress").GetComponent<Slider>();
-        buildingHealthBar.gameObject.SetActive(true);
-        buildingProgressBar.gameObject.SetActive(true);
+        Slider healthBar = buildingObject.transform.Find("HealthUI/CurrentHealth").GetComponent<Slider>();
+        Slider progressBar = buildingObject.transform.Find("ProgressUI/CurrentProgress").GetComponent<Slider>();
+        healthBar.gameObject.SetActive(true);
+        progressBar.gameObject.SetActive(true);
         Building newBuilding;
         switch (buildingType)
         {
@@ -76,7 +74,7 @@ public class BuildingController : MonoBehaviour
                 // Barrack 객체를 불러온다. -> 오브젝트를 통해서 건물의 정보를 알 수 있게 하기위해
                 Barrack _newBarrack = buildingObject.GetComponent<Barrack>();
                 // 배럭 정보 초기화
-                _newBarrack.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
+                _newBarrack.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
 
                 // Dictionary에 추가
                 buildingDictionary.Add(_buildingID, _newBarrack);
@@ -88,7 +86,7 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(4));
 
                 PopulationBuilding _newPop = buildingObject.GetComponent<PopulationBuilding>();
-                _newPop.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
+                _newPop.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
 
                 buildingDictionary.Add(_buildingID, _newPop);
                 newBuilding = _newPop;
@@ -99,7 +97,7 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(5));
 
                 ResourceBuilding _newResource = buildingObject.GetComponent<ResourceBuilding>();
-                _newResource.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
+                _newResource.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
 
                 buildingDictionary.Add(_buildingID, _newResource);
                 newBuilding = _newResource;
@@ -110,7 +108,7 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6));
 
                 Defender _newDefender = buildingObject.GetComponent<Defender>();
-                _newDefender.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
+                _newDefender.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
                 
                 buildingDictionary.Add(_buildingID, _newDefender);
                 newBuilding = _newDefender;
@@ -121,7 +119,7 @@ public class BuildingController : MonoBehaviour
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6));
 
                 Defender defautBuilding = buildingObject.AddComponent<Defender>();
-                defautBuilding.Init(_teamID, _buildingID, buildingLocation, buildingHealthBar, buildingProgressBar);
+                defautBuilding.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
                 buildingDictionary.Add(_buildingID, defautBuilding);
                 newBuilding = defautBuilding;
                 break;
@@ -130,7 +128,6 @@ public class BuildingController : MonoBehaviour
         _buildingID++;
         return newBuilding;
     }
-    //-----------------------------------------------------------------------------------------------------------------------------------
     public void UpdateBuilding(Vector3 buildingLocation, string buildingType){}
     
 
@@ -139,7 +136,7 @@ public class BuildingController : MonoBehaviour
     {
         for (int i = 0; i < _buildingID; i++)
         {
-            Debug.Log(buildings[i].buildingType);
+            Debug.Log(buildings[i].type);
         }
     }
 
@@ -157,6 +154,6 @@ public class BuildingController : MonoBehaviour
     public void UpgradeBuilding()
     {
         Building building = GameManager.instance.clickedObject[0].GetComponent<Building>();
-        building.buildingLevel++;
+        building.level++;
     }
 }

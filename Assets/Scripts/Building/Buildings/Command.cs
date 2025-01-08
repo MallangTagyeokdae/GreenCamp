@@ -11,11 +11,11 @@ public class Command : Building
      : base(
         teamID,
         buildingID,
-        buildingType : "Command",
+        type : "Command",
         buildingLocation,
-        buildingMaxHealth : 500,
-        buildingCost : 0,
-        buildingLevel : 1
+        maxHealth : 500,
+        cost : 0,
+        level : 1
         )
     {
         attackPower = 10;
@@ -25,13 +25,13 @@ public class Command : Building
     public void Init(string teamID, int buildingID, Vector3 buildingLocation)
     {
         this.teamID = teamID;
-        this.buildingID = buildingID;
-        this.buildingType = "Command";
-        this.buildingLocation = buildingLocation;
-        this.buildingMaxHealth = 500;
-        this.buildingCurrentHealth = 0;
-        this.buildingLevel = 1;
-        this.buildingCost = 0;
+        this.ID = buildingID;
+        this.type = "Command";
+        this.location = buildingLocation;
+        this.maxHealth = 500;
+        this.currentHealth = 0;
+        this.level = 1;
+        this.cost = 0;
         this.attackPower = 10;
         this.attackRange = 10;
     }
@@ -43,7 +43,7 @@ public class Command : Building
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
-    public override void UpdateTime(float update)
+    public override void UpdateCreateBuildingTime(float update)
     {
         time = update;
         UpdateMesh();
@@ -54,5 +54,17 @@ public class Command : Building
         {
             this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
         }
+    }
+    public override void InitOrderTime(float totalTime)
+    {
+        this.state = State.InProgress;
+        time = 0f;
+        loadingTime = totalTime;
+    }
+    public override void UpdateOrderTime(float update)
+    {
+        time = update;
+        this.progress = time / loadingTime * 100;
+        this.progressBar.value = (float)this.progress / 100;
     }
 }

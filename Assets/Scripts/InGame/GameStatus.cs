@@ -86,7 +86,7 @@ public class GameStatus : MonoBehaviour
 
     public bool canCreateBuilding(Building building)
     {
-        if (this.currentResourceCount < building.buildingCost)
+        if (this.currentResourceCount < building.cost)
         {
             Debug.Log("자원부족");
             return false;

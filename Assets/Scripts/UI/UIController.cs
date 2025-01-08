@@ -59,7 +59,7 @@ public class UIController : MonoBehaviour
         Building clickedBuidling = clickedObject.GetComponent<Building>();
 
         // ---------------------- 준현 --------------------
-        if (clickedBuidling.buildingState == 0) // 건물이 생성중일 때
+        if (clickedBuidling.state == 0) // 건물이 생성중일 때
         {
             selectedUI = UILists[1];
             UpdateHealth(selectedUI, clickedBuidling);
@@ -73,7 +73,7 @@ public class UIController : MonoBehaviour
 
                 // 체력 설정
                 _health = selectedUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
-                _health.text = clickedBuidling.buildingCurrentHealth.ToString();
+                _health.text = clickedBuidling.currentHealth.ToString();
             }
 
             if (UIindex == 1)
@@ -93,7 +93,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateLevel(UIContainer currentUI, Building clickedObject)
     {
-        int level = clickedObject.GetComponent<Building>().buildingLevel;
+        int level = clickedObject.GetComponent<Building>().level;
         SetLevel(currentUI, level);
     }
 
@@ -105,8 +105,8 @@ public class UIController : MonoBehaviour
 
     public void UpdateHealth(UIContainer currentUI, Building clickedObject)
     {
-        int currentHealth = (int)Math.Round(clickedObject.GetComponent<Building>().buildingCurrentHealth);
-        int maxHealth = clickedObject.GetComponent<Building>().buildingMaxHealth;
+        int currentHealth = (int)Math.Round(clickedObject.GetComponent<Building>().currentHealth);
+        int maxHealth = clickedObject.GetComponent<Building>().maxHealth;
         SetHealth(currentUI, currentHealth, maxHealth);
     }
 
