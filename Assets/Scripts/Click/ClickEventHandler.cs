@@ -12,6 +12,7 @@ public class ClickEventHandler : MonoBehaviour
     public UnityEvent<Vector3> rightClickUpEvent;
     public UnityEvent<Vector3> mouseHoverEvent;
     public UnityEvent<Vector3> deMouseHoverEvent;
+    public UnityEvent draggedEvent;
     public void LeftClickDown(Vector3 pos)
     {
         leftClickDownEvent?.Invoke(pos);
@@ -40,5 +41,9 @@ public class ClickEventHandler : MonoBehaviour
     public void DeMouseHover(Vector3 pos)
     {
         deMouseHoverEvent?.Invoke(pos);
+    }
+
+    public void Dragged(){
+        draggedEvent?.Invoke();
     }
 }

@@ -49,16 +49,6 @@ public class GameManager : MonoBehaviour
     {
         currentUI.Show();
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (clickedObject[0].TryGetComponent<Unit>(out Unit unit))
-            {
-                StopCoroutine(unit.unitBehaviour);
-            }
-        }
-    }
 
     // ================== 클릭 관련 함수 ======================
     public void SetClickedObject(GameObject gameObject)
@@ -67,17 +57,17 @@ public class GameManager : MonoBehaviour
         clickedObject.Add(gameObject);
     }
 
+    public void AddClickedObject(GameObject gameObject){
+        if(!clickedObject.Contains(gameObject)){
+            clickedObject.Add(gameObject);
+        }
+    }
+
     public void GroundEvent(Vector3 newLocation)
     {
-        if (clickedObject[0].name.Contains("Barrack")) SetSponPos(newLocation);
-        else if (clickedObject[0].name.Contains("Archer")
-                || clickedObject[0].name.Contains("Healer")
-                || clickedObject[0].name.Contains("Soldier")
-                || clickedObject[0].name.Contains("Tanker"))
-        {
-            MoveUnit(newLocation);
-            Debug.Log("check");
-        }
+        if (clickedObject[0].name.Contains("Barrack") && clickedObject.Count == 1) SetSponPos(newLocation);
+        
+        MoveUnit(newLocation);
     }
     // =====================================================
 
@@ -116,6 +106,7 @@ public class GameManager : MonoBehaviour
         Unit createdUnit = unitController.CreateUnit(buildingPos, unitType);
         // 유닛을 destination으로 이동명령 내리기
         GameObject unitObject = createdUnit.gameObject;
+        unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => AddClickedObject(unitObject));
         //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
         createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
     }
@@ -214,12 +205,22 @@ public class GameManager : MonoBehaviour
 
     public void MoveUnit(Vector3 newLocation)
     {
-        Unit selectedUnit = clickedObject[0].GetComponent<Unit>();
-        if (selectedUnit.unitBehaviour != null)
+        foreach (GameObject go in clickedObject)
         {
-            StopCoroutine(selectedUnit.unitBehaviour);
+            go.TryGetComponent(out Unit selectedUnit);
+
+            if(selectedUnit == null){
+                continue;
+            }
+
+            Debug.Log($"move unit: {go}");
+
+            if (selectedUnit.unitBehaviour != null)
+            {
+                StopCoroutine(selectedUnit.unitBehaviour);
+            }
+            selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(go, newLocation));
         }
-        selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(clickedObject[0], newLocation));
     }
 
 
