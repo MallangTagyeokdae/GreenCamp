@@ -10,7 +10,6 @@ public class HealthBarHandler : MonoBehaviour
     void Start()
     {
         cam = Camera.main.transform;
-        gameObject.SetActive(false);
     }
 
     void Update()
