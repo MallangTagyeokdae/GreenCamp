@@ -188,6 +188,15 @@ public class ClickManager : MonoBehaviour
                     DestroyDragBox();
                     endPos = hit.point;
                     Collider[] colliders = startPos != endPos ? SelectObjectInBox() : null;
+
+                    if (colliders != null)
+                    {
+                        //GameManager.instance.clickedObject.Clear();
+                        foreach (Collider collider in colliders)
+                        {
+                            collider.gameObject.GetComponent<ClickEventHandler>().Dragged();
+                        }
+                    }
                     _isDragging = false;
                 }
             }
@@ -265,8 +274,8 @@ public class ClickManager : MonoBehaviour
             Mathf.Abs(100),
             Mathf.Abs(startPos.z - endPos.z)
         ) / 2, Quaternion.identity);
-
-        foreach(Collider collider in colliders){
+        foreach (Collider collider in colliders)
+        {
             Debug.Log(collider.name);
         }
         return colliders;

@@ -13078,6 +13078,7 @@ GameObject:
   - component: {fileID: 419058409232757245}
   - component: {fileID: 6511356759311515488}
   - component: {fileID: 6309980027969008881}
+  - component: {fileID: -5389289359545416517}
   - component: {fileID: 7450208193237345683}
   - component: {fileID: 7198733288392561748}
   - component: {fileID: 4099498115814379899}
@@ -13218,6 +13219,21 @@ MonoBehaviour:
   deMouseHoverEvent:
     m_PersistentCalls:
       m_Calls: []
+  dragEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-5389289359545416517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6031986855511284481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb13b27b141dcee4baf353a03da1a6a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &7450208193237345683
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -66,16 +66,21 @@ public class GameManager : MonoBehaviour
         clickedObject.Add(gameObject);
     }
 
+    public void AddClickedObject(GameObject gameObject)
+    {
+        Debug.Log("checkcheck");
+        if (!clickedObject.Contains(gameObject))
+        {
+            clickedObject.Add(gameObject);
+        }
+    }
+
     public void GroundEvent(Vector3 newLocation)
     {
-        if(clickedObject[0].name.Contains("Barrack")) SetSponPos(newLocation);
-        else if(clickedObject[0].name.Contains("Archer")
-                || clickedObject[0].name.Contains("Healer")
-                || clickedObject[0].name.Contains("Soldier")
-                || clickedObject[0].name.Contains("Tanker"))
+        if (clickedObject[0].name.Contains("Barrack")) SetSponPos(newLocation);
+        else
         {
             MoveUnit(newLocation);
-            Debug.Log("check");
         }
     }
     // =====================================================
@@ -92,7 +97,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetUnitInfo(int UIindex)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-       currentUI = uIController.SetUnitUI(UIindex);
+        currentUI = uIController.SetUnitUI(UIindex);
     }
     // =====================================================
 
@@ -111,11 +116,12 @@ public class GameManager : MonoBehaviour
         Unit createdUnit = unitController.CreateUnit(buildingPos, unitType);
         // 유닛을 destination으로 이동명령 내리기
         GameObject unitObject = createdUnit.gameObject;
+        unitObject.GetComponent<ClickEventHandler>().dragEvent.AddListener(() => AddClickedObject(unitObject));
         //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
         createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
     }
     // =====================================================
-    
+
 
     // =================== 건물 관리 함수들 ===================
     public void SetBuildingType(string buildingType)
@@ -137,7 +143,7 @@ public class GameManager : MonoBehaviour
         //effect 동작만 되도록 막 넣음
         GameObject effect = Instantiate(sponeffect, building.gameObject.transform);
         effect.transform.localPosition = Vector3.zero;
-        effect.transform.localScale = new Vector3(4,4,4);
+        effect.transform.localScale = new Vector3(4, 4, 4);
         effect.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
         //----------------------------
 
@@ -153,7 +159,7 @@ public class GameManager : MonoBehaviour
     private void UpdateBuildingUI(Building building, float time)
     { // 건물이 생성될 때 체력을 업데이트 해주는 함수
         building.UpdateTime(time);
-        if(clickedObject[0].GetComponent<Building>() == building)
+        if (clickedObject[0].GetComponent<Building>() == building)
         {
             uIController.UpdateHealth(currentUI, building);
         }
@@ -161,9 +167,9 @@ public class GameManager : MonoBehaviour
 
     private void ReloadBuildingUI(Building building)
     { // 건물이 생성완료 됐을 때 건물을 클릭하고 있으면 건물 UI로 바꿔준다.
-        if(clickedObject[0].name == building.name)
+        if (clickedObject[0].name == building.name)
         {
-            switch(building.buildingType)
+            switch (building.buildingType)
             {
                 case "Command":
                     SetBuildingInfo(2);
@@ -197,25 +203,36 @@ public class GameManager : MonoBehaviour
     {
         this.unitType = unitType;
     }
-    
-    
+
+
     public void MoveUnit(Vector3 newLocation)
-    {   
-        Unit selectedUnit = clickedObject[0].GetComponent<Unit>();
-        if(selectedUnit.unitBehaviour != null)
+    {
+        foreach (GameObject go in clickedObject)
         {
-            StopCoroutine(selectedUnit.unitBehaviour);
+            go.TryGetComponent(out Unit selectedUnit);
+            if (selectedUnit == null)
+            {
+                continue;
+            }
+            
+            if (selectedUnit.unitBehaviour != null)
+            {
+                StopCoroutine(selectedUnit.unitBehaviour);
+            }
+            selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(go, newLocation));
         }
-        selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(clickedObject[0], newLocation));
+
     }
-    
+
     // =====================================================
 
 
     // =================== 타이머 함수 =================== 
-    private async Task StartTimer(float time, Action<float> action){
+    private async Task StartTimer(float time, Action<float> action)
+    {
         float start = 0f;
-        while(time > start){
+        while (time > start)
+        {
             start += Time.deltaTime;
             action.Invoke(start);
             await Task.Yield();
