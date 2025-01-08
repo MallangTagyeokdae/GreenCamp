@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UIElements;
 using UnityEditor.Overlays;
+using Unity.AI.Navigation;
 
 public class ClickManager : MonoBehaviour
 {
@@ -161,10 +162,6 @@ public class ClickManager : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
-        /*if(_isDragging == true){
-            _overlay = true;
-        }*/
-
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -188,6 +185,11 @@ public class ClickManager : MonoBehaviour
                     DestroyDragBox();
                     endPos = hit.point;
                     Collider[] colliders = startPos != endPos ? SelectObjectInBox() : null;
+                    if(colliders != null){
+                        foreach(Collider collider in colliders){
+                            collider.gameObject.GetComponent<ClickEventHandler>().Dragged();
+                        }
+                    }
                     _isDragging = false;
                 }
             }
@@ -266,9 +268,6 @@ public class ClickManager : MonoBehaviour
             Mathf.Abs(startPos.z - endPos.z)
         ) / 2, Quaternion.identity);
 
-        foreach(Collider collider in colliders){
-            Debug.Log(collider.name);
-        }
         return colliders;
     }
 }
