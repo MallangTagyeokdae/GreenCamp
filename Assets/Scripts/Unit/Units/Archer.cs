@@ -18,9 +18,9 @@ public class Archer : Unit
                 unitCurrentHealth: 50,
                 unitCost: 0,
                 unitPower: 35,
-                unitPowerRange: 0,
-                unitMoveSpeed: 0,
-                populationCost: 0)
+                unitPowerRange: 3,
+                unitMoveSpeed: 3,
+                populationCost: 1)
     {
         // 추가 초기화 작업 수행 가능
     }
@@ -34,8 +34,8 @@ public class Archer : Unit
         this.unitCurrentHealth = 50;
         this.unitCost = 0;
         this.unitPower = 35;
-        this.unitPowerRange = 0;
+        this.unitPowerRange = 3;
         this.unitMoveSpeed = 3;
-        this.populationCost = 0;
+        this.populationCost = 1;
     }
 }

@@ -14,9 +14,9 @@ public class Soldier : Unit
                 unitCurrentHealth: 100,
                 unitCost: 0,
                 unitPower: 30,
-                unitPowerRange: 0,
-                unitMoveSpeed: 0,
-                populationCost: 0)
+                unitPowerRange: 1,
+                unitMoveSpeed: 2,
+                populationCost: 1)
     { }
     public void Init(string teamID, int unitID, Vector3 unitLocation)
     {
@@ -28,9 +28,9 @@ public class Soldier : Unit
         this.unitCurrentHealth = 100;
         this.unitCost = 0;
         this.unitPower = 30;
-        this.unitPowerRange = 0;
+        this.unitPowerRange = 1;
         this.unitMoveSpeed = 2;
-        this.populationCost = 0;
+        this.populationCost = 1;
     }
 }
 
