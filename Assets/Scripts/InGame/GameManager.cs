@@ -52,8 +52,10 @@ public class GameManager : MonoBehaviour
     // ================== 클릭 관련 함수 ======================
     public void SetClickedObject(GameObject gameObject)
     {
+        unitController.SetActiveHealthBar(clickedObject);
         clickedObject.Clear();
         clickedObject.Add(gameObject);
+        unitController.SetActiveHealthBar(gameObject, true);
     }
 
     public void AddClickedObject(GameObject gameObject)
@@ -61,9 +63,9 @@ public class GameManager : MonoBehaviour
         if (!clickedObject.Contains(gameObject))
         {
             clickedObject.Add(gameObject);
+            unitController.SetActiveHealthBar(gameObject, true);
         }
     }
-
     public void GroundEvent(Vector3 newLocation)
     {
         if (clickedObject[0].name.Contains("Barrack") && clickedObject.Count == 1) SetSponPos(newLocation);
@@ -90,7 +92,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("SetHealthBar 함수 실행 여부 확인");
         unit.healthBar.value = (float)(unit.unitCurrentHealth * 1.0 / unit.unitMaxHealth);
-        unit.healthBar.gameObject.SetActive(true);
+        // unit.healthBar.gameObject.SetActive(true);
     }
     // =====================================================
 
