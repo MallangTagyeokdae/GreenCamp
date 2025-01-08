@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
     public UIController uIController;
     public UnitController unitController;
     public string unitType;
-    public HealthBarHandler healthBarHandler;
     //-----------------------------
 
     //------------ 준현 ------------
@@ -57,8 +56,10 @@ public class GameManager : MonoBehaviour
         clickedObject.Add(gameObject);
     }
 
-    public void AddClickedObject(GameObject gameObject){
-        if(!clickedObject.Contains(gameObject)){
+    public void AddClickedObject(GameObject gameObject)
+    {
+        if (!clickedObject.Contains(gameObject))
+        {
             clickedObject.Add(gameObject);
         }
     }
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
     public void GroundEvent(Vector3 newLocation)
     {
         if (clickedObject[0].name.Contains("Barrack") && clickedObject.Count == 1) SetSponPos(newLocation);
-        
+
         MoveUnit(newLocation);
     }
     // =====================================================
@@ -87,7 +88,9 @@ public class GameManager : MonoBehaviour
     }
     public void SetHealthBar(Unit unit)
     {
-        healthBarHandler.UpdateHealthBar(unit);
+        Debug.Log("SetHealthBar 함수 실행 여부 확인");
+        unit.healthBar.value = (float)(unit.unitCurrentHealth * 1.0 / unit.unitMaxHealth);
+        unit.healthBar.gameObject.SetActive(true);
     }
     // =====================================================
 
@@ -101,20 +104,21 @@ public class GameManager : MonoBehaviour
     public async void CreateUnit() // 해윤
     {
         Barrack barrack = clickedObject[0].GetComponent<Barrack>();
-        if(barrack != null)
+        if (barrack != null)
         {
             barrack.progressBar.gameObject.SetActive(true);
             Vector3 buildingPos = barrack.transform.position;
             Vector3 destination = barrack._sponPos;
             buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
-            Unit createdUnit = await DelayUnitCreation(barrack,unitType,buildingPos);
+            Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos);
             // 유닛을 destination으로 이동명령 내리기
             GameObject unitObject = createdUnit.gameObject;
             //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
             createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
             CheckingBuiltClear(barrack);
             ReloadBuildingUI(barrack);
-        } else
+        }
+        else
         {
             Debug.LogError("유닛 생성 오류");
         }
@@ -219,7 +223,8 @@ public class GameManager : MonoBehaviour
         {
             go.TryGetComponent(out Unit selectedUnit);
 
-            if(selectedUnit == null){
+            if (selectedUnit == null)
+            {
                 continue;
             }
 
@@ -233,21 +238,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-     public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos)
+    public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos)
     {
-        switch(unitType)
+        switch (unitType)
         {
             case "Soldier":
-                await OrderCreateUnit(barrack,10f);
+                await OrderCreateUnit(barrack, 10f);
                 break;
             case "Archer":
-                await OrderCreateUnit(barrack,15f);
+                await OrderCreateUnit(barrack, 15f);
                 break;
             case "Tanker":
-                await OrderCreateUnit(barrack,20f);
+                await OrderCreateUnit(barrack, 20f);
                 break;
             case "Healer":
-                await OrderCreateUnit(barrack,25f);
+                await OrderCreateUnit(barrack, 25f);
                 break;
         }
         return unitController.CreateUnit(buildingPos, unitType);
@@ -256,7 +261,7 @@ public class GameManager : MonoBehaviour
     private async Task OrderCreateUnit(Barrack barrack, float totalTime)
     {
         barrack.InitOrderTime(totalTime);
-        await StartTimer(totalTime,(float time) => UpdateUnitProgress(barrack,time));
+        await StartTimer(totalTime, (float time) => UpdateUnitProgress(barrack, time));
     }
     private void UpdateUnitProgress(Barrack barrack, float time)
     {
