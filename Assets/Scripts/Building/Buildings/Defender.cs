@@ -47,7 +47,7 @@ public class Defender : Building
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
-    public override void UpdateCreateBuildingTime(float update)
+    public override void UpdateTime(float update)
     {
         float incrementPerSec = buildingMaxHealth / loadingTime;
         time = update;
@@ -65,6 +65,4 @@ public class Defender : Building
             this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
         }
     }
-    public override void InitOrderTime(float totalTime){}
-    public override void UpdateOrderTime(float update){}
 }

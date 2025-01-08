@@ -118,17 +118,5 @@ public class UIController : MonoBehaviour
         healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
     }
 
-    public void SetUnSet(UIElements uIElements)
-    {
-        foreach(GameObject gameObject in uIElements.initialActive)
-        {
-            gameObject.SetActive(false);
-        }
-        foreach(GameObject gameObject1 in uIElements.initialUnActive)
-        {
-            gameObject.SetActive(true);
-        }
-    }
-
     // ----------------------------------------
 }

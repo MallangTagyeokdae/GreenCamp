@@ -8,9 +8,8 @@ public abstract class Building : MonoBehaviour
 {
     public enum BuildingState
     {
-        InCreated,  // 건물이 건설 중인 상태
-        Built,   // 건물이 완료된 상태
         InProgress,  // 건물이 진행 중인 상태
+        Built,   // 건물이 완료된 상태
         Destroy
     }
 
@@ -25,12 +24,15 @@ public abstract class Building : MonoBehaviour
     public int buildingLevel { get; set; }
     public Slider buildingHealthBar { get; set; }
     public Slider buildingProgressBar { get; set; }
+
+    //------------조영리------------------
     public float time { get; set; }
     public float loadingTime{get; set;}
-    public BuildingState buildingState = BuildingState.InCreated;
+    public BuildingState buildingState = BuildingState.InProgress;
     public Mesh progressMesh1;
     public Mesh progressMesh2;
     public Mesh completeMesh;
+    //------------------------------------------
 
     public Building(string teamID, int buildingID, string buildingType, Vector3 buildingLocation,
     int buildingMaxHealth, int buildingCost, int buildingLevel)
@@ -46,15 +48,15 @@ public abstract class Building : MonoBehaviour
         this.loadingTime = 10f;
     }
 
+    //------------조영리------------------
     public virtual void InitTime(){
     }
 
-    public virtual void UpdateCreateBuildingTime(float update){
+    public virtual void UpdateTime(float update){
     }
 
     public virtual void UpdateMesh(){
     }
-    public virtual void InitOrderTime(float totalTime){} // 건물 생성 외 다른 명령을 내릴 떄 타이머 초기화
-    public virtual void UpdateOrderTime(float update){} // 건물 생성 외 다른 명령을 내릴 떄 타이머 업데이트
+    //------------------------------------------
 
 }
