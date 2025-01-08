@@ -28,16 +28,6 @@ public abstract class Unit : MonoBehaviour
         healthBar.gameObject.SetActive(false);
         Debug.Log(unitAnimator.name);
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) // 임시
-        {
-            if (unitType == "Healer") unitAnimator.SetTrigger("isHealing");
-            unitAnimator.SetTrigger("isAttacking");
-        }
-
-        if (!GameManager.instance.clickedObject.Contains(gameObject)) { healthBar.gameObject.SetActive(false); }
-    }
     public Coroutine unitBehaviour;
 
     public Unit(string teamID,

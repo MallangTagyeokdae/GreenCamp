@@ -90,6 +90,18 @@ public class UnitController : MonoBehaviour
         return _createdUnit;
 
     }
+    public void SetActiveHealthBar(List<GameObject> clickedObject, bool activeStatus = false)
+    {
+        foreach (GameObject go in clickedObject)
+        {
+            SetActiveHealthBar(go, activeStatus);
+        }
+    }
+    public void SetActiveHealthBar(GameObject go, bool activeStatus = false)
+    {
+        if (go.TryGetComponent(out Unit unit))
+            unit.healthBar.gameObject.SetActive(activeStatus);
+    }
     public void unitAttacked(int unitID, int damage)
     {
         Unit selectedUnit = unitDictionary[unitID];
@@ -124,5 +136,4 @@ public class UnitController : MonoBehaviour
         unit.transform.position = newLocation;
         unit.unitAnimator.SetBool("isWalking", false);
     }
-
 }
