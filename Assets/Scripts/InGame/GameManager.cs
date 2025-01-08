@@ -99,6 +99,10 @@ public class GameManager : MonoBehaviour
     {
         healthBarHandler.UpdateHealthBar(unit);
     }
+    public void SetUIUnSet(UIElements uIElements)
+    {
+        uIController.SetUnSet(uIElements);
+    }
     // =====================================================
 
 
@@ -108,16 +112,26 @@ public class GameManager : MonoBehaviour
         DelayBuildingCreation(buildingPos);
         grid.SetActive(false);
     }
-    public void CreateUnit() // 해윤
+    public async void CreateUnit() // 해윤
     {
-        Vector3 buildingPos = clickedObject[0].GetComponent<Barrack>().transform.position;
-        Vector3 destination = clickedObject[0].GetComponent<Barrack>()._sponPos;
-        buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
-        Unit createdUnit = unitController.CreateUnit(buildingPos, unitType);
-        // 유닛을 destination으로 이동명령 내리기
-        GameObject unitObject = createdUnit.gameObject;
-        //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
-        createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
+        Barrack barrack = clickedObject[0].GetComponent<Barrack>();
+        if(barrack != null)
+        {
+            barrack.buildingProgressBar.gameObject.SetActive(true);
+            Vector3 buildingPos = barrack.transform.position;
+            Vector3 destination = barrack._sponPos;
+            buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
+            Unit createdUnit = await DelayUnitCreation(barrack,unitType,buildingPos);
+            // 유닛을 destination으로 이동명령 내리기
+            GameObject unitObject = createdUnit.gameObject;
+            //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
+            createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
+            CheckingBuiltClear(barrack);
+            ReloadBuildingUI(barrack);
+        } else
+        {
+            Debug.LogError("유닛 생성 오류");
+        }
     }
     // =====================================================
 
@@ -137,7 +151,7 @@ public class GameManager : MonoBehaviour
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType);
         building.InitTime();
-        await StartTimer(building.loadingTime, (float time) => UpdateBuildingUI(building, time));
+        await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time));
 
         //effect 동작만 되도록 막 넣음
         GameObject effect = Instantiate(sponeffect, building.gameObject.transform);
@@ -150,22 +164,21 @@ public class GameManager : MonoBehaviour
         Destroy(effect, effect.GetComponent<ParticleSystem>().main.startLifetime.constant);
         //------------------------
         Debug.Log($"check time: {building.time}");
-        building.buildingState = Building.BuildingState.Built;
+        building.buildingCurrentHealth = Mathf.FloorToInt(building.buildingCurrentHealth); // 소수점 아래자리 버리기
         CheckingBuiltClear(building);
         ReloadBuildingUI(building);
     }
 
     private void CheckingBuiltClear(Building building)
     {
-        building.buildingCurrentHealth = Mathf.FloorToInt(building.buildingCurrentHealth); // 소수점 아래자리 버리기
+        building.buildingState = Building.BuildingState.Built;
         building.buildingHealthBar.gameObject.SetActive(false);
         building.buildingProgressBar.gameObject.SetActive(false);
-
     }
 
-    private void UpdateBuildingUI(Building building, float time)
+    private void UpdateBuildingHealth(Building building, float time)
     { // 건물이 생성될 때 체력을 업데이트 해주는 함수
-        building.UpdateTime(time);
+        building.UpdateCreateBuildingTime(time);
         if (clickedObject[0].GetComponent<Building>() == building)
         {
             uIController.UpdateHealth(currentUI, building);
@@ -222,6 +235,35 @@ public class GameManager : MonoBehaviour
         selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(clickedObject[0], newLocation));
     }
 
+    public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos)
+    {
+        switch(unitType)
+        {
+            case "Soldier":
+                await OrderCreateUnit(barrack,10f);
+                break;
+            case "Archer":
+                await OrderCreateUnit(barrack,15f);
+                break;
+            case "Tanker":
+                await OrderCreateUnit(barrack,20f);
+                break;
+            case "Healer":
+                await OrderCreateUnit(barrack,25f);
+                break;
+        }
+        return unitController.CreateUnit(buildingPos, unitType);
+    }
+
+    private async Task OrderCreateUnit(Barrack barrack, float totalTime)
+    {
+        barrack.InitOrderTime(totalTime);
+        await StartTimer(totalTime,(float time) => UpdateUnitProgress(barrack,time));
+    }
+    private void UpdateUnitProgress(Barrack barrack, float time)
+    {
+        barrack.UpdateOrderTime(time);
+    }
 
     // =====================================================
 

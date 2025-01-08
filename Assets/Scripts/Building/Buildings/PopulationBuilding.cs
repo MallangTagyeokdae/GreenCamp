@@ -40,7 +40,7 @@ public class PopulationBuilding : Building
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
-    public override void UpdateTime(float update)
+    public override void UpdateCreateBuildingTime(float update)
     {
         float incrementPerSec = buildingMaxHealth / loadingTime;
         time = update;
@@ -58,4 +58,6 @@ public class PopulationBuilding : Building
             this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
         }
     }
+    public override void InitOrderTime(float totalTime){}
+    public override void UpdateOrderTime(float update){}
 }

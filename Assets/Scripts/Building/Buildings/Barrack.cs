@@ -49,7 +49,7 @@ public class Barrack : Building
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
-    public override void UpdateTime(float update)
+    public override void UpdateCreateBuildingTime(float update)
     {
         float incrementPerSec = buildingMaxHealth / loadingTime;
         time = update;
@@ -68,5 +68,17 @@ public class Barrack : Building
         {
             this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
         }
+    }
+    public override void InitOrderTime(float totalTime)
+    {
+        this.buildingState = BuildingState.InProgress;
+        time = 0f;
+        loadingTime = totalTime;
+    }
+    public override void UpdateOrderTime(float update)
+    {
+        time = update;
+        this.buildingProgress = time / loadingTime * 100;
+        this.buildingProgressBar.value = (float)this.buildingProgress / 100;
     }
 }
