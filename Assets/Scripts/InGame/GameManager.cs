@@ -109,17 +109,21 @@ public class GameManager : MonoBehaviour
         {
             if(barrack.state == Building.State.Built)
             {
-                buildingController.SetBuildingState(barrack,2);
-                barrack.progressBar.gameObject.SetActive(true);
+                Debug.Log("유닛생성 시작");
+                buildingController.SetBuildingState(barrack,2,unitType);
+                ReloadBuildingUI(barrack);
+
                 Vector3 buildingPos = barrack.transform.position;
                 Vector3 destination = barrack._sponPos;
                 buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
                 Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos);
+
                 // 유닛을 destination으로 이동명령 내리기
                 GameObject unitObject = createdUnit.gameObject;
-                //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
+                
+                buildingController.SetBuildingState(barrack,1,"None");
                 createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination, 1));
-                buildingController.CheckingBuiltClear(barrack);
+
                 ReloadBuildingUI(barrack);
             }
         }
@@ -134,8 +138,12 @@ public class GameManager : MonoBehaviour
     }
     public void LevelUpBuilding()
     {
-        buildingController.UpgradeBuilding();
-        uIController.UpdateLevel(currentUI, clickedObject[0].GetComponent<Building>());
+        if(clickedObject[0].TryGetComponent(out Building building))
+        {
+            buildingController.UpgradeBuilding();
+            uIController.UpdateLevel(currentUI, building);
+            ReloadBuildingUI(building);
+        }
     }
     private async Task DelayBuildingCreation(Vector3 buildingPos)
     {
@@ -155,9 +163,8 @@ public class GameManager : MonoBehaviour
         Destroy(effect, effect.GetComponent<ParticleSystem>().main.startLifetime.constant);
         //------------------------
         Debug.Log($"check time: {building.time}");
-        building.state = Building.State.Built;
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
-        buildingController.CheckingBuiltClear(building);
+        buildingController.SetBuildingState(building,1,"None");
         ReloadBuildingUI(building);
     }
 
@@ -263,6 +270,10 @@ public class GameManager : MonoBehaviour
     private void UpdateUnitProgress(Barrack barrack, float time)
     {
         barrack.UpdateOrderTime(time);
+        if(clickedObject[0].GetComponent<Barrack>() == barrack)
+        {
+            uIController.SetProgressBar(currentUI,barrack.progress/100,1);
+        }
     }
 
     // =====================================================

@@ -157,17 +157,25 @@ public class BuildingController : MonoBehaviour
         building.level++;
     }
 
-    public void CheckingBuiltClear(Building building)
+    public void SetBuildingState(Building building, int state, string progressType) // 빌딩 상태 업데이트하는 함수
     {
-        SetBuildingState(building,1);
-        building.healthBar.gameObject.SetActive(false);
-        building.progressBar.gameObject.SetActive(false);
+        switch(state)
+        {
+            case 1:
+                building.healthBar.gameObject.SetActive(false);
+                building.progressBar.gameObject.SetActive(false);
+                building.progress = 0;
+                break;
+            case 2:
+                building.progressBar.gameObject.SetActive(true);
+                building.progress = 0;
+                break;
 
-    }
-
-    public void SetBuildingState(Building building, int state)
-    {
+        }
         building.state = (Building.State)state;
+        Debug.Log(building.state);
+        Enum.TryParse(progressType, out Building.InProgressItem item);
+        building.inProgressItem = item;
     }
     
 }
