@@ -188,7 +188,10 @@ public class ClickManager : MonoBehaviour
                     Collider[] colliders = startPos != endPos ? SelectObjectInBox() : null;
                     if(colliders != null){
                         foreach(Collider collider in colliders){
-                            collider.gameObject.GetComponent<ClickEventHandler>().Dragged();
+                            if(collider.gameObject.CompareTag("Clickable")){
+                                collider.gameObject.GetComponent<ClickEventHandler>().Dragged();
+                            }                            
+                            //Debug.Log($"{collider.gameObject.name}");
                         }
                     }
                 }
