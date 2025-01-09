@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager.Containers;
 using ExitGames.Client.Photon.StructWrapping;
 using TMPro;
@@ -58,38 +59,56 @@ public class UIController : MonoBehaviour
         UIContainer currentUI = GameManager.instance.currentUI;
         Building clickedBuidling = clickedObject.GetComponent<Building>();
 
-        // ---------------------- 준현 --------------------
-        if (clickedBuidling.state == 0) // 건물이 생성중일 때
+        uiElements.Clear();
+
+        if (clickedBuidling.state == Building.State.InCreating) // 건물이 생성중일 때
         {
             selectedUI = UILists[1];
             UpdateHealth(selectedUI, clickedBuidling);
-        }
-        else
+        } else if (clickedBuidling.state == Building.State.InProgress) // 건물에서 작업중인 상황일 때 UI 표시
         {
-            if (UIindex >= 1 && UIindex <= 5)
+            switch(clickedBuidling.type)
             {
-                // 레벨 설정
-                UpdateLevel(selectedUI, clickedBuidling);
-
-                // 체력 설정
-                _health = selectedUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
-                _health.text = clickedBuidling.currentHealth.ToString();
+                case "Barrack":
+                    uiLockElements.Add(selectedUI.transform.Find("RightSide/Solider/SoliderBtn/LockLevel1").GetComponent<UIButton>());
+                    uiLockElements.Add(selectedUI.transform.Find("RightSide/Archer/ArcherBtn/LockLevel2").GetComponent<UIButton>());
+                    uiLockElements.Add(selectedUI.transform.Find("RightSide/Tanker/TankerBtn/LockLevel3").GetComponent<UIButton>());
+                    uiLockElements.Add(selectedUI.transform.Find("RightSide/Healer/HealerBtn/LockLevel4").GetComponent<UIButton>());
+                    uiLockElements.Add(selectedUI.transform.Find("RightSide/Healer/HealerBtn/LockLevel4").GetComponent<UIButton>());
+                    uiLockElements.Add(selectedUI.transform.Find("LeftSide/LeftSide/LockLevelUpBtn").GetComponent<UIButton>());
+                    uiElements.Add(selectedUI.transform.Find("RightSide/Solider/SoliderBtn/LockLevel1").GetComponent<UIButton>());
+                    uiElements.Add(selectedUI.transform.Find("RightSide/Archer/ArcherBtn/LockLevel2").GetComponent<UIButton>());
+                    uiElements.Add(selectedUI.transform.Find("RightSide/Tanker/TankerBtn/LockLevel3").GetComponent<UIButton>());
+                    uiElements.Add(selectedUI.transform.Find("RightSide/Healer/HealerBtn/LockLevel4").GetComponent<UIButton>());
+                    uiElements.Add(selectedUI.transform.Find("RightSide/Healer/HealerBtn/LockLevel4").GetComponent<UIButton>());
+                    uiElements.Add(selectedUI.transform.Find("LeftSide/LeftSide/LockLevelUpBtn").GetComponent<UIButton>());
+                    break;
+                default:
+                    uiLockElements.Add(selectedUI.transform.Find("LeftSide/RightSide/LockLevelUpBtn").GetComponent<UIButton>());
+                    uiElements.Add(selectedUI.transform.Find("LeftSide/RightSide/LockLevelUpBtn").GetComponent<UIButton>());
+                    break;
             }
-
-            if (UIindex == 1)
-            {
-
-            }
-            else if (UIindex == 2)
-            {
-
-            }
+        } else if(clickedBuidling.state == Building.State.Built)
+        {
+            // 레벨 설정
+            UpdateLevel(selectedUI, clickedBuidling);
+            // 체력 설정
+            UpdateHealth(selectedUI, clickedBuidling);
         }
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
 
-    // ---------------- 준현 ---------------------
+    public void CheckProgressedElement() // 현재 건물에서 진행중인 작업이 무엇인지 확인하는 함수
+    {
+        foreach(UIButton uIButton in uiElements)
+        {
+            if(uIButton.gameObject.tag == "InProgress")
+            {
+
+            }
+        }
+    }
 
     public void UpdateLevel(UIContainer currentUI, Building clickedObject)
     {
@@ -117,6 +136,4 @@ public class UIController : MonoBehaviour
         healthText.text = currentHealth.ToString();
         healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
     }
-
-    // ----------------------------------------
 }
