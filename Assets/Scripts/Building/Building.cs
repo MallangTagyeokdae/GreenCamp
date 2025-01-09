@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Building : MonoBehaviour
+public abstract class Building : Entity
 {
     public enum State
     {
