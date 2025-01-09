@@ -8,10 +8,10 @@ public abstract class Building : Entity
 {
     public enum State
     {
-        InCreating,  // 건물이 건설 중인 상태
-        Built,   // 건물이 완료된 상태
-        InProgress,  // 건물이 진행 중인 상태
-        Destroy
+        InCreating = 0,  // 건물이 건설 중인 상태
+        Built = 1,   // 건물이 완료된 상태
+        InProgress = 2,  // 건물이 진행 중인 상태
+        Destroy = 3
     }
 
     public string teamID { get; set; }

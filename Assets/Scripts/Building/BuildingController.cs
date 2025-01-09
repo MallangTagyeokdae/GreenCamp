@@ -156,4 +156,18 @@ public class BuildingController : MonoBehaviour
         Building building = GameManager.instance.clickedObject[0].GetComponent<Building>();
         building.level++;
     }
+
+    public void CheckingBuiltClear(Building building)
+    {
+        SetBuildingState(building,1);
+        building.healthBar.gameObject.SetActive(false);
+        building.progressBar.gameObject.SetActive(false);
+
+    }
+
+    public void SetBuildingState(Building building, int state)
+    {
+        building.state = (Building.State)state;
+    }
+    
 }

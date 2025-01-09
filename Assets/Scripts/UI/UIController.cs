@@ -60,56 +60,79 @@ public class UIController : MonoBehaviour
         UIContainer currentUI = GameManager.instance.currentUI;
         Building clickedBuidling = clickedObject.GetComponent<Building>();
 
-        // uiElements.Clear();
-
         if (clickedBuidling.state == Building.State.InCreating) // 건물이 생성중일 때
         {
             selectedUI = UILists[1];
-            UpdateHealth(selectedUI, clickedBuidling);
         } else if (clickedBuidling.state == Building.State.InProgress) // 건물에서 작업중인 상황일 때 UI 표시
         {
-            switch(clickedBuidling.type)
-            {
-                // case "Barrack":
-                //     uiLockElements.Add(selectedUI.transform.Find("RightSide/Solider/SoliderBtn/LockLevel1").GetComponent<UIButton>());
-                //     uiLockElements.Add(selectedUI.transform.Find("RightSide/Archer/ArcherBtn/LockLevel2").GetComponent<UIButton>());
-                //     uiLockElements.Add(selectedUI.transform.Find("RightSide/Tanker/TankerBtn/LockLevel3").GetComponent<UIButton>());
-                //     uiLockElements.Add(selectedUI.transform.Find("RightSide/Healer/HealerBtn/LockLevel4").GetComponent<UIButton>());
-                //     uiLockElements.Add(selectedUI.transform.Find("RightSide/Healer/HealerBtn/LockLevel4").GetComponent<UIButton>());
-                //     uiLockElements.Add(selectedUI.transform.Find("LeftSide/LeftSide/LockLevelUpBtn").GetComponent<UIButton>());
-                //     uiElements.Add(selectedUI.transform.Find("RightSide/Solider/SoliderBtn/LockLevel1").GetComponent<UIButton>());
-                //     uiElements.Add(selectedUI.transform.Find("RightSide/Archer/ArcherBtn/LockLevel2").GetComponent<UIButton>());
-                //     uiElements.Add(selectedUI.transform.Find("RightSide/Tanker/TankerBtn/LockLevel3").GetComponent<UIButton>());
-                //     uiElements.Add(selectedUI.transform.Find("RightSide/Healer/HealerBtn/LockLevel4").GetComponent<UIButton>());
-                //     uiElements.Add(selectedUI.transform.Find("RightSide/Healer/HealerBtn/LockLevel4").GetComponent<UIButton>());
-                //     uiElements.Add(selectedUI.transform.Find("LeftSide/LeftSide/LockLevelUpBtn").GetComponent<UIButton>());
-                //     break;
-                // default:
-                //     uiLockElements.Add(selectedUI.transform.Find("LeftSide/RightSide/LockLevelUpBtn").GetComponent<UIButton>());
-                //     uiElements.Add(selectedUI.transform.Find("LeftSide/RightSide/LockLevelUpBtn").GetComponent<UIButton>());
-                //     break;
-            }
+            SetInteractable(selectedUI.GetComponent<UIElement>().uiElements);
+            SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
         } else if(clickedBuidling.state == Building.State.Built)
         {
-            // 레벨 설정
-            UpdateLevel(selectedUI, clickedBuidling);
-            // 체력 설정
-            UpdateHealth(selectedUI, clickedBuidling);
+            SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, true);
+            SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuidling);
         }
+        // 레벨 설정
+        UpdateLevel(selectedUI, clickedBuidling);
+        // 체력 설정
+        // UpdateHealth(selectedUI, clickedBuidling);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
+    
+    private void SetButtonByLevel(List<UIButton> uIButtons, Building building)
+    {
+        if(building.TryGetComponent(out Barrack barrack))
+        {
+            int level = barrack.level;
+            switch(level)
+            {
+                case 1:
+                    SetActive(uIButtons.GetRange(1,1));
+                    SetActive(uIButtons.GetRange(2,3),true);
+                    break;
+                case 2:
+                    SetActive(uIButtons.GetRange(1,2));
+                    SetActive(uIButtons.GetRange(3,2), true);
+                    break;
+                case 4:
+                    SetActive(uIButtons.GetRange(1,3));
+                    SetActive(uIButtons.GetRange(4,1), true);
+                    break;
+                case 3:
+                    SetActive(uIButtons.GetRange(1,4));
+                    break;
+            }
+        }
+        uIButtons[0].gameObject.SetActive(false);
+    }
+    
+    private void SetInteractable(List<UIButton> uIButtons, bool state = false)
+    {
+        foreach(UIButton uIButton in uIButtons)
+        {
+            uIButton.GetComponent<UIButton>().interactable = state;
+        }
+    }
 
-    // public void CheckProgressedElement() // 현재 건물에서 진행중인 작업이 무엇인지 확인하는 함수
-    // {
-    //     foreach(UIButton uIButton in uiElements)
-    //     {
-    //         if(uIButton.gameObject.tag == "InProgress")
-    //         {
+    private void SetActive(List<UIButton> uIButtons, bool state = false)
+    {
+        foreach(UIButton uIButton in uIButtons)
+        {
+            uIButton.gameObject.SetActive(state);
+        }
+    }
 
-    //         }
-    //     }
-    // }
+    private void CheckProgressedElement(List<UIButton> uiElements) // 현재 건물에서 진행중인 작업이 무엇인지 확인하는 함수
+    {
+        foreach(UIButton uIButton in uiElements)
+        {
+            if(uIButton.gameObject.tag == "InProgress")
+            {
+
+            }
+        }
+    }
 
     public void UpdateLevel(UIContainer currentUI, Building clickedObject)
     {
