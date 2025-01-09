@@ -44,7 +44,7 @@ public class UnitController : MonoBehaviour
         unitObject = PhotonNetwork.Instantiate($"Prefabs/Units/{_teamID}TeamUnits/{unitType}", unitLocation, Quaternion.Euler(new Vector3(0, 180, 0)));
         unitObject.name = unitType + _unitID.ToString();
         GameObject gameObject = unitObject;
-        Debug.Log(unitLocation);
+        
 
         // switch문으로 unit을 Dictionary에 저장
         switch (unitType)
@@ -87,6 +87,8 @@ public class UnitController : MonoBehaviour
         }
         );
         unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener( ()=> GameManager.instance.AddClickedObject(gameObject));
+        Unit unit = gameObject.GetComponent<Unit>();
+        unit.SetAttCollision((GameObject go) => Debug.Log($"coll check: {go.name}"));
         _unitID++;
         return _createdUnit;
 
@@ -111,9 +113,10 @@ public class UnitController : MonoBehaviour
     {
 
     }
-    public IEnumerator MoveUnit(GameObject unitObject, Vector3 newLocation)
+    public IEnumerator MoveUnit(GameObject unitObject, Vector3 newLocation, int order)
     {
         Unit unit = unitObject.GetComponent<Unit>();
+        unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
 
         while (Vector3.Distance(unitObject.transform.position, newLocation) > 0.01f)
         {
@@ -135,6 +138,11 @@ public class UnitController : MonoBehaviour
             yield return null;
         }
         unit.transform.position = newLocation;
+        unit.SetOrder(0);
         unit.unitAnimator.SetBool("isWalking", false);
     }
+
+    /*public IEnumerator Attack(GameObject ally, GameObject enemy){
+
+    }*/
 }

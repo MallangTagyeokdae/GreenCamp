@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
                 // 유닛을 destination으로 이동명령 내리기
                 GameObject unitObject = createdUnit.gameObject;
                 //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
-                createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
+                createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination, 1));
                 buildingController.CheckingBuiltClear(barrack);
                 ReloadBuildingUI(barrack);
             }
@@ -212,6 +212,12 @@ public class GameManager : MonoBehaviour
 
     public void MoveUnit(Vector3 newLocation)
     {
+        int order = 1;
+
+        if(Input.GetKeyDown(KeyCode.A)){
+            order = 2;
+        }
+
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
@@ -221,13 +227,11 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
-            Debug.Log($"move unit: {go}");
-
             if (selectedUnit.unitBehaviour != null)
             {
                 StopCoroutine(selectedUnit.unitBehaviour);
             }
-            selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(go, newLocation));
+            selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(go, newLocation, order));
         }
     }
 

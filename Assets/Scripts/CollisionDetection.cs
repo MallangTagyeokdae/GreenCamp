@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollisionDetection : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private GameObject root;
+    public CollisionRange collisionRange;
+
+    private void Start() {
+        root = gameObject.transform.parent.gameObject;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnTriggerEnter(Collider other) {
+        if(root.TryGetComponent(out Entity entity)){
+            entity.OnChildTriggerEnter(other.gameObject, collisionRange);
+        }
     }
 }
