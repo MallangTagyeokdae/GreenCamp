@@ -8,7 +8,7 @@ public abstract class Building : MonoBehaviour
 {
     public enum State
     {
-        InCreated,  // 건물이 건설 중인 상태
+        InCreating,  // 건물이 건설 중인 상태
         Built,   // 건물이 완료된 상태
         InProgress,  // 건물이 진행 중인 상태
         Destroy
@@ -27,7 +27,7 @@ public abstract class Building : MonoBehaviour
     public Slider progressBar { get; set; }
     public float time { get; set; }
     public float loadingTime{get; set;}
-    public State state = State.InCreated;
+    public State state = State.InCreating;
     public Mesh progressMesh1;
     public Mesh progressMesh2;
     public Mesh completeMesh;

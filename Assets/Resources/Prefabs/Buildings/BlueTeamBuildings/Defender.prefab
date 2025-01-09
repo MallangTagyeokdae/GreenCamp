@@ -941,6 +941,9 @@ MonoBehaviour:
   deMouseHoverEvent:
     m_PersistentCalls:
       m_Calls: []
+  draggedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &930100057350849220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -969,7 +972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f705c420dbb48cf9a26cdeaedafa31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingState: 0
+  state: 0
   progressMesh1: {fileID: 4300000, guid: a6360e359f4767e41a49aec1887be29c, type: 3}
   progressMesh2: {fileID: 4300000, guid: 1e99ddaf9b6c01949bda36d1292dce52, type: 3}
   completeMesh: {fileID: 4300002, guid: f38b9a56b23e4df499eaede1c2276296, type: 3}

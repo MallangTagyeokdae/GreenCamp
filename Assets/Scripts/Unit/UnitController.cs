@@ -124,5 +124,4 @@ public class UnitController : MonoBehaviour
         unit.transform.position = newLocation;
         unit.unitAnimator.SetBool("isWalking", false);
     }
-
 }
