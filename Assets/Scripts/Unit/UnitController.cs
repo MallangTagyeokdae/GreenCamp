@@ -86,6 +86,7 @@ public class UnitController : MonoBehaviour
             GameManager.instance.SetHealthBar(unit);
         }
         );
+        unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener( ()=> GameManager.instance.AddClickedObject(gameObject));
         _unitID++;
         return _createdUnit;
 

@@ -105,24 +105,23 @@ public class GameManager : MonoBehaviour
     }
     public async void CreateUnit() // 해윤
     {
-        Barrack barrack = clickedObject[0].GetComponent<Barrack>();
-        if (barrack != null)
+        if(clickedObject[0].TryGetComponent(out Barrack barrack))
         {
-            barrack.progressBar.gameObject.SetActive(true);
-            Vector3 buildingPos = barrack.transform.position;
-            Vector3 destination = barrack._sponPos;
-            buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
-            Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos);
-            // 유닛을 destination으로 이동명령 내리기
-            GameObject unitObject = createdUnit.gameObject;
-            //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
-            createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
-            CheckingBuiltClear(barrack);
-            ReloadBuildingUI(barrack);
-        }
-        else
-        {
-            Debug.LogError("유닛 생성 오류");
+            if(barrack.state == Building.State.Built)
+            {
+                buildingController.SetBuildingState(barrack,2);
+                barrack.progressBar.gameObject.SetActive(true);
+                Vector3 buildingPos = barrack.transform.position;
+                Vector3 destination = barrack._sponPos;
+                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
+                Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos);
+                // 유닛을 destination으로 이동명령 내리기
+                GameObject unitObject = createdUnit.gameObject;
+                //unitController.currentMoveCoroutine.Add(gameObject, StartCoroutine(unitController.MoveUnit(gameObject, destination)));
+                createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination));
+                buildingController.CheckingBuiltClear(barrack);
+                ReloadBuildingUI(barrack);
+            }
         }
     }
     // =====================================================
@@ -158,16 +157,8 @@ public class GameManager : MonoBehaviour
         Debug.Log($"check time: {building.time}");
         building.state = Building.State.Built;
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
-        CheckingBuiltClear(building);
+        buildingController.CheckingBuiltClear(building);
         ReloadBuildingUI(building);
-    }
-
-    private void CheckingBuiltClear(Building building)
-    {
-        building.state = Building.State.Built;
-        building.healthBar.gameObject.SetActive(false);
-        building.progressBar.gameObject.SetActive(false);
-
     }
 
     private void UpdateBuildingHealth(Building building, float time)
