@@ -14,6 +14,16 @@ public abstract class Building : Entity
         Destroy = 3
     }
 
+    public enum InProgressItem
+    {
+        None = 0,
+        LevelUP = 1,
+        Soldier = 2,
+        Archer = 3,
+        Tanker = 4,
+        Healer = 5
+    }
+
     public string teamID { get; set; }
     public int ID { get; set; }
     public string type { get; set; }
@@ -28,6 +38,7 @@ public abstract class Building : Entity
     public float time { get; set; }
     public float loadingTime{get; set;}
     public State state = State.InCreating;
+    public InProgressItem inProgressItem = InProgressItem.None;
     public Mesh progressMesh1;
     public Mesh progressMesh2;
     public Mesh completeMesh;

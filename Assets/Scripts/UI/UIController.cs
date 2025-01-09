@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Doozy.Runtime.UIManager;
 using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager.Containers;
 using ExitGames.Client.Photon.StructWrapping;
 using TMPro;
 using Unity.Profiling;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -60,27 +62,67 @@ public class UIController : MonoBehaviour
         UIContainer currentUI = GameManager.instance.currentUI;
         Building clickedBuidling = clickedObject.GetComponent<Building>();
 
-        if (clickedBuidling.state == Building.State.InCreating) // 건물이 생성중일 때
+        switch(clickedBuidling.state)
         {
-            selectedUI = UILists[1];
-        } else if (clickedBuidling.state == Building.State.InProgress) // 건물에서 작업중인 상황일 때 UI 표시
-        {
-            SetInteractable(selectedUI.GetComponent<UIElement>().uiElements);
-            SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
-        } else if(clickedBuidling.state == Building.State.Built)
-        {
-            SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, true);
-            SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuidling);
+            case Building.State.InCreating:
+                selectedUI = UILists[1];
+                break;
+            case Building.State.Built:
+                 // 건물의 상태(레벨)에 따라서 버튼의 Interactable을 활성화 시켜준다.
+                SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiElements, clickedBuidling, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
+                // 건물의 상태(레벨)에 따라서 활성화된 버튼 위의 잠금을 해제해준다.
+                SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuidling, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
+                // UI의 이미지를 업데이트한다.
+                SetBuildingUIImage(selectedUI, clickedBuidling.inProgressItem);
+                // UI의 진행바를 업데이트한다.
+                SetProgressBar(selectedUI, clickedBuidling.progress/100, 1);
+                break;
+            case Building.State.InProgress:
+            // UI의 모든 버튼의 Interactable을 false로 바꾼다.
+                SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, false);
+                // UI의 모든 버튼위에 Lock 표시를 한다.
+                SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
+                // UI의 이미지를 업데이트 해준다.
+                SetBuildingUIImage(selectedUI, clickedBuidling.inProgressItem);
+                // UI의 진행바를 업데이트한다.
+                SetProgressBar(selectedUI, clickedBuidling.progress/100, 1);
+                break;
+            case Building.State.Destroy:
+                break;
         }
         // 레벨 설정
         UpdateLevel(selectedUI, clickedBuidling);
         // 체력 설정
-        // UpdateHealth(selectedUI, clickedBuidling);
+        UpdateHealth(selectedUI, clickedBuidling);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
+    public void SetBuildingUIImage(UIContainer selectedUI, Enum progressType) // UI에 이미지 업데이트 하는 함수
+    {
+        switch(progressType)
+        {
+            case Building.InProgressItem.LevelUP:
+                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[1].sprite;
+                break;
+            case Building.InProgressItem.Soldier:
+                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[2].sprite;
+                break;
+            case Building.InProgressItem.Archer:
+                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[3].sprite;
+                break;
+            case Building.InProgressItem.Tanker:
+                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[4].sprite;
+                break;
+            case Building.InProgressItem.Healer:
+                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[5].sprite;
+                break;
+            default:
+                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = null;
+                break;
+        }
+    }
     
-    private void SetButtonByLevel(List<UIButton> uIButtons, Building building)
+    private void SetButtonByLevel(List<UIButton> uIButtons, Building building, Action<List<UIButton>,bool> action, bool state)
     {
         if(building.TryGetComponent(out Barrack barrack))
         {
@@ -88,49 +130,49 @@ public class UIController : MonoBehaviour
             switch(level)
             {
                 case 1:
-                    SetActive(uIButtons.GetRange(1,1));
-                    SetActive(uIButtons.GetRange(2,3),true);
+                    action(uIButtons.GetRange(1,1), state);
+                    action(uIButtons.GetRange(2,3), !state);
                     break;
                 case 2:
-                    SetActive(uIButtons.GetRange(1,2));
-                    SetActive(uIButtons.GetRange(3,2), true);
-                    break;
-                case 4:
-                    SetActive(uIButtons.GetRange(1,3));
-                    SetActive(uIButtons.GetRange(4,1), true);
+                    action(uIButtons.GetRange(1,2), state);
+                    action(uIButtons.GetRange(3,2), !state);
                     break;
                 case 3:
-                    SetActive(uIButtons.GetRange(1,4));
+                    action(uIButtons.GetRange(1,3), state);
+                    action(uIButtons.GetRange(4,1), !state);
+                    break;
+                case 4:
+                    action(uIButtons.GetRange(1,4), state);
                     break;
             }
         }
-        uIButtons[0].gameObject.SetActive(false);
+        // 레벨에 상관없이 레벨업 버튼은 Interactable -> true, Lock 버튼 Active -> false로 해야함
+        if(state)
+        {
+            uIButtons[0].GetComponent<UIButton>().interactable = state;
+        } else if(!state)
+        {
+            uIButtons[0].gameObject.SetActive(state);
+        }
     }
     
-    private void SetInteractable(List<UIButton> uIButtons, bool state = false)
+    private void SetInteractable(List<UIButton> uIButtons, bool state)
     {
         foreach(UIButton uIButton in uIButtons)
         {
-            uIButton.GetComponent<UIButton>().interactable = state;
-        }
-    }
-
-    private void SetActive(List<UIButton> uIButtons, bool state = false)
-    {
-        foreach(UIButton uIButton in uIButtons)
-        {
-            uIButton.gameObject.SetActive(state);
-        }
-    }
-
-    private void CheckProgressedElement(List<UIButton> uiElements) // 현재 건물에서 진행중인 작업이 무엇인지 확인하는 함수
-    {
-        foreach(UIButton uIButton in uiElements)
-        {
-            if(uIButton.gameObject.tag == "InProgress")
+            if(uIButton.GetComponent<UIButton>().interactable != state)
             {
-
+                uIButton.GetComponent<UIButton>().interactable = state;
             }
+        }
+    }
+
+    private void SetActive(List<UIButton> uIButtons, bool state)
+    {
+        foreach(UIButton uIButton in uIButtons)
+        {
+            if(uIButton.gameObject.activeSelf != state)
+                uIButton.gameObject.SetActive(state);
         }
     }
 
@@ -142,22 +184,31 @@ public class UIController : MonoBehaviour
 
     public void SetLevel(UIContainer currentUI, int currentLevel)
     {
-        _level = currentUI.transform.Find("LeftSide/LeftSide/LevelArea/Level").GetComponent<TMP_Text>();
+        _level = currentUI.GetComponent<UIElement>().level;
         _level.text = currentLevel.ToString();
     }
 
-    public void UpdateHealth(UIContainer currentUI, Building clickedObject)
+    public void UpdateHealth(UIContainer currentUI, Building clickedObject) // 체력 숫자를 표시하는 함수
     {
         int currentHealth = (int)Math.Round(clickedObject.GetComponent<Building>().currentHealth);
         int maxHealth = clickedObject.GetComponent<Building>().maxHealth;
-        SetHealth(currentUI, currentHealth, maxHealth);
+        if(clickedObject.state == (Building.State).0) // 건설중인경우에는 체력바도 업데이트 해줘야함
+        {
+            SetProgressBar(currentUI, currentHealth, maxHealth);
+        }
+        SetHealth(currentUI, currentHealth);
     }
 
-    public void SetHealth(UIContainer currentUI, int currentHealth, int maxHealth)
+    public void SetHealth(UIContainer currentUI, int currentHealth)
     {
-        TMP_Text healthText = currentUI.transform.Find("LeftSide/LeftSide/HealthArea/Health").GetComponent<TMP_Text>();
-        Slider healthBar = currentUI.transform.Find("LeftSide/BuildingCurrentHealth").GetComponent<Slider>();
+        TMP_Text healthText = currentUI.GetComponent<UIElement>().health;
         healthText.text = currentHealth.ToString();
-        healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
     }
+
+    public void SetProgressBar(UIContainer currentUI, float currentvalue, float maxValue)
+    {
+        Slider progresBar = currentUI.GetComponent<UIElement>().progressBar;
+        progresBar.value = (float)(currentvalue * 1.0 / maxValue);
+    }
+
 }
