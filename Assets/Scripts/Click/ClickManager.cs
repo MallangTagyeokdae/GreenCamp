@@ -183,7 +183,13 @@ public class ClickManager : MonoBehaviour
                 if (hit.collider.name == "Ground" && hit.collider.gameObject.CompareTag("Clickable"))
                 {
                     DestroyDragBox();
-                    _isDragging = false;
+                    if(!_isDragging){
+                        return;
+                    }
+                    else{
+                        _isDragging = false;
+                    }
+                     
                     endPos = hit.point;
                     Collider[] colliders = startPos != endPos ? SelectObjectInBox() : null;
                     if(colliders != null){
@@ -194,6 +200,7 @@ public class ClickManager : MonoBehaviour
                             //Debug.Log($"{collider.gameObject.name}");
                         }
                     }
+                    
                 }
             }
 
