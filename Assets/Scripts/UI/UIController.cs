@@ -57,26 +57,25 @@ public class UIController : MonoBehaviour
         return CheckUpdateUI(selectedUI, currentUI);
     }
     // Building UI 변경하는 함수
-    public UIContainer SetBuildingUI(int UIindex, GameObject clickedObject)
+    public UIContainer SetBuildingUI(int UIindex, Building clickedBuilding)
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
-        Building clickedBuidling = clickedObject.GetComponent<Building>();
 
-        switch(clickedBuidling.state)
+        switch(clickedBuilding.state)
         {
             case Building.State.InCreating:
                 selectedUI = UILists[1];
                 break;
             case Building.State.Built:
                  // 건물의 상태(레벨)에 따라서 버튼의 Interactable을 활성화 시켜준다.
-                SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiElements, clickedBuidling, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
+                SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
                 // 건물의 상태(레벨)에 따라서 활성화된 버튼 위의 잠금을 해제해준다.
-                SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuidling, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
+                SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
                 // UI의 이미지를 업데이트한다.
-                SetBuildingUIImage(selectedUI, clickedBuidling.inProgressItem);
+                SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem);
                 // UI의 진행바를 업데이트한다.
-                SetProgressBar(selectedUI, clickedBuidling.progress/100, 1);
+                SetProgressBar(selectedUI, clickedBuilding.progress/100, 1);
                 break;
             case Building.State.InProgress:
             // UI의 모든 버튼의 Interactable을 false로 바꾼다.
@@ -84,17 +83,17 @@ public class UIController : MonoBehaviour
                 // UI의 모든 버튼위에 Lock 표시를 한다.
                 SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
                 // UI의 이미지를 업데이트 해준다.
-                SetBuildingUIImage(selectedUI, clickedBuidling.inProgressItem);
+                SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem);
                 // UI의 진행바를 업데이트한다.
-                SetProgressBar(selectedUI, clickedBuidling.progress/100, 1);
+                SetProgressBar(selectedUI, clickedBuilding.progress/100, 1);
                 break;
             case Building.State.Destroy:
                 break;
         }
         // 레벨 설정
-        UpdateLevel(selectedUI, clickedBuidling);
+        UpdateLevel(selectedUI, clickedBuilding);
         // 체력 설정
-        UpdateHealth(selectedUI, clickedBuidling);
+        UpdateHealth(selectedUI, clickedBuilding);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
