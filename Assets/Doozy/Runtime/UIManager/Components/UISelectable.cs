@@ -358,7 +358,7 @@ namespace Doozy.Runtime.UIManager.Components
             GetUISelectableState(state).stateEvent.Execute();
             return this;
         }
-
+        
         public UISelectable RefreshState() =>
             SetState(currentUISelectionState);
 
