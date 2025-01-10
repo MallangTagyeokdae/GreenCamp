@@ -43,7 +43,7 @@ public class Defender : Building
     public override void InitTime()
     {
         time = 0f;
-        loadingTime = 20f;
+        loadingTime = 20/10f;
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 

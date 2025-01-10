@@ -80,9 +80,12 @@ public class GameManager : MonoBehaviour
     {
         currentUI = uIController.SetBuildingListUI(UIindex);
     }
-    public void SetBuildingInfo(int UIindex)
+    public void SetBuildingInfo(int UIindex, Building building)
     {
-        currentUI = uIController.SetBuildingUI(UIindex, clickedObject[0]);
+        if(clickedObject[0] == building.gameObject)
+        {
+            currentUI = uIController.SetBuildingUI(UIindex, building);
+        }
     }
     public void SetUnitInfo(int UIindex)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
@@ -109,7 +112,6 @@ public class GameManager : MonoBehaviour
         {
             if(barrack.state == Building.State.Built)
             {
-                Debug.Log("유닛생성 시작");
                 buildingController.SetBuildingState(barrack,2,unitType);
                 ReloadBuildingUI(barrack);
 
@@ -136,12 +138,15 @@ public class GameManager : MonoBehaviour
     {
         this.buildingType = buildingType;
     }
-    public void LevelUpBuilding()
+    public async void LevelUpBuilding()
     {
         if(clickedObject[0].TryGetComponent(out Building building))
         {
-            buildingController.UpgradeBuilding();
-            uIController.UpdateLevel(currentUI, building);
+            buildingController.SetBuildingState(building,2,"LevelUP");
+            ReloadBuildingUI(building);
+            await OrderCreate(building, building.level*10f);
+            buildingController.UpgradeBuilding(building);
+            buildingController.SetBuildingState(building,1,"None");
             ReloadBuildingUI(building);
         }
     }
@@ -184,19 +189,19 @@ public class GameManager : MonoBehaviour
             switch (building.type)
             {
                 case "Command":
-                    SetBuildingInfo(2);
+                    SetBuildingInfo(2, building);
                     break;
                 case "Barrack":
-                    SetBuildingInfo(3);
+                    SetBuildingInfo(3, building);
                     break;
                 case "PopulationBuilding":
-                    SetBuildingInfo(4);
+                    SetBuildingInfo(4, building);
                     break;
                 case "ResourceBuilding":
-                    SetBuildingInfo(5);
+                    SetBuildingInfo(5, building);
                     break;
                 case "Defender":
-                    SetBuildingInfo(6);
+                    SetBuildingInfo(6, building);
                     break;
             }
         }
@@ -247,32 +252,32 @@ public class GameManager : MonoBehaviour
         switch (unitType)
         {
             case "Soldier":
-                await OrderCreateUnit(barrack, 10f);
+                await OrderCreate(barrack, 2f);
                 break;
             case "Archer":
-                await OrderCreateUnit(barrack, 15f);
+                await OrderCreate(barrack, 2f);
                 break;
             case "Tanker":
-                await OrderCreateUnit(barrack, 20f);
+                await OrderCreate(barrack, 2f);
                 break;
             case "Healer":
-                await OrderCreateUnit(barrack, 25f);
+                await OrderCreate(barrack, 2f);
                 break;
         }
         return unitController.CreateUnit(buildingPos, unitType);
     }
 
-    private async Task OrderCreateUnit(Barrack barrack, float totalTime)
+    private async Task OrderCreate(Building building, float totalTime)
     {
-        barrack.InitOrderTime(totalTime);
-        await StartTimer(totalTime, (float time) => UpdateUnitProgress(barrack, time));
+        building.InitOrderTime(totalTime);
+        await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time));
     }
-    private void UpdateUnitProgress(Barrack barrack, float time)
+    private void UpdateBuildingProgress(Building building, float time)
     {
-        barrack.UpdateOrderTime(time);
-        if(clickedObject[0].GetComponent<Barrack>() == barrack)
+        building.UpdateOrderTime(time);
+        if(clickedObject[0].GetComponent<Barrack>() == building)
         {
-            uIController.SetProgressBar(currentUI,barrack.progress/100,1);
+            uIController.SetProgressBar(currentUI,building.progress/100,1);
         }
     }
 

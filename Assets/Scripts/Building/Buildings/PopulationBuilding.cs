@@ -36,7 +36,7 @@ public class PopulationBuilding : Building
     public override void InitTime()
     {
         time = 0f;
-        loadingTime = 15f;
+        loadingTime = 15/10f;
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 

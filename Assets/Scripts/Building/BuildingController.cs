@@ -52,8 +52,6 @@ public class BuildingController : MonoBehaviour
         switch (buildingType)
         {
             case "Command":
-                // UI 바뀌는 callback 함수 넣어줌
-                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(2));
 
                 // Command 객체를 넣어준다. -> 오브젝트를 통해서 건물의 정보를 알 수 있게 하기위해
                 Command _newCommand = buildingObject.AddComponent<Command>();
@@ -65,12 +63,12 @@ public class BuildingController : MonoBehaviour
                 newBuilding = _newCommand;
                 newBuilding.progressMesh1 = _newCommand.progressMesh1;
                 newBuilding.completeMesh = _newCommand.completeMesh;
+
+                // UI 바뀌는 callback 함수 넣어줌
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(2, newBuilding));
                 break;
 
             case "Barrack":
-                // UI 바뀌는 callback 함수 넣어줌
-                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(3));
-
                 // Barrack 객체를 불러온다. -> 오브젝트를 통해서 건물의 정보를 알 수 있게 하기위해
                 Barrack _newBarrack = buildingObject.GetComponent<Barrack>();
                 // 배럭 정보 초기화
@@ -81,10 +79,11 @@ public class BuildingController : MonoBehaviour
                 newBuilding = _newBarrack;
                 newBuilding.progressMesh1 = _newBarrack.progressMesh1;
                 newBuilding.completeMesh = _newBarrack.completeMesh;
+
+                // UI 바뀌는 callback 함수 넣어줌
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(3, newBuilding));
                 break;
             case "PopulationBuilding":
-                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(4));
-
                 PopulationBuilding _newPop = buildingObject.GetComponent<PopulationBuilding>();
                 _newPop.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
 
@@ -92,10 +91,9 @@ public class BuildingController : MonoBehaviour
                 newBuilding = _newPop;
                 newBuilding.progressMesh1 = _newPop.progressMesh1;
                 newBuilding.completeMesh = _newPop.completeMesh;
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(4, newBuilding));
                 break;
             case "ResourceBuilding":
-                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(5));
-
                 ResourceBuilding _newResource = buildingObject.GetComponent<ResourceBuilding>();
                 _newResource.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
 
@@ -103,10 +101,10 @@ public class BuildingController : MonoBehaviour
                 newBuilding = _newResource;
                 newBuilding.progressMesh1 = _newResource.progressMesh1;
                 newBuilding.completeMesh = _newResource.completeMesh;
+
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(5, newBuilding));
                 break;
             case "Defender":
-                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6));
-
                 Defender _newDefender = buildingObject.GetComponent<Defender>();
                 _newDefender.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
                 
@@ -114,23 +112,22 @@ public class BuildingController : MonoBehaviour
                 newBuilding = _newDefender;
                 newBuilding.progressMesh1 = _newDefender.progressMesh1;
                 newBuilding.completeMesh = _newDefender.completeMesh;
+
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6, newBuilding));
                 break;
             default: //일단 초기화를 위해서 더미데이터를 넣음음
-                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6));
-
                 Defender defautBuilding = buildingObject.AddComponent<Defender>();
                 defautBuilding.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
                 buildingDictionary.Add(_buildingID, defautBuilding);
                 newBuilding = defautBuilding;
+
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6, newBuilding));
                 break;
         }
 
         _buildingID++;
         return newBuilding;
     }
-    public void UpdateBuilding(Vector3 buildingLocation, string buildingType){}
-    
-
     // 디버깅용
     public void PrintList(Dictionary<int, Building> buildings)
     {
@@ -151,9 +148,8 @@ public class BuildingController : MonoBehaviour
 
     }
 
-    public void UpgradeBuilding()
+    public void UpgradeBuilding(Building building)
     {
-        Building building = GameManager.instance.clickedObject[0].GetComponent<Building>();
         building.level++;
     }
 
@@ -173,7 +169,6 @@ public class BuildingController : MonoBehaviour
 
         }
         building.state = (Building.State)state;
-        Debug.Log(building.state);
         Enum.TryParse(progressType, out Building.InProgressItem item);
         building.inProgressItem = item;
     }
