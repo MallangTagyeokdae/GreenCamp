@@ -972,6 +972,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ab038f4b0b74df68f4e151012abaf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   state: 0
   inProgressItem: 0
   progressMesh1: {fileID: 4300000, guid: 9018b9e829e697640b479e00dd8fdcc0, type: 3}

@@ -8,6 +8,7 @@ using TMPro;
 using Unity.Profiling;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
@@ -149,7 +150,7 @@ public class UIController : MonoBehaviour
         // 레벨에 상관없이 레벨업 버튼은 Interactable -> true, Lock 버튼 Active -> false로 해야함
         if(state)
         {
-            uIButtons[0].GetComponent<UIButton>().interactable = state;
+            uIButtons[0].interactable = state;
         } else if(!state)
         {
             uIButtons[0].gameObject.SetActive(state);
@@ -159,10 +160,11 @@ public class UIController : MonoBehaviour
     private void SetInteractable(List<UIButton> uIButtons, bool state)
     {
         foreach(UIButton uIButton in uIButtons)
-        {
-            if(uIButton.GetComponent<UIButton>().interactable != state)
+        {   
+            if(uIButton.interactable != state)
             {
-                uIButton.GetComponent<UIButton>().interactable = state;
+                uIButton.OnDeselect(null);
+                uIButton.interactable = state;
             }
         }
     }
