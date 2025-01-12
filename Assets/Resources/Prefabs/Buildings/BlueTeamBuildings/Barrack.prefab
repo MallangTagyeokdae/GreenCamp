@@ -972,13 +972,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ab038f4b0b74df68f4e151012abaf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attTrigger:
+  attTriggerEnter:
     m_PersistentCalls:
       m_Calls: []
-  aggTrigger:
+  attTriggerExit:
     m_PersistentCalls:
       m_Calls: []
-  aggList: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
   teamID: 
   state: 0
   inProgressItem: 0

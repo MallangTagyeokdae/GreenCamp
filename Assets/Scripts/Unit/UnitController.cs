@@ -88,7 +88,8 @@ public class UnitController : MonoBehaviour
         );
         unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(gameObject));
         Unit unit = gameObject.GetComponent<Unit>();
-        unit.SetAttCollision((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy);});
+        unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy);});
+        unit.SetAttExit((GameObject enemy) => { unit.attackList.Remove(enemy);});
         _unitID++;
         return _createdUnit;
 
@@ -126,7 +127,7 @@ public class UnitController : MonoBehaviour
             unit.transform.rotation = Quaternion.LookRotation(moveDirection);
         }
 
-        unit.ChangeAnimation("Move");
+        unit.ChangeState("Move");
 
         while (Vector3.Distance(unitObject.transform.position, newLocation) > 0.01f)
         {
@@ -140,7 +141,7 @@ public class UnitController : MonoBehaviour
 
         unit.transform.position = newLocation;
         unit.SetOrder(0);
-        unit.ChangeAnimation("Idle");
+        unit.ChangeState("Idle");
     }
 
     // damage 넣는 로직 추가해야함, 적팀일 때 공격도
@@ -151,13 +152,14 @@ public class UnitController : MonoBehaviour
         {
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             ally.transform.rotation = Quaternion.LookRotation(rot);
-            unit.ChangeAnimation("Attack");
+            unit.ChangeState("Attack");
             yield return null;
         }
 
         if (enemy == null)
         {
             unit.SetOrder(0);
+            unit.ChangeState("Idle");
         }
     }
 

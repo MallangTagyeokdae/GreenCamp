@@ -12,20 +12,36 @@ public enum CollisionRange
 
 public class Entity : MonoBehaviour
 {
-    [HideInInspector] public UnityEvent<GameObject> attTrigger;
-    [HideInInspector] public UnityEvent<GameObject> aggTrigger;
+    [HideInInspector] public UnityEvent<GameObject> attTriggerEnter;
+    [HideInInspector] public UnityEvent<GameObject> attTriggerExit;
+    [HideInInspector] public UnityEvent<GameObject> aggTriggerEnter;
+    [HideInInspector] public UnityEvent<GameObject> aggTriggerExit;
     public HashSet<GameObject> attackList;
-    public List<GameObject> aggList;
+    public HashSet<GameObject> aggList;
     public string teamID;
+
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)
     {
         switch (coll)
         {
             case CollisionRange.attack:
-                attTrigger?.Invoke(go);
+                attTriggerEnter?.Invoke(go);
                 break;
             case CollisionRange.aggretion:
-                aggTrigger?.Invoke(go);
+                aggTriggerEnter?.Invoke(go);
+                break;
+        }
+    }
+
+    public void OnChildTriggerExit(GameObject go, CollisionRange coll)
+    {
+        switch (coll)
+        {
+            case CollisionRange.attack:
+                attTriggerExit?.Invoke(go);
+                break;
+            case CollisionRange.aggretion:
+                aggTriggerExit?.Invoke(go);
                 break;
         }
     }
