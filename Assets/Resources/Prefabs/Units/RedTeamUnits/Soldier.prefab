@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2881834226238106485, guid: b3c52779e94764e83bc8fdbef740ece5, type: 3}
       propertyPath: m_Name
-      value: Soldier Variant
+      value: Soldier
       objectReference: {fileID: 0}
     - target: {fileID: 2881834226241244851, guid: b3c52779e94764e83bc8fdbef740ece5, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -67,5 +67,38 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2881834226238106485, guid: b3c52779e94764e83bc8fdbef740ece5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7170555348763224430}
   m_SourcePrefab: {fileID: 100100000, guid: b3c52779e94764e83bc8fdbef740ece5, type: 3}
+--- !u!1 &5864727300351772452 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2881834226238106485, guid: b3c52779e94764e83bc8fdbef740ece5, type: 3}
+  m_PrefabInstance: {fileID: 8547241234072923217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7170555348763224430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5864727300351772452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918fe3d3bf238487d82f0cecbf275a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  aggList: []
+  teamID: red
+  healthBar: {fileID: 0}
+  state: 0
+  attackList: []
+  animator: {fileID: 0}
+  order: 0

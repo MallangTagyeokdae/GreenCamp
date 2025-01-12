@@ -24,7 +24,7 @@ public abstract class Building : Entity
         Healer = 5
     }
 
-    public string teamID { get; set; }
+    //public string teamID { get; set; }
     public int ID { get; set; }
     public string type { get; set; }
     public Vector3 location { get; set; }

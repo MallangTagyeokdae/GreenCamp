@@ -9,10 +9,14 @@ public enum CollisionRange
     aggretion
 }
 
+
 public class Entity : MonoBehaviour
 {
     [HideInInspector] public UnityEvent<GameObject> attTrigger;
     [HideInInspector] public UnityEvent<GameObject> aggTrigger;
+    public HashSet<GameObject> attackList;
+    public List<GameObject> aggList;
+    public string teamID;
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)
     {
         switch (coll)

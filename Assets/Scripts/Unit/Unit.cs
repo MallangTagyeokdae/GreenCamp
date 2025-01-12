@@ -8,17 +8,24 @@ using UnityEngine.UI;
 
 public abstract class Unit : Entity
 {
-    public enum Order
+    public enum Order // 유닛에게 내려진 유저의 명령
     {
         Idle = 0,
         Move = 1,
-        
+
         Offensive = 2,
         Attack = 3
     }
 
+    public enum State //현재 실행 중인 유닛의 동작
+    {
+        Idle,
+        Move,
+        Attack
+    }
 
-    public string teamID { get; set; }
+
+    //public string teamID; //{ get; set; }
     public int unitID { get; set; }
     public string unitType { get; set; }
     public Vector3 unitLocation { get; set; }
@@ -31,12 +38,14 @@ public abstract class Unit : Entity
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
     public Slider healthBar;
+    public State state = State.Idle;
+    
 
-    [HideInInspector] public Animator unitAnimator;
+    [HideInInspector] public Animator animator;
 
     public Coroutine unitBehaviour;
 
-    /*[HideInInspector]*/ public Order order = Order.Idle;
+    public Order order = Order.Idle;
 
     private void Awake()
     {
@@ -44,10 +53,14 @@ public abstract class Unit : Entity
         {
             attTrigger = new UnityEvent<GameObject>();
         }
-        unitAnimator = GetComponent<Animator>();
+        attackList = new HashSet<GameObject>();
+        animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
         healthBar = gameObject.transform.Find("HealthBar/UnitCurrentHealth").GetComponent<Slider>();
         healthBar.gameObject.SetActive(false);
-        Debug.Log(unitAnimator.name);
     }
 
     public Unit(string teamID,
@@ -96,9 +109,62 @@ public abstract class Unit : Entity
                 order = Order.Offensive;
                 break;
 
-            case 3: 
+            case 3:
                 order = Order.Attack;
                 break;
         }
+    }
+
+    public void SetAnimation(string newState)
+    {
+        switch (newState)
+        {
+            case "Idle":
+                state = State.Idle;
+                break;
+
+            case "Move":
+                state = State.Move;
+                animator.SetBool("isWalking", true);
+                break;
+
+            case "Attack":
+                state = State.Attack;
+                animator.SetBool("isAttacking", true);
+                break;
+        }
+    }
+
+    public void ChangeAnimation(string newState)
+    {
+        switch (state)
+        {
+            case State.Idle:
+                if (newState == "Idle")
+                {
+                    break;
+                }
+                SetAnimation(newState);
+                break;
+
+            case State.Move:
+                if (newState == "Move")
+                {
+                    break;
+                }
+                animator.SetBool("isWalking", false);
+                SetAnimation(newState);
+                break;
+
+            case State.Attack:
+                if (newState == "Attack")
+                {
+                    break;
+                }
+                animator.SetBool("isAttacking", false);
+                SetAnimation(newState);
+                break;
+        }
+
     }
 }

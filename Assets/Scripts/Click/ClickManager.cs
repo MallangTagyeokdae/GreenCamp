@@ -253,10 +253,11 @@ public class ClickManager : MonoBehaviour
         /*lineRenderer.startColor = Color.green;
         lineRenderer.endColor = Color.green;*/
         lineRenderer.positionCount = 5;
-        lineRenderer.startWidth = 0.3f;
-        lineRenderer.endWidth = 0.3f;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
         lineRenderer.material = new Material(Shader.Find("Unlit/Color"));
         lineRenderer.material.SetColor("_Color", Color.green);
+        lineRenderer.textureMode = LineTextureMode.Tile;
 
         lineRenderer.SetPosition(0, _dragBox.topLeft + new Vector3(0, 0.08f, 0));
         lineRenderer.SetPosition(1, _dragBox.bottomLeft + new Vector3(0, 0.08f, 0));
