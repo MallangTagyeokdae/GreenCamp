@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using UnityEngine;
 using UnityEngine.Events;
@@ -49,11 +50,16 @@ public abstract class Unit : Entity
 
     private void Awake()
     {
-        if (attTrigger == null)
+        if (attTriggerEnter == null)
         {
-            attTrigger = new UnityEvent<GameObject>();
+            attTriggerEnter = new UnityEvent<GameObject>();
+        }
+        if (attTriggerExit == null)
+        {
+            attTriggerExit = new UnityEvent<GameObject>();
         }
         attackList = new HashSet<GameObject>();
+        aggList = new HashSet<GameObject>();
         animator = GetComponent<Animator>();
     }
 
@@ -88,9 +94,38 @@ public abstract class Unit : Entity
         this.populationCost = populationCost;
     }
 
-    public void SetAttCollision(Action<GameObject> action)
+    public void SetAttEnter(Action<GameObject> action)
     {
-        attTrigger.AddListener((GameObject go) => action(go));
+        attTriggerEnter.AddListener((GameObject go) => action(go));
+    }
+    public void SetAttExit(Action<GameObject> action)
+    {
+        attTriggerExit.AddListener((GameObject go) => action(go));
+    }
+
+    private void OnIdleEnter(){ //attackList와 aggList 내의 null 값들을 전부 제거해준 후 attack또는 aggro 함수를 실행해준다.
+        foreach(GameObject enemy in attackList){
+            if(enemy == null){
+                attackList.Remove(enemy);
+            }
+        }
+
+        foreach(GameObject enemy in aggList){
+            if(enemy == null){
+                aggList.Remove(enemy);
+            }
+        }
+
+        if(attackList.Count != 0){
+            //콜백함수 실행 후 리턴
+            GameManager.instance.AttackUnit(this.gameObject, attackList.ToList<GameObject>()[0]); // 일단 하드 코딩함 근데 콜백 따로 만들어서 하는 것보단 이게 나을 수도?
+            return;
+        }
+
+        if(aggList.Count != 0){
+            //콜백함수 실행 후 리턴
+        }
+
     }
 
     public void SetOrder(int index)
@@ -115,12 +150,13 @@ public abstract class Unit : Entity
         }
     }
 
-    public void SetAnimation(string newState)
+    public void SetState(string newState)
     {
         switch (newState)
         {
             case "Idle":
                 state = State.Idle;
+                OnIdleEnter();
                 break;
 
             case "Move":
@@ -135,7 +171,7 @@ public abstract class Unit : Entity
         }
     }
 
-    public void ChangeAnimation(string newState)
+    public void ChangeState(string newState)
     {
         switch (state)
         {
@@ -144,7 +180,7 @@ public abstract class Unit : Entity
                 {
                     break;
                 }
-                SetAnimation(newState);
+                SetState(newState);
                 break;
 
             case State.Move:
@@ -153,7 +189,7 @@ public abstract class Unit : Entity
                     break;
                 }
                 animator.SetBool("isWalking", false);
-                SetAnimation(newState);
+                SetState(newState);
                 break;
 
             case State.Attack:
@@ -162,9 +198,10 @@ public abstract class Unit : Entity
                     break;
                 }
                 animator.SetBool("isAttacking", false);
-                SetAnimation(newState);
+                SetState(newState);
                 break;
         }
-
     }
+
+    //새로운 객체를 찾아야 하는 경우 -> 유닛의 상태가 idle이 되었을 때(이동을 완료했을 때, 공격하던 객체가 죽었을 때, 공격하던 객체가 어그로 범위를 벗어났을 때)
 }

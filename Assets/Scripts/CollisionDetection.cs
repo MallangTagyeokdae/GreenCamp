@@ -18,4 +18,10 @@ public class CollisionDetection : MonoBehaviour
             entity.OnChildTriggerEnter(other.gameObject, collisionRange);
         }
     }
+
+    private void OnTriggerExit(Collider other) {
+        if(root.TryGetComponent(out Entity entity)){
+            entity.OnChildTriggerExit(other.gameObject, collisionRange);
+        }
+    }
 }
