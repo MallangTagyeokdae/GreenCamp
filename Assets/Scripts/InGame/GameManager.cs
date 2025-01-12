@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
 using Unity.VisualScripting;
@@ -82,7 +83,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetBuildingInfo(int UIindex, Building building)
     {
-        if(clickedObject[0] == building.gameObject)
+        if (clickedObject[0] == building.gameObject)
         {
             currentUI = uIController.SetBuildingUI(UIindex, building);
         }
@@ -108,11 +109,11 @@ public class GameManager : MonoBehaviour
     }
     public async void CreateUnit() // 해윤
     {
-        if(clickedObject[0].TryGetComponent(out Barrack barrack))
+        if (clickedObject[0].TryGetComponent(out Barrack barrack))
         {
-            if(barrack.state == Building.State.Built)
+            if (barrack.state == Building.State.Built)
             {
-                buildingController.SetBuildingState(barrack,2,unitType);
+                buildingController.SetBuildingState(barrack, 2, unitType);
                 ReloadBuildingUI(barrack);
 
                 Vector3 buildingPos = barrack.transform.position;
@@ -122,9 +123,9 @@ public class GameManager : MonoBehaviour
 
                 // 유닛을 destination으로 이동명령 내리기
                 GameObject unitObject = createdUnit.gameObject;
-                
-                buildingController.SetBuildingState(barrack,1,"None");
-                createdUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(unitObject, destination, 1));
+
+                buildingController.SetBuildingState(barrack, 1, "None");
+                createdUnit.unitBehaviour = StartCoroutine(unitController.Move(unitObject, destination, 1));
 
                 ReloadBuildingUI(barrack);
             }
@@ -140,13 +141,13 @@ public class GameManager : MonoBehaviour
     }
     public async void LevelUpBuilding()
     {
-        if(clickedObject[0].TryGetComponent(out Building building))
+        if (clickedObject[0].TryGetComponent(out Building building))
         {
-            buildingController.SetBuildingState(building,2,"LevelUP");
+            buildingController.SetBuildingState(building, 2, "LevelUP");
             ReloadBuildingUI(building);
-            await OrderCreate(building, building.level*10f);
+            await OrderCreate(building, building.level * 10f);
             buildingController.UpgradeBuilding(building);
-            buildingController.SetBuildingState(building,1,"None");
+            buildingController.SetBuildingState(building, 1, "None");
             ReloadBuildingUI(building);
         }
     }
@@ -169,7 +170,7 @@ public class GameManager : MonoBehaviour
         //------------------------
         Debug.Log($"check time: {building.time}");
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
-        buildingController.SetBuildingState(building,1,"None");
+        buildingController.SetBuildingState(building, 1, "None");
         ReloadBuildingUI(building);
     }
 
@@ -226,7 +227,8 @@ public class GameManager : MonoBehaviour
     {
         int order = 1;
 
-        if(Input.GetKeyDown(KeyCode.A)){
+        if (Input.GetKey(KeyCode.A))
+        {
             order = 2;
         }
 
@@ -243,8 +245,44 @@ public class GameManager : MonoBehaviour
             {
                 StopCoroutine(selectedUnit.unitBehaviour);
             }
-            selectedUnit.unitBehaviour = StartCoroutine(unitController.MoveUnit(go, newLocation, order));
+            selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, newLocation, order));
         }
+    }
+
+    public void AttackUnit(GameObject ally, GameObject enemy)
+    {
+        Unit unit = ally.GetComponent<Unit>();
+        enemy.TryGetComponent(out Entity enemyEntity);
+        if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
+        {
+            return;
+        }
+        else
+        {
+            if(!unit.attackList.Contains(enemy)){
+                unit.attackList.Add(enemy);
+            }
+            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
+            {
+                return;
+            }
+
+            if (unit.unitBehaviour != null)
+            {
+                StopCoroutine(unit.unitBehaviour);
+            }
+            unit.unitBehaviour = StartCoroutine(unitController.Attack(ally, enemy));
+        }
+    }
+
+    public void Aggregated()
+    {
+        /*
+            1. 어그로가 끌렸을 경우 offensive명령으로 해당 유닛을 향해 move
+            2. 알아서 공격범위에 들어오면 attackunit이 실행됨.
+            3. 근데 만약 어그로가 끌린 대상이 있는데 해당 대상이 아닌 다른 유닛이 공격범위에 들어오면?
+
+        */
     }
 
     public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos)
@@ -275,9 +313,9 @@ public class GameManager : MonoBehaviour
     private void UpdateBuildingProgress(Building building, float time)
     {
         building.UpdateOrderTime(time);
-        if(clickedObject[0].GetComponent<Barrack>() == building)
+        if (clickedObject[0].GetComponent<Barrack>() == building)
         {
-            uIController.SetProgressBar(currentUI,building.progress/100,1);
+            uIController.SetProgressBar(currentUI, building.progress / 100, 1);
         }
     }
 

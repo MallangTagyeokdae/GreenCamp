@@ -19133,7 +19133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5321407220397933015}
-  - component: {fileID: 3073610952864841248}
+  - component: {fileID: 9199572972694933928}
   - component: {fileID: 9071545334262375993}
   m_Layer: 0
   m_Name: PowerRange
@@ -19157,7 +19157,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2881834226238015655}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3073610952864841248
+--- !u!114 &9199572972694933928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -19166,9 +19166,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6207998206512307127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4c55c9ee0e044a7ba78226ace14989, type: 3}
+  m_Script: {fileID: 11500000, guid: 95014456e91380e41a27952078fdc1d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionRange: 0
 --- !u!64 &9071545334262375993
 MeshCollider:
   m_ObjectHideFlags: 0

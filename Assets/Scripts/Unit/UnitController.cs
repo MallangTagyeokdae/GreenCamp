@@ -44,7 +44,7 @@ public class UnitController : MonoBehaviour
         unitObject = PhotonNetwork.Instantiate($"Prefabs/Units/{_teamID}TeamUnits/{unitType}", unitLocation, Quaternion.Euler(new Vector3(0, 180, 0)));
         unitObject.name = unitType + _unitID.ToString();
         GameObject gameObject = unitObject;
-        
+
 
         // switch문으로 unit을 Dictionary에 저장
         switch (unitType)
@@ -86,9 +86,9 @@ public class UnitController : MonoBehaviour
             GameManager.instance.SetHealthBar(unit);
         }
         );
-        unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener( ()=> GameManager.instance.AddClickedObject(gameObject));
+        unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(gameObject));
         Unit unit = gameObject.GetComponent<Unit>();
-        unit.SetAttCollision((GameObject go) => Debug.Log($"coll check: {go.name}"));
+        unit.SetAttCollision((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy);});
         _unitID++;
         return _createdUnit;
 
@@ -113,10 +113,20 @@ public class UnitController : MonoBehaviour
     {
 
     }
-    public IEnumerator MoveUnit(GameObject unitObject, Vector3 newLocation, int order)
+    
+    // =================== 유닛 행동 함수 ===================
+    public IEnumerator Move(GameObject unitObject, Vector3 newLocation, int order)
     {
         Unit unit = unitObject.GetComponent<Unit>();
         unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
+        Vector3 moveDirection = (newLocation - unit.transform.position).normalized;
+
+        if (moveDirection != Vector3.zero)
+        {
+            unit.transform.rotation = Quaternion.LookRotation(moveDirection);
+        }
+
+        unit.ChangeAnimation("Move");
 
         while (Vector3.Distance(unitObject.transform.position, newLocation) > 0.01f)
         {
@@ -125,24 +135,36 @@ public class UnitController : MonoBehaviour
                 newLocation,
                 unit.unitMoveSpeed * Time.deltaTime
             );
-
-            Vector3 moveDirection = (newLocation - unit.transform.position).normalized;
-
-            if (moveDirection != Vector3.zero)
-            {
-                unit.transform.rotation = Quaternion.LookRotation(moveDirection);
-            }
-
-            unit.unitAnimator.SetBool("isWalking", true);
-
             yield return null;
         }
+
         unit.transform.position = newLocation;
         unit.SetOrder(0);
-        unit.unitAnimator.SetBool("isWalking", false);
+        unit.ChangeAnimation("Idle");
     }
 
-    /*public IEnumerator Attack(GameObject ally, GameObject enemy){
+    // damage 넣는 로직 추가해야함, 적팀일 때 공격도
+    public IEnumerator Attack(GameObject ally, GameObject enemy)
+    {
+        ally.TryGetComponent(out Unit unit);
+        while (enemy != null) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
+        {
+            Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
+            ally.transform.rotation = Quaternion.LookRotation(rot);
+            unit.ChangeAnimation("Attack");
+            yield return null;
+        }
 
-    }*/
+        if (enemy == null)
+        {
+            unit.SetOrder(0);
+        }
+    }
+
+    /*  1. 새로운 유닛을 설정할 때는 triggerStay가 아니라 trigger가 enter할 때마다 들어온 유닛을 list에 추가한다.
+        2. 공격중인 유닛이 죽으면 list에 저장된 유닛들 중 list.RemoveAll(unit => unit == null)을 해준 뒤(죽어서 사라지는 유닛의 경우 ontriggerexit의 콜백을 하지 않기 때문) 새로운 유닛을 설정
+        -> OntriggerStay는 update처럼 매 프레임 단위로 검사를 해야하기 때문에, resource를 낭비할 여지가 있음. 따라서 range 안에 있는 객체들에 대한 list를 관리해야함
+    */
+
+    //move가 있는데 chase를 만들어야할까?
 }
