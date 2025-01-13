@@ -87,9 +87,12 @@ public class UnitController : MonoBehaviour
         }
         );
         unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(gameObject));
+
         Unit unit = gameObject.GetComponent<Unit>();
         unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy); });
         unit.SetAttExit((GameObject enemy) => { unit.attackList.Remove(enemy); });
+        unit.SetAggEnter((GameObject enemy) => { GameManager.instance.Aggregated(unitObject, enemy); });
+        unit.SetAggExit((GameObject enemy) => { unit.aggList.Remove(enemy); });
         _unitID++;
         return _createdUnit;
 
@@ -144,13 +147,13 @@ public class UnitController : MonoBehaviour
         unit.ChangeState("Idle");
     }
 
-    public IEnumerator Move(GameObject unitObject, GameObject enemyObject, int order)
+    public IEnumerator Move(GameObject unitObject, GameObject enemyObject)
     {
         Unit unit = unitObject.GetComponent<Unit>();
-        unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
+        unit.SetOrder(3);
         unit.ChangeState("Move");
 
-        while (enemyObject != null)
+        while (unit.aggList.Contains(enemyObject) && unit.attackList.Count == 0)
         {
             Vector3 moveDirection = (enemyObject.transform.position - unit.transform.position).normalized;
 
@@ -167,7 +170,6 @@ public class UnitController : MonoBehaviour
 
             yield return null;
         }
-
         unit.SetOrder(0);
         unit.ChangeState("Idle");
     }
@@ -176,7 +178,8 @@ public class UnitController : MonoBehaviour
     public IEnumerator Attack(GameObject ally, GameObject enemy)
     {
         ally.TryGetComponent(out Unit unit);
-        while (enemy != null) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
+
+        while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             ally.transform.rotation = Quaternion.LookRotation(rot);
@@ -184,11 +187,8 @@ public class UnitController : MonoBehaviour
             yield return null;
         }
 
-        if (enemy == null)
-        {
-            unit.SetOrder(0);
-            unit.ChangeState("Idle");
-        }
+        unit.SetOrder(0);
+        unit.ChangeState("Idle");
     }
 
     /*  1. 새로운 유닛을 설정할 때는 triggerStay가 아니라 trigger가 enter할 때마다 들어온 유닛을 list에 추가한다.
