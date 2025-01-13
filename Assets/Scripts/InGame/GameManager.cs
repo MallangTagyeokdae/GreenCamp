@@ -337,10 +337,12 @@ public class GameManager : MonoBehaviour
         {
             if (photonView.IsMine)      // IsMine Check
             {
-                photonView?.RPC("UpdateBuilding", RpcTarget.AllBuffered, building, time);
+                photonView?.RPC("UpdateBuildingProgress", RpcTarget.AllBuffered, building, time);
             }
         });
     }
+    
+    [PunRPC]
     private void UpdateBuildingProgress(Building building, float time)
     {
         building.UpdateOrderTime(time);
