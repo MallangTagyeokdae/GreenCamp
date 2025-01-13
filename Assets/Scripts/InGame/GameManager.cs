@@ -249,6 +249,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void MoveUnit(GameObject enemyObject)
+    {
+        int order = 3;
+        
+        foreach (GameObject go in clickedObject)
+        {
+            go.TryGetComponent(out Unit selectedUnit);
+
+            if (selectedUnit == null)
+            {
+                continue;
+            }
+
+            if (selectedUnit.unitBehaviour != null)
+            {
+                StopCoroutine(selectedUnit.unitBehaviour);
+            }
+            selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, enemyObject, order));
+        }
+    }
+
     public void AttackUnit(GameObject ally, GameObject enemy)
     {
         Unit unit = ally.GetComponent<Unit>();

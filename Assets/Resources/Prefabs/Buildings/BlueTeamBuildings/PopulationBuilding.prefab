@@ -977,7 +977,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 564a028900423421fb4407dfad2f2063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  attTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  teamID: 
   state: 0
+  inProgressItem: 0
   progressMesh1: {fileID: 4300000, guid: c4bb27f050a2ef4439fb736e16b2bded, type: 3}
   progressMesh2: {fileID: 4300000, guid: b1ff534b3931e674e8e475faa59eb659, type: 3}
   completeMesh: {fileID: 4300000, guid: 05035b78d90b21f43854dfe010ccd289, type: 3}
