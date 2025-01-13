@@ -78,16 +78,18 @@ public class UnitController : MonoBehaviour
                 _unitID--;
                 break;
         }
+        Unit unit = gameObject.GetComponent<Unit>();
+        GameManager.instance.SetHealthBar(unit);
         unitObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
         {
             GameManager.instance.SetClickedObject(gameObject);
             GameManager.instance.SetUnitInfo(7);
-            Unit unit = gameObject.GetComponent<Unit>();
-            GameManager.instance.SetHealthBar(unit);
+
+
         }
         );
         unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(gameObject));
-        Unit unit = gameObject.GetComponent<Unit>();
+
         unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy); });
         unit.SetAttExit((GameObject enemy) => { unit.attackList.Remove(enemy); });
         unit.SetAggEnter((GameObject enemy) => { GameManager.instance.Aggregated(unit.gameObject, enemy); });
