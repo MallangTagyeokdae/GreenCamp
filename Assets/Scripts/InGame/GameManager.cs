@@ -266,6 +266,7 @@ public class GameManager : MonoBehaviour
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
             {
+                Debug.Log(unit.order);
                 return;
             }
 
@@ -285,6 +286,7 @@ public class GameManager : MonoBehaviour
             3. 근데 만약 어그로가 끌린 대상이 있는데 해당 대상이 아닌 다른 유닛이 공격범위에 들어오면?
 
         */
+        int order = 2;
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
         if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
@@ -297,16 +299,18 @@ public class GameManager : MonoBehaviour
             {
                 unit.aggList.Add(enemy);
             }
-            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
+            /*if (unit.order == Unit.Order.Move || unit.order == Unit.Order.Offensive || unit.state == Unit.State.Attack)
             {
                 return;
-            }
-
-            if (unit.unitBehaviour != null)
+            }*/
+            if (unit.state == Unit.State.Idle)
             {
-                StopCoroutine(unit.unitBehaviour);
+                if (unit.unitBehaviour != null)
+                {
+                    StopCoroutine(unit.unitBehaviour);
+                }
+                unit.unitBehaviour = StartCoroutine(unitController.Move(ally, enemy, order));
             }
-            unit.unitBehaviour = StartCoroutine(unitController.Move(ally, enemy));
         }
     }
 

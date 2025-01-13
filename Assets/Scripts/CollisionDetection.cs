@@ -16,7 +16,7 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (root.TryGetComponent(out Entity entity) && other.CompareTag("Clickable"))
+        if (root.TryGetComponent(out Entity entity))
         {
             entity.OnChildTriggerEnter(other.gameObject, collisionRange);
         }
@@ -24,7 +24,7 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (root.TryGetComponent(out Entity entity) && other.CompareTag("Clickable"))
+        if (root.TryGetComponent(out Entity entity))
         {
             entity.OnChildTriggerExit(other.gameObject, collisionRange);
         }

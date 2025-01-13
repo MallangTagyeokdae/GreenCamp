@@ -146,13 +146,13 @@ public class UnitController : MonoBehaviour
         unit.ChangeState("Idle");
     }
 
-    public IEnumerator Move(GameObject unitObject, GameObject enemy)
+    public IEnumerator Move(GameObject unitObject, GameObject enemy, int order = 3)
     {
         Unit unit = unitObject.GetComponent<Unit>();
-        unit.SetOrder(3); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
+        unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
         unit.ChangeState("Move");
 
-        while (unit.aggList.Contains(enemy) && !unit.attackList.Contains(enemy))
+        while (unit.aggList.Contains(enemy))
         {
             Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
 
