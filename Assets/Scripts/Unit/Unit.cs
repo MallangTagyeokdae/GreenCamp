@@ -40,7 +40,7 @@ public abstract class Unit : Entity
     public int populationCost { get; set; }
     public Slider healthBar;
     public State state = State.Idle;
-    
+
 
     [HideInInspector] public Animator animator;
 
@@ -57,6 +57,14 @@ public abstract class Unit : Entity
         if (attTriggerExit == null)
         {
             attTriggerExit = new UnityEvent<GameObject>();
+        }
+        if (aggTriggerEnter == null)
+        {
+            aggTriggerEnter = new UnityEvent<GameObject>();
+        }
+        if (aggTriggerExit == null)
+        {
+            aggTriggerExit = new UnityEvent<GameObject>();
         }
         attackList = new HashSet<GameObject>();
         aggList = new HashSet<GameObject>();
@@ -102,28 +110,45 @@ public abstract class Unit : Entity
     {
         attTriggerExit.AddListener((GameObject go) => action(go));
     }
+    public void SetAggEnter(Action<GameObject> action)
+    {
+        aggTriggerEnter.AddListener((GameObject go) => action(go));
+    }
+    public void SetAggExit(Action<GameObject> action)
+    {
+        aggTriggerExit.AddListener((GameObject go) => action(go));
+    }
 
-    private void OnIdleEnter(){ //attackList와 aggList 내의 null 값들을 전부 제거해준 후 attack또는 aggro 함수를 실행해준다.
-        foreach(GameObject enemy in attackList){
-            if(enemy == null){
+    private void OnIdleEnter()
+    { //attackList와 aggList 내의 null 값들을 전부 제거해준 후 attack또는 aggro 함수를 실행해준다.
+        foreach (GameObject enemy in attackList)
+        {
+            if (enemy == null)
+            {
                 attackList.Remove(enemy);
             }
         }
 
-        foreach(GameObject enemy in aggList){
-            if(enemy == null){
+        foreach (GameObject enemy in aggList)
+        {
+            if (enemy == null)
+            {
                 aggList.Remove(enemy);
             }
         }
 
-        if(attackList.Count != 0){
+        if (attackList.Count != 0)
+        {
             //콜백함수 실행 후 리턴
             GameManager.instance.AttackUnit(this.gameObject, attackList.ToList<GameObject>()[0]); // 일단 하드 코딩함 근데 콜백 따로 만들어서 하는 것보단 이게 나을 수도?
             return;
         }
 
-        if(aggList.Count != 0){
+        if (aggList.Count != 0)
+        {
             //콜백함수 실행 후 리턴
+            GameManager.instance.Aggregated(this.gameObject, aggList.ToList<GameObject>()[0]); // 일단 하드 코딩함 근데 콜백 따로 만들어서 하는 것보단 이게 나을 수도?
+            return;
         }
 
     }
