@@ -13580,7 +13580,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
@@ -19148,8 +19148,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9003924803260315086}
-  - component: {fileID: 4681049049106361609}
   - component: {fileID: 5363594803260218120}
+  - component: {fileID: 4458246229808516292}
   m_Layer: 0
   m_Name: PowerRange
   m_TagString: Untagged
@@ -19172,18 +19172,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7938499591172844252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4681049049106361609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8952257771979145368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4c55c9ee0e044a7ba78226ace14989, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!64 &5363594803260218120
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -19206,6 +19194,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4458246229808516292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8952257771979145368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95014456e91380e41a27952078fdc1d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionRange: 0
 --- !u!1 &8958591633147362084
 GameObject:
   m_ObjectHideFlags: 0
