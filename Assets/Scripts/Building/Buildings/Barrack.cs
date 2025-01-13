@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class Barrack : Building
 {
     public Vector3 _sponPos { get; set; }
