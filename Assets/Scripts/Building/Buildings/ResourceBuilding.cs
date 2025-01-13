@@ -22,11 +22,12 @@ public class ResourceBuilding : Building
     public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar)
     {
         this.teamID = teamID;
-        this.ID = ID;
+        this.ID = buildingID;
         this.type = "ResourceBuilding";
         this.location = buildingLocation;
         this.maxHealth = 250;
         this.currentHealth = 0;
+        this.progress = 0;
         this.level = 1;
         this.cost = 0;
         this.healthBar = buildingHealthBar;

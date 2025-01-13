@@ -334,7 +334,7 @@ public class GameManager : MonoBehaviour
     private void UpdateBuildingProgress(Building building, float time)
     {
         building.UpdateOrderTime(time);
-        if (clickedObject[0].GetComponent<Barrack>() == building)
+        if (clickedObject[0].GetComponent<Building>() == building)
         {
             uIController.SetProgressBar(currentUI, building.progress / 100, 1);
         }

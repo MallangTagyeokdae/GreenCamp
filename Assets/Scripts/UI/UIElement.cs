@@ -9,9 +9,11 @@ public class UIElement : MonoBehaviour
 {
     public List<UIButton> uiElements;
     public List<UIButton> uiLockElements;
-    public List<Image> uiImages;
+    public List<Sprite> uiImages;
     public TMP_Text name;
     public TMP_Text level;
-    public TMP_Text health; 
+    public TMP_Text currentHealth; 
+    public TMP_Text maxHealth; 
     public Slider progressBar;
+    public Image image;
 }
