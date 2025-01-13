@@ -250,27 +250,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void MoveUnit(GameObject enemyObject)
-    {
-        int order = 3;
-
-        foreach (GameObject go in clickedObject)
-        {
-            go.TryGetComponent(out Unit selectedUnit);
-
-            if (selectedUnit == null)
-            {
-                continue;
-            }
-
-            if (selectedUnit.unitBehaviour != null)
-            {
-                StopCoroutine(selectedUnit.unitBehaviour);
-            }
-            selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, enemyObject, order));
-        }
-    }
-
     public void AttackUnit(GameObject ally, GameObject enemy)
     {
         Unit unit = ally.GetComponent<Unit>();
@@ -298,7 +277,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Aggregated()
+    public void Aggregated(GameObject ally, GameObject enemy)
     {
         /*
             1. 어그로가 끌렸을 경우 offensive명령으로 해당 유닛을 향해 move
@@ -306,6 +285,29 @@ public class GameManager : MonoBehaviour
             3. 근데 만약 어그로가 끌린 대상이 있는데 해당 대상이 아닌 다른 유닛이 공격범위에 들어오면?
 
         */
+        Unit unit = ally.GetComponent<Unit>();
+        enemy.TryGetComponent(out Entity enemyEntity);
+        if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
+        {
+            return;
+        }
+        else
+        {
+            if (!unit.aggList.Contains(enemy))
+            {
+                unit.aggList.Add(enemy);
+            }
+            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
+            {
+                return;
+            }
+
+            if (unit.unitBehaviour != null)
+            {
+                StopCoroutine(unit.unitBehaviour);
+            }
+            unit.unitBehaviour = StartCoroutine(unitController.Move(ally, enemy));
+        }
     }
 
     public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos)
