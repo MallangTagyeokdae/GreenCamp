@@ -331,18 +331,16 @@ public class GameManager : MonoBehaviour
     private async Task OrderCreate(Building building, float totalTime)
     {
         building.InitOrderTime(totalTime);
-        //await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time));
-        PhotonView photonView = building.GetComponent<PhotonView>();
+        await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time));
+        /*PhotonView photonView = building.GetComponent<PhotonView>();
         await StartTimer(totalTime, (float time) =>
         {
             if (photonView.IsMine)      // IsMine Check
             {
                 photonView?.RPC("UpdateBuildingProgress", RpcTarget.AllBuffered, building, time);
             }
-        });
+        });*/
     }
-    
-    [PunRPC]
     private void UpdateBuildingProgress(Building building, float time)
     {
         building.UpdateOrderTime(time);
