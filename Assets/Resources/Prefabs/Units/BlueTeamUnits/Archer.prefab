@@ -13332,6 +13332,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 4099498115814379899}
+  - {fileID: 6380550951748888002}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -13392,8 +13393,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: isWalking
+  - Type: 9
+    SynchronizeType: 0
+    Name: isAttacking
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &6133691179712431599
 GameObject:
   m_ObjectHideFlags: 0
