@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -252,7 +253,7 @@ public class GameManager : MonoBehaviour
     public void MoveUnit(GameObject enemyObject)
     {
         int order = 3;
-        
+
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
@@ -280,7 +281,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if(!unit.attackList.Contains(enemy)){
+            if (!unit.attackList.Contains(enemy))
+            {
                 unit.attackList.Add(enemy);
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
@@ -329,7 +331,15 @@ public class GameManager : MonoBehaviour
     private async Task OrderCreate(Building building, float totalTime)
     {
         building.InitOrderTime(totalTime);
-        await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time));
+        //await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time));
+        PhotonView photonView = building.GetComponent<PhotonView>();
+        await StartTimer(totalTime, (float time) =>
+        {
+            if (photonView.IsMine)      // IsMine Check
+            {
+                photonView?.RPC("UpdateBuilding", RpcTarget.AllBuffered, building, time);
+            }
+        });
     }
     private void UpdateBuildingProgress(Building building, float time)
     {
