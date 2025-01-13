@@ -40,10 +40,7 @@ public class GameManager : MonoBehaviour
     public GameObject ground;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
     public List<GameObject> clickedObject; // 현재 선택된 게임 Object
-    //-----------------------------
-
-    //------------ 영리 ------------ 일단 대충
-    public GameObject sponeffect;
+    public EffectHandler effectHandler;
     //-----------------------------
 
     void Start()
@@ -121,6 +118,8 @@ public class GameManager : MonoBehaviour
                 Vector3 destination = barrack._sponPos;
                 buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
                 Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos);
+                GameObject effect = effectHandler.CreateEffect(2,createdUnit.transform,new Vector3(-90,0,0),1);
+                effectHandler.DestoryEffectGetTime(effect,effect.GetComponent<ParticleSystem>().main.startLifetime.constant);
 
                 // 유닛을 destination으로 이동명령 내리기
                 GameObject unitObject = createdUnit.gameObject;
@@ -146,9 +145,14 @@ public class GameManager : MonoBehaviour
         {
             buildingController.SetBuildingState(building, 2, "LevelUP");
             ReloadBuildingUI(building);
+
+            GameObject effect = effectHandler.CreateEffect(1,building.transform,Vector3.zero,3);
+
             await OrderCreate(building, building.level * 10f);
             buildingController.UpgradeBuilding(building);
             buildingController.SetBuildingState(building, 1, "None");
+
+            effectHandler.DestoryEffectImmed(effect);
             ReloadBuildingUI(building);
         }
     }
@@ -159,16 +163,9 @@ public class GameManager : MonoBehaviour
         building.InitTime();
         await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time));
 
-        //effect 동작만 되도록 막 넣음
-        GameObject effect = Instantiate(sponeffect, building.gameObject.transform);
-        effect.transform.localPosition = Vector3.zero;
-        effect.transform.localScale = new Vector3(4, 4, 4);
-        effect.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        //----------------------------
+        GameObject effect = effectHandler.CreateEffect(0,building.transform,Vector3.zero,3);
+        effectHandler.DestoryEffectGetTime(effect,2.0f);
 
-        //Destroy-----------------
-        Destroy(effect, effect.GetComponent<ParticleSystem>().main.startLifetime.constant);
-        //------------------------
         Debug.Log($"check time: {building.time}");
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
         buildingController.SetBuildingState(building, 1, "None");
