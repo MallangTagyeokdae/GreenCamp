@@ -161,21 +161,7 @@ public class UIController : MonoBehaviour
         foreach(UIButton uIButton in uIButtons)
         {   
             if(uIButton.interactable != state)
-            {
-                if(EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject == uIButton.gameObject)
-                {
-                    if(state)
-                        EventSystem.current.SetSelectedGameObject(null);
-                    else
-                    {
-                        uIButton.OnDeselect(null);
-                        uIButton.SetState(UISelectionState.Normal);
-                        
-                    }
-                }
-                Debug.Log(uIButton.name);
                 uIButton.interactable = state;
-            }
         }
     }
 
