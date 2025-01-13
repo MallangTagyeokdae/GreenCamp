@@ -88,8 +88,8 @@ public class UnitController : MonoBehaviour
         );
         unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(gameObject));
         Unit unit = gameObject.GetComponent<Unit>();
-        unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy);});
-        unit.SetAttExit((GameObject enemy) => { unit.attackList.Remove(enemy);});
+        unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy); });
+        unit.SetAttExit((GameObject enemy) => { unit.attackList.Remove(enemy); });
         _unitID++;
         return _createdUnit;
 
@@ -114,7 +114,7 @@ public class UnitController : MonoBehaviour
     {
 
     }
-    
+
     // =================== 유닛 행동 함수 ===================
     public IEnumerator Move(GameObject unitObject, Vector3 newLocation, int order)
     {
@@ -140,6 +140,34 @@ public class UnitController : MonoBehaviour
         }
 
         unit.transform.position = newLocation;
+        unit.SetOrder(0);
+        unit.ChangeState("Idle");
+    }
+
+    public IEnumerator Move(GameObject unitObject, GameObject enemyObject, int order)
+    {
+        Unit unit = unitObject.GetComponent<Unit>();
+        unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
+        unit.ChangeState("Move");
+
+        while (enemyObject != null)
+        {
+            Vector3 moveDirection = (enemyObject.transform.position - unit.transform.position).normalized;
+
+            if (moveDirection != Vector3.zero)
+            {
+                unit.transform.rotation = Quaternion.LookRotation(moveDirection);
+            }
+
+            unit.transform.position = Vector3.MoveTowards(
+                unit.transform.position,
+                enemyObject.transform.position,
+                unit.unitMoveSpeed * Time.deltaTime
+            );
+
+            yield return null;
+        }
+
         unit.SetOrder(0);
         unit.ChangeState("Idle");
     }
