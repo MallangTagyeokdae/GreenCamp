@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -333,11 +334,19 @@ public class GameManager : MonoBehaviour
     {
         building.InitOrderTime(totalTime);
         await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time));
+        /*PhotonView photonView = building.GetComponent<PhotonView>();
+        await StartTimer(totalTime, (float time) =>
+        {
+            if (photonView.IsMine)      // IsMine Check
+            {
+                photonView?.RPC("UpdateBuildingProgress", RpcTarget.AllBuffered, building, time);
+            }
+        });*/
     }
     private void UpdateBuildingProgress(Building building, float time)
     {
         building.UpdateOrderTime(time);
-        if (clickedObject[0].GetComponent<Barrack>() == building)
+        if (clickedObject[0].GetComponent<Building>() == building)
         {
             uIController.SetProgressBar(currentUI, building.progress / 100, 1);
         }

@@ -66,6 +66,7 @@ public class UIController : MonoBehaviour
         {
             case Building.State.InCreating:
                 selectedUI = UILists[1];
+                SetBuildingUIImage(selectedUI, clickedBuilding.type);
                 break;
             case Building.State.Built:
                  // 건물의 상태(레벨)에 따라서 버튼의 Interactable을 활성화 시켜준다.
@@ -73,7 +74,7 @@ public class UIController : MonoBehaviour
                 // 건물의 상태(레벨)에 따라서 활성화된 버튼 위의 잠금을 해제해준다.
                 SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
                 // UI의 이미지를 업데이트한다.
-                SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem);
+                SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem.ToString());
                 // UI의 진행바를 업데이트한다.
                 SetProgressBar(selectedUI, clickedBuilding.progress/100, 1);
                 break;
@@ -83,7 +84,7 @@ public class UIController : MonoBehaviour
                 // UI의 모든 버튼위에 Lock 표시를 한다.
                 SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
                 // UI의 이미지를 업데이트 해준다.
-                SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem);
+                SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem.ToString());
                 // UI의 진행바를 업데이트한다.
                 SetProgressBar(selectedUI, clickedBuilding.progress/100, 1);
                 break;
@@ -94,30 +95,36 @@ public class UIController : MonoBehaviour
         UpdateLevel(selectedUI, clickedBuilding);
         // 체력 설정
         UpdateHealth(selectedUI, clickedBuilding);
+        // 이름 설정
+        UpdateName(selectedUI, clickedBuilding);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
-    public void SetBuildingUIImage(UIContainer selectedUI, Enum progressType) // UI에 이미지 업데이트 하는 함수
+    public void SetBuildingUIImage(UIContainer selectedUI, String progressType) // UI에 이미지 업데이트 하는 함수
     {
         switch(progressType)
         {
-            case Building.InProgressItem.LevelUP:
-                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[1].sprite;
+            case "Barrack":
+            case "LevelUP":
+                selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[0];
                 break;
-            case Building.InProgressItem.Soldier:
-                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[2].sprite;
+            case "PopulationBuilding":
+            case "Soldier":
+                selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[1];
                 break;
-            case Building.InProgressItem.Archer:
-                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[3].sprite;
+            case "ResourceBuilding":
+            case "Archer":
+                selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[2];
                 break;
-            case Building.InProgressItem.Tanker:
-                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[4].sprite;
+            case "DefenderBuilding":
+            case "Tanker":
+                selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[3];
                 break;
-            case Building.InProgressItem.Healer:
-                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = selectedUI.GetComponent<UIElement>().uiImages[5].sprite;
+            case "Healer":
+                selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[4];
                 break;
             default:
-                selectedUI.GetComponent<UIElement>().uiImages[0].sprite = null;
+                selectedUI.GetComponent<UIElement>().image.sprite = null;
                 break;
         }
     }
@@ -161,21 +168,7 @@ public class UIController : MonoBehaviour
         foreach(UIButton uIButton in uIButtons)
         {   
             if(uIButton.interactable != state)
-            {
-                if(EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject == uIButton.gameObject)
-                {
-                    if(state)
-                        EventSystem.current.SetSelectedGameObject(null);
-                    else
-                    {
-                        uIButton.OnDeselect(null);
-                        uIButton.SetState(UISelectionState.Normal);
-                        
-                    }
-                }
-                Debug.Log(uIButton.name);
                 uIButton.interactable = state;
-            }
         }
     }
 
@@ -208,19 +201,48 @@ public class UIController : MonoBehaviour
         {
             SetProgressBar(currentUI, currentHealth, maxHealth);
         }
-        SetHealth(currentUI, currentHealth);
+        SetHealth(currentUI, currentHealth, maxHealth);
     }
 
-    public void SetHealth(UIContainer currentUI, int currentHealth)
+    public void SetHealth(UIContainer currentUI, int currentHealth, int maxHealth)
     {
-        TMP_Text healthText = currentUI.GetComponent<UIElement>().health;
-        healthText.text = currentHealth.ToString();
+        TMP_Text MaxHealthText = currentUI.GetComponent<UIElement>().maxHealth;
+        TMP_Text CurrentHealthText = currentUI.GetComponent<UIElement>().currentHealth;
+        CurrentHealthText.text = currentHealth.ToString();
+        MaxHealthText.text = maxHealth.ToString();
     }
 
     public void SetProgressBar(UIContainer currentUI, float currentvalue, float maxValue)
     {
         Slider progresBar = currentUI.GetComponent<UIElement>().progressBar;
         progresBar.value = (float)(currentvalue * 1.0 / maxValue);
+    }
+
+    public void UpdateName(UIContainer currentUI, Building building)
+    {
+        TMP_Text nameText = currentUI.GetComponent<UIElement>().name;
+        nameText.text = ParseBuildingName(building);
+    }
+
+    public string ParseBuildingName(Building building)
+    {
+        if(building.name.Contains("Command"))
+        {
+            return "본진";
+        } else if(building.name.Contains("Barrack"))
+        {
+            return "배럭";
+        } else if(building.name.Contains("Population"))
+        {
+            return "인구수건물";
+        } else if(building.name.Contains("Resource"))
+        {
+            return "자원건물";
+        } else if(building.name.Contains("Defender"))
+        {
+            return "방어건물";
+        }
+        return "";
     }
 
 }
