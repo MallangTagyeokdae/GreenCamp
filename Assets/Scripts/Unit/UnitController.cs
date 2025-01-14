@@ -78,17 +78,17 @@ public class UnitController : MonoBehaviour
                 _unitID--;
                 break;
         }
+
         Unit unit = gameObject.GetComponent<Unit>();
         GameManager.instance.SetHealthBar(unit);
-        unitObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
+
+        gameObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
         {
             GameManager.instance.SetClickedObject(gameObject);
             GameManager.instance.SetUnitInfo(7);
-
-
         }
         );
-        unitObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(gameObject));
+        gameObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(gameObject));
 
         unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy); });
         unit.SetAttExit((GameObject enemy) => { unit.attackList.Remove(enemy); });
@@ -154,7 +154,7 @@ public class UnitController : MonoBehaviour
         unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
         unit.ChangeState("Move");
 
-        while (unit.aggList.Contains(enemy))
+        while (unit.aggList.Contains(enemy)) //aggList는 여기서 검사할 필요가 없지 않나? enemy != null로 바꿔주셈
         {
             Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
 
