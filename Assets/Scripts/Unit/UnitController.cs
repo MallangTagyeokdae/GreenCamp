@@ -154,7 +154,7 @@ public class UnitController : MonoBehaviour
         unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
         unit.ChangeState("Move");
 
-        while (unit.aggList.Contains(enemy)) //aggList는 여기서 검사할 필요가 없지 않나? enemy != null로 바꿔주셈
+        while (enemy != null)
         {
             Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
 
