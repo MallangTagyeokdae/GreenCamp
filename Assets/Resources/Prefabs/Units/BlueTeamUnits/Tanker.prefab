@@ -5511,7 +5511,7 @@ GameObject:
   - component: {fileID: 3873729162918753997}
   - component: {fileID: 5164128363443111643}
   - component: {fileID: 7093008042780167714}
-  - component: {fileID: 3493445726489785338}
+  - component: {fileID: 3133461840160776501}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -5602,7 +5602,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3493445726489785338
+--- !u!114 &3133461840160776501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13426,6 +13426,7 @@ GameObject:
   - component: {fileID: -4423840144624646869}
   - component: {fileID: -7861697718831393127}
   - component: {fileID: 8271976870040986676}
+  - component: {fileID: 1445875119074066540}
   m_Layer: 0
   m_Name: Tanker
   m_TagString: Clickable
@@ -13679,6 +13680,35 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &1445875119074066540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154791723814996376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c331e31e8ec4d029179299a1d1fe27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  attTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  teamID: 
+  healthBar: {fileID: 1300174168617867986}
+  state: 0
+  animator: {fileID: 0}
+  order: 0
 --- !u!1 &6189645890645135008
 GameObject:
   m_ObjectHideFlags: 0

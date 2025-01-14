@@ -13219,6 +13219,7 @@ GameObject:
   - component: {fileID: 4099498115814379899}
   - component: {fileID: -2953485049445277104}
   - component: {fileID: 6380550951748888002}
+  - component: {fileID: 1538693576857479876}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Clickable
@@ -13472,6 +13473,35 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &1538693576857479876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6031986855511284481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16b270903ff943ef944b0908581e5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  attTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  teamID: 
+  healthBar: {fileID: 4508799639484592511}
+  state: 0
+  animator: {fileID: 0}
+  order: 0
 --- !u!1 &6133691179712431599
 GameObject:
   m_ObjectHideFlags: 0
@@ -15527,7 +15557,7 @@ GameObject:
   - component: {fileID: 401110917520296375}
   - component: {fileID: 4748656586087107229}
   - component: {fileID: 7157438192838762609}
-  - component: {fileID: 8186359486516752562}
+  - component: {fileID: 244340567229745065}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -15618,7 +15648,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8186359486516752562
+--- !u!114 &244340567229745065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

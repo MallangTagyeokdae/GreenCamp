@@ -50,25 +50,25 @@ public class UnitController : MonoBehaviour
         switch (unitType)
         {
             case "Archer":
-                Archer newArcher = unitObject.AddComponent<Archer>();
+                Archer newArcher = unitObject.GetComponent<Archer>();
                 newArcher.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newArcher);
                 _createdUnit = newArcher;
                 break;
             case "Soldier":
-                Soldier newSoldier = unitObject.AddComponent<Soldier>();
+                Soldier newSoldier = unitObject.GetComponent<Soldier>();
                 newSoldier.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newSoldier);
                 _createdUnit = newSoldier;
                 break;
             case "Tanker":
-                Tanker newTanker = unitObject.AddComponent<Tanker>();
+                Tanker newTanker = unitObject.GetComponent<Tanker>();
                 newTanker.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newTanker);
                 _createdUnit = newTanker;
                 break;
             case "Healer":
-                Healer newHealer = unitObject.AddComponent<Healer>();
+                Healer newHealer = unitObject.GetComponent<Healer>();
                 newHealer.Init(_teamID, _unitID, unitLocation);
                 unitDictionary.Add(_unitID, newHealer);
                 _createdUnit = newHealer;
