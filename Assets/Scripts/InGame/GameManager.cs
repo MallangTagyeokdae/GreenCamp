@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentUI.Show();
+        buildingController.CreateBuilding(new Vector3(0,0,0), "Command", new Vector3(-90, 0, 90));
     }
 
     // ================== 클릭 관련 함수 ======================
@@ -158,8 +159,13 @@ public class GameManager : MonoBehaviour
     }
     private async Task DelayBuildingCreation(Vector3 buildingPos)
     {
+        // ----- 임시로 일단 쓴거임 -------
+        // _detectedObjects = GameStatus.instance.GetDetectedObjects();
+        // UpdateGridMeshToBuilted(_detectedObjects);
+        // ----- 임시로 일단 쓴거임 -------
+
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
-        Building building = buildingController.CreateBuilding(buildingPos, buildingType);
+        Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90));
         building.InitTime();
         await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time));
 
@@ -170,6 +176,17 @@ public class GameManager : MonoBehaviour
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
         buildingController.SetBuildingState(building, 1, "None");
         ReloadBuildingUI(building);
+    }
+    
+    private void UpdateGridMeshToBuilted(List<Collider> detectedObjects)
+    {
+        foreach(Collider detectedobject in detectedObjects)
+        {
+            if(detectedobject.TryGetComponent(out GridEvent grid))
+            {
+                grid.OnBuiltIn();
+            }
+        }
     }
 
     private void UpdateBuildingHealth(Building building, float time)

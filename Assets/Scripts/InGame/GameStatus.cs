@@ -33,7 +33,6 @@ public class GameStatus : MonoBehaviour
     public int currentUnitCount { get; set; }
     public int maxBuildingCount { get; set; }
     public int currentBuildingCount { get; set; }
-
     public void InitGameStatus()
     {
         teamID = "Blue";
