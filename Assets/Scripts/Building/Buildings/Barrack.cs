@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,7 +47,8 @@ public class Barrack : Building
     {
         time = 0f;
         loadingTime = 30/10f;
-        gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+        //gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+        this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
     }
 
     public override void UpdateCreateBuildingTime(float update)
@@ -63,10 +65,12 @@ public class Barrack : Building
     public override void UpdateMesh()
     {
         if (time > loadingTime/2 && time < loadingTime) {
-            this.gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
+            //this.gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
+            this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh2", RpcTarget.AllBuffered);
         } else if (time > loadingTime)
         {
-            this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
+            //this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
+            this.gameObject.GetComponent<PhotonView>().RPC("SetCompleteMesh", RpcTarget.AllBuffered);
         }
     }
     public override void InitOrderTime(float totalTime)
@@ -75,10 +79,26 @@ public class Barrack : Building
         time = 0f;
         loadingTime = totalTime;
     }
+
+    
     public override void UpdateOrderTime(float update)
     {
         time = update;
         this.progress = time / loadingTime * 100;
         this.progressBar.value = (float)this.progress / 100;
+    }
+
+    [PunRPC]
+    private void SetProgressMesh1(){
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+    }
+
+    [PunRPC]
+    private void SetProgressMesh2(){
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
+    }
+    [PunRPC]
+    private void SetCompleteMesh(){
+        gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
     }
 }
