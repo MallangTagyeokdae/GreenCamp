@@ -69,12 +69,13 @@ public abstract class Unit : Entity
         attackList = new HashSet<GameObject>();
         aggList = new HashSet<GameObject>();
         animator = GetComponent<Animator>();
+        healthBar = gameObject.transform.Find("HealthBar/UnitCurrentHealth").GetComponent<Slider>();
+        healthBar.gameObject.SetActive(false);
     }
 
     private void Start()
     {
-        healthBar = gameObject.transform.Find("HealthBar/UnitCurrentHealth").GetComponent<Slider>();
-        healthBar.gameObject.SetActive(false);
+        
     }
 
     public Unit(string teamID,

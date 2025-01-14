@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetHealthBar(Unit unit)
     {
-        Debug.Log("SetHealthBar 함수 실행 여부 확인");
+        Debug.Log($"{unit.healthBar==null}");
         unit.healthBar.value = (float)(unit.unitCurrentHealth * 1.0 / unit.unitMaxHealth);
         // unit.healthBar.gameObject.SetActive(true);
     }
@@ -283,7 +283,7 @@ public class GameManager : MonoBehaviour
             3. 근데 만약 어그로가 끌린 대상이 있는데 해당 대상이 아닌 다른 유닛이 공격범위에 들어오면?
 
         */
-        int order = 2;
+        int order = 3; //이거 이제 3번이 맞겠다
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
         if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
@@ -311,6 +311,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //피격시 idle상태로 변환 후 해당 유닛에게 어택명령?
     public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos)
     {
         switch (unitType)
