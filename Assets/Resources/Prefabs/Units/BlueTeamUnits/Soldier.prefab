@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7544288164750825371}
   - component: {fileID: 3120572791925860352}
   - component: {fileID: 5449925681401648296}
-  - component: {fileID: 6817296421988552139}
+  - component: {fileID: 1063722938379245778}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6817296421988552139
+--- !u!114 &1063722938379245778
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2844,6 +2844,7 @@ GameObject:
   - component: {fileID: -2557456136307159502}
   - component: {fileID: -197196682809645988}
   - component: {fileID: -5041541504648279188}
+  - component: {fileID: 7100249967737059059}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: Clickable
@@ -3097,6 +3098,35 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &7100249967737059059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2881834226238106485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918fe3d3bf238487d82f0cecbf275a59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  attTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  teamID: 
+  healthBar: {fileID: 6212170728899033757}
+  state: 0
+  animator: {fileID: 0}
+  order: 0
 --- !u!1 &2881834226238107007
 GameObject:
   m_ObjectHideFlags: 0
