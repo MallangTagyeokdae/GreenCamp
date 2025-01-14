@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3573689446639347818}
   - component: {fileID: 4504187751965033002}
   - component: {fileID: 2973886920064003261}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GridElement
   m_TagString: Clickable
   m_Icon: {fileID: 0}
@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420c2370a83384ff0874b0288249e0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHovered: 0
   defaultMaterial: {fileID: 2100000, guid: d2677361d94094c57940a88735da3d9a, type: 2}
-  hoveredMaterial: {fileID: 2100000, guid: 44d8f569659104c2f84a83ad48aa033a, type: 2}
+  hoveredMaterial: {fileID: 2100000, guid: c22e4993a5fd94f4aa11503d214fc627, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: 44d8f569659104c2f84a83ad48aa033a, type: 2}
   builtedMaterial: {fileID: 2100000, guid: 9545eeb2599484e5db08c80192fd2525, type: 2}
 --- !u!114 &2973886920064003261
 MonoBehaviour:
@@ -152,5 +152,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   deMouseHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  draggedEvent:
     m_PersistentCalls:
       m_Calls: []

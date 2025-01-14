@@ -11,41 +11,28 @@ public class BuildingController : MonoBehaviour
 {
     //--------- 변수 선언 위치 변경 (해윤) ---------//
     public Dictionary<int, Building> buildingDictionary = new Dictionary<int, Building>();
-    private Dictionary<string, GameObject> _buildingPrefabs = new Dictionary<string, GameObject>();
     private string _teamID;
     private int _buildingID;
     //---------------------------------------//
     public GameObject buildingObject;
-    public void Start()
+    
+    public void Awake()
     {
         _teamID = GameStatus.instance.teamID;
         _buildingID = 0;
-
-        // 폴더 경로에 있는 모든 GameObject를 Load해 unitPrefabsList에 임시로 저장
-        List<GameObject> buildingPrefabsList = new List<GameObject>(Resources.LoadAll<GameObject>($"Prefabs/Buildings/{_teamID}TeamBuildings"));
-
-        // foreach문으로 List 안에 있는 building 객체들을 다시 Dictionary로 저장
-        foreach (GameObject building in buildingPrefabsList)
-        {
-            if (!_buildingPrefabs.ContainsKey(building.name))
-            {
-                _buildingPrefabs.Add(building.name, building);
-            }
-        }
-
     }
 
-    public Building CreateBuilding(Vector3 buildingLocation, string buildingType)
+    public Building CreateBuilding(Vector3 buildingLocation, string buildingType, Vector3 rot)
     // 건물 생성
     {
         // 객체 생성
-        buildingObject = PhotonNetwork.Instantiate($"Prefabs/Buildings/{_teamID}TeamBuildings/{buildingType}", buildingLocation, Quaternion.Euler(new Vector3(-90, 90, 90)));
+        buildingObject = PhotonNetwork.Instantiate($"Prefabs/Buildings/{_teamID}TeamBuildings/{buildingType}", buildingLocation, Quaternion.Euler(rot));
         buildingObject.name = buildingType + _buildingID.ToString(); // 새로 생성될 오브젝트에 고유한 이름을 붙여줌
         GameObject gameObject = buildingObject; // SetClickedObject에 넣을 임의 변수 만듦 -> call by value로 되기 떄문에 buildingObject가 바뀌어도 값이 안바뀜
         // 좌클릭 했을 때 callback 함수 넣어줌
         buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetClickedObject(gameObject));
-        Slider healthBar = buildingObject.transform.Find("HealthUI/CurrentHealth").GetComponent<Slider>();
-        Slider progressBar = buildingObject.transform.Find("ProgressUI/CurrentProgress").GetComponent<Slider>();
+        Slider healthBar = buildingObject.transform.Find("UI/HealthUI/CurrentHealth").GetComponent<Slider>();
+        Slider progressBar = buildingObject.transform.Find("UI/ProgressUI/CurrentProgress").GetComponent<Slider>();
         healthBar.gameObject.SetActive(true);
         progressBar.gameObject.SetActive(true);
         Building newBuilding;

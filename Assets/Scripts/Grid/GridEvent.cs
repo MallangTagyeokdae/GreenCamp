@@ -1,23 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridEvent : MonoBehaviour
 {
+    public enum State
+    {
+        Default = 0,
+        Hovered = 1,
+        Selected = 2,
+        Builted = 3
+    }
+
     public Material defaultMaterial;
     public Material hoveredMaterial;
-    private bool _isHovered = false;
-    private bool _isBuilted = false;
+    public Material selectedMaterial;
+    public State gridState = State.Default;
     public Material builtedMaterial;
     private ClickEventHandler _clickEventHandler;
     private MeshRenderer _meshRenderer;
 
     void Start()
     {
+        UnSetRender();
         _meshRenderer = GetComponent<MeshRenderer>();
         _clickEventHandler = GetComponent<ClickEventHandler>();
-        _clickEventHandler.mouseHoverEvent.AddListener((Vector3 pos) => OnMouseHovered());
-        _clickEventHandler.deMouseHoverEvent.AddListener((Vector3 pos) => OnMouseHoveredOut());
         _clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) => {
             GameManager.instance.CreateBuilding(gameObject.transform.position);
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
@@ -26,44 +36,64 @@ public class GridEvent : MonoBehaviour
     }
     public void OnBuiltIn()
     {
-        _isBuilted = true;
-        ChangeMesh();
-    }
-    public void OnMouseHovered()
-    {
-        SetisHovered();
+        SetBuilted();
         ChangeMesh();
     }
 
-    public void OnMouseHoveredOut()
+    public void UnSetRender()
     {
-        UnSetHovered();
-        ChangeMesh();
+        gameObject.GetComponent<Renderer>().enabled = false;
+    }
+    public void SetRander()
+    {
+        gameObject.GetComponent<Renderer>().enabled = true;
+    }
+    public void SetBuilted()
+    {
+        gridState = State.Builted;
+    }
+    public void SetHovered()
+    {
+        gridState = State.Hovered;
+    }
+    public void SetDefault()
+    {
+        gridState = State.Default;
+    }
+    public void SetSelected()
+    {
+        gridState = State.Selected;
     }
 
-    public void SetisHovered()
+    public bool GetIsHovered()
     {
-        if(!_isHovered)
-        {
-            _isHovered = true;
-        }
+        return gridState == State.Hovered ? true : false;
     }
-
-    public void UnSetHovered()
+    public bool GetIsBuilted()
     {
-        if(_isHovered)
-        {
-            _isHovered = false;
-        }
+        return gridState == State.Builted ? true : false;
     }
+    public bool GetIsSelected()
+    {
+        return gridState == State.Selected ? true : false; 
+    }
+    
     public void ChangeMesh()
     {
-        if(!_isBuilted)
+        switch(gridState)
         {
-            _meshRenderer.material = _isHovered ? hoveredMaterial : defaultMaterial;
-        } else {
-            _meshRenderer.material = builtedMaterial;
-            gameObject.tag = "Untagged";
+            case State.Default:
+                _meshRenderer.material = defaultMaterial;
+                break;
+            case State.Hovered:
+                _meshRenderer.material = hoveredMaterial;
+                break;
+            case State.Selected:
+                _meshRenderer.material = selectedMaterial;
+                break;
+            case State.Builted:
+                _meshRenderer.material = builtedMaterial;
+                break;
         }
     }
 }
