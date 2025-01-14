@@ -43,6 +43,7 @@ public abstract class Unit : Entity
 
 
     [HideInInspector] public Animator animator;
+    private new Rigidbody rigidbody;
 
     public Coroutine unitBehaviour;
 
@@ -71,11 +72,13 @@ public abstract class Unit : Entity
         animator = GetComponent<Animator>();
         healthBar = gameObject.transform.Find("HealthBar/UnitCurrentHealth").GetComponent<Slider>();
         healthBar.gameObject.SetActive(false);
+        rigidbody = gameObject.GetComponent<Rigidbody>();
+        rigidbody.isKinematic = true;
     }
 
     private void Start()
     {
-        
+
     }
 
     public Unit(string teamID,
@@ -182,16 +185,19 @@ public abstract class Unit : Entity
         {
             case "Idle":
                 state = State.Idle;
+                rigidbody.isKinematic = true;
                 OnIdleEnter();
                 break;
 
             case "Move":
                 state = State.Move;
+                rigidbody.isKinematic = false;
                 animator.SetBool("isWalking", true);
                 break;
 
             case "Attack":
                 state = State.Attack;
+                rigidbody.isKinematic = true;
                 animator.SetBool("isAttacking", true);
                 break;
         }
