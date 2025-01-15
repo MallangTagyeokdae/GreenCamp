@@ -9,6 +9,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+public enum GameStates
+{
+    
+}
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
@@ -102,10 +106,15 @@ public class GameManager : MonoBehaviour
 
 
     // =================== 객체 생성 함수들 ===================
-    public void CreateBuilding(Vector3 buildingPos)
+    public void CreateBuilding()
     {
-        DelayBuildingCreation(buildingPos);
-        grid.SetActive(false);
+        if(gridHandler.CheckCanBuilt()) // 건물이 생성가능한지 확인하는 조건문 나중에 자원, 건물인구수 체크하는것도 추가해야함
+        // 건물생성가능여부를 판단하는 기능을 하는 함수를 만들어서 조건문에 넣도록 개선해야함
+        {
+            Vector3 buildingPos = gridHandler.CalculateGridScalse();
+            DelayBuildingCreation(buildingPos);
+            grid.SetActive(false);
+        }
     }
     public async void CreateUnit() // 해윤
     {
@@ -160,10 +169,8 @@ public class GameManager : MonoBehaviour
     }
     private async Task DelayBuildingCreation(Vector3 buildingPos)
     {
-        // ----- 임시로 일단 쓴거임 -------
-        // _detectedObjects = GameStatus.instance.GetDetectedObjects();
-        // UpdateGridMeshToBuilted(_detectedObjects);
-        // ----- 임시로 일단 쓴거임 -------
+        // 건물 아래 Grid를 Builted로 변경
+        gridHandler.SetGridsToBuilted();
 
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90));
@@ -176,18 +183,8 @@ public class GameManager : MonoBehaviour
         Debug.Log($"check time: {building.time}");
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
         buildingController.SetBuildingState(building, 1, "None");
+
         ReloadBuildingUI(building);
-    }
-    
-    private void UpdateGridMeshToBuilted(List<Collider> detectedObjects)
-    {
-        foreach(Collider detectedobject in detectedObjects)
-        {
-            if(detectedobject.TryGetComponent(out GridEvent grid))
-            {
-                grid.OnBuiltIn();
-            }
-        }
     }
 
     private void UpdateBuildingHealth(Building building, float time)

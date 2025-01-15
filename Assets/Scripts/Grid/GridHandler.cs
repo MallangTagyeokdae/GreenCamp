@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridHandler : MonoBehaviour
@@ -52,7 +53,7 @@ public class GridHandler : MonoBehaviour
             {
                 if(obj.TryGetComponent(out GridEvent grid))
                 {
-                    if(!detectedObjs.Contains(obj) && !grid.GetIsBuilted())
+                    if(!detectedObjs.Contains(obj) && !grid.GetIsBuilted() && !grid.GetIsHasObject())
                     {
                         grid.SetDefault();
                         grid.ChangeMesh();
@@ -69,7 +70,8 @@ public class GridHandler : MonoBehaviour
         {
             if(obj.TryGetComponent(out GridEvent grid))
             {
-                if(!grid.GetIsBuilted())
+                grid.CheckHasObject();
+                if(!grid.GetIsBuilted() && !grid.GetIsHasObject())
                 {
                     grid.SetHovered();
                     grid.ChangeMesh();
@@ -85,7 +87,7 @@ public class GridHandler : MonoBehaviour
         {
             if(obj.TryGetComponent(out GridEvent grid))
             {
-                if(!grid.GetIsBuilted())
+                if(!grid.GetIsBuilted() && !grid.GetIsHasObject())
                 {
                     grid.SetSelected();
                     grid.ChangeMesh();
@@ -104,5 +106,29 @@ public class GridHandler : MonoBehaviour
                 grid.ChangeMesh();
             }
         }
+    }
+
+    public Vector3 CalculateGridScalse()
+    {
+        Vector3 center = Vector3.zero;
+
+        foreach(Collider collider in constructionGrids)
+        {
+            center += collider.gameObject.transform.position;
+        }
+
+        return center / constructionGrids.Count();
+    }
+
+    public bool CheckCanBuilt()
+    {
+        foreach(Collider obj in constructionGrids)
+        {
+            if(obj.TryGetComponent(out GridEvent grid))
+            {
+                if(grid.GetIsBuilted() || grid.GetIsHasObject()) return false;
+            }
+        }
+        return true;
     }
 }
