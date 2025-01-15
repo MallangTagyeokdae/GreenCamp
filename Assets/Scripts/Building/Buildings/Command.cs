@@ -38,6 +38,14 @@ public class Command : Building
         this.loadingTime = 10f;
     }
 
+
+    public override void InitTime()
+    {
+        time = 0f;
+        loadingTime = .1f;
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+    }
+
     [PunRPC]
     public override void SetProgressMesh1(){
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;

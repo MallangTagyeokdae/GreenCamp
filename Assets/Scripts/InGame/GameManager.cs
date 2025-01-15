@@ -11,6 +11,10 @@ using UnityEngine.UIElements;
 
 public enum GameStates
 {
+    Loading = 0,
+    InGame = 1,
+    ConstructionMode = 2,
+    EndGame = 3
     
 }
 public class GameManager : MonoBehaviour
@@ -46,21 +50,44 @@ public class GameManager : MonoBehaviour
     public List<GameObject> clickedObject; // 현재 선택된 게임 Object
     public EffectHandler effectHandler;
     public GridHandler gridHandler;
+    public GameStates gameState = GameStates.Loading;
     //-----------------------------
 
     void Start()
     {
         currentUI.Show();
         buildingController.CreateBuilding(new Vector3(0,0,0), "Command", new Vector3(-90, 0, 90));
+        SetState("InGame");
     }
+
+    // ================== 상태 관련 함수 ======================
+    public void SetState(string newState)
+    {
+        if(Enum.TryParse(newState, out GameStates state))
+            gameState = state;
+    }
+
+    public bool CheckState(string checkState)
+    {
+        if(Enum.TryParse(checkState, out GameStates state))
+        {
+            return gameState == state ? true : false;
+        }
+        Debug.Log("CheckState함수에서 State 잘못 입력함");
+        return false;
+    }
+    // ====================================================
 
     // ================== 클릭 관련 함수 ======================
     public void SetClickedObject(GameObject gameObject)
     {
-        unitController.SetActiveHealthBar(clickedObject);
-        clickedObject.Clear();
-        clickedObject.Add(gameObject);
-        unitController.SetActiveHealthBar(gameObject, true);
+        if(CheckState("InGame"))
+        {
+            unitController.SetActiveHealthBar(clickedObject);
+            clickedObject.Clear();
+            clickedObject.Add(gameObject);
+            unitController.SetActiveHealthBar(gameObject, true);
+        }
     }
 
     public void AddClickedObject(GameObject gameObject)
@@ -73,7 +100,7 @@ public class GameManager : MonoBehaviour
     }
     public void GroundEvent(Vector3 newLocation)
     {
-        if (clickedObject[0].name.Contains("Barrack") && clickedObject.Count == 1) SetSponPos(newLocation);
+        if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1) buildingController.SetSponPos(newLocation,building);
 
         MoveUnit(newLocation);
     }
@@ -81,20 +108,21 @@ public class GameManager : MonoBehaviour
 
 
     //=================== UI 변경 관련 함수들 ===================
-    public void SetBuildingListUI(int UIindex)
+    public void SetBuildingListUI(int UIindex) // 건설할 건물 띄워주는 UI, Ground Inspector창에서 직접 넣어줌
     {
         currentUI = uIController.SetBuildingListUI(UIindex);
     }
     public void SetBuildingInfo(int UIindex, Building building)
     {
-        if (clickedObject[0] == building.gameObject)
+        if (clickedObject[0] == building.gameObject && CheckState("InGame"))
         {
             currentUI = uIController.SetBuildingUI(UIindex, building);
         }
     }
     public void SetUnitInfo(int UIindex)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        currentUI = uIController.SetUnitUI(UIindex);
+        if(gameState == GameStates.InGame)
+            currentUI = uIController.SetUnitUI(UIindex);
     }
     public void SetHealthBar(Unit unit)
     {
@@ -108,12 +136,13 @@ public class GameManager : MonoBehaviour
     // =================== 객체 생성 함수들 ===================
     public void CreateBuilding()
     {
-        if(gridHandler.CheckCanBuilt()) // 건물이 생성가능한지 확인하는 조건문 나중에 자원, 건물인구수 체크하는것도 추가해야함
+        if(gridHandler.CheckCanBuilt() && CheckState("ConstructionMode")) // 건물이 생성가능한지 확인하는 조건문 나중에 자원, 건물인구수 체크하는것도 추가해야함
         // 건물생성가능여부를 판단하는 기능을 하는 함수를 만들어서 조건문에 넣도록 개선해야함
         {
             Vector3 buildingPos = gridHandler.CalculateGridScalse();
             DelayBuildingCreation(buildingPos);
             grid.SetActive(false);
+            SetState("InGame");
         }
     }
     public async void CreateUnit() // 해윤
@@ -125,10 +154,14 @@ public class GameManager : MonoBehaviour
                 buildingController.SetBuildingState(barrack, 2, unitType);
                 ReloadBuildingUI(barrack);
 
-                Vector3 buildingPos = barrack.transform.position;
-                Vector3 destination = barrack._sponPos;
-                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f);
-                Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos);
+                Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
+                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f); // 유닛이 생성되는 기본값
+
+                Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos); // 유닛 생성
+
+                Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
+
+                // 생성 이팩트
                 GameObject effect = effectHandler.CreateEffect(2,createdUnit.transform,new Vector3(-90,0,0),1);
                 effectHandler.DestoryEffectGetTime(effect,effect.GetComponent<ParticleSystem>().main.startLifetime.constant);
 
@@ -219,11 +252,6 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
-    }
-
-    private void SetSponPos(Vector3 newLocation)
-    {
-        clickedObject[0].GetComponent<Barrack>().SetSponPos(newLocation);
     }
 
     // =====================================================
