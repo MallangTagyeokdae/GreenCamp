@@ -12,27 +12,34 @@ public class GridEvent : MonoBehaviour
         Default = 0,
         Hovered = 1,
         Selected = 2,
-        Builted = 3
+        HasObject = 3,
+        Builted = 4
     }
 
     public Material defaultMaterial;
     public Material hoveredMaterial;
     public Material selectedMaterial;
-    public State gridState = State.Default;
     public Material builtedMaterial;
+    public State gridState = State.Default;
     private ClickEventHandler _clickEventHandler;
     private MeshRenderer _meshRenderer;
+    public List<Collider> detectedColliders = new List<Collider>();
 
     void Start()
     {
         UnSetRender();
         _meshRenderer = GetComponent<MeshRenderer>();
         _clickEventHandler = GetComponent<ClickEventHandler>();
+        _clickEventHandler.mouseHoverEvent.AddListener((Vector3 pos) => GameManager.instance.gridHandler.HoveredGrid(pos));
         _clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) => {
-            GameManager.instance.CreateBuilding(gameObject.transform.position);
+            GameManager.instance.CreateBuilding();
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
-            OnBuiltIn();
         });
+    }
+    private void OnDisable()
+    {
+        UnSetRender();
+        detectedColliders.Clear();
     }
     public void OnBuiltIn()
     {
@@ -48,36 +55,45 @@ public class GridEvent : MonoBehaviour
     {
         gameObject.GetComponent<Renderer>().enabled = true;
     }
-    public void SetBuilted()
+    public void SetDefault()
     {
-        gridState = State.Builted;
+        gameObject.tag = "Clickable";
+        gridState = State.Default;
     }
     public void SetHovered()
     {
         gridState = State.Hovered;
     }
-    public void SetDefault()
-    {
-        gridState = State.Default;
-    }
     public void SetSelected()
     {
         gridState = State.Selected;
+    }
+    public void SetHasObject()
+    {
+        gridState = State.HasObject;
+    }
+    public void SetBuilted()
+    {
+        gameObject.tag = "Untagged";
+        gridState = State.Builted;
     }
 
     public bool GetIsHovered()
     {
         return gridState == State.Hovered ? true : false;
     }
-    public bool GetIsBuilted()
-    {
-        return gridState == State.Builted ? true : false;
-    }
     public bool GetIsSelected()
     {
         return gridState == State.Selected ? true : false; 
     }
-    
+    public bool GetIsHasObject()
+    {
+        return gridState == State.HasObject ? true : false;
+    }
+    public bool GetIsBuilted()
+    {
+        return gridState == State.Builted ? true : false;
+    }
     public void ChangeMesh()
     {
         switch(gridState)
@@ -91,9 +107,46 @@ public class GridEvent : MonoBehaviour
             case State.Selected:
                 _meshRenderer.material = selectedMaterial;
                 break;
+            case State.HasObject:
+                _meshRenderer.material = builtedMaterial;
+                break;
             case State.Builted:
                 _meshRenderer.material = builtedMaterial;
                 break;
+        }
+    }
+
+    private void OnTriggerEnter(Collider obj)
+    {
+        if(obj.CompareTag("Clickable") && !GetIsBuilted())
+        {
+            if(!detectedColliders.Contains(obj))
+                detectedColliders.Add(obj);
+
+            SetHasObject();
+            ChangeMesh();
+        }
+    }
+
+    private void OnTriggerExit(Collider obj)
+    {
+        if(obj.CompareTag("Clickable") && !GetIsBuilted())
+        {
+            detectedColliders.Remove(obj);
+
+            if(detectedColliders.Count == 0)
+            {
+                SetDefault();
+                ChangeMesh();
+            }
+        }
+    }
+
+    public void CheckHasObject()
+    {
+        if(detectedColliders.Count == 0 && !GetIsBuilted())
+        {
+            SetDefault();
         }
     }
 }

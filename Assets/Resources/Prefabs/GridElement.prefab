@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3573689446639347818}
   - component: {fileID: 4504187751965033002}
   - component: {fileID: 2973886920064003261}
+  - component: {fileID: 6107257507266313654}
   m_Layer: 3
   m_Name: GridElement
   m_TagString: Clickable
@@ -124,6 +125,7 @@ MonoBehaviour:
   hoveredMaterial: {fileID: 2100000, guid: c22e4993a5fd94f4aa11503d214fc627, type: 2}
   selectedMaterial: {fileID: 2100000, guid: 44d8f569659104c2f84a83ad48aa033a, type: 2}
   builtedMaterial: {fileID: 2100000, guid: 9545eeb2599484e5db08c80192fd2525, type: 2}
+  gridState: 0
 --- !u!114 &2973886920064003261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,3 +159,24 @@ MonoBehaviour:
   draggedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &6107257507266313654
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253901454322640110}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 13.1035185, z: 10}
+  m_Center: {x: 0, y: 1.8101583, z: 0}
