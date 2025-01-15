@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,6 +35,7 @@ public class Barrack : Building
         this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 4f);
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
+        this.loadingTime = 30f;
     }
 
     public void SetSponPos(Vector3 setSponPos)
@@ -41,44 +43,17 @@ public class Barrack : Building
         this._sponPos = setSponPos;
     }
 
-
-    public override void InitTime()
-    {
-        time = 0f;
-        loadingTime = 30/10f;
+    [PunRPC]
+    public override void SetProgressMesh1(){
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
-    public override void UpdateCreateBuildingTime(float update)
-    {
-        float incrementPerSec = maxHealth / loadingTime;
-        time = update;
-        this.currentHealth += incrementPerSec * Time.deltaTime;
-        this.progress = time/loadingTime*100;
-
-        this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
-        this.progressBar.value = (float)this.progress / 100;
-        UpdateMesh();
+    [PunRPC]
+    public override void SetProgressMesh2(){
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
     }
-    public override void UpdateMesh()
-    {
-        if (time > loadingTime/2 && time < loadingTime) {
-            this.gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
-        } else if (time > loadingTime)
-        {
-            this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
-        }
-    }
-    public override void InitOrderTime(float totalTime)
-    {
-        this.state = State.InProgress;
-        time = 0f;
-        loadingTime = totalTime;
-    }
-    public override void UpdateOrderTime(float update)
-    {
-        time = update;
-        this.progress = time / loadingTime * 100;
-        this.progressBar.value = (float)this.progress / 100;
+    [PunRPC]
+    public override void SetCompleteMesh(){
+        gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
     }
 }

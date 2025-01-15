@@ -21,6 +21,7 @@ public class LobbyController : MonoBehaviour
     public Transform parent;
     private List<string> _roomList;
     // Start is called before the first frame update
+    public OutGameState outGameState;
     void Start()
     {
         _roomList = new List<string>();
@@ -29,6 +30,7 @@ public class LobbyController : MonoBehaviour
     public void LogIn()
     {
         loggedIn.Invoke();
+        outGameState.SetLobbyState("Login");
     }
 
     public void updateRoomList(List<RoomInfo> roomList)
@@ -40,10 +42,16 @@ public class LobbyController : MonoBehaviour
             if (!_roomList.Contains(roomInfo.Name))
             {
                 GameObject room = Instantiate(prefab, parent);
-                room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => PhotonManager.instance.JoinRoom(roomInfo));
-                room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => {Debug.Log("test pressed button!");});
+                room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() =>
+                {
+                    PhotonManager.instance.JoinRoom(roomInfo);
+                    outGameState.SetLobbyState("JoinGame");
+                });
+                room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => { Debug.Log("test pressed button!"); });
+
                 room.name = roomInfo.Name;
                 Debug.Log(room.transform.Find("Title").gameObject);//.GetComponent<TextMeshPro>().text = roomInfo.Name;
+
             }
         }
 

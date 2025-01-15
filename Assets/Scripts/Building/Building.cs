@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,15 +58,64 @@ public abstract class Building : Entity
         this.loadingTime = 10f;
     }
 
-    public virtual void InitTime(){
+    public virtual void InitTime()
+    {
+        time = 0f;
+        loadingTime = 30/10f;
+        //gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+        this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
     }
 
-    public virtual void UpdateCreateBuildingTime(float update){
+    public virtual void UpdateCreateBuildingTime(float update)//
+    {
+        float incrementPerSec = maxHealth / loadingTime;
+        time = update;
+        this.currentHealth += incrementPerSec * Time.deltaTime;
+        this.progress = time/loadingTime*100;
+
+        this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
+        this.progressBar.value = (float)this.progress / 100;
+        UpdateMesh();
     }
 
-    public virtual void UpdateMesh(){
+    public virtual void UpdateMesh() //
+    {
+        if (time > loadingTime/2 && time < loadingTime) {
+            //this.gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
+            this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh2", RpcTarget.AllBuffered);
+        } else if (time > loadingTime)
+        {
+            //this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
+            this.gameObject.GetComponent<PhotonView>().RPC("SetCompleteMesh", RpcTarget.AllBuffered);
+        }
     }
-    public virtual void InitOrderTime(float totalTime){} // 건물 생성 외 다른 명령을 내릴 떄 타이머 초기화
-    public virtual void UpdateOrderTime(float update){} // 건물 생성 외 다른 명령을 내릴 떄 타이머 업데이트
+
+    public virtual void InitOrderTime(float totalTime)//
+    {
+        this.state = State.InProgress;
+        time = 0f;
+        loadingTime = totalTime;
+    }
+
+    public virtual void UpdateOrderTime(float update)//
+    {
+        time = update;
+        this.progress = time / loadingTime * 100;
+        this.progressBar.value = (float)this.progress / 100;
+    }
+
+    [PunRPC]
+    public virtual void SetProgressMesh1(){
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+    }
+
+    [PunRPC]
+    public virtual void SetProgressMesh2(){
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
+    }
+    [PunRPC]
+    public virtual void SetCompleteMesh(){
+        gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
+    }
 
 }

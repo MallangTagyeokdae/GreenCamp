@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class Command : Building
@@ -34,7 +35,9 @@ public class Command : Building
         this.cost = 0;
         this.attackPower = 10;
         this.attackRange = 10;
+        this.loadingTime = 10f;
     }
+
 
     public override void InitTime()
     {
@@ -43,28 +46,17 @@ public class Command : Building
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
-    public override void UpdateCreateBuildingTime(float update)
-    {
-        time = update;
-        UpdateMesh();
+    [PunRPC]
+    public override void SetProgressMesh1(){
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
-    public override void UpdateMesh()
-    {
-        if (time > loadingTime)
-        {
-            this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
-        }
+
+    [PunRPC]
+    public override void SetProgressMesh2(){
+        gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
     }
-    public override void InitOrderTime(float totalTime)
-    {
-        this.state = State.InProgress;
-        time = 0f;
-        loadingTime = totalTime;
-    }
-    public override void UpdateOrderTime(float update)
-    {
-        time = update;
-        this.progress = time / loadingTime * 100;
-        this.progressBar.value = (float)this.progress / 100;
+    [PunRPC]
+    public override void SetCompleteMesh(){
+        gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
     }
 }
