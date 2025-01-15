@@ -39,7 +39,7 @@ public class Command : Building
     public override void InitTime()
     {
         time = 0f;
-        loadingTime = 10f;
+        loadingTime = .1f;
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 

@@ -159,5 +159,10 @@ public class BuildingController : MonoBehaviour
         Enum.TryParse(progressType, out Building.InProgressItem item);
         building.inProgressItem = item;
     }
+
+    public void SetSponPos(Vector3 newLocation, Building building)
+    {
+        building.GetComponent<Barrack>().SetSponPos(newLocation);
+    }
     
 }
