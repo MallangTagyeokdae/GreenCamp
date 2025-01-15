@@ -18,8 +18,8 @@ public class GridEvent : MonoBehaviour
     public Material defaultMaterial;
     public Material hoveredMaterial;
     public Material selectedMaterial;
-    public State gridState = State.Default;
     public Material builtedMaterial;
+    public State gridState = State.Default;
     private ClickEventHandler _clickEventHandler;
     private MeshRenderer _meshRenderer;
 
@@ -28,10 +28,10 @@ public class GridEvent : MonoBehaviour
         UnSetRender();
         _meshRenderer = GetComponent<MeshRenderer>();
         _clickEventHandler = GetComponent<ClickEventHandler>();
+        _clickEventHandler.mouseHoverEvent.AddListener((Vector3 pos) => GameManager.instance.gridHandler.HoveredGrid(pos));
         _clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) => {
             GameManager.instance.CreateBuilding(gameObject.transform.position);
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
-            OnBuiltIn();
         });
     }
     public void OnBuiltIn()
@@ -94,6 +94,24 @@ public class GridEvent : MonoBehaviour
             case State.Builted:
                 _meshRenderer.material = builtedMaterial;
                 break;
+        }
+    }
+
+    private void OnTriggerEnter(Collider obj)
+    {
+        if(obj.CompareTag("Clickable"))
+        {
+            SetBuilted();
+            ChangeMesh();
+        }
+    }
+
+    private void OnTriggerExit(Collider obj)
+    {
+        if(obj.CompareTag("Clickable"))
+        {
+            SetDefault();
+            ChangeMesh();
         }
     }
 }

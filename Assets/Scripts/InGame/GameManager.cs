@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
     public List<GameObject> clickedObject; // 현재 선택된 게임 Object
     public EffectHandler effectHandler;
+    public GridHandler gridHandler;
     //-----------------------------
 
     void Start()
