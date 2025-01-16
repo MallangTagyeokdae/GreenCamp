@@ -161,10 +161,6 @@ public class GameManager : MonoBehaviour
 
                 Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
 
-                // 생성 이팩트
-                GameObject effect = effectHandler.CreateEffect(2,createdUnit.transform,new Vector3(-90,0,0),1);
-                effectHandler.DestoryEffectGetTime(effect,effect.GetComponent<ParticleSystem>().main.startLifetime.constant);
-
                 // 유닛을 destination으로 이동명령 내리기
                 GameObject unitObject = createdUnit.gameObject;
 
@@ -210,8 +206,8 @@ public class GameManager : MonoBehaviour
         building.InitTime();
         await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time));
 
-        GameObject effect = effectHandler.CreateEffect(0,building.transform,Vector3.zero,3);
-        effectHandler.DestoryEffectGetTime(effect,2.0f);
+        /*GameObject effect = effectHandler.CreateEffect(0,building.transform,Vector3.zero,3);
+        effectHandler.DestoryEffectGetTime(effect,2.0f);*/
 
         Debug.Log($"check time: {building.time}");
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기

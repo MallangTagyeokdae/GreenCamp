@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Palmmedia.ReportGenerator.Core.Parser.Analysis;
+using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -232,6 +234,22 @@ public abstract class Unit : Entity
                 SetState(newState);
                 break;
         }
+    }
+
+
+    [PunRPC]
+    public void AttackRequest()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            this.GetComponent<PhotonView>().RPC("SyncHealth", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    public void SyncAttack()
+    {
+        unitCurrentHealth -= 10;
     }
 
     //새로운 객체를 찾아야 하는 경우 -> 유닛의 상태가 idle이 되었을 때(이동을 완료했을 때, 공격하던 객체가 죽었을 때, 공격하던 객체가 어그로 범위를 벗어났을 때)

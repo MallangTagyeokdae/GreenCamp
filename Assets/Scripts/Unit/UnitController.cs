@@ -180,11 +180,27 @@ public class UnitController : MonoBehaviour
     public IEnumerator Attack(GameObject ally, GameObject enemy)
     {
         ally.TryGetComponent(out Unit unit);
+        unit.ChangeState("Attack");
+
         while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
+            
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             ally.transform.rotation = Quaternion.LookRotation(rot);
-            unit.ChangeState("Attack");
+            AnimatorStateInfo stateInfo = unit.animator.GetCurrentAnimatorStateInfo(0);
+            float progress = stateInfo.normalizedTime % 1;
+
+            if(progress >= 0.37f && unit.animator.GetBool("Attacked") == false){
+                unit.animator.SetBool("Attacked", true);
+                Debug.Log("attack check");
+                enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient);
+            }
+
+            else if(progress < 0.1f){
+                unit.animator.SetBool("Attacked", false);
+            }
+
+
             yield return null;
         }
 
