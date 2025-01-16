@@ -87,6 +87,7 @@ public abstract class Building : Entity
         {
             //this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
             this.gameObject.GetComponent<PhotonView>().RPC("SetCompleteMesh", RpcTarget.AllBuffered);
+            gameObject.transform.Find("completeEffect").gameObject.SetActive(true);
         }
     }
 
