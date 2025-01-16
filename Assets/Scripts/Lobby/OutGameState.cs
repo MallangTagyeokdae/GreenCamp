@@ -10,6 +10,7 @@ public class OutGameState : MonoBehaviour
     {
         Logout,
         Login,
+        CreateGame,
         JoinGame
     }
     
@@ -29,6 +30,9 @@ public class OutGameState : MonoBehaviour
                 lobbyState = LobbyState.Login;
                 beforeSelectTeamUI.SetActive(true);
                 selectTeamUI.SetActive(false);
+                break;
+            case "CreateGame":
+                
                 break;
             case "JoinGame":
                 lobbyState = LobbyState.JoinGame;
