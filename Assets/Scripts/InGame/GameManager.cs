@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
     }
     public void SetUnitInfo(int UIindex)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        if(gameState == GameStates.InGame)
-            currentUI = uIController.SetUnitUI(UIindex);
+        if(gameState == GameStates.InGame && clickedObject[0].TryGetComponent(out Unit unit))
+            currentUI = uIController.SetUnitUI(UIindex, unit);
     }
     public void SetHealthBar(Unit unit)
     {
@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
                 ReloadBuildingUI(barrack);
 
                 Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
-                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f); // 유닛이 생성되는 기본값
+                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4.8f); // 유닛이 생성되는 기본값
 
                 Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos); // 유닛 생성
 
