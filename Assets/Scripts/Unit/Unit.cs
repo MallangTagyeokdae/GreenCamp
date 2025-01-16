@@ -41,7 +41,6 @@ public abstract class Unit : Entity
     public Slider healthBar;
     public State state = State.Idle;
 
-
     [HideInInspector] public Animator animator;
     private new Rigidbody rigidbody;
 
