@@ -184,12 +184,13 @@ public class GameManager : MonoBehaviour
         if (clickedObject[0].TryGetComponent(out Building building))
         {
             buildingController.SetBuildingState(building, 2, "LevelUP");
-            building.GetComponent<PhotonView>().RPC("GenerateLevelUpEffect", RpcTarget.All);
+            building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, true);
             ReloadBuildingUI(building);
 
             //GameObject effect = effectHandler.CreateEffect(1,building.transform,Vector3.zero,3);
 
             await OrderCreate(building, building.level * 10f);
+            building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
             buildingController.UpgradeBuilding(building);
             buildingController.SetBuildingState(building, 1, "None");
 
