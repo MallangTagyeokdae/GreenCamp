@@ -23,14 +23,14 @@ public class GridHandler : MonoBehaviour
             areaPos = new Vector3(hitPoint.x, 0.01f, hitPoint.z);
             
             // 넓은 범위
-            Collider[] detectedObjs = Physics.OverlapSphere(new Vector3(areaPos.x, 0.02f, areaPos.z),18.5f,_layerMask);
+            Collider[] detectedObjs = Physics.OverlapSphere(new Vector3(areaPos.x, 0.02f, areaPos.z),15f,_layerMask);
             // 건물이 지어지는 Grid만
-            Collider[] constructionGrid = Physics.OverlapBox(new Vector3(areaPos.x, 0.02f, areaPos.z),_range*2,Quaternion.identity,_layerMask);
+            Collider[] constructionObjs = Physics.OverlapBox(new Vector3(areaPos.x, 0.02f, areaPos.z),_range*2,Quaternion.identity,_layerMask);
             UpdateGridMeshToDefault(detectedObjs);
-            // UpdateGridMeshToDefault(constructionGrid);
+            UpdateOutSelected(constructionObjs);
             // 기존 리스트에서 빠져나갈 요소들의 Mesh값을 바꿔줬으니 새로 받은 Grid 배열을 List로 추가해줌
             detectedGrids = detectedObjs.ToList();
-            constructionGrids = constructionGrid.ToList();
+            constructionGrids = constructionObjs.ToList();
             // 최신화된 Grid List의 요소들을 검사해서 Builted && Hovered 상태가 아니면 Mesh를 바꿔준다.
             UpdateGridMeshToHovered();
             UpdateGridMeshToSelected();
@@ -64,6 +64,23 @@ public class GridHandler : MonoBehaviour
         }
     }
 
+    private void UpdateOutSelected(Collider[] selectedObjs)
+    {
+        if(constructionGrids.Count() != 0)
+        {
+            foreach(Collider obj in constructionGrids)
+            {
+                if(obj.TryGetComponent(out GridEvent grid))
+                {
+                    if(!selectedObjs.Contains(obj) && (grid.GetIsBuilted() || grid.GetIsHasObject()))
+                    {
+                        grid.ChangeMesh();
+                    }
+                }
+            }
+        }
+    }
+
     private void UpdateGridMeshToHovered()
     {
         foreach(Collider obj in detectedGrids)
@@ -87,8 +104,10 @@ public class GridHandler : MonoBehaviour
         {
             if(obj.TryGetComponent(out GridEvent grid))
             {
-                if(!grid.GetIsBuilted() && !grid.GetIsHasObject())
+                if(grid.GetIsBuilted() || grid.GetIsHasObject())
                 {
+                    grid.ChangeMeshToBlocked();
+                } else {
                     grid.SetSelected();
                     grid.ChangeMesh();
                 }

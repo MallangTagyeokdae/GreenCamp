@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
                 ReloadBuildingUI(barrack);
 
                 Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
-                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4.8f); // 유닛이 생성되는 기본값
+                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5f); // 유닛이 생성되는 기본값
 
                 Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos); // 유닛 생성
 

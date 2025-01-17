@@ -121,10 +121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420c2370a83384ff0874b0288249e0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GroundMaterial: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: d2677361d94094c57940a88735da3d9a, type: 2}
   hoveredMaterial: {fileID: 2100000, guid: c22e4993a5fd94f4aa11503d214fc627, type: 2}
   selectedMaterial: {fileID: 2100000, guid: 44d8f569659104c2f84a83ad48aa033a, type: 2}
+  blockMaterial: {fileID: 2100000, guid: 9d52e893cf50f41c5ab797e2c33db776, type: 2}
   builtedMaterial: {fileID: 2100000, guid: 9545eeb2599484e5db08c80192fd2525, type: 2}
   gridState: 0
   detectedColliders: []
