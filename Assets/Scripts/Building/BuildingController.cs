@@ -15,6 +15,8 @@ public class BuildingController : MonoBehaviour
     private int _buildingID;
     //---------------------------------------//
     public GameObject buildingObject;
+    public GameObject enemyBuildings;   //적 빌딩이 hierarchy 창에서 생성될 위치
+    public GameObject myBuildings;  //아군 빌딩이 hierarchy 창에서 생성될 위치
     
     public void Awake()
     {
@@ -31,6 +33,7 @@ public class BuildingController : MonoBehaviour
         GameObject gameObject = buildingObject; // SetClickedObject에 넣을 임의 변수 만듦 -> call by value로 되기 떄문에 buildingObject가 바뀌어도 값이 안바뀜
         // 좌클릭 했을 때 callback 함수 넣어줌
         buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetClickedObject(gameObject));
+        
         Slider healthBar = buildingObject.transform.Find("UI/HealthUI/CurrentHealth").GetComponent<Slider>();
         Slider progressBar = buildingObject.transform.Find("UI/ProgressUI/CurrentProgress").GetComponent<Slider>();
         healthBar.gameObject.SetActive(true);
@@ -110,6 +113,13 @@ public class BuildingController : MonoBehaviour
 
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6, newBuilding));
                 break;
+        }
+
+        if(_teamID == buildingObject.GetComponent<Building>().teamID){
+            buildingObject.transform.SetParent(myBuildings.transform);
+        }
+        else{
+            buildingObject.transform.SetParent(enemyBuildings.transform);
         }
 
         _buildingID++;
