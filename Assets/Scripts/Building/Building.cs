@@ -127,7 +127,7 @@ public abstract class Building : Entity
     }
 
     [PunRPC]
-    public virtual void GenerateLevelUpEffect(){
-        levelUpEffect.SetActive(true);
+    public virtual void ActiveLevelUpEffect(bool active = true){
+        levelUpEffect.SetActive(active);
     }
 }
