@@ -43,6 +43,8 @@ public abstract class Building : Entity
     public Mesh progressMesh1;
     public Mesh progressMesh2;
     public Mesh completeMesh;
+    public GameObject completeEffect;
+    public GameObject levelUpEffect;
 
     public Building(string teamID, int ID, string type, Vector3 location,
     int maxHealth, int cost, int level)
@@ -87,7 +89,7 @@ public abstract class Building : Entity
         {
             //this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
             this.gameObject.GetComponent<PhotonView>().RPC("SetCompleteMesh", RpcTarget.AllBuffered);
-            gameObject.transform.Find("completeEffect").gameObject.SetActive(true);
+            gameObject.GetComponent<PhotonView>().RPC("GenerateCompleteEffect", RpcTarget.All);
         }
     }
 
@@ -119,4 +121,13 @@ public abstract class Building : Entity
         gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
     }
 
+    [PunRPC]
+    public virtual void GenerateCompleteEffect(){
+        completeEffect.SetActive(true);
+    }
+
+    [PunRPC]
+    public virtual void GenerateLevelUpEffect(){
+        levelUpEffect.SetActive(true);
+    }
 }
