@@ -21,6 +21,8 @@ public class UnitController : MonoBehaviour
     private int _unitID;
     private Unit _createdUnit;
     public GameObject unitObject;
+    public GameObject enemyUnits; //적 유닛이 hierarchy 창에서 생성될 위치
+    public GameObject myUnits; //아군 유닛이 hierarchy 창에서 생성될 위치
     private void Start()
     {
         _teamID = GameStatus.instance.teamID; // 본인 TeamID를 GameStatus에서 instance로 받아옴.
@@ -43,7 +45,7 @@ public class UnitController : MonoBehaviour
     {
         unitObject = PhotonNetwork.Instantiate($"Prefabs/Units/{_teamID}TeamUnits/{unitType}", unitLocation, Quaternion.Euler(new Vector3(0, 180, 0)));
         unitObject.name = unitType + _unitID.ToString();
-        GameObject gameObject = unitObject;
+        GameObject unitObj = unitObject;
 
 
         // switch문으로 unit을 Dictionary에 저장
@@ -79,21 +81,28 @@ public class UnitController : MonoBehaviour
                 break;
         }
 
-        Unit unit = gameObject.GetComponent<Unit>();
+        Unit unit = unitObj.GetComponent<Unit>();
         GameManager.instance.SetHealthBar(unit);
 
-        gameObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
+        unitObj.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
         {
-            GameManager.instance.SetClickedObject(gameObject);
+            GameManager.instance.SetClickedObject(unitObj);
             GameManager.instance.SetUnitInfo(7);
         }
         );
-        gameObject.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(gameObject));
+        unitObj.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(unitObj));
 
         unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy); });
         unit.SetAttExit((GameObject enemy) => { unit.attackList.Remove(enemy); });
         unit.SetAggEnter((GameObject enemy) => { GameManager.instance.Aggregated(unit.gameObject, enemy); });
         unit.SetAggExit((GameObject enemy) => { unit.aggList.Remove(enemy); });
+
+        if(_teamID == unitObject.GetComponent<Unit>().teamID){
+            unitObj.transform.SetParent(myUnits.transform);
+        }
+        else{
+            unitObj.transform.SetParent(enemyUnits.transform);
+        }
         _unitID++;
         return _createdUnit;
 
