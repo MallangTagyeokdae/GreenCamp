@@ -242,7 +242,7 @@ public abstract class Unit : Entity
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            this.GetComponent<PhotonView>().RPC("SyncHealth", RpcTarget.All);
+            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All);
         }
     }
 
