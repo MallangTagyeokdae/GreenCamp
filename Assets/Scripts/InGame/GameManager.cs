@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
     }
     public void SetUnitInfo(int UIindex)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        if(gameState == GameStates.InGame)
-            currentUI = uIController.SetUnitUI(UIindex);
+        if(gameState == GameStates.InGame && clickedObject[0].TryGetComponent(out Unit unit))
+            currentUI = uIController.SetUnitUI(UIindex, unit);
     }
     public void SetHealthBar(Unit unit)
     {
@@ -155,15 +155,11 @@ public class GameManager : MonoBehaviour
                 ReloadBuildingUI(barrack);
 
                 Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
-                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 4f); // 유닛이 생성되는 기본값
+                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5f); // 유닛이 생성되는 기본값
 
                 Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos); // 유닛 생성
 
                 Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
-
-                // 생성 이팩트
-                GameObject effect = effectHandler.CreateEffect(2,createdUnit.transform,new Vector3(-90,0,0),1);
-                effectHandler.DestoryEffectGetTime(effect,effect.GetComponent<ParticleSystem>().main.startLifetime.constant);
 
                 // 유닛을 destination으로 이동명령 내리기
                 GameObject unitObject = createdUnit.gameObject;
@@ -188,15 +184,17 @@ public class GameManager : MonoBehaviour
         if (clickedObject[0].TryGetComponent(out Building building))
         {
             buildingController.SetBuildingState(building, 2, "LevelUP");
+            building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, true);
             ReloadBuildingUI(building);
 
-            GameObject effect = effectHandler.CreateEffect(1,building.transform,Vector3.zero,3);
+            //GameObject effect = effectHandler.CreateEffect(1,building.transform,Vector3.zero,3);
 
             await OrderCreate(building, building.level * 10f);
+            building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
             buildingController.UpgradeBuilding(building);
             buildingController.SetBuildingState(building, 1, "None");
 
-            effectHandler.DestoryEffectImmed(effect);
+            //effectHandler.DestoryEffectImmed(effect);
             ReloadBuildingUI(building);
         }
     }
@@ -210,8 +208,8 @@ public class GameManager : MonoBehaviour
         building.InitTime();
         await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time));
 
-        GameObject effect = effectHandler.CreateEffect(0,building.transform,Vector3.zero,3);
-        effectHandler.DestoryEffectGetTime(effect,2.0f);
+        /*GameObject effect = effectHandler.CreateEffect(0,building.transform,Vector3.zero,3);
+        effectHandler.DestoryEffectGetTime(effect,2.0f);*/
 
         Debug.Log($"check time: {building.time}");
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기

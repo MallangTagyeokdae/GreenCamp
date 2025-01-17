@@ -19,6 +19,7 @@ public class GridEvent : MonoBehaviour
     public Material defaultMaterial;
     public Material hoveredMaterial;
     public Material selectedMaterial;
+    public Material blockMaterial;
     public Material builtedMaterial;
     public State gridState = State.Default;
     private ClickEventHandler _clickEventHandler;
@@ -114,6 +115,10 @@ public class GridEvent : MonoBehaviour
                 _meshRenderer.material = builtedMaterial;
                 break;
         }
+    }
+    public void ChangeMeshToBlocked()
+    {
+        _meshRenderer.material = blockMaterial;
     }
 
     private void OnTriggerEnter(Collider obj)

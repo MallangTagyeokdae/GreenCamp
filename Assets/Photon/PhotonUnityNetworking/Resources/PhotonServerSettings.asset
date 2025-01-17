@@ -40,6 +40,14 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - UpdateBuildingProgress
+  - SetCompleteMesh
+  - SetProgressMesh1
+  - SetProgressMesh2
+  - AttackRequest
+  - SyncAttack
+  - GenerateCompleteEffect
+  - GenerateLevelUpEffect
+  - ActiveLevelUpEffect
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

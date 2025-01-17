@@ -3,7 +3,12 @@ guid: 5a300920e309c4ea884cf0840bf48e78
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - progressMesh1: {instanceID: 0}
+  - progressMesh2: {instanceID: 0}
+  - completeMesh: {instanceID: 0}
+  - levelup: {instanceID: 0}
+  - complete: {fileID: 195466, guid: 98c1ddbf01c12c3488151f2907ffa740, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

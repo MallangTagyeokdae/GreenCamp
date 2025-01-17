@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Unit을 상속받는 자식 Archer Class
 public class Archer : Unit

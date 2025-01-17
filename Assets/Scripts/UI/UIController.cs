@@ -36,23 +36,45 @@ public class UIController : MonoBehaviour
         UIContainer currentUI = GameManager.instance.currentUI;
         return CheckUpdateUI(selectedUI, currentUI);
     }
-    public UIContainer SetUnitUI(int UIindex)
+    public UIContainer SetUnitUI(int UIindex, Unit unit)
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
-        Unit selectedUnit = GameManager.instance.clickedObject[0].GetComponent<Unit>();
 
-        TMP_Text unitType = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitType").GetComponent<TMP_Text>();
-        TMP_Text unitPower = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitPowerField/UnitPower").GetComponent<TMP_Text>();
-        TMP_Text unitPowerRange = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitPowerRangeField/UnitPowerRange").GetComponent<TMP_Text>();
-        TMP_Text unitMoveSpeed = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitMoveSpeedField/UnitMoveSpeed").GetComponent<TMP_Text>();
-        Slider unitCurrentHealth = selectedUI.transform.Find("LeftSide/UnitInfoField/UnitHealthField/UnitCurrentHealth").GetComponent<Slider>();
+        UIElement uIElement = selectedUI.GetComponent<UIElement>();
 
-        unitType.text = selectedUnit.unitType;
-        unitPower.text = $"{selectedUnit.unitPower}";
-        unitPowerRange.text = $"{selectedUnit.unitPowerRange}";
-        unitMoveSpeed.text = $"{selectedUnit.unitMoveSpeed}";
-        unitCurrentHealth.value = (float)(selectedUnit.unitCurrentHealth * 1.0 / selectedUnit.unitMaxHealth);
+        TMP_Text type = uIElement.name;
+        TMP_Text range = uIElement.level;
+        TMP_Text currentHealth = uIElement.currentHealth;
+        TMP_Text maxHealth = uIElement.maxHealth;
+        Image image = uIElement.image;
+        Slider currentHealthBar = uIElement.progressBar;
+        TMP_Text power = selectedUI.transform.Find("LeftSide/LeftBanner/Damage/Damage").GetComponent<TMP_Text>();
+        TMP_Text moveSpeed = selectedUI.transform.Find("LeftSide/LeftBanner/MoveSpeed/Speed").GetComponent<TMP_Text>();
+
+        switch(unit.unitType)
+        {
+            case "Soldier":
+                image.sprite = uIElement.uiImages[0];
+                break;
+            case "Archer":
+                image.sprite = uIElement.uiImages[1];
+                break;
+            case "Tnaker":
+                image.sprite = uIElement.uiImages[2];
+                break;
+            case "Healer":
+                image.sprite = uIElement.uiImages[3];
+                break;
+        }
+
+        type.text = unit.unitType;
+        power.text = $"{unit.unitPower}";
+        range.text = $"{unit.unitPowerRange}";
+        moveSpeed.text = $"{unit.unitMoveSpeed}";
+        currentHealth.text = $"{unit.unitCurrentHealth}";
+        maxHealth.text = $"{unit.unitMaxHealth}";
+        currentHealthBar.value = (float)(unit.unitCurrentHealth * 1.0 / unit.unitMaxHealth);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
