@@ -102,11 +102,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &4504187751965033002
@@ -121,11 +121,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420c2370a83384ff0874b0288249e0e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GroundMaterial: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: d2677361d94094c57940a88735da3d9a, type: 2}
   hoveredMaterial: {fileID: 2100000, guid: c22e4993a5fd94f4aa11503d214fc627, type: 2}
   selectedMaterial: {fileID: 2100000, guid: 44d8f569659104c2f84a83ad48aa033a, type: 2}
   builtedMaterial: {fileID: 2100000, guid: 9545eeb2599484e5db08c80192fd2525, type: 2}
   gridState: 0
+  detectedColliders: []
 --- !u!114 &2973886920064003261
 MonoBehaviour:
   m_ObjectHideFlags: 0
