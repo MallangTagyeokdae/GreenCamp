@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
 using Photon.Pun;
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
     public EffectHandler effectHandler;
     public GridHandler gridHandler;
     public GameStates gameState = GameStates.Loading;
+    private List<CancellationTokenSource> tasks = new List<CancellationTokenSource>();
     //-----------------------------
 
     void Start()
@@ -151,11 +153,11 @@ public class GameManager : MonoBehaviour
         {
             if (barrack.state == Building.State.Built)
             {
-                buildingController.SetBuildingState(barrack, 2, unitType);
+                buildingController.SetBuildingState(barrack, Building.State.InProgress, unitType);
                 ReloadBuildingUI(barrack);
 
                 Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
-                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5f); // 유닛이 생성되는 기본값
+                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5.5f); // 유닛이 생성되는 기본값
 
                 Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos); // 유닛 생성
 
@@ -164,7 +166,7 @@ public class GameManager : MonoBehaviour
                 // 유닛을 destination으로 이동명령 내리기
                 GameObject unitObject = createdUnit.gameObject;
 
-                buildingController.SetBuildingState(barrack, 1, "None");
+                buildingController.SetBuildingState(barrack, Building.State.Built, "None");
                 createdUnit.unitBehaviour = StartCoroutine(unitController.Move(unitObject, destination, 1));
 
                 ReloadBuildingUI(barrack);
@@ -183,7 +185,7 @@ public class GameManager : MonoBehaviour
     {
         if (clickedObject[0].TryGetComponent(out Building building))
         {
-            buildingController.SetBuildingState(building, 2, "LevelUP");
+            buildingController.SetBuildingState(building, Building.State.InProgress, "LevelUP");
             building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, true);
             ReloadBuildingUI(building);
 
@@ -192,7 +194,7 @@ public class GameManager : MonoBehaviour
             await OrderCreate(building, building.level * 10f);
             building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
             buildingController.UpgradeBuilding(building);
-            buildingController.SetBuildingState(building, 1, "None");
+            buildingController.SetBuildingState(building, Building.State.Built, "None");
 
             //effectHandler.DestoryEffectImmed(effect);
             ReloadBuildingUI(building);
@@ -213,7 +215,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log($"check time: {building.time}");
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
-        buildingController.SetBuildingState(building, 1, "None");
+        buildingController.SetBuildingState(building, Building.State.Built, "None");
 
         ReloadBuildingUI(building);
     }
@@ -398,7 +400,7 @@ public class GameManager : MonoBehaviour
     // =====================================================
 
 
-    // =================== 타이머 함수 =================== 
+    // =================== 타이머 함수 ======================== 
     private async Task StartTimer(float time, Action<float> action)
     {
         float start = 0f;
@@ -410,4 +412,28 @@ public class GameManager : MonoBehaviour
         }
     }
     // =====================================================
+
+    // =================== 타이머 함수 ======================== 
+    public void PressedESC()
+    {
+        // ESC를 눌렀을 때 현재 선택된 오브젝트에 따라서 관리를 한다.
+        GameObject targetObj = clickedObject[0];
+
+        if(targetObj.TryGetComponent(out Building building))
+        {
+            switch(building.state)
+            {
+                case Building.State.InCreating:
+                    buildingController.DestroyBuilding(building);
+                    SetClickedObject(ground);
+                    break;
+                case Building.State.InProgress:
+                    buildingController.CancelProgress(building);
+                    break;
+            }
+        }
+
+    }
+    // ===================================================== 
+
 }

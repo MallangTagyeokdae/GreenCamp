@@ -72,6 +72,7 @@ public class BuildingController : MonoBehaviour
 
                 // UI 바뀌는 callback 함수 넣어줌
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(3, newBuilding));
+                // ESC 눌렀을 때 행동 취소하는 함수 넣어줌
                 break;
             case "PopulationBuilding":
                 PopulationBuilding _newPop = buildingObject.GetComponent<PopulationBuilding>();
@@ -140,9 +141,11 @@ public class BuildingController : MonoBehaviour
 
     }
 
-    public void DestroyBuilding(int buildingID)
+    public void DestroyBuilding(Building building)
     {
-
+        Debug.Log("건물생성 취소됌");
+        building.state = Building.State.Destroy;
+        building.SetProgressMesh1();
     }
 
     public void UpgradeBuilding(Building building)
@@ -150,22 +153,22 @@ public class BuildingController : MonoBehaviour
         building.level++;
     }
 
-    public void SetBuildingState(Building building, int state, string progressType) // 빌딩 상태 업데이트하는 함수
+    public void SetBuildingState(Building building, Building.State state, string progressType) // 빌딩 상태 업데이트하는 함수
     {
         switch(state)
         {
-            case 1:
+            case Building.State.Built:
                 building.healthBar.gameObject.SetActive(false);
                 building.progressBar.gameObject.SetActive(false);
                 building.progress = 0;
                 break;
-            case 2:
+            case Building.State.InProgress:
                 building.progressBar.gameObject.SetActive(true);
                 building.progress = 0;
                 break;
 
         }
-        building.state = (Building.State)state;
+        building.state = state;
         Enum.TryParse(progressType, out Building.InProgressItem item);
         building.inProgressItem = item;
     }
@@ -175,4 +178,11 @@ public class BuildingController : MonoBehaviour
         building.GetComponent<Barrack>().SetSponPos(newLocation);
     }
     
+    public void CancelProgress(Building building)
+    {
+        Debug.Log("진행중인 작업 취소됌");
+        SetBuildingState(building, Building.State.Built, "none");
+
+    }
+
 }
