@@ -5,6 +5,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro.Examples;
 using Unity.VisualScripting;
+using ExitGames.Client.Photon;
+using Photon.Pun.Demo.Cockpit;
 
 public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviour > MonoBehaviourPunCallbacks로 변경(MonoBehaviour에서 photon 관련 behavior가 추가된 버전)
 {
@@ -153,6 +155,36 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
     }
+    //---------------------------------------------------------------------------------------------------------------------
+    public void SetTeam(string teamName)
+    {
+        // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
+        ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
+
+        Debug.Log($"Team set to: {teamName}");
+    }
+
+    // 플레이어의 팀 정보 확인 메서드
+    public string GetTeam(Player player)
+    {
+        if (player.CustomProperties.TryGetValue("team", out object teamName))
+        {
+            return (string)teamName;
+        }
+        return "No Team"; // 팀 정보가 없을 경우
+    }
+
+    // 모든 플레이어의 팀 정보를 출력
+    public void PrintAllTeams()
+    {
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            string team = GetTeam(player);
+            Debug.Log($"Player {player.NickName} is on team {team}");
+        }
+    }
+    //---------------------------------------------------------------------------------------------------------------------
 
     //방에 있는 유저들의 씬을 게임씬으로 변경
     public void StartGame()
