@@ -20,7 +20,7 @@ public class PopulationBuilding : Building
     {
     }
 
-    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar)
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar, List<Collider> colliders)
     {
         this.teamID = teamID;
         this.ID = buildingID;
@@ -34,6 +34,7 @@ public class PopulationBuilding : Building
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 15f;
+        this.underGrid = colliders;
     }
 
     [PunRPC]

@@ -150,4 +150,19 @@ public class GridHandler : MonoBehaviour
         }
         return true;
     }
+
+    public void SetAfterDestroy(List<Collider> colliders)
+    {
+        foreach(Collider obj in colliders)
+        {
+            if(obj.TryGetComponent(out GridEvent grid))
+            {
+                if(grid.GetIsBuilted())
+                {
+                    grid.SetDefault();
+                    grid.ChangeMesh();
+                }
+            }
+        }
+    }
 }

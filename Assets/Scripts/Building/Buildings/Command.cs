@@ -23,7 +23,7 @@ public class Command : Building
         attackRange = 10;
     }
 
-    public void Init(string teamID, int buildingID, Vector3 buildingLocation)
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation, List<Collider> colliders)
     {
         this.teamID = teamID;
         this.ID = buildingID;
@@ -36,6 +36,7 @@ public class Command : Building
         this.attackPower = 10;
         this.attackRange = 10;
         this.loadingTime = 10f;
+        this.underGrid = colliders;
     }
 
 

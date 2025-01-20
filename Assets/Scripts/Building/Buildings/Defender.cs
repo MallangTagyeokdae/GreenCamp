@@ -25,7 +25,7 @@ public class Defender : Building
         attackRange = 10;
     }
 
-    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar)
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar, List<Collider> colliders)
     {
         this.teamID = teamID;
         this.ID = buildingID;
@@ -41,6 +41,7 @@ public class Defender : Building
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 20f;
+        this.underGrid = colliders;
     }
 
     [PunRPC]
