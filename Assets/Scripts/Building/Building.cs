@@ -37,12 +37,14 @@ public abstract class Building : Entity
     public Slider healthBar { get; set; }
     public Slider progressBar { get; set; }
     public float time { get; set; }
-    public float loadingTime{get; set;}
+    public float loadingTime{ get; set; }
+    public List<Collider> underGrid { get; set; }
     public State state = State.InCreating;
     public InProgressItem inProgressItem = InProgressItem.None;
     public Mesh progressMesh1;
     public Mesh progressMesh2;
     public Mesh completeMesh;
+    public GameObject destroyEffect;
     public GameObject completeEffect;
     public GameObject levelUpEffect;
 
@@ -129,5 +131,10 @@ public abstract class Building : Entity
     [PunRPC]
     public virtual void ActiveLevelUpEffect(bool active = true){
         levelUpEffect.SetActive(active);
+    }
+    
+    [PunRPC]
+    public virtual void ActiveDestroyEffect() {
+        destroyEffect.SetActive(true);
     }
 }

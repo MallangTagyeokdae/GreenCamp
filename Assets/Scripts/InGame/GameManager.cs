@@ -52,21 +52,33 @@ public class GameManager : MonoBehaviour
     public EffectHandler effectHandler;
     public GridHandler gridHandler;
     public GameStates gameState = GameStates.Loading;
-    private List<CancellationTokenSource> tasks = new List<CancellationTokenSource>();
+    public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     //-----------------------------
 
     void Start()
     {
         currentUI.Show();
-        buildingController.CreateBuilding(new Vector3(0,0,0), "Command", new Vector3(-90, 0, 90));
+        // Vector3 buildingPos = gridHandler.CalculateGridScalse();
+        // DelayBuildingCreation(buildingPos);
         SetState("InGame");
     }
 
     // ================== 상태 관련 함수 ======================
     public void SetState(string newState)
     {
-        if(Enum.TryParse(newState, out GameStates state))
-            gameState = state;
+        Enum.TryParse(newState, out GameStates state);
+        switch(state)
+        {
+            case GameStates.InGame:
+                gameState = state;
+                break;
+            case GameStates.ConstructionMode:
+                gameState = state;
+                break;
+            case GameStates.EndGame:
+                gameState = state;
+                break;
+        }
     }
 
     public bool CheckState(string checkState)
@@ -110,9 +122,9 @@ public class GameManager : MonoBehaviour
 
 
     //=================== UI 변경 관련 함수들 ===================
-    public void SetBuildingListUI(int UIindex) // 건설할 건물 띄워주는 UI, Ground Inspector창에서 직접 넣어줌
+    public void SetBuildingListUI() // 건설할 건물 띄워주는 UI, Ground Inspector창에서 직접 넣어줌
     {
-        currentUI = uIController.SetBuildingListUI(UIindex);
+        currentUI = uIController.SetBuildingListUI(0);
     }
     public void SetBuildingInfo(int UIindex, Building building)
     {
@@ -149,17 +161,22 @@ public class GameManager : MonoBehaviour
     }
     public async void CreateUnit() // 해윤
     {
-        if (clickedObject[0].TryGetComponent(out Barrack barrack))
+        GameObject targetOBJ = clickedObject[0];
+        if (targetOBJ.TryGetComponent(out Barrack barrack))
         {
             if (barrack.state == Building.State.Built)
             {
+                var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
                 buildingController.SetBuildingState(barrack, Building.State.InProgress, unitType);
                 ReloadBuildingUI(barrack);
 
                 Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
                 buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5.5f); // 유닛이 생성되는 기본값
 
-                Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos); // 유닛 생성
+                tasks[targetOBJ] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
+                Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos, cts.Token); // 유닛 생성
+                
+                tasks.Remove(targetOBJ); // 유닛 생성이 완료되면 딕셔너리에서 제거해줌
 
                 Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
 
@@ -185,33 +202,41 @@ public class GameManager : MonoBehaviour
     {
         if (clickedObject[0].TryGetComponent(out Building building))
         {
+            var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
+
             buildingController.SetBuildingState(building, Building.State.InProgress, "LevelUP");
             building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, true);
             ReloadBuildingUI(building);
 
-            //GameObject effect = effectHandler.CreateEffect(1,building.transform,Vector3.zero,3);
+            tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-            await OrderCreate(building, building.level * 10f);
+            await OrderCreate(building, building.level * 10f, cts.Token);
+
+            tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
+
             building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
             buildingController.UpgradeBuilding(building);
             buildingController.SetBuildingState(building, Building.State.Built, "None");
 
-            //effectHandler.DestoryEffectImmed(effect);
+            
             ReloadBuildingUI(building);
         }
     }
     private async Task DelayBuildingCreation(Vector3 buildingPos)
     {
+        var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
+
         // 건물 아래 Grid를 Builted로 변경
         gridHandler.SetGridsToBuilted();
 
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
-        Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90));
+        Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
         building.InitTime();
-        await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time));
 
-        /*GameObject effect = effectHandler.CreateEffect(0,building.transform,Vector3.zero,3);
-        effectHandler.DestoryEffectGetTime(effect,2.0f);*/
+        tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
+        await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time), cts.Token);
+
+        tasks.Remove(building.gameObject); // 건물 생성이 완료되면 딕셔너리에서 제거해줌
 
         Debug.Log($"check time: {building.time}");
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
@@ -229,7 +254,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ReloadBuildingUI(Building building)
+    public void ReloadBuildingUI(Building building)
     { // 건물이 생성완료 됐을 때 건물을 클릭하고 있으면 건물 UI로 바꿔준다.
         if (clickedObject[0].name == building.name)
         {
@@ -355,30 +380,30 @@ public class GameManager : MonoBehaviour
     }
 
     //피격시 idle상태로 변환 후 해당 유닛에게 어택명령?
-    public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos)
+    public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos, CancellationToken token)
     {
         switch (unitType)
         {
             case "Soldier":
-                await OrderCreate(barrack, 2f);
+                await OrderCreate(barrack, 2f, token);
                 break;
             case "Archer":
-                await OrderCreate(barrack, 2f);
+                await OrderCreate(barrack, 2f, token);
                 break;
             case "Tanker":
-                await OrderCreate(barrack, 2f);
+                await OrderCreate(barrack, 2f, token);
                 break;
             case "Healer":
-                await OrderCreate(barrack, 2f);
+                await OrderCreate(barrack, 2f, token);
                 break;
         }
         return unitController.CreateUnit(buildingPos, unitType);
     }
 
-    private async Task OrderCreate(Building building, float totalTime)
+    private async Task OrderCreate(Building building, float totalTime, CancellationToken token)
     {
         building.InitOrderTime(totalTime);
-        await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time));
+        await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time), token);
         /*PhotonView photonView = building.GetComponent<PhotonView>();
         await StartTimer(totalTime, (float time) =>
         {
@@ -401,11 +426,12 @@ public class GameManager : MonoBehaviour
 
 
     // =================== 타이머 함수 ======================== 
-    private async Task StartTimer(float time, Action<float> action)
+    private async Task StartTimer(float time, Action<float> action, CancellationToken token)
     {
         float start = 0f;
         while (time > start)
         {
+            token.ThrowIfCancellationRequested();
             start += Time.deltaTime;
             action.Invoke(start);
             await Task.Yield();
@@ -413,24 +439,32 @@ public class GameManager : MonoBehaviour
     }
     // =====================================================
 
-    // =================== 타이머 함수 ======================== 
+    // =================== 키관련 함수 ======================== 
     public void PressedESC()
     {
         // ESC를 눌렀을 때 현재 선택된 오브젝트에 따라서 관리를 한다.
         GameObject targetObj = clickedObject[0];
 
-        if(targetObj.TryGetComponent(out Building building))
+        switch(gameState)
         {
-            switch(building.state)
-            {
-                case Building.State.InCreating:
-                    buildingController.DestroyBuilding(building);
-                    SetClickedObject(ground);
-                    break;
-                case Building.State.InProgress:
-                    buildingController.CancelProgress(building);
-                    break;
-            }
+            case GameStates.InGame:
+                if(targetObj.TryGetComponent(out Building building))
+                {
+                    if(tasks.TryGetValue(building.gameObject, out var cts))
+                    {
+                        cts.Cancel();
+                        cts.Dispose();
+                        tasks.Remove(building.gameObject);
+                        buildingController.CancelProgress(building);
+                    }
+                }
+                break;
+            case GameStates.ConstructionMode:
+                SetState("InGame");
+                grid.SetActive(false);
+                SetClickedObject(ground);
+                SetBuildingListUI();
+                break;
         }
 
     }

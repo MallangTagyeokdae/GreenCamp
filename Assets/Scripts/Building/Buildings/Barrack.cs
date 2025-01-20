@@ -21,7 +21,7 @@ public class Barrack : Building
         )
     { }
 
-    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar)
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar, List<Collider> colliders)
     {
         this.teamID = teamID;
         this.ID = buildingID;
@@ -36,6 +36,7 @@ public class Barrack : Building
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 30f;
+        this.underGrid = colliders;
     }
 
     public void SetSponPos(Vector3 setSponPos)

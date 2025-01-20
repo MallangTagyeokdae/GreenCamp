@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using TMPro.EditorUtilities;
@@ -9,11 +10,9 @@ using UnityEngine.UI;
 
 public class BuildingController : MonoBehaviour
 {
-    //--------- 변수 선언 위치 변경 (해윤) ---------//
     public Dictionary<int, Building> buildingDictionary = new Dictionary<int, Building>();
     private string _teamID;
     private int _buildingID;
-    //---------------------------------------//
     public GameObject buildingObject;
     public GameObject enemyBuildings;   //적 빌딩이 hierarchy 창에서 생성될 위치
     public GameObject myBuildings;  //아군 빌딩이 hierarchy 창에서 생성될 위치
@@ -24,7 +23,7 @@ public class BuildingController : MonoBehaviour
         _buildingID = 0;
     }
 
-    public Building CreateBuilding(Vector3 buildingLocation, string buildingType, Vector3 rot)
+    public Building CreateBuilding(Vector3 buildingLocation, string buildingType, Vector3 rot, List<Collider> grids)
     // 건물 생성
     {
         // 객체 생성
@@ -46,7 +45,7 @@ public class BuildingController : MonoBehaviour
                 // Command 객체를 넣어준다. -> 오브젝트를 통해서 건물의 정보를 알 수 있게 하기위해
                 Command _newCommand = buildingObject.AddComponent<Command>();
                 // Command 정보 초기화
-                _newCommand.Init(_teamID, _buildingID, buildingLocation);
+                _newCommand.Init(_teamID, _buildingID, buildingLocation,grids);
 
                 // Dictionary에 추가
                 buildingDictionary.Add(_buildingID, _newCommand);
@@ -62,7 +61,7 @@ public class BuildingController : MonoBehaviour
                 // Barrack 객체를 불러온다. -> 오브젝트를 통해서 건물의 정보를 알 수 있게 하기위해
                 Barrack _newBarrack = buildingObject.GetComponent<Barrack>();
                 // 배럭 정보 초기화
-                _newBarrack.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
+                _newBarrack.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar,grids);
 
                 // Dictionary에 추가
                 buildingDictionary.Add(_buildingID, _newBarrack);
@@ -76,7 +75,7 @@ public class BuildingController : MonoBehaviour
                 break;
             case "PopulationBuilding":
                 PopulationBuilding _newPop = buildingObject.GetComponent<PopulationBuilding>();
-                _newPop.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
+                _newPop.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar,grids);
 
                 buildingDictionary.Add(_buildingID, _newPop);
                 newBuilding = _newPop;
@@ -86,7 +85,7 @@ public class BuildingController : MonoBehaviour
                 break;
             case "ResourceBuilding":
                 ResourceBuilding _newResource = buildingObject.GetComponent<ResourceBuilding>();
-                _newResource.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
+                _newResource.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar,grids);
 
                 buildingDictionary.Add(_buildingID, _newResource);
                 newBuilding = _newResource;
@@ -97,7 +96,7 @@ public class BuildingController : MonoBehaviour
                 break;
             case "Defender":
                 Defender _newDefender = buildingObject.GetComponent<Defender>();
-                _newDefender.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
+                _newDefender.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar,grids);
                 
                 buildingDictionary.Add(_buildingID, _newDefender);
                 newBuilding = _newDefender;
@@ -108,7 +107,7 @@ public class BuildingController : MonoBehaviour
                 break;
             default: //일단 초기화를 위해서 더미데이터를 넣음음
                 Defender defautBuilding = buildingObject.AddComponent<Defender>();
-                defautBuilding.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar);
+                defautBuilding.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar,grids);
                 buildingDictionary.Add(_buildingID, defautBuilding);
                 newBuilding = defautBuilding;
 
@@ -141,11 +140,15 @@ public class BuildingController : MonoBehaviour
 
     }
 
-    public void DestroyBuilding(Building building)
+    public async Task DestroyBuilding(Building building)
     {
-        Debug.Log("건물생성 취소됌");
-        building.state = Building.State.Destroy;
+        building.gameObject.tag = "Untagged";
+        SetBuildingState(building,Building.State.Destroy,"none");
         building.SetProgressMesh1();
+        building.ActiveDestroyEffect();
+        await StartTimer(5f);
+        GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
+        Destroy(building.gameObject);
     }
 
     public void UpgradeBuilding(Building building)
@@ -157,10 +160,12 @@ public class BuildingController : MonoBehaviour
     {
         switch(state)
         {
+            case Building.State.Destroy:
             case Building.State.Built:
                 building.healthBar.gameObject.SetActive(false);
                 building.progressBar.gameObject.SetActive(false);
                 building.progress = 0;
+                building.time = 0;
                 break;
             case Building.State.InProgress:
                 building.progressBar.gameObject.SetActive(true);
@@ -180,9 +185,34 @@ public class BuildingController : MonoBehaviour
     
     public void CancelProgress(Building building)
     {
+        if(building.state.Equals(Building.State.InCreating))
+        {
+            DestroyBuilding(building);
+            GameManager.instance.SetBuildingListUI();
+            GameManager.instance.SetClickedObject(GameManager.instance.ground);
+        } else if(building.state.Equals(Building.State.InProgress))
+        {
+            switch(building.inProgressItem)
+            {
+                case Building.InProgressItem.LevelUP:
+                    building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
+                    break;
+                default:
+                    break;
+            }
+            SetBuildingState(building, Building.State.Built, "none");
+            GameManager.instance.ReloadBuildingUI(building);
+        }
         Debug.Log("진행중인 작업 취소됌");
-        SetBuildingState(building, Building.State.Built, "none");
-
     }
 
+    private async Task StartTimer(float time)
+    {
+        float start = 0f;
+        while (time > start)
+        {
+            start += Time.deltaTime;
+            await Task.Yield();
+        }
+    }
 }
