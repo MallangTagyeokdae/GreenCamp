@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEditorInternal;
@@ -35,7 +36,7 @@ public class GameStatus : MonoBehaviour
     public int currentBuildingCount { get; set; }
     public void InitGameStatus()
     {
-        teamID = "Blue";
+        teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
         maxResourceCount = 1000;
         currentResourceCount = 0;
         resourcePerSecond = 5;

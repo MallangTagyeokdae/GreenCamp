@@ -97,12 +97,12 @@ public class UnitController : MonoBehaviour
         unit.SetAggEnter((GameObject enemy) => { GameManager.instance.Aggregated(unit.gameObject, enemy); });
         unit.SetAggExit((GameObject enemy) => { unit.aggList.Remove(enemy); });
 
-        if(_teamID == unitObject.GetComponent<Unit>().teamID){
+        /*if(_teamID == unitObject.GetComponent<Unit>().teamID){
             unitObj.transform.SetParent(myUnits.transform);
         }
         else{
             unitObj.transform.SetParent(enemyUnits.transform);
-        }
+        }*/
         _unitID++;
         return _createdUnit;
 

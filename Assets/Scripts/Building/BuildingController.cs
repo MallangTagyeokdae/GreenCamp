@@ -116,12 +116,12 @@ public class BuildingController : MonoBehaviour
                 break;
         }
 
-        if(_teamID == buildingObject.GetComponent<Building>().teamID){
+        /*if(_teamID == buildingObject.GetComponent<Building>().teamID){
             buildingObject.transform.SetParent(myBuildings.transform);
         }
         else{
             buildingObject.transform.SetParent(enemyBuildings.transform);
-        }
+        }*/
 
         _buildingID++;
         return newBuilding;
