@@ -69,8 +69,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         Debug.Log($"Number of Room: {roomList.Count}");
-        Debug.Log($"{roomList[0].Name}");
-
         foreach(RoomInfo room in roomList){
             if(room.RemovedFromList){
                 _roomList.Remove(room);
@@ -78,6 +76,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
             else{
                 _roomList.Add(room);
             }
+        }
+
+        foreach(RoomInfo room in _roomList){
+            Debug.Log($"custom property check: {room.CustomProperties["Title"]}");
         }
 
         lobbyController.updateRoomList(_roomList);
@@ -92,14 +94,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         RoomOptions roomOptions = new RoomOptions(); // 최대 플레이어 수와 방 제목을 설정하기 위한 변수
         roomOptions.MaxPlayers = 2; // 최대 플레이어 수 설정
         roomOptions.EmptyRoomTtl = 1000; //n msec 동안 방 파괴 x
-        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
-        {
-            { "Title", roomTitle }  // "Title"이라는 키에 방 제목 저장
-        };
+        ///string titlecheck = (string)roomInfo.CustomProperties["Title"];
+        
 
-        if (PhotonNetwork.CreateRoom(roomName, roomOptions))
+        if (PhotonNetwork.CreateRoom(roomName + "/" + roomTitle, roomOptions))
         {
-            Debug.Log("Created room with name: " + roomName + " and room title: " + roomTitle);
+            Debug.Log("Created room with name: " + roomName + roomTitle);
         }
     }
 
@@ -146,6 +146,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     public override void OnJoinedRoom()
     {
         Debug.Log($"join room: {PhotonNetwork.CurrentRoom.Name} Successed");
+        Debug.Log("joined room title: " + PhotonNetwork.CurrentRoom.CustomProperties["Title"]);
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
     }
 

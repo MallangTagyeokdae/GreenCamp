@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &211259453313841450
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4007358212603995654, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_Name
+      value: CFXR3 Smoke Signals (Gray, Lit) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212604361254, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212623779526, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6444139dd170a7249acc68e412bfd00f, type: 2}
+    - target: {fileID: 4007358212623779526, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_SelectedEditorRenderState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212623779526, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_SortMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212623779526, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212623779526, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_NormalDirection
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4007358212623779526, guid: 48615ef93de88ce4da848bae3658b978,
+        type: 3}
+      propertyPath: m_Flip.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 48615ef93de88ce4da848bae3658b978, type: 3}
