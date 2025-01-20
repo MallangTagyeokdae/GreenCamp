@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4030030224483281989
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6068827365368370439}
+    m_Modifications:
+    - target: {fileID: 4611546286904886030, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_Name
+      value: CFXR3 Ice Trail B
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886019, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611546286904886016, guid: e8dbed4e9ae716b4f82209e8cae9c1b5,
+        type: 3}
+      propertyPath: scalingMode
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e8dbed4e9ae716b4f82209e8cae9c1b5, type: 3}
+--- !u!1001 &7251349412953663697
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3501893452787138010, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_Name
+      value: CFXR3 Iceball B + Ice Trail
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138010, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452413584978, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3501893452413584978, guid: db667c0317c36ab41aef724b63de71cb,
+        type: 3}
+      propertyPath: m_Range
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db667c0317c36ab41aef724b63de71cb, type: 3}
+--- !u!4 &6068827365368370439 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3501893452787138006, guid: db667c0317c36ab41aef724b63de71cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 7251349412953663697}
+  m_PrefabAsset: {fileID: 0}
