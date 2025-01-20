@@ -97,7 +97,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         ///string titlecheck = (string)roomInfo.CustomProperties["Title"];
         
 
-        if (PhotonNetwork.CreateRoom(roomName + roomTitle, roomOptions))
+        if (PhotonNetwork.CreateRoom(roomName + "/" + roomTitle, roomOptions))
         {
             Debug.Log("Created room with name: " + roomName + roomTitle);
         }
