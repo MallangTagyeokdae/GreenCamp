@@ -32,7 +32,7 @@ public class Barrack : Building
         this.progress = 0;
         this.level = 1;
         this.cost = 50;
-        this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 4f);
+        this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 5.5f);
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 30f;
