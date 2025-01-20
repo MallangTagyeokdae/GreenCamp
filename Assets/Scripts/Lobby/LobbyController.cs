@@ -51,8 +51,11 @@ public class LobbyController : MonoBehaviour
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => { Debug.Log("test pressed button!"); });
 
                 room.name = roomInfo.Name;
-                Debug.Log(room.transform.Find("Title").gameObject);//.GetComponent<TextMeshPro>().text = roomInfo.Name;
-
+                string roomname = room.name.Substring(room.name.IndexOf("/") + 1);
+                //Debug.Log(room.transform.Find("Title").gameObject.GetComponent<TextMeshPro>().text = roomInfo.Name;);//.GetComponent<TextMeshPro>().text = roomInfo.Name;
+                //roomInfo.CustomProperties.TryGetValue("Title", out object titlecheck);
+                //string titlecheck = (string)roomInfo.CustomProperties["Title"];
+                room.transform.Find("Title").gameObject.GetComponent<TextMeshPro>().text = roomname;
             }
         }
 
