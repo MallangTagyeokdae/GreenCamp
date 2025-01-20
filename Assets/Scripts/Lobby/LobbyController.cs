@@ -36,6 +36,7 @@ public class LobbyController : MonoBehaviour
     public void updateRoomList(List<RoomInfo> roomList)
     {
         List<string> rooms = new List<string>();
+        Debug.Log($"roomlist count: {roomList.Count}");
         foreach (RoomInfo roomInfo in roomList)
         {
             rooms.Add(roomInfo.Name);
