@@ -32,6 +32,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     {
         // 이 객체가 씬 전환 시 파괴되지 않도록 설정
         DontDestroyOnLoad(this.gameObject);
+        _roomList = new List<RoomInfo>();
     }
 
     // Start is called before the first frame update
@@ -68,8 +69,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         Debug.Log($"Number of Room: {roomList.Count}");
-        Debug.Log(roomList.Count);
-        _roomList = roomList;
+        Debug.Log($"{roomList[0].Name}");
+
+        foreach(RoomInfo room in roomList){
+            if(room.RemovedFromList){
+                _roomList.Remove(room);
+            }
+            else{
+                _roomList.Add(room);
+            }
+        }
+
         lobbyController.updateRoomList(_roomList);
         //base.OnRoomListUpdate(roomList);
     }
@@ -81,7 +91,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         // 룸 생성
         RoomOptions roomOptions = new RoomOptions(); // 최대 플레이어 수와 방 제목을 설정하기 위한 변수
         roomOptions.MaxPlayers = 2; // 최대 플레이어 수 설정
-        roomOptions.EmptyRoomTtl = 1000;
+        roomOptions.EmptyRoomTtl = 1000; //n msec 동안 방 파괴 x
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
         {
             { "Title", roomTitle }  // "Title"이라는 키에 방 제목 저장
@@ -146,9 +156,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         PhotonNetwork.JoinLobby();
     }
 
-
-
-
     public void LeaveRoom()
     {
         userInfo.InitUserInfo();
@@ -156,7 +163,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         PhotonNetwork.JoinLobby();
     }
     //---------------------------------------------------------------------------------------------------------------------
-    /*public void SetTeam(string teamName)
+    public void SetTeam(string teamName)
     {
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
         ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
@@ -172,7 +179,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         {
             return (string)teamName;
         }
-        return "No Team"; // 팀 정보가 없을 경우
+        return "Null";
     }
 
     // 모든 플레이어의 팀 정보를 출력
@@ -183,7 +190,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
             string team = GetTeam(player);
             Debug.Log($"Player {player.NickName} is on team {team}");
         }
-    }*/
+    }
     //---------------------------------------------------------------------------------------------------------------------
 
     //방에 있는 유저들의 씬을 게임씬으로 변경
