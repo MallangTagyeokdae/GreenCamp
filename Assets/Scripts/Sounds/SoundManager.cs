@@ -42,6 +42,12 @@ public class SoundManager : MonoBehaviour
         }
 
         PlayBackGroundMusic();
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    void Start(){
+        _bgmVolume = _backGroundMusic.volume;
+        _soundVolume = _backGroundMusic.volume;
     }
 
     private int GetEmptyChannel()
