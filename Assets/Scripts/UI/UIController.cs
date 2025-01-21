@@ -273,11 +273,53 @@ public class UIController : MonoBehaviour
         for(int i=3; i>0; i--)
         {
             countDown.text = i.ToString();
+            if(i == 1)
+            {
+                Options[1].Show();
+                Options[2].Show();
+            }
             await Task.Delay(1000);
         }
 
         Options[0].Hide();
-        Options[1].Show();
-        Options[2].Show();
+    }
+
+    public UIContainer SetGroupUI(int index, int startIndex, UIContainer currentUI, List<GameObject> clickedObjs)
+    {
+        UIContainer groupUI = UILists[index];
+
+        for(int count=startIndex; count<clickedObjs.Count; count++)
+        {
+            if(clickedObjs[count].TryGetComponent(out Unit unit))
+            {
+                groupUI.GetComponent<UIElement>().groupImages[count].gameObject.SetActive(true);
+                switch(unit.unitType)
+                {
+                    case "Soldier":
+                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[0];
+                        break;
+                    case "Archer":
+                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[1];
+                        break;
+                    case "Tnaker":
+                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[2];
+                        break;
+                    case "Healer":
+                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[3];
+                        break;
+                }
+            }
+        }
+        return CheckUpdateUI(groupUI, currentUI);
+    }
+
+    public void ActiveFalseUI(int index)
+    {
+        UIContainer groupUI = UILists[index];
+
+        foreach(Image image in groupUI.GetComponent<UIElement>().groupImages)
+        {
+            image.gameObject.SetActive(false);
+        }
     }
 }
