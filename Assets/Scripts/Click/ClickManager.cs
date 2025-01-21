@@ -185,7 +185,7 @@ public class ClickManager : MonoBehaviour
         {
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.name == "Ground" && hit.collider.gameObject.CompareTag("Clickable"))
+                if (hit.collider.name == "RealGround" && hit.collider.gameObject.CompareTag("Clickable"))
                 {
                     startPos = hit.point;
                     _isDragging = true;
@@ -198,7 +198,7 @@ public class ClickManager : MonoBehaviour
         {
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.name == "Ground" && hit.collider.gameObject.CompareTag("Clickable"))
+                if (hit.collider.name == "RealGround" && hit.collider.gameObject.CompareTag("Clickable"))
                 {
                     DestroyDragBox();
                     if(!_isDragging){
@@ -228,7 +228,7 @@ public class ClickManager : MonoBehaviour
         {
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.name == "Ground" && hit.collider.gameObject.CompareTag("Clickable"))
+                if (hit.collider.name == "RealGround" && hit.collider.gameObject.CompareTag("Clickable"))
                 {
                     _previousEndPos = endPos;
                     endPos = hit.point;

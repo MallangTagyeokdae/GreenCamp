@@ -45,7 +45,7 @@ public class BuildingController : MonoBehaviour
                 // Command 객체를 넣어준다. -> 오브젝트를 통해서 건물의 정보를 알 수 있게 하기위해
                 Command _newCommand = buildingObject.AddComponent<Command>();
                 // Command 정보 초기화
-                _newCommand.Init(_teamID, _buildingID, buildingLocation,grids);
+                _newCommand.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar, grids);
 
                 // Dictionary에 추가
                 buildingDictionary.Add(_buildingID, _newCommand);
@@ -218,5 +218,15 @@ public class BuildingController : MonoBehaviour
             start += Time.deltaTime;
             await Task.Yield();
         }
+    }
+
+    public void initCommand(Building building)
+    {
+        building.currentHealth = building.maxHealth;
+        
+        building.healthBar.gameObject.SetActive(false);
+        building.progressBar.gameObject.SetActive(false);
+        building.progress = 0;
+        building.time = 0;
     }
 }

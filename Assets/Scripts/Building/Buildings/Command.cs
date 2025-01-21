@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Command : Building
 {
@@ -23,7 +24,7 @@ public class Command : Building
         attackRange = 10;
     }
 
-    public void Init(string teamID, int buildingID, Vector3 buildingLocation, List<Collider> colliders)
+    public void Init(string teamID, int buildingID, Vector3 buildingLocation, Slider buildingHealthBar, Slider buildingProgressBar, List<Collider> colliders)
     {
         this.teamID = teamID;
         this.ID = buildingID;
@@ -35,6 +36,8 @@ public class Command : Building
         this.cost = 0;
         this.attackPower = 10;
         this.attackRange = 10;
+        this.healthBar = buildingHealthBar;
+        this.progressBar = buildingProgressBar;
         this.loadingTime = 10f;
         this.underGrid = colliders;
     }

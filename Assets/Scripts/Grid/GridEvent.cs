@@ -26,10 +26,13 @@ public class GridEvent : MonoBehaviour
     private MeshRenderer _meshRenderer;
     public List<Collider> detectedColliders = new List<Collider>();
 
+    void Awake()
+    {
+        _meshRenderer = GetComponent<MeshRenderer>();
+    }
     void Start()
     {
         UnSetRender();
-        _meshRenderer = GetComponent<MeshRenderer>();
         _clickEventHandler = GetComponent<ClickEventHandler>();
         _clickEventHandler.mouseHoverEvent.AddListener((Vector3 pos) => GameManager.instance.gridHandler.HoveredGrid(pos));
         _clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) => {
