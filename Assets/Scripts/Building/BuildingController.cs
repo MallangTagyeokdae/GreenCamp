@@ -153,6 +153,10 @@ public class BuildingController : MonoBehaviour
 
     public void UpgradeBuilding(Building building)
     {
+        float healthPercent = building.currentHealth / building.maxHealth;
+        building.maxHealth += building.level * 50;
+        building.currentHealth = Mathf.FloorToInt(building.currentHealth * healthPercent);
+        
         building.level++;
     }
 

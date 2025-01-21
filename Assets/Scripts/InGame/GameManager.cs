@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
+using Doozy.Runtime.Common;
 using Doozy.Runtime.UIManager.Containers;
 using Photon.Pun;
 using Unity.VisualScripting;
@@ -51,24 +52,37 @@ public class GameManager : MonoBehaviour
     public List<GameObject> clickedObject; // 현재 선택된 게임 Object
     public EffectHandler effectHandler;
     public GridHandler gridHandler;
+    public GameObject target;
     public GameStates gameState = GameStates.Loading;
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
+    private Vector3[] _randomRot = {new Vector3(200,0,200), new Vector3(-200,0,200), new Vector3(200,0,-200), new Vector3(-200,0,-200)};
     //-----------------------------
 
     void Start()
     {
-        currentUI.Show();
-        // Vector3 buildingPos = gridHandler.CalculateGridScalse();
-        // DelayBuildingCreation(buildingPos);
-        SetState("InGame");
+         _ = InitialGame();
     }
 
     // ================== 상태 관련 함수 ======================
+    public async Task InitialGame()
+    {
+        
+        SetState("Loading");
+        await uIController.CountDown();
+        SetState("InGame");
+        currentUI.Show();
+        target.SetActive(true);
+        // Vector3 buildingPos = gridHandler.CalculateGridScalse();
+        // DelayBuildingCreation(buildingPos);
+    }
     public void SetState(string newState)
     {
         Enum.TryParse(newState, out GameStates state);
         switch(state)
         {
+            case GameStates.Loading:
+                gameState = state;
+                break;
             case GameStates.InGame:
                 gameState = state;
                 break;
@@ -218,7 +232,6 @@ public class GameManager : MonoBehaviour
             buildingController.UpgradeBuilding(building);
             buildingController.SetBuildingState(building, Building.State.Built, "None");
 
-            
             ReloadBuildingUI(building);
         }
     }
