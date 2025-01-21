@@ -29,6 +29,8 @@ public class SoundManager : MonoBehaviour
     private float _soundVolume = 0f; //효과음 볼륨값
     private float _masterVolume = 0f;
     private bool _isMute = false;
+    private bool _bgmMute = false;
+    private bool _effectMute = false;
     public int channelCount = 5;
 
     private void Awake()
@@ -46,7 +48,8 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    void Start(){
+    void Start()
+    {
         _bgmVolume = _backGroundMusic.volume;
         _soundVolume = _backGroundMusic.volume;
         _masterVolume = 1f;
@@ -106,32 +109,60 @@ public class SoundManager : MonoBehaviour
     public void ReleaseMute()
     {
         _isMute = false;
-        for (int i = 0; i < channelCount; i++)
+        if (!_effectMute)
         {
-            _soundChannels[i].volume = _soundVolume;
+            for (int i = 0; i < channelCount; i++)
+            {
+                _soundChannels[i].volume = _soundVolume * _masterVolume;
+            }
         }
-        _backGroundMusic.volume = _bgmVolume;
+        if (!_bgmMute)
+        {
+            _backGroundMusic.volume = _bgmVolume * _masterVolume;
+        }
     }
 
     public void SoundVolumeControl(float newVolume)
     {
+        _soundVolume = newVolume;
+        if (!_isMute && !_effectMute)
+        {
+            for (int i = 0; i < channelCount; i++)
+            {
+                _soundChannels[i].volume = _soundVolume * _masterVolume;
+            }
+        }
+    }
+
+    public void MuteSound()
+    {
+        for (int i = 0; i < channelCount; i++)
+        {
+            _soundChannels[i].volume = 0f;
+        }
+        _effectMute = true;
+    }
+    public void ReleaseSoundMute()
+    {
+        _effectMute = false;
         if (!_isMute)
         {
             for (int i = 0; i < channelCount; i++)
             {
-                _soundChannels[i].volume = newVolume * _masterVolume;
+                _soundChannels[i].volume = _soundVolume * _masterVolume;
             }
         }
-        _soundVolume = newVolume * _masterVolume;
+
     }
 
-    public void ApplyMasterVolume(float master){
+    public void ApplyMasterVolume(float master)
+    {
         _masterVolume = master;
         if (!_isMute)
         {
             for (int i = 0; i < channelCount; i++)
             {
-                _soundChannels[i].volume = _soundVolume *_masterVolume;
+                _soundChannels[i].volume = _soundVolume * _masterVolume;
             }
             _backGroundMusic.volume = _bgmVolume * _masterVolume;
         }
@@ -160,20 +191,36 @@ public class SoundManager : MonoBehaviour
         _backGroundMusic.Stop();
     }
 
-    public void PauseBackGroundMusic(){
+    public void PauseBackGroundMusic()
+    {
         _backGroundMusic.Pause();
     }
-    public void UnpauseBackGroundMusic(){
+    public void UnpauseBackGroundMusic()
+    {
         _backGroundMusic.UnPause();
     }
 
     public void BackGroundMusicVolumeControl(float newVolume)
     {
+        _bgmVolume = newVolume;
+        if (!_isMute && !_bgmMute)
+        {
+            _backGroundMusic.volume = _bgmVolume * _masterVolume;
+        }
+    }
+
+    public void MuteBackGroundMusic()
+    {
+        _backGroundMusic.volume = 0f;
+        _bgmMute = true;
+    }
+    public void ReleaseBackGroundMusicMute()
+    {
+        _bgmMute = false;
         if (!_isMute)
         {
-            _backGroundMusic.volume = newVolume;
+            _backGroundMusic.volume = _bgmVolume * _masterVolume;
         }
-        _bgmVolume = newVolume;
     }
 
     #endregion bgm

@@ -14,6 +14,11 @@ public class PlaySoundHandler : MonoBehaviour
         SoundManager.instance.PlaySound(soundName);
     }
 
+    public void MasterVolumeControl(){
+        float masterVolume = masterSlider.GetComponent<Slider>().value;
+        SoundManager.instance.ApplyMasterVolume(masterVolume);
+    }
+
     public void MuteAll()
     {
         SoundManager.instance.MuteAll();
@@ -24,9 +29,38 @@ public class PlaySoundHandler : MonoBehaviour
         SoundManager.instance.ReleaseMute();
     }
 
-    public void MasterVolumeControl(){
-        float masterVolume = masterSlider.GetComponent<Slider>().value;
-        SoundManager.instance.ApplyMasterVolume(masterVolume);
+    public void SoundVolumeControl()
+    {
+        float effectVolume = effectSlider.GetComponent<Slider>().value;
+        SoundManager.instance.SoundVolumeControl(effectVolume);
     }
+
+    public void MuteSound()
+    {
+        SoundManager.instance.MuteSound();
+    }
+
+    public void ReleaseSoundMute()
+    {
+        SoundManager.instance.ReleaseSoundMute();
+    }
+
+    public void BackGroundMusicVolumeControl()
+    {
+        float bgmVolume = bgmSlider.GetComponent<Slider>().value;
+        SoundManager.instance.BackGroundMusicVolumeControl(bgmVolume);
+    }
+
+    public void MuteBackGroundMusic()
+    {
+        SoundManager.instance.MuteBackGroundMusic();
+    }
+
+    public void ReleaseBackGroundMusicMute()
+    {
+        SoundManager.instance.ReleaseBackGroundMusicMute();
+    }
+
+    
 
 }
