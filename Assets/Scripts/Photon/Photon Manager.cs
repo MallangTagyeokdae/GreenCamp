@@ -68,18 +68,16 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     //RoomList가 update될 때마다 실행
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        Debug.Log($"Number of Room: {roomList.Count}");
         foreach(RoomInfo room in roomList){
             if(room.RemovedFromList){
                 _roomList.Remove(room);
             }
+            else if(_roomList.Contains(room)){
+                continue;
+            }
             else{
                 _roomList.Add(room);
             }
-        }
-
-        foreach(RoomInfo room in _roomList){
-            Debug.Log($"custom property check: {room.CustomProperties["Title"]}");
         }
 
         lobbyController.updateRoomList(_roomList);
@@ -97,7 +95,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         ///string titlecheck = (string)roomInfo.CustomProperties["Title"];
         
 
-        if (PhotonNetwork.CreateRoom(roomName + "/" + roomTitle, roomOptions))
+        if (PhotonNetwork.CreateRoom(roomName + "~" + roomTitle, roomOptions))
         {
             Debug.Log("Created room with name: " + roomName + roomTitle);
         }
