@@ -36,7 +36,6 @@ public class LobbyController : MonoBehaviour
     public void updateRoomList(List<RoomInfo> roomList)
     {
         List<string> rooms = new List<string>();
-        Debug.Log($"roomlist count: {roomList.Count}");
         foreach (RoomInfo roomInfo in roomList)
         {
             rooms.Add(roomInfo.Name);
@@ -65,11 +64,6 @@ public class LobbyController : MonoBehaviour
         {
             if (!rooms.Contains(roomName)) //_roomList에 존재하는데 rooms에 존재하지 않는 다면 더 이상 존재하지 않는 방임
             {
-                foreach(string check in rooms){
-                    Debug.Log("remained room name check: " + check);
-                }
-                Debug.Log("room name check: "+roomName);
-                Debug.Log($"왜?: {parent.Find(roomName) == null}");
                 GameObject go = parent.Find(roomName).gameObject;
                 if (go != null)
                 {
