@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,18 @@ public class GridHandler : MonoBehaviour
     public GameObject grid;
     public List<Collider> detectedGrids;
     public List<Collider> constructionGrids;
+    public List<GridList> startingPoints;
 
     private float _buildingRange;
     private Vector3 _range;
     private Vector3 areaPos;
     private LayerMask _layerMask = 1 << 3;
+    
+    [System.Serializable]
+    public class GridList
+    {
+        public List<Collider> gridList = new List<Collider>();
+    }
 
     public void HoveredGrid(Vector3 hitPoint)
     {
@@ -127,16 +135,17 @@ public class GridHandler : MonoBehaviour
         }
     }
 
-    public Vector3 CalculateGridScalse()
+    public Vector3 CalculateGridScalse(List<Collider> colliders = null)
     {
+        List<Collider> checkList = colliders ?? constructionGrids;
         Vector3 center = Vector3.zero;
 
-        foreach(Collider collider in constructionGrids)
+        foreach(Collider collider in checkList)
         {
             center += collider.gameObject.transform.position;
         }
 
-        return center / constructionGrids.Count();
+        return new Vector3(center.x,0,center.z) / checkList.Count();
     }
 
     public bool CheckCanBuilt()
@@ -162,6 +171,37 @@ public class GridHandler : MonoBehaviour
                     grid.SetDefault();
                     grid.ChangeMesh();
                 }
+            }
+        }
+    }
+
+    public List<Collider> SetStartingPoint(int index)
+    {
+        List<Collider> colliders = new List<Collider>();
+        for(int i=0; i<4; i++)
+        {
+            Debug.Log(i);
+            Collider startPoint = startingPoints[index].gridList[i];
+            if(startPoint.TryGetComponent(out GridEvent grid))
+            {
+                GameManager.instance.grid.SetActive(true);
+                Debug.Log(grid.gridState);
+                colliders.Add(startPoint);
+                grid.SetBuilted();
+                grid.ChangeMesh();
+                GameManager.instance.grid.SetActive(false);
+            }
+        }
+        return colliders;
+    }
+
+    public void ActiveFalse()
+    {
+        for(int i=0; i<4; i++)
+        {
+            for(int j=0; j<4; j++)
+            {
+                startingPoints[i].gridList[i].gameObject.SetActive(false);
             }
         }
     }

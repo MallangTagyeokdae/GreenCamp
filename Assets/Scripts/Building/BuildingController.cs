@@ -19,13 +19,13 @@ public class BuildingController : MonoBehaviour
     
     public void Awake()
     {
-        _teamID = GameStatus.instance.teamID;
         _buildingID = 0;
     }
 
     public Building CreateBuilding(Vector3 buildingLocation, string buildingType, Vector3 rot, List<Collider> grids)
     // 건물 생성
     {
+        _teamID = GameStatus.instance.teamID;
         // 객체 생성
         buildingObject = PhotonNetwork.Instantiate($"Prefabs/Buildings/{_teamID}TeamBuildings/{buildingType}", buildingLocation, Quaternion.Euler(rot));
         buildingObject.name = buildingType + _buildingID.ToString(); // 새로 생성될 오브젝트에 고유한 이름을 붙여줌

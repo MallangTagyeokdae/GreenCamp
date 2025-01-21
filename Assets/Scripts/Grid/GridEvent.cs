@@ -97,6 +97,7 @@ public class GridEvent : MonoBehaviour
     }
     public void ChangeMesh()
     {
+        Debug.Log(gridState);
         switch(gridState)
         {
             case State.Default:
@@ -115,6 +116,7 @@ public class GridEvent : MonoBehaviour
                 _meshRenderer.material = builtedMaterial;
                 break;
         }
+        Debug.Log("Mesh변경 완료");
     }
     public void ChangeMeshToBlocked()
     {

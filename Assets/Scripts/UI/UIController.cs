@@ -272,8 +272,8 @@ public class UIController : MonoBehaviour
 
         for(int i=3; i>0; i--)
         {
-            await Task.Delay(1000);
             countDown.text = i.ToString();
+            await Task.Delay(1000);
         }
 
         Options[0].Hide();

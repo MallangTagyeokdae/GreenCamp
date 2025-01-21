@@ -16,7 +16,8 @@ public enum GameStates
     Loading = 0,
     InGame = 1,
     ConstructionMode = 2,
-    EndGame = 3
+    SetTargetMode = 3,
+    EndGame = 4
     
 }
 public class GameManager : MonoBehaviour
@@ -66,12 +67,47 @@ public class GameManager : MonoBehaviour
     // ================== 상태 관련 함수 ======================
     public async Task InitialGame()
     {
-        
+        List<Collider> startGrids = new List<Collider>();
+        Vector3 startingPoint = new Vector3();
         SetState("Loading");
+        await Task.Delay(2000);
+        if(GameStatus.instance.teamID == "Red")
+        {
+            target.transform.position = _randomRot[0];
+            startGrids = gridHandler.SetStartingPoint(0);
+
+        } else if(GameStatus.instance.teamID == "Blue")
+        {
+            target.transform.position = _randomRot[3];
+            startGrids = gridHandler.SetStartingPoint(3);
+        }
+        
+        startingPoint = gridHandler.CalculateGridScalse(startGrids);
+        gridHandler.ActiveFalse();
+        grid.SetActive(false);
+        Debug.Log("Grid변경 완료");
+
+        // //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
+        // Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
+        // Debug.Log("CreateBuilding함수 호출 완료");
+        // building.InitTime();
+
+        // Debug.Log("빌딩 객체 생성 완료");
+
+        // tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
+        // await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time), cts.Token);
+
+        // tasks.Remove(building.gameObject); // 건물 생성이 완료되면 딕셔너리에서 제거해줌
+
+        // building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
+        // buildingController.SetBuildingState(building, Building.State.Built, "None");
+
+        // ReloadBuildingUI(building);
         await uIController.CountDown();
         SetState("InGame");
         currentUI.Show();
         target.SetActive(true);
+        // if(GameStatus.instance)
         // Vector3 buildingPos = gridHandler.CalculateGridScalse();
         // DelayBuildingCreation(buildingPos);
     }
@@ -238,20 +274,24 @@ public class GameManager : MonoBehaviour
     private async Task DelayBuildingCreation(Vector3 buildingPos)
     {
         var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
+        Debug.Log("함수 진입");
 
         // 건물 아래 Grid를 Builted로 변경
         gridHandler.SetGridsToBuilted();
+        Debug.Log("Grid변경 완료");
 
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
+        Debug.Log("CreateBuilding함수 호출 완료");
         building.InitTime();
+
+        Debug.Log("빌딩 객체 생성 완료");
 
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
         await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time), cts.Token);
 
         tasks.Remove(building.gameObject); // 건물 생성이 완료되면 딕셔너리에서 제거해줌
 
-        Debug.Log($"check time: {building.time}");
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
         buildingController.SetBuildingState(building, Building.State.Built, "None");
 
