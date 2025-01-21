@@ -27,6 +27,7 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> _soundChannels;
     private float _bgmVolume = 0f;   //bgm 볼륨값
     private float _soundVolume = 0f; //효과음 볼륨값
+    private float _masterVolume = 0f;
     private bool _isMute = false;
     public int channelCount = 5;
 
@@ -48,6 +49,7 @@ public class SoundManager : MonoBehaviour
     void Start(){
         _bgmVolume = _backGroundMusic.volume;
         _soundVolume = _backGroundMusic.volume;
+        _masterVolume = 1f;
     }
 
     private int GetEmptyChannel()
@@ -117,10 +119,22 @@ public class SoundManager : MonoBehaviour
         {
             for (int i = 0; i < channelCount; i++)
             {
-                _soundChannels[i].volume = newVolume;
+                _soundChannels[i].volume = newVolume * _masterVolume;
             }
         }
-        _soundVolume = newVolume;
+        _soundVolume = newVolume * _masterVolume;
+    }
+
+    public void ApplyMasterVolume(float master){
+        _masterVolume = master;
+        if (!_isMute)
+        {
+            for (int i = 0; i < channelCount; i++)
+            {
+                _soundChannels[i].volume = _soundVolume *_masterVolume;
+            }
+            _backGroundMusic.volume = _bgmVolume * _masterVolume;
+        }
     }
 
     # region bgm
