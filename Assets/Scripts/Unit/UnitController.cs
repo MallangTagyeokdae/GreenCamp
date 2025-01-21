@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
-using TMPro.EditorUtilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
