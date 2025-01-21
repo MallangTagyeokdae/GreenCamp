@@ -207,7 +207,6 @@ public class BuildingController : MonoBehaviour
             SetBuildingState(building, Building.State.Built, "none");
             GameManager.instance.ReloadBuildingUI(building);
         }
-        Debug.Log("진행중인 작업 취소됌");
     }
 
     private async Task StartTimer(float time)

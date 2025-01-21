@@ -492,14 +492,20 @@ public class GameManager : MonoBehaviour
 
     // =================== 타이머 함수 ======================== 
     private async Task StartTimer(float time, Action<float> action, CancellationToken token)
-    {
-        float start = 0f;
-        while (time > start)
+    { 
+        try
         {
-            token.ThrowIfCancellationRequested();
-            start += Time.deltaTime;
-            action.Invoke(start);
-            await Task.Yield();
+            float start = 0f;
+            while (time > start)
+            {
+                token.ThrowIfCancellationRequested();
+                start += Time.deltaTime;
+                action.Invoke(start);
+                await Task.Yield();
+            }
+        } catch (OperationCanceledException)
+        {
+            Debug.Log("작업취소");
         }
     }
     // =====================================================
