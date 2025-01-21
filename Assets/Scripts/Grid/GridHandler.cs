@@ -135,7 +135,7 @@ public class GridHandler : MonoBehaviour
         }
     }
 
-    public Vector3 CalculateGridScalse(List<Collider> colliders = null)
+    public Vector3 CalculateGridScale(List<Collider> colliders = null)
     {
         List<Collider> checkList = colliders ?? constructionGrids;
         Vector3 center = Vector3.zero;
@@ -180,16 +180,13 @@ public class GridHandler : MonoBehaviour
         List<Collider> colliders = new List<Collider>();
         for(int i=0; i<4; i++)
         {
-            Debug.Log(i);
             Collider startPoint = startingPoints[index].gridList[i];
             if(startPoint.TryGetComponent(out GridEvent grid))
             {
-                GameManager.instance.grid.SetActive(true);
                 Debug.Log(grid.gridState);
                 colliders.Add(startPoint);
                 grid.SetBuilted();
                 grid.ChangeMesh();
-                GameManager.instance.grid.SetActive(false);
             }
         }
         return colliders;

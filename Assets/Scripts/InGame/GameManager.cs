@@ -67,10 +67,14 @@ public class GameManager : MonoBehaviour
     // ================== 상태 관련 함수 ======================
     public async Task InitialGame()
     {
-        List<Collider> startGrids = new List<Collider>();
-        Vector3 startingPoint = new Vector3();
-        SetState("Loading");
-        await Task.Delay(2000);
+        List<Collider> startGrids = new();
+        Vector3 startingPoint;
+
+        SetState("Loading"); // 상태변경
+
+        grid.SetActive(true); // Grid를 켜서 본진이 건설될 위치의 Grid 상태를 바꿀준비
+
+        // 일단은 팀 종류에 따라서 위치를 고정했는데 나중에 난수 생성해서 받은 값으로 _randomRot, SetStartingPoint값에 넣어주면 코드 2줄로 줄일 수 있음
         if(GameStatus.instance.teamID == "Red")
         {
             target.transform.position = _randomRot[0];
@@ -81,35 +85,22 @@ public class GameManager : MonoBehaviour
             target.transform.position = _randomRot[3];
             startGrids = gridHandler.SetStartingPoint(3);
         }
-        
-        startingPoint = gridHandler.CalculateGridScalse(startGrids);
-        gridHandler.ActiveFalse();
+
+        // 본진이 지어질 위치 Grid의 평균값으로 계산
+        startingPoint = gridHandler.CalculateGridScale(startGrids);
         grid.SetActive(false);
-        Debug.Log("Grid변경 완료");
 
-        // //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
-        // Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
-        // Debug.Log("CreateBuilding함수 호출 완료");
-        // building.InitTime();
+        // 본진 생성
+        Building building = buildingController.CreateBuilding(startingPoint, buildingType, new Vector3(-90, 90, 0), gridHandler.constructionGrids);
+        // 본진 초기값 세팅
+        buildingController.initCommand(building);
 
-        // Debug.Log("빌딩 객체 생성 완료");
-
-        // tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
-        // await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time), cts.Token);
-
-        // tasks.Remove(building.gameObject); // 건물 생성이 완료되면 딕셔너리에서 제거해줌
-
-        // building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
-        // buildingController.SetBuildingState(building, Building.State.Built, "None");
-
-        // ReloadBuildingUI(building);
+        // 게임 시작 카운트다운 활성화
         await uIController.CountDown();
+
         SetState("InGame");
         currentUI.Show();
         target.SetActive(true);
-        // if(GameStatus.instance)
-        // Vector3 buildingPos = gridHandler.CalculateGridScalse();
-        // DelayBuildingCreation(buildingPos);
     }
     public void SetState(string newState)
     {
@@ -203,7 +194,7 @@ public class GameManager : MonoBehaviour
         if(gridHandler.CheckCanBuilt() && CheckState("ConstructionMode")) // 건물이 생성가능한지 확인하는 조건문 나중에 자원, 건물인구수 체크하는것도 추가해야함
         // 건물생성가능여부를 판단하는 기능을 하는 함수를 만들어서 조건문에 넣도록 개선해야함
         {
-            Vector3 buildingPos = gridHandler.CalculateGridScalse();
+            Vector3 buildingPos = gridHandler.CalculateGridScale();
             DelayBuildingCreation(buildingPos);
             grid.SetActive(false);
             SetState("InGame");
