@@ -51,19 +51,26 @@ public class LobbyController : MonoBehaviour
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => { Debug.Log("test pressed button!"); });
 
                 room.name = roomInfo.Name;
-                string roomname = room.name.Substring(room.name.IndexOf("/") + 1);
-                //Debug.Log(room.transform.Find("Title").gameObject.GetComponent<TextMeshPro>().text = roomInfo.Name;);//.GetComponent<TextMeshPro>().text = roomInfo.Name;
-                //roomInfo.CustomProperties.TryGetValue("Title", out object titlecheck);
-                //string titlecheck = (string)roomInfo.CustomProperties["Title"];
-                room.transform.Find("Title").gameObject.GetComponent<TextMeshPro>().text = roomname;
+                string roomname = room.name.Substring(room.name.IndexOf("~") + 1);
+                if(roomname == null){
+                    room.transform.Find("Title").gameObject.GetComponent<TMP_Text>().text = "";
+                }
+                else{
+                    room.transform.Find("Title").gameObject.GetComponent<TMP_Text>().text = roomname;
+                }
             }
-        }
+        } //rooms에 현재 남은 room의 list가 name으로 입력되어 있음
 
         foreach (string roomName in _roomList)
         {
-            if (!rooms.Contains(roomName))
+            if (!rooms.Contains(roomName)) //_roomList에 존재하는데 rooms에 존재하지 않는 다면 더 이상 존재하지 않는 방임
             {
-                GameObject go = parent.Find($"{roomName}").gameObject;
+                foreach(string check in rooms){
+                    Debug.Log("remained room name check: " + check);
+                }
+                Debug.Log("room name check: "+roomName);
+                Debug.Log($"왜?: {parent.Find(roomName) == null}");
+                GameObject go = parent.Find(roomName).gameObject;
                 if (go != null)
                 {
                     Destroy(go); // 해당 룸 네임을 가진 방을 파괴
