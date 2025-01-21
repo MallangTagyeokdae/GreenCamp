@@ -10,6 +10,7 @@ public class UIElement : MonoBehaviour
     public List<UIButton> uiElements;
     public List<UIButton> uiLockElements;
     public List<Sprite> uiImages;
+    public List<Image> groupImages;
     public TMP_Text name;
     public TMP_Text level;
     public TMP_Text currentHealth; 

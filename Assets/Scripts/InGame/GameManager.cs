@@ -147,10 +147,30 @@ public class GameManager : MonoBehaviour
 
     public void AddClickedObject(GameObject gameObject)
     {
-        if (!clickedObject.Contains(gameObject))
+        if(clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 16)
         {
-            clickedObject.Add(gameObject);
-            unitController.SetActiveHealthBar(gameObject, true);
+            if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
+            {
+                clickedObject.Add(gameObject);
+                unitController.SetActiveHealthBar(gameObject, true);
+                if(clickedObject.Count >= 3)
+                {
+                    uIController.ActiveFalseUI(8);
+                    SetGroupUnitUI(8,0);
+                }
+            }
+        } else if(!clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 17)
+        {
+            if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
+            {
+                clickedObject.Add(gameObject);
+                unitController.SetActiveHealthBar(gameObject, true);
+                if(clickedObject.Count >= 3)
+                {
+                    uIController.ActiveFalseUI(8);
+                    SetGroupUnitUI(8,1);
+                }
+            }
         }
     }
     public void GroundEvent(Vector3 newLocation)
@@ -179,9 +199,15 @@ public class GameManager : MonoBehaviour
         if(gameState == GameStates.InGame && clickedObject[0].TryGetComponent(out Unit unit))
             currentUI = uIController.SetUnitUI(UIindex, unit);
     }
+    public void SetGroupUnitUI(int UIindex, int startIndex)
+    {
+        if(gameState == GameStates.InGame && clickedObject.Count >= 3)
+        {
+            currentUI = uIController.SetGroupUI(UIindex, startIndex, currentUI, clickedObject);
+        }
+    }
     public void SetHealthBar(Unit unit)
     {
-        Debug.Log($"{unit.healthBar==null}");
         unit.healthBar.value = (float)(unit.unitCurrentHealth * 1.0 / unit.unitMaxHealth);
         // unit.healthBar.gameObject.SetActive(true);
     }
@@ -265,18 +291,13 @@ public class GameManager : MonoBehaviour
     private async Task DelayBuildingCreation(Vector3 buildingPos)
     {
         var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
-        Debug.Log("함수 진입");
 
         // 건물 아래 Grid를 Builted로 변경
         gridHandler.SetGridsToBuilted();
-        Debug.Log("Grid변경 완료");
 
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
-        Debug.Log("CreateBuilding함수 호출 완료");
         building.InitTime();
-
-        Debug.Log("빌딩 객체 생성 완료");
 
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
         await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time), cts.Token);
@@ -510,7 +531,31 @@ public class GameManager : MonoBehaviour
                 SetBuildingListUI();
                 break;
         }
+    }
 
+    public void PressedA()
+    {
+        
+    }
+
+    public void PressedH()
+    {
+        
+    }
+
+    public void PressedM()
+    {
+        
+    }
+
+    public void PressedS()
+    {
+        
+    }
+
+    public void PressedT()
+    {
+        
     }
     // ===================================================== 
 
