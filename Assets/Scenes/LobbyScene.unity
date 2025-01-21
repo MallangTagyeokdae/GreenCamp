@@ -6721,6 +6721,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: MuteBackGroundMusic
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   DisabledState:
     StateType: 4
     StateEvent:
@@ -12235,6 +12247,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: MuteSound
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   DisabledState:
     StateType: 4
     StateEvent:
@@ -12512,7 +12536,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1417993795}
+        m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+        m_MethodName: BackGroundMusicVolumeControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1266442521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17615,6 +17651,18 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 21300000, guid: c2f74929e1d1dd14a8e78308820419ec, type: 3}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: ReleaseBackGroundMusicMute
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
@@ -25072,7 +25120,7 @@ MonoBehaviour:
   NormalState:
     StateType: 0
     StateEvent:
-      EventName: Normal
+      EventName: Normal State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -25080,7 +25128,7 @@ MonoBehaviour:
   HighlightedState:
     StateType: 1
     StateEvent:
-      EventName: Highlighted
+      EventName: Highlighted State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -25088,7 +25136,7 @@ MonoBehaviour:
   PressedState:
     StateType: 2
     StateEvent:
-      EventName: Pressed
+      EventName: Pressed State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -25096,7 +25144,7 @@ MonoBehaviour:
   SelectedState:
     StateType: 3
     StateEvent:
-      EventName: Selected
+      EventName: Selected State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -25125,10 +25173,22 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: ReleaseSoundMute
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   DisabledState:
     StateType: 4
     StateEvent:
-      EventName: Disabled
+      EventName: Disabled State
       Runners: []
       Event:
         m_PersistentCalls:
