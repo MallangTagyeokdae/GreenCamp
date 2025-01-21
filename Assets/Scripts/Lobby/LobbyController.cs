@@ -52,8 +52,12 @@ public class LobbyController : MonoBehaviour
 
                 room.name = roomInfo.Name;
                 string roomname = room.name.Substring(room.name.IndexOf("~") + 1);
-                //Debug.Log($"{room.transform.Find("Title").gameObject.GetComponent<> == null}");
-                room.transform.Find("Title").gameObject.GetComponent<TMP_Text>().text = roomname;
+                if(roomname == null){
+                    room.transform.Find("Title").gameObject.GetComponent<TMP_Text>().text = "";
+                }
+                else{
+                    room.transform.Find("Title").gameObject.GetComponent<TMP_Text>().text = roomname;
+                }
             }
         } //rooms에 현재 남은 room의 list가 name으로 입력되어 있음
 
