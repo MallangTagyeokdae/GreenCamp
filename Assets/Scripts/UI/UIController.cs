@@ -1,20 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Doozy.Runtime.UIManager;
 using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager.Containers;
 using ExitGames.Client.Photon.StructWrapping;
 using TMPro;
-using Unity.Profiling;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
     public string unitInfo;
-    public List<UIContainer> UILists;
+    public List<UIContainer> UILists; // 유닛, 건물과 관련된 UI들
+    public List<UIContainer> Options; // 로딩, 자원, 배경과 관련된 UI들
     public BuildingController buildingController;
     private TMP_Text _level;
     private TMP_Text _health;
@@ -267,4 +266,18 @@ public class UIController : MonoBehaviour
         return "";
     }
 
+    public async Task CountDown()
+    {
+        TMP_Text countDown = Options[0].transform.Find("CountDown").GetComponent<TMP_Text>();
+
+        for(int i=3; i>0; i--)
+        {
+            countDown.text = i.ToString();
+            await Task.Delay(1000);
+        }
+
+        Options[0].Hide();
+        Options[1].Show();
+        Options[2].Show();
+    }
 }
