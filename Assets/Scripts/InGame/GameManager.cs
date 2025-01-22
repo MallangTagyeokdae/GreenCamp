@@ -103,7 +103,6 @@ public class GameManager : MonoBehaviour
         SetState("InGame");
         currentUI.Show();
         target.SetActive(true);
-        masterTimer = StartCoroutine(MasterTimer());
     }
     public void SetState(string newState)
     {
@@ -156,7 +155,8 @@ public class GameManager : MonoBehaviour
             {
                 clickedObject.Add(gameObject);
                 unitController.SetActiveHealthBar(gameObject, true);
-                if(clickedObject.Count >= 3)
+                if (clickedObject.Count == 1) SetUnitInfo(7, clickedObject[0]);
+                else if(clickedObject.Count >= 3)
                 {
                     uIController.ActiveFalseUI(8);
                     SetGroupUnitUI(8,0);
@@ -168,7 +168,8 @@ public class GameManager : MonoBehaviour
             {
                 clickedObject.Add(gameObject);
                 unitController.SetActiveHealthBar(gameObject, true);
-                if(clickedObject.Count >= 3)
+                if (clickedObject.Count == 2) SetUnitInfo(7, clickedObject[1]);
+                else if(clickedObject.Count >= 3)
                 {
                     uIController.ActiveFalseUI(8);
                     SetGroupUnitUI(8,1);
@@ -199,10 +200,10 @@ public class GameManager : MonoBehaviour
             currentUI = uIController.SetBuildingUI(UIindex, building);
         }
     }
-    public void SetUnitInfo(int UIindex)
+    public void SetUnitInfo(int UIindex, GameObject unit)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        if(gameState == GameStates.InGame && clickedObject[0].TryGetComponent(out Unit unit))
-            currentUI = uIController.SetUnitUI(UIindex, unit);
+        if(gameState == GameStates.InGame && unit.TryGetComponent(out Unit clickedUnit))
+            currentUI = uIController.SetUnitUI(UIindex, clickedUnit);
     }
     public void SetGroupUnitUI(int UIindex, int startIndex)
     {

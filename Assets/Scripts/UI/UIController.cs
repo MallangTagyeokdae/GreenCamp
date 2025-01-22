@@ -59,7 +59,7 @@ public class UIController : MonoBehaviour
             case "Archer":
                 image.sprite = uIElement.uiImages[1];
                 break;
-            case "Tnaker":
+            case "Tanker":
                 image.sprite = uIElement.uiImages[2];
                 break;
             case "Healer":
@@ -287,27 +287,29 @@ public class UIController : MonoBehaviour
     public UIContainer SetGroupUI(int index, int startIndex, UIContainer currentUI, List<GameObject> clickedObjs)
     {
         UIContainer groupUI = UILists[index];
+        int imageIndex = 0;
 
-        for(int count=startIndex; count<clickedObjs.Count; count++)
+        for(int i = startIndex; startIndex<clickedObjs.Count; startIndex++)
         {
-            if(clickedObjs[count].TryGetComponent(out Unit unit))
+            if(clickedObjs[i].TryGetComponent(out Unit unit))
             {
-                groupUI.GetComponent<UIElement>().groupImages[count].gameObject.SetActive(true);
+                groupUI.GetComponent<UIElement>().groupImages[imageIndex].gameObject.SetActive(true);
                 switch(unit.unitType)
                 {
                     case "Soldier":
-                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[0];
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[0];
                         break;
                     case "Archer":
-                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[1];
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[1];
                         break;
                     case "Tnaker":
-                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[2];
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[2];
                         break;
                     case "Healer":
-                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[3];
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[3];
                         break;
                 }
+                imageIndex++;
             }
         }
         return CheckUpdateUI(groupUI, currentUI);
