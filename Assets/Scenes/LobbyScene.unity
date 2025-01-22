@@ -1813,7 +1813,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8181,6 +8181,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: SaveSoundSetting
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
@@ -12497,7 +12509,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -12672,7 +12684,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -13307,6 +13319,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundList: {fileID: 11400000, guid: 00ea9ad37319f4a49a8c83b93fb8ff6b, type: 2}
   bgmClip: {fileID: 8300000, guid: 487173db45280c241bb52e769cddd80e, type: 3}
+  masterSlider: {fileID: 1274445299}
+  bgmSlider: {fileID: 1255134927}
+  effectSlider: {fileID: 65375903}
   channelCount: 5
 --- !u!4 &1417993794
 Transform:
@@ -13335,9 +13350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e8ad38c3a16f7419e3a08fb6ded2eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterSlider: {fileID: 1274445299}
-  bgmSlider: {fileID: 1255134927}
-  effectSlider: {fileID: 65375903}
 --- !u!1 &1419048945
 GameObject:
   m_ObjectHideFlags: 0
