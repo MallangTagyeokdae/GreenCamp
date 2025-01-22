@@ -193,30 +193,59 @@ public class UnitController : MonoBehaviour
 
         while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
-            
+
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             ally.transform.rotation = Quaternion.LookRotation(rot);
             AnimatorStateInfo stateInfo = unit.animator.GetCurrentAnimatorStateInfo(0);
             float progress = stateInfo.normalizedTime % 1;
 
-            if(progress >= 0.37f && unit.animator.GetBool("Attacked") == false){
+            if (progress >= 0.37f && unit.animator.GetBool("Attacked") == false)
+            {
                 unit.animator.SetBool("Attacked", true);
                 Debug.Log("attack check");
                 enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient);
             }
-
-            else if(progress < 0.1f){
+            else if (progress < 0.1f)
+            {
                 unit.animator.SetBool("Attacked", false);
             }
-
-
-            yield return null;
+            if (unit.TryGetComponent(out Archer archer))
+            {
+                StartCoroutine(LaunchArrow(archer, enemy));
+                yield return new WaitForSeconds(1);
+            }
+            else
+            {
+                yield return null;
+            }
         }
+
+
 
 
         unit.SetOrder(0);
         unit.ChangeState("Idle");
 
+    }
+    public IEnumerator LaunchArrow(Archer archer, GameObject enemy)
+    {
+        Vector3 rot = (enemy.transform.position - archer.transform.position).normalized;
+        GameObject arrow = Instantiate(archer.arrow, new Vector3(archer.transform.position.x, 1.0f, archer.transform.position.z), Quaternion.LookRotation(rot) * Quaternion.Euler(-90, 0, 0));
+
+        while (Vector3.Distance(arrow.transform.position, new Vector3(enemy.transform.position.x, 1.0f, enemy.transform.position.z)) > 1.0f)
+        {
+            rot = (enemy.transform.position - arrow.transform.position).normalized;
+            Vector3 forward = new Vector3(rot.x, 0, rot.z);
+            if (forward.sqrMagnitude > 0.01f)
+            {
+                arrow.transform.rotation = Quaternion.LookRotation(forward) * Quaternion.Euler(-90, 0, 0);
+            }
+            arrow.transform.position = Vector3.MoveTowards(arrow.transform.position,
+                                                          new Vector3(enemy.transform.position.x, 1.0f, enemy.transform.position.z),
+                                                          Time.deltaTime * 25);
+            yield return null;
+        }
+        Destroy(arrow);
     }
 
     /*  1. 새로운 유닛을 설정할 때는 triggerStay가 아니라 trigger가 enter할 때마다 들어온 유닛을 list에 추가한다.
