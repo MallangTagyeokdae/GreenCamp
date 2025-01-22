@@ -259,7 +259,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetHealthBar(Unit unit)
     {
-        unit.healthBar.value = (float)(unit.unitCurrentHealth * 1.0 / unit.unitMaxHealth);
+        unit.healthBar.value = (float)(unit.currentHealth * 1.0 / unit.maxHealth);
         // unit.healthBar.gameObject.SetActive(true);
     }
     // =====================================================

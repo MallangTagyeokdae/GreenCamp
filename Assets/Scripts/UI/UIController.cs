@@ -81,9 +81,9 @@ public class UIController : MonoBehaviour
         power.text = $"{unit.unitPower}";
         range.text = $"{unit.unitPowerRange}";
         moveSpeed.text = $"{unit.unitMoveSpeed}";
-        currentHealth.text = $"{unit.unitCurrentHealth}";
-        maxHealth.text = $"{unit.unitMaxHealth}";
-        currentHealthBar.value = (float)(unit.unitCurrentHealth * 1.0 / unit.unitMaxHealth);
+        currentHealth.text = $"{unit.currentHealth}";
+        maxHealth.text = $"{unit.maxHealth}";
+        currentHealthBar.value = (float)(unit.currentHealth * 1.0 / unit.maxHealth);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
@@ -241,7 +241,7 @@ public class UIController : MonoBehaviour
     public void UpdateHealth(UIContainer currentUI, Building clickedObject) // 체력 숫자를 표시하는 함수
     {
         int currentHealth = (int)Math.Round(clickedObject.GetComponent<Building>().currentHealth);
-        int maxHealth = clickedObject.GetComponent<Building>().maxHealth;
+        int maxHealth = (int)Math.Round(clickedObject.GetComponent<Building>().maxHealth);
         if(clickedObject.state == (Building.State).0) // 건설중인경우에는 체력바도 업데이트 해줘야함
         {
             SetProgressBar(currentUI, currentHealth, maxHealth);
