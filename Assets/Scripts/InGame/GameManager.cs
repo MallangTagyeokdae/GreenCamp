@@ -607,18 +607,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PressedF1()
+    public void PressedF10()
     {
         // 상태 상관없이 그냥 설정창 띄우기
+        uIController.SetSettingPage(true);
         
     }
-
-    private bool CheckCreateUnitPermission(Barrack barrack, int level)
-    {
-        // 건물이 유닛을 생성할 레벨이 되는지 확인하는 함수
-        return barrack.level >= level ? true : false;
-    }
-
 
     public void PressedA()
     {
@@ -868,6 +862,13 @@ public class GameManager : MonoBehaviour
                 break;
         }
     } 
+
+    private bool CheckCreateUnitPermission(Barrack barrack, int level)
+    {
+        // 건물이 유닛을 생성할 레벨이 되는지 확인하는 함수
+        return barrack.level >= level ? true : false;
+    }
+
     // ===================================================== 
 
     private int[] MakeRandom(int range)
