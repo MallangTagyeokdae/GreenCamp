@@ -77,9 +77,9 @@ public class GameManager : MonoBehaviour
 
         grid.SetActive(true); // Grid를 켜서 본진이 건설될 위치의 Grid 상태를 바꿀준비
 
-        int[] randomNums = MakeRandom(4);
         if(PhotonNetwork.IsMasterClient)
         {
+            int[] randomNums = MakeRandom(4);
             GameStatus.instance.GetComponent<PhotonView>().RPC("CreateCommand", RpcTarget.Others, randomNums[1]);
             CreateCommand(randomNums[0]);
         }
@@ -99,16 +99,8 @@ public class GameManager : MonoBehaviour
     {
         Vector3 startingPoint;
         List<Collider> startGrids = new();
-        if(GameStatus.instance.teamID == "Red")
-        {
-            target.transform.position = _randomRot[0];
-            startGrids = gridHandler.SetStartingPoint(0);
-
-        } else if(GameStatus.instance.teamID == "Blue")
-        {
-            target.transform.position = _randomRot[3];
-            startGrids = gridHandler.SetStartingPoint(3);
-        }
+        target.transform.position = _randomRot[index];
+        startGrids = gridHandler.SetStartingPoint(index);
 
         // 본진이 지어질 위치 Grid의 평균값으로 계산
         startingPoint = gridHandler.CalculateGridScale(startGrids);
