@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -71,14 +72,33 @@ public class GameManager : MonoBehaviour
     // ================== 상태 관련 함수 ======================
     public async Task InitialGame()
     {
-        List<Collider> startGrids = new();
-        Vector3 startingPoint;
 
         SetState("Loading"); // 상태변경
 
         grid.SetActive(true); // Grid를 켜서 본진이 건설될 위치의 Grid 상태를 바꿀준비
 
-        // 일단은 팀 종류에 따라서 위치를 고정했는데 나중에 난수 생성해서 받은 값으로 _randomRot, SetStartingPoint값에 넣어주면 코드 2줄로 줄일 수 있음
+        int[] randomNums = MakeRandom(4);
+        if(PhotonNetwork.IsMasterClient)
+        {
+            GameStatus.instance.GetComponent<PhotonView>().RPC("CreateCommand", RpcTarget.Others, randomNums[1]);
+            CreateCommand(randomNums[0]);
+        }
+
+        // 게임 시작 카운트다운 활성화
+        await uIController.CountDown();
+        SetState("InGame");
+        currentUI.Show();
+        target.SetActive(true);
+        if(PhotonNetwork.IsMasterClient){
+            masterTimer = StartCoroutine(MasterTimer());
+        }
+    }
+
+    [PunRPC]
+    private void CreateCommand(int index)
+    {
+        Vector3 startingPoint;
+        List<Collider> startGrids = new();
         if(GameStatus.instance.teamID == "Red")
         {
             target.transform.position = _randomRot[0];
@@ -98,15 +118,6 @@ public class GameManager : MonoBehaviour
         Building building = buildingController.CreateBuilding(startingPoint, buildingType, new Vector3(-90, 90, 0), gridHandler.constructionGrids);
         // 본진 초기값 세팅
         buildingController.initCommand(building);
-
-        // 게임 시작 카운트다운 활성화
-        await uIController.CountDown();
-        SetState("InGame");
-        currentUI.Show();
-        target.SetActive(true);
-        if(PhotonNetwork.IsMasterClient){
-            masterTimer = StartCoroutine(MasterTimer());
-        }
     }
     public void SetState(string newState)
     {
@@ -861,4 +872,13 @@ public class GameManager : MonoBehaviour
     } 
     // ===================================================== 
 
+    private int[] MakeRandom(int range)
+    {
+        int[] randomNum;
+        System.Random random = new System.Random();
+        return Enumerable.Range(0, range) // 0부터 3까지 숫자 생성
+                         .OrderBy(x => random.Next()) // 랜덤으로 섞기
+                         .Take(2) // 앞에서 2개 선택
+                         .ToArray(); // 배열로 변환
+    }
 }
