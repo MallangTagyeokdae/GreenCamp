@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class SoundManager : MonoBehaviour
     public SoundList soundList;
 
     public AudioClip bgmClip;
+    public GameObject masterSlider;
+    public GameObject bgmSlider;
+    public GameObject effectSlider;
     private AudioSource _backGroundMusic;
     private List<AudioSource> _soundChannels;
     private float _bgmVolume = 0f;   //bgm 볼륨값
@@ -39,20 +43,22 @@ public class SoundManager : MonoBehaviour
         _soundChannels = new List<AudioSource>();
         _backGroundMusic = gameObject.AddComponent<AudioSource>();
         _backGroundMusic.loop = true;
+
+        
         for (int i = 0; i < channelCount; i++)
         {
             _soundChannels.Add(gameObject.AddComponent<AudioSource>());
         }
-
+        
         PlayBackGroundMusic();
         DontDestroyOnLoad(this.gameObject);
     }
 
     void Start()
     {
-        _bgmVolume = _backGroundMusic.volume;
-        _soundVolume = _backGroundMusic.volume;
-        _masterVolume = 1f;
+        Debug.Log($"has key? {PlayerPrefs.HasKey("masterVolume")}");
+        Debug.Log($"volume: {PlayerPrefs.GetFloat("masterVolume")}");
+        LoadSoundSetting();
     }
 
     private int GetEmptyChannel()
@@ -224,5 +230,11 @@ public class SoundManager : MonoBehaviour
     }
 
     #endregion bgm
+
+    public void LoadSoundSetting(){
+        bgmSlider.GetComponent<Slider>().value = PlayerPrefs.HasKey("bgmVolume")? PlayerPrefs.GetFloat("bgmVolume") : 1f;
+        effectSlider.GetComponent<Slider>().value = PlayerPrefs.HasKey("effectVolume") ? PlayerPrefs.GetFloat("effectVolume") : 1f;
+        masterSlider.GetComponent<Slider>().value = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume"): 1f;
+    }
 }
 

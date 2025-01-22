@@ -11,6 +11,7 @@ using TMPro;
 using Doozy.Runtime.UIManager.Listeners;
 using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager;
+using Photon.Pun;
 
 public class LobbyController : MonoBehaviour
 {
@@ -61,7 +62,9 @@ public class LobbyController : MonoBehaviour
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() =>
                 {
                     PhotonManager.instance.JoinRoom(roomInfo);
-                    SetState("TeamSelect");
+                    if(PhotonNetwork.InRoom){   //방에 입장이 되었을 때
+                        SetState("TeamSelect");
+                    }
                 });
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => { Debug.Log("test pressed button!"); });
 
