@@ -17,7 +17,8 @@ public enum GameStates
     InGame = 1,
     ConstructionMode = 2,
     SetTargetMode = 3,
-    EndGame = 4
+    SetMoveRot = 4,
+    EndGame = 5
     
 }
 public class GameManager : MonoBehaviour
@@ -117,6 +118,14 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.ConstructionMode:
                 gameState = state;
+                grid.SetActive(true);
+                SetBuildingListUI();
+                break;
+            case GameStates.SetMoveRot:
+                gameState = state;
+                break;
+            case GameStates.SetTargetMode:
+                gameState = state;
                 break;
             case GameStates.EndGame:
                 gameState = state;
@@ -147,9 +156,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // 리팩토링때 조져야함
     public void AddClickedObject(GameObject gameObject)
     {
-        if(clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 16)
+        if(clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 15)
         {
             if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
             {
@@ -162,7 +172,7 @@ public class GameManager : MonoBehaviour
                     SetGroupUnitUI(8,0);
                 }
             }
-        } else if(!clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 17)
+        } else if(!clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 16)
         {
             if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
             {
@@ -177,13 +187,42 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void GroundEvent(Vector3 newLocation)
+    public void GroundRightClickEvent(Vector3 newLocation)
     {
-        if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1) buildingController.SetSponPos(newLocation,building);
-        MoveUnit(newLocation);
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1)
+                    buildingController.SetSponPos(newLocation,building);
+                MoveUnit(newLocation);
+                break;
+            case GameStates.ConstructionMode:
+            case GameStates.SetMoveRot:
+            case GameStates.SetTargetMode:
+                SetState("InGame");
+                break;
+        }
 
-        Debug.Log("땅 클릭됌");
         GameObject effect = Instantiate(clickEffect, new Vector3(newLocation.x, .2f, newLocation.z), Quaternion.Euler(new Vector3(90,0,0)));
+    }
+
+    public void GroundLeftClickEvent(Vector3 newLocation)
+    {
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                SetClickedObject(ground);
+                SetBuildingListUI();
+                break;
+            case GameStates.SetMoveRot:
+                MoveUnit(newLocation);
+                SetState("InGame");
+                break;
+            case GameStates.SetTargetMode:
+                MoveUnit(newLocation);
+                SetState("InGame");
+                break;
+        }
     }
     // =====================================================
 
@@ -230,9 +269,10 @@ public class GameManager : MonoBehaviour
             DelayBuildingCreation(buildingPos);
             grid.SetActive(false);
             SetState("InGame");
+            SetBuildingListUI();
         }
     }
-    public async void CreateUnit() // 해윤
+    public async void CreateUnit()
     {
         GameObject targetOBJ = clickedObject[0];
         if (targetOBJ.TryGetComponent(out Barrack barrack))
@@ -275,23 +315,26 @@ public class GameManager : MonoBehaviour
     {
         if (clickedObject[0].TryGetComponent(out Building building))
         {
-            var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
+            if(building.level < 5)
+            {
+                var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
-            buildingController.SetBuildingState(building, Building.State.InProgress, "LevelUP");
-            building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, true);
-            ReloadBuildingUI(building);
+                buildingController.SetBuildingState(building, Building.State.InProgress, "LevelUP");
+                building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, true);
+                ReloadBuildingUI(building);
 
-            tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
+                tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-            await OrderCreate(building, building.level * 10f, cts.Token);
+                await OrderCreate(building, building.level * 10f, cts.Token);
 
-            tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
+                tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
-            building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
-            buildingController.UpgradeBuilding(building);
-            buildingController.SetBuildingState(building, Building.State.Built, "None");
+                building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
+                buildingController.UpgradeBuilding(building);
+                buildingController.SetBuildingState(building, Building.State.Built, "None");
 
-            ReloadBuildingUI(building);
+                ReloadBuildingUI(building);
+            }
         }
     }
     private async Task DelayBuildingCreation(Vector3 buildingPos)
@@ -558,30 +601,261 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private bool CheckCreateUnitPermission(Barrack barrack, int level)
+    {
+        // 건물이 유닛을 생성할 레벨이 되는지 확인하는 함수
+        return barrack.level >= level ? true : false;
+    }
+
+
     public void PressedA()
     {
-        
+        /*
+            게임 State 확인
+            clicked[0] 종류 확인
+            유닛 -> GameState를 SetTargetMode로 바꿈
+            배럭 -> 아처 생성
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                if(uIController.checkIsUnitUI(currentUI))
+                {
+                    SetState("SetTargetMode");
+                } else if(clickedObj.TryGetComponent(out Barrack barrack))
+                {
+                    if(CheckCreateUnitPermission(barrack, 2) && barrack.state == Building.State.Built) // 권한 확인
+                    {
+                        // 아처 생성
+                        SetUnitType("Archer");
+                        CreateUnit();
+                    }
+                }
+                break;
+        }
     }
+
+    public void PressedB()
+    {
+         /*
+            게임 State 확인
+            InGame
+                clickedObject[0] 확인
+                    1.  ground 이면 ConstructionMode로 변경 => 배럭 건설 세팅해줌
+                        GridHandler에서 SetBuildingRange 값을 1.25 로 변경
+                        BuildingType을 Barrack으로 변경
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                if(clickedObj == ground)
+                {
+                    SetState("ConstructionMode");
+                    gridHandler.SetBuildingRange(1.25f);
+                    SetBuildingType("Barrack");
+                }
+                break;
+        }
+    }
+
+    public void PressedD()
+    {
+        /*
+            게임 State 확인
+            InGame
+                clickedObject[0] 확인
+                    1.  ground 이면 ConstructionMode로 변경 => 디펜더 건설 세팅해줌
+                        GridHandler에서 SetBuildingRange 값을 0.0001로 변경
+                        BuildingType을 Defender로 변경
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                if(clickedObj == ground)
+                {
+                    SetState("ConstructionMode");
+                    gridHandler.SetBuildingRange(0.001f);
+                    SetBuildingType("Defender");
+                }
+                break;
+        }
+    }
+
+
 
     public void PressedH()
     {
-        
+        /*
+            게임 State확인
+            InGame
+                clickedObject[0] 확인
+                    1.  Barrack이면
+                        힐러생성
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                
+                if(clickedObj.TryGetComponent(out Barrack barrack))
+                {
+                    if(CheckCreateUnitPermission(barrack, 4) && barrack.state == Building.State.Built) // 권한 확인
+                    {
+                        // 힐러 생성
+                        SetUnitType("Healer");
+                        CreateUnit();
+                    }
+                }
+                break;
+        }
+    }
+
+    public void PressedL()
+    {
+        /*
+            게임 State 확인
+            InGame
+                clickedObject[0] 확인
+                    1.  Building 이면
+                        레벨업 실행
+        */
+        GameObject clickedObj = clickedObject[0];
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                if(clickedObj.TryGetComponent(out Building building))
+                {
+                    if(building.state == Building.State.Built)
+                    {
+                        LevelUpBuilding();
+                    }
+                }
+                break;
+        }
     }
 
     public void PressedM()
     {
-        
+        /*
+            게임 State 확인
+            InGame
+                currentUI확인
+                    UI가 7 or 8일떄 (유닛이 선택된 상태)
+                        SetMoveRot 모드로 변경
+        */
+
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                if(uIController.checkIsUnitUI(currentUI))
+                {
+                    SetState("SetMoveRot");
+                }
+                break;
+        }
     }
+
+    public void PressedR()
+    {
+        /*
+            게임 State 확인
+            InGame
+                1. clickedObject[0] = ground 이면 ConstructionMode로 변경 => 터렛 건설 세팅해줌
+                    GridHandler에서 SetBuildingRange 값을 1.25 로 변경
+                    BuildingType을 ResourceBuilding으로 변경
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                if(clickedObj == ground)
+                {
+                    SetState("ConstructionMode");
+                    gridHandler.SetBuildingRange(1.25f);
+                    SetBuildingType("ResourceBuilding");
+                }
+                break;
+        }
+    }  
 
     public void PressedS()
     {
-        
+        /*
+            게임 State가 InGame인지 확인
+                currentUI확인
+                    UI가 7 or 8일떄 (유닛이 선택된 상태)
+                        clicked Object에 정지명령
+                    다른경우
+                    clickedObject[0] 확인
+                        1. 배럭 -> 솔져 생성
+                        2. ground -> ConstructionMode로 변경 => 자원건물 건설 세팅해줌
+                            GridHandler에서 SetBuildingRange 값을 0.0001로 변경
+                            BuildingType을 PopulationBuilding로 변경
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                if(uIController.checkIsUnitUI(currentUI))
+                {
+                    foreach(GameObject gameObject in clickedObject)
+                    {
+                        if(gameObject.TryGetComponent(out Unit unit))
+                            StopCoroutine(unit.unitBehaviour);
+                    }
+
+                } else if(clickedObj.TryGetComponent(out Barrack barrack))
+                {
+                    if(CheckCreateUnitPermission(barrack, 1) && barrack.state == Building.State.Built) // 권한 확인
+                    {
+                        // 솔저 생성
+                        SetUnitType("Soldier");
+                        CreateUnit();
+                    }
+                } else if(clickedObj == ground)
+                {
+                    SetState("ConstructionMode");
+                    gridHandler.SetBuildingRange(0.0001f);
+                    SetBuildingType("PopulationBuilding");
+                }
+                break;
+        }
     }
 
     public void PressedT()
     {
-        
-    }
+        /*
+            게임 State갸 InGame인지 확인
+                InGame -> clickedObject[0] 확인
+                    1. 배럭이면 -> 탱커 생성
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch(gameState)
+        {
+            case GameStates.InGame:
+                
+                if(clickedObj.TryGetComponent(out Barrack barrack))
+                {
+                    if(CheckCreateUnitPermission(barrack, 3) && barrack.state == Building.State.Built) // 권한 확인
+                    {
+                        // 탱커 생성
+                        SetUnitType("Tanker");
+                        CreateUnit();
+                    }
+                }
+                break;
+        }
+    } 
     // ===================================================== 
 
 }
