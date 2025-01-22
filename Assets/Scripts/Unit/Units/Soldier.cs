@@ -14,7 +14,7 @@ public class Soldier : Unit
                 unitCurrentHealth: 100,
                 unitCost: 0,
                 unitPower: 30,
-                unitPowerRange: 1,
+                unitPowerRange: 3,
                 unitMoveSpeed: 2,
                 populationCost: 1)
     { }
@@ -28,7 +28,7 @@ public class Soldier : Unit
         this.unitCurrentHealth = 100;
         this.unitCost = 0;
         this.unitPower = 30;
-        this.unitPowerRange = 1;
+        this.unitPowerRange = 3;
         this.unitMoveSpeed = 2;
         this.populationCost = 1;
     }

@@ -14,8 +14,8 @@ public class Tanker : Unit
                 unitCurrentHealth: 150,
                 unitCost: 0,
                 unitPower: 15,
-                unitPowerRange: 0,
-                unitMoveSpeed: 3,
+                unitPowerRange: 3,
+                unitMoveSpeed: 1,
                 populationCost: 1)
     { }
     public void Init(string teamID, int unitID, Vector3 unitLocation)
@@ -28,8 +28,8 @@ public class Tanker : Unit
         this.unitCurrentHealth = 150;
         this.unitCost = 0;
         this.unitPower = 15;
-        this.unitPowerRange = 1;
-        this.unitMoveSpeed = 3;
+        this.unitPowerRange = 3;
+        this.unitMoveSpeed = 1;
         this.populationCost = 1;
     }
 }

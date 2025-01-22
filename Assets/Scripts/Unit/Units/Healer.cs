@@ -14,7 +14,7 @@ public class Healer : Unit
                 unitCurrentHealth: 85,
                 unitCost: 0,
                 unitPower: 0,
-                unitPowerRange: 2,
+                unitPowerRange: 4,
                 unitMoveSpeed: 1,
                 populationCost: 1)
     { }
@@ -28,7 +28,7 @@ public class Healer : Unit
         this.unitCurrentHealth = 85;
         this.unitCost = 0;
         this.unitPower = 0;
-        this.unitPowerRange = 2;
+        this.unitPowerRange = 4;
         this.unitMoveSpeed = 1;
         this.populationCost = 1;
     }
