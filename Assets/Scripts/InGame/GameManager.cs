@@ -77,13 +77,13 @@ public class GameManager : MonoBehaviour
 
         grid.SetActive(true); // Grid를 켜서 본진이 건설될 위치의 Grid 상태를 바꿀준비
 
-        int[] randomNums = MakeRandom(2);
+        int[] randomNums = MakeRandom(4);
         if(PhotonNetwork.IsMasterClient)
         {
             GameStatus.instance.GetComponent<PhotonView>().RPC("CreateCommand", RpcTarget.Others, randomNums[1]);
             CreateCommand(randomNums[0]);
         }
-        
+
         // 게임 시작 카운트다운 활성화
         await uIController.CountDown();
         SetState("InGame");
@@ -876,7 +876,7 @@ public class GameManager : MonoBehaviour
     {
         int[] randomNum;
         System.Random random = new System.Random();
-        return Enumerable.Range(0, 4) // 0부터 3까지 숫자 생성
+        return Enumerable.Range(0, range) // 0부터 3까지 숫자 생성
                          .OrderBy(x => random.Next()) // 랜덤으로 섞기
                          .Take(2) // 앞에서 2개 선택
                          .ToArray(); // 배열로 변환
