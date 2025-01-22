@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
     private Vector3[] _randomRot = {new Vector3(200,0,200), new Vector3(-200,0,200), new Vector3(200,0,-200), new Vector3(-200,0,-200)};
     //-----------------------------
 
+    private Coroutine masterTimer;
+
     void Start()
     {
          _ = InitialGame();
@@ -98,10 +100,10 @@ public class GameManager : MonoBehaviour
 
         // 게임 시작 카운트다운 활성화
         await uIController.CountDown();
-
         SetState("InGame");
         currentUI.Show();
         target.SetActive(true);
+        masterTimer = StartCoroutine(MasterTimer());
     }
     public void SetState(string newState)
     {
@@ -510,6 +512,19 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("작업취소");
         }
+    }
+
+    private IEnumerator MasterTimer(){
+        float time = 0f;
+        while(true){
+            time += Time.deltaTime;
+            if(time > 1f){
+                GameStatus.instance.GetComponent<PhotonView>().RPC("UpdateResource", RpcTarget.All);
+                time = 0f;
+            }
+            yield return null;
+        }
+        
     }
     // =====================================================
 
