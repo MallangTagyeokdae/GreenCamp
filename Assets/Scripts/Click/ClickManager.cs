@@ -22,6 +22,7 @@ public class ClickManager : MonoBehaviour
     public GameObject grid;
     public List<Collider> detectedGrids;
     public List<Collider> constructionGrids;
+    public GameObject clickedEffect;
 
     private float _buildingRange;
     private Vector3 _range;
@@ -119,12 +120,12 @@ public class ClickManager : MonoBehaviour
         if (drawRay) // drawRay가 true인 경우 scene에 ray를 그림
         {
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
+
         }
 
         if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
         {
             action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
-            // Debug.Log($"{hit.collider.gameObject.name}, {hit.point}");
         }
     }
 

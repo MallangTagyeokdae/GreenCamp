@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     public string buildingType;
     public GameObject grid;
     public GameObject ground;
+    public GameObject clickEffect;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
     public List<GameObject> clickedObject; // 현재 선택된 게임 Object
     public EffectHandler effectHandler;
@@ -176,8 +177,10 @@ public class GameManager : MonoBehaviour
     public void GroundEvent(Vector3 newLocation)
     {
         if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1) buildingController.SetSponPos(newLocation,building);
-
         MoveUnit(newLocation);
+
+        Debug.Log("땅 클릭됌");
+        GameObject effect = Instantiate(clickEffect, new Vector3(newLocation.x, .2f, newLocation.z), Quaternion.Euler(new Vector3(90,0,0)));
     }
     // =====================================================
 
@@ -492,14 +495,20 @@ public class GameManager : MonoBehaviour
 
     // =================== 타이머 함수 ======================== 
     private async Task StartTimer(float time, Action<float> action, CancellationToken token)
-    {
-        float start = 0f;
-        while (time > start)
+    { 
+        try
         {
-            token.ThrowIfCancellationRequested();
-            start += Time.deltaTime;
-            action.Invoke(start);
-            await Task.Yield();
+            float start = 0f;
+            while (time > start)
+            {
+                token.ThrowIfCancellationRequested();
+                start += Time.deltaTime;
+                action.Invoke(start);
+                await Task.Yield();
+            }
+        } catch (OperationCanceledException)
+        {
+            Debug.Log("작업취소");
         }
     }
     // =====================================================
