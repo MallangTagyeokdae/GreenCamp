@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,6 +20,8 @@ public class Entity : MonoBehaviour
     public HashSet<GameObject> attackList;
     public HashSet<GameObject> aggList;
     public string teamID;
+    public float maxHealth { get; set; }
+    public float currentHealth { get; set; }
 
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)
     {
@@ -45,4 +48,21 @@ public class Entity : MonoBehaviour
                 break;
         }
     }
+
+
+    [PunRPC]
+    public void AttackRequest()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    public void SyncAttack()
+    {
+        currentHealth -= 10;
+    }
+
 }
