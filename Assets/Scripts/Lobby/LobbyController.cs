@@ -62,9 +62,6 @@ public class LobbyController : MonoBehaviour
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() =>
                 {
                     PhotonManager.instance.JoinRoom(roomInfo);
-                    if(PhotonNetwork.InRoom){   //방에 입장이 되었을 때
-                        SetState("TeamSelect");
-                    }
                 });
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => { Debug.Log("test pressed button!"); });
 
