@@ -29,8 +29,6 @@ public abstract class Building : Entity
     public int ID { get; set; }
     public string type { get; set; }
     public Vector3 location { get; set; }
-    public int maxHealth { get; set; }
-    public float currentHealth { get; set; }
     public float progress { get; set; }
     public int cost { get; set; }
     public int level { get; set; }
@@ -137,4 +135,5 @@ public abstract class Building : Entity
     public virtual void ActiveDestroyEffect() {
         destroyEffect.SetActive(true);
     }
+
 }

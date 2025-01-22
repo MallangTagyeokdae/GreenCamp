@@ -31,8 +31,6 @@ public abstract class Unit : Entity
     public int unitID { get; set; }
     public string unitType { get; set; }
     public Vector3 unitLocation { get; set; }
-    public int unitMaxHealth { get; set; }
-    public int unitCurrentHealth { get; set; }
     public int unitCost { get; set; }
     public int unitPower { get; set; }
     public int unitPowerRange { get; set; }
@@ -97,8 +95,8 @@ public abstract class Unit : Entity
         this.unitID = unitID;
         this.unitType = unitType;
         transform.position = unitLocation;
-        this.unitMaxHealth = unitMaxHealth;
-        this.unitCurrentHealth = unitCurrentHealth;
+        this.maxHealth = unitMaxHealth;
+        this.currentHealth = unitCurrentHealth;
         this.unitCost = unitCost;
         this.unitPower = unitPower;
         this.unitPowerRange = unitPowerRange;
@@ -234,22 +232,5 @@ public abstract class Unit : Entity
                 break;
         }
     }
-
-
-    [PunRPC]
-    public void AttackRequest()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All);
-        }
-    }
-
-    [PunRPC]
-    public void SyncAttack()
-    {
-        unitCurrentHealth -= 10;
-    }
-
     //새로운 객체를 찾아야 하는 경우 -> 유닛의 상태가 idle이 되었을 때(이동을 완료했을 때, 공격하던 객체가 죽었을 때, 공격하던 객체가 어그로 범위를 벗어났을 때)
 }

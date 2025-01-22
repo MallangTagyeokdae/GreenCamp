@@ -24,8 +24,8 @@ public class Soldier : Unit
         this.unitID = unitID;
         this.unitType = "Soldier";
         this.unitLocation = unitLocation;
-        this.unitMaxHealth = 100;
-        this.unitCurrentHealth = 100;
+        this.maxHealth = 100;
+        this.currentHealth = 100;
         this.unitCost = 0;
         this.unitPower = 30;
         this.unitPowerRange = 3;

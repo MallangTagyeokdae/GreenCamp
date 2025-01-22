@@ -40,9 +40,4 @@ public class CameraMovement : MonoBehaviour
         // 카메라 위치 업데이트
         transform.position = pos;
     }
-
-    public void SetTargetToClickedOBJ()
-    {
-        target.transform.position = GameManager.instance.clickedObject[0].transform.position;
-    }
 }

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
-public class Multi :MonoBehaviour, LobbyState{
+public class Multi :LobbyState{
     private GameObject popUp;
     private TMP_Text roomName;
     private Transform parent;
@@ -17,7 +18,7 @@ public class Multi :MonoBehaviour, LobbyState{
         roomName.text = "";
     }
     public void OutPage(string next){
-        if(next == "TeamSelect"){
+        if(next == "TeamSelect" && PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.JoinedLobby){
             PhotonManager.instance.CreateRoom(roomName.text);
         }
     }

@@ -33,8 +33,8 @@ public class Archer : Unit
         this.unitID = unitID;
         this.unitType = "Archer";
         this.unitLocation = unitLocation;
-        this.unitMaxHealth = 50;
-        this.unitCurrentHealth = 50;
+        this.maxHealth = 50;
+        this.currentHealth = 50;
         this.unitCost = 0;
         this.unitPower = 35;
         this.unitPowerRange = 14;
