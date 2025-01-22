@@ -319,7 +319,6 @@ public class UIController : MonoBehaviour
         {
             if(clickedObjs[i].TryGetComponent(out Unit unit))
             {
-                Debug.Log(unit.unitType + "/" + i + "/"+ clickedObjs.Count);
                 groupUI.GetComponent<UIElement>().groupImages[imageIndex].gameObject.SetActive(true);
                 switch(unit.unitType)
                 {

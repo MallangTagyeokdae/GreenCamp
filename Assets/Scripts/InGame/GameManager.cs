@@ -579,6 +579,17 @@ public class GameManager : MonoBehaviour
     // =====================================================
 
     // =================== 키관련 함수 ======================== 
+    public void PressedSpace()
+    {
+        if(clickedObject.Count == 1)
+        {
+            if(clickedObject[0] == ground) return;
+            else target.transform.position = clickedObject[0].transform.position;
+        } else
+        {
+            target.transform.position = clickedObject[1].transform.position;
+        }
+    }
     public void PressedESC()
     {
         // ESC를 눌렀을 때 현재 선택된 오브젝트에 따라서 관리를 한다.
