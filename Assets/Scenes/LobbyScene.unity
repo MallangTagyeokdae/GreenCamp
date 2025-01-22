@@ -1889,6 +1889,11 @@ MonoBehaviour:
   lobbyState: 0
   beforeSelectTeamUI: {fileID: 817304723}
   selectTeamUI: {fileID: 292106732}
+  pages:
+  - {fileID: 1482748100}
+  - {fileID: 44521213}
+  - {fileID: 1849299738}
+  - {fileID: 1609523250}
 --- !u!4 &82062220
 Transform:
   m_ObjectHideFlags: 0
@@ -2381,7 +2386,6 @@ MonoBehaviour:
   scrollRect: {fileID: 639581303}
   prefab: {fileID: 120699913777897003, guid: 81204b62ae1c544ceb6ac8d8e9586118, type: 3}
   parent: {fileID: 1297619853}
-  outGameState: {fileID: 82062219}
 --- !u!4 &119623203
 Transform:
   m_ObjectHideFlags: 0
@@ -4614,7 +4618,19 @@ MonoBehaviour:
     Runners: []
     Event:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 119623202}
+          m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
+          m_MethodName: SetState
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Multi
+            m_BoolArgument: 0
+          m_CallState: 2
   OnInstantToggleOnCallback:
     EventName: OnInstantToggleOnCallback
     Runners: []
@@ -5990,7 +6006,7 @@ GameObject:
   - component: {fileID: 506966814}
   - component: {fileID: 506966813}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: RoomNameField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21804,7 +21820,7 @@ MonoBehaviour:
   NormalState:
     StateType: 0
     StateEvent:
-      EventName: Normal
+      EventName: Normal State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -21825,28 +21841,16 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 910434096}
-            m_TargetAssemblyTypeName: PhotonManager, Assembly-CSharp
-            m_MethodName: CreateRoom
+          - m_Target: {fileID: 119623202}
+            m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
+            m_MethodName: SetState
             m_Mode: 5
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
-              m_StringArgument: test room
-              m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 82062219}
-            m_TargetAssemblyTypeName: OutGameState, Assembly-CSharp
-            m_MethodName: SetLobbyState
-            m_Mode: 5
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: JoinGame
+              m_StringArgument: TeamSelect
               m_BoolArgument: 0
             m_CallState: 2
   SelectedState:
