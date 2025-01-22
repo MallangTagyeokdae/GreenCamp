@@ -24,8 +24,8 @@ public class Tanker : Unit
         this.unitID = unitID;
         this.unitType = "Tanker";
         this.unitLocation = unitLocation;
-        this.unitMaxHealth = 150;
-        this.unitCurrentHealth = 150;
+        this.maxHealth = 150;
+        this.currentHealth = 150;
         this.unitCost = 0;
         this.unitPower = 15;
         this.unitPowerRange = 3;
