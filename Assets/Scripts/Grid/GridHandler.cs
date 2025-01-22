@@ -183,7 +183,6 @@ public class GridHandler : MonoBehaviour
             Collider startPoint = startingPoints[index].gridList[i];
             if(startPoint.TryGetComponent(out GridEvent grid))
             {
-                Debug.Log(grid.gridState);
                 colliders.Add(startPoint);
                 grid.SetBuilted();
                 grid.ChangeMesh();
