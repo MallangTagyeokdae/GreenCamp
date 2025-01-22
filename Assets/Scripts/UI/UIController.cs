@@ -17,7 +17,6 @@ public class UIController : MonoBehaviour
     public BuildingController buildingController;
     private TMP_Text _level;
     private TMP_Text _health;
-    public UIElement uIElement;
     // Ground 눌렀을 때 건물 리스트 UI 나타내는 함수
     public UIContainer CheckUpdateUI(UIContainer selectedUI, UIContainer currentUI)
     { // 현재 선택된 UI랑 GM에 있는 UI랑 같은지 확인해서 화면에 업데이트 하고, 선택된 UI를 리턴해줌
@@ -33,7 +32,18 @@ public class UIController : MonoBehaviour
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
-        return CheckUpdateUI(selectedUI, currentUI);
+        switch(GameManager.instance.gameState)
+        {
+            case  GameStates.InGame:
+                SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiElements, 4, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
+                SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiLockElements, 4, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
+                break;
+            case GameStates.ConstructionMode:
+                SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, false);
+                SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
+                break;
+        }
+        return selectedUI;
     }
     public UIContainer SetUnitUI(int UIindex, Unit unit)
     {
@@ -59,7 +69,7 @@ public class UIController : MonoBehaviour
             case "Archer":
                 image.sprite = uIElement.uiImages[1];
                 break;
-            case "Tnaker":
+            case "Tanker":
                 image.sprite = uIElement.uiImages[2];
                 break;
             case "Healer":
@@ -91,9 +101,9 @@ public class UIController : MonoBehaviour
                 break;
             case Building.State.Built:
                  // 건물의 상태(레벨)에 따라서 버튼의 Interactable을 활성화 시켜준다.
-                SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
+                SetBuildingButtonByLevel(selectedUI.GetComponent<UIElement>().uiElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
                 // 건물의 상태(레벨)에 따라서 활성화된 버튼 위의 잠금을 해제해준다.
-                SetButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
+                SetBuildingButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
                 // UI의 이미지를 업데이트한다.
                 SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem.ToString());
                 // UI의 진행바를 업데이트한다.
@@ -121,7 +131,8 @@ public class UIController : MonoBehaviour
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
-    public void SetBuildingUIImage(UIContainer selectedUI, String progressType) // UI에 이미지 업데이트 하는 함수
+
+    public void SetBuildingUIImage(UIContainer selectedUI, string progressType) // UI에 이미지 업데이트 하는 함수
     {
         switch(progressType)
         {
@@ -150,7 +161,7 @@ public class UIController : MonoBehaviour
         }
     }
     
-    private void SetButtonByLevel(List<UIButton> uIButtons, Building building, Action<List<UIButton>,bool> action, bool state)
+    private void SetBuildingButtonByLevel(List<UIButton> uIButtons, Building building, Action<List<UIButton>,bool> action, bool state)
     {
         if(building.TryGetComponent(out Barrack barrack))
         {
@@ -184,6 +195,19 @@ public class UIController : MonoBehaviour
         }
     }
     
+    private void SetBuildingListButton(List<UIButton> uIButtons, int level, Action<List<UIButton>, bool> action, bool state)
+    {
+        switch(level)
+        {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                action(uIButtons.GetRange(0,4), state);
+                break;
+        }
+    }
+
     private void SetInteractable(List<UIButton> uIButtons, bool state)
     {
         foreach(UIButton uIButton in uIButtons)
@@ -235,8 +259,11 @@ public class UIController : MonoBehaviour
 
     public void SetProgressBar(UIContainer currentUI, float currentvalue, float maxValue)
     {
-        Slider progresBar = currentUI.GetComponent<UIElement>().progressBar;
-        progresBar.value = (float)(currentvalue * 1.0 / maxValue);
+        if(currentUI != UILists[8] && currentUI.TryGetComponent(out UIElement uIElement))
+        {
+            Slider progresBar = uIElement.progressBar;
+            progresBar.value = (float)(currentvalue * 1.0 / maxValue);
+        }
     }
 
     public void UpdateName(UIContainer currentUI, Building building)
@@ -287,27 +314,29 @@ public class UIController : MonoBehaviour
     public UIContainer SetGroupUI(int index, int startIndex, UIContainer currentUI, List<GameObject> clickedObjs)
     {
         UIContainer groupUI = UILists[index];
-
-        for(int count=startIndex; count<clickedObjs.Count; count++)
+        int imageIndex = 0;
+        for(int i = startIndex; i<clickedObjs.Count; i++)
         {
-            if(clickedObjs[count].TryGetComponent(out Unit unit))
+            if(clickedObjs[i].TryGetComponent(out Unit unit))
             {
-                groupUI.GetComponent<UIElement>().groupImages[count].gameObject.SetActive(true);
+                Debug.Log(unit.unitType + "/" + i + "/"+ clickedObjs.Count);
+                groupUI.GetComponent<UIElement>().groupImages[imageIndex].gameObject.SetActive(true);
                 switch(unit.unitType)
                 {
                     case "Soldier":
-                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[0];
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[0];
                         break;
                     case "Archer":
-                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[1];
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[1];
                         break;
-                    case "Tnaker":
-                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[2];
+                    case "Tanker":
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[2];
                         break;
                     case "Healer":
-                        groupUI.GetComponent<UIElement>().groupImages[count].sprite = groupUI.GetComponent<UIElement>().uiImages[3];
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[3];
                         break;
                 }
+                imageIndex++;
             }
         }
         return CheckUpdateUI(groupUI, currentUI);
@@ -321,5 +350,12 @@ public class UIController : MonoBehaviour
         {
             image.gameObject.SetActive(false);
         }
+    }
+
+    public bool checkIsUnitUI(UIContainer currentUI)
+    {
+        if(currentUI == UILists[7] || currentUI == UILists[8])
+            return true;
+        return false;
     }
 }
