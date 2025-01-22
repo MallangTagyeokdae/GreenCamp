@@ -17,7 +17,6 @@ public class UIController : MonoBehaviour
     public BuildingController buildingController;
     private TMP_Text _level;
     private TMP_Text _health;
-    public UIElement uIElement;
     // Ground 눌렀을 때 건물 리스트 UI 나타내는 함수
     public UIContainer CheckUpdateUI(UIContainer selectedUI, UIContainer currentUI)
     { // 현재 선택된 UI랑 GM에 있는 UI랑 같은지 확인해서 화면에 업데이트 하고, 선택된 UI를 리턴해줌
@@ -235,8 +234,11 @@ public class UIController : MonoBehaviour
 
     public void SetProgressBar(UIContainer currentUI, float currentvalue, float maxValue)
     {
-        Slider progresBar = currentUI.GetComponent<UIElement>().progressBar;
-        progresBar.value = (float)(currentvalue * 1.0 / maxValue);
+        if(currentUI != UILists[8] && currentUI.TryGetComponent(out UIElement uIElement))
+        {
+            Slider progresBar = uIElement.progressBar;
+            progresBar.value = (float)(currentvalue * 1.0 / maxValue);
+        }
     }
 
     public void UpdateName(UIContainer currentUI, Building building)
@@ -288,11 +290,11 @@ public class UIController : MonoBehaviour
     {
         UIContainer groupUI = UILists[index];
         int imageIndex = 0;
-
         for(int i = startIndex; startIndex<clickedObjs.Count; startIndex++)
         {
             if(clickedObjs[i].TryGetComponent(out Unit unit))
             {
+                Debug.Log(imageIndex + "/"+ groupUI.GetComponent<UIElement>().groupImages.Count);
                 groupUI.GetComponent<UIElement>().groupImages[imageIndex].gameObject.SetActive(true);
                 switch(unit.unitType)
                 {
