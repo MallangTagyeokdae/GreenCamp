@@ -65,11 +65,13 @@ public class GameStatus : MonoBehaviour
         maxBuildingCount += count;
     }
 
+    [PunRPC]
     public void UpdateResource()
     {
         currentResourceCount += resourcePerSecond;
     }
 
+    
     public void UpdateUnitCount()
     {
         currentUnitCount++;
