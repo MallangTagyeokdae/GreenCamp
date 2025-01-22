@@ -103,7 +103,9 @@ public class GameManager : MonoBehaviour
         SetState("InGame");
         currentUI.Show();
         target.SetActive(true);
-        masterTimer = StartCoroutine(MasterTimer());
+        if(PhotonNetwork.IsMasterClient){
+            masterTimer = StartCoroutine(MasterTimer());
+        }
     }
     public void SetState(string newState)
     {
