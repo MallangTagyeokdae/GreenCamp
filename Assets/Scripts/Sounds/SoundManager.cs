@@ -51,7 +51,6 @@ public class SoundManager : MonoBehaviour
         }
         
         PlayBackGroundMusic();
-        DontDestroyOnLoad(this.gameObject);
     }
 
     void Start()
