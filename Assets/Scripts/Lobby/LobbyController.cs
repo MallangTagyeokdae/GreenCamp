@@ -21,16 +21,32 @@ public class LobbyController : MonoBehaviour
     public Transform parent;
     private List<string> _roomList;
     // Start is called before the first frame update
-    public OutGameState outGameState;
+    private LobbyState state;
     void Start()
     {
         _roomList = new List<string>();
+        state = new Home();
     }
 
     public void LogIn()
     {
         loggedIn.Invoke();
-        outGameState.SetLobbyState("Login");
+        //outGameState.SetLobbyState("Login");
+    }
+
+    public void SetState(string stateName){
+        this.state.OutPage(stateName);
+        switch (stateName){
+            case "Home": state = new Home(); break;
+            case "Single": state = new Single(); break;
+            case "Multi": state = new Multi(); break;
+            case "Setting": state = new Setting(); break;
+            case "TeamSelect": state = new TeamSelect(); break;
+        }
+        this.state.InitPage();
+    }
+
+    public void CreateRoom(){
     }
 
     public void updateRoomList(List<RoomInfo> roomList)
@@ -45,7 +61,7 @@ public class LobbyController : MonoBehaviour
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() =>
                 {
                     PhotonManager.instance.JoinRoom(roomInfo);
-                    outGameState.SetLobbyState("JoinGame");
+                    SetState("TeamSelect");
                 });
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() => { Debug.Log("test pressed button!"); });
 
