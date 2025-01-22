@@ -352,10 +352,21 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public bool checkIsUnitUI(UIContainer currentUI)
+    public bool CheckIsUnitUI(UIContainer currentUI)
     {
         if(currentUI == UILists[7] || currentUI == UILists[8])
             return true;
         return false;
+    }
+
+    public void SetSettingPage(bool state)
+    {
+        if(state)
+        {
+            Options[3].GetComponent<UIContainer>().Show();
+        } else
+        {
+            Options[3].GetComponent<UIContainer>().Hide();
+        }
     }
 }

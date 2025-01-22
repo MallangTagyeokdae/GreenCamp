@@ -607,6 +607,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PressedF1()
+    {
+        // 상태 상관없이 그냥 설정창 띄우기
+        
+    }
+
     private bool CheckCreateUnitPermission(Barrack barrack, int level)
     {
         // 건물이 유닛을 생성할 레벨이 되는지 확인하는 함수
@@ -627,7 +633,7 @@ public class GameManager : MonoBehaviour
         switch(gameState)
         {
             case GameStates.InGame:
-                if(uIController.checkIsUnitUI(currentUI))
+                if(uIController.CheckIsUnitUI(currentUI))
                 {
                     SetState("SetTargetMode");
                 } else if(clickedObj.TryGetComponent(out Barrack barrack))
@@ -760,7 +766,7 @@ public class GameManager : MonoBehaviour
         switch(gameState)
         {
             case GameStates.InGame:
-                if(uIController.checkIsUnitUI(currentUI))
+                if(uIController.CheckIsUnitUI(currentUI))
                 {
                     SetState("SetMoveRot");
                 }
@@ -811,7 +817,7 @@ public class GameManager : MonoBehaviour
         switch(gameState)
         {
             case GameStates.InGame:
-                if(uIController.checkIsUnitUI(currentUI))
+                if(uIController.CheckIsUnitUI(currentUI))
                 {
                     foreach(GameObject gameObject in clickedObject)
                     {
