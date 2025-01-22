@@ -200,7 +200,7 @@ public class GameManager : MonoBehaviour
             case GameStates.InGame:
                 if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1)
                     buildingController.SetSponPos(newLocation,building);
-                MoveUnit(newLocation);
+                MoveUnit(newLocation, 1);
                 break;
             case GameStates.ConstructionMode:
             case GameStates.SetMoveRot:
@@ -221,11 +221,11 @@ public class GameManager : MonoBehaviour
                 SetBuildingListUI();
                 break;
             case GameStates.SetMoveRot:
-                MoveUnit(newLocation);
+                MoveUnit(newLocation, 1);
                 SetState("InGame");
                 break;
             case GameStates.SetTargetMode:
-                MoveUnit(newLocation);
+                MoveUnit(newLocation, 2);
                 SetState("InGame");
                 break;
         }
@@ -409,15 +409,8 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void MoveUnit(Vector3 newLocation)
+    public void MoveUnit(Vector3 newLocation, int order)
     {
-        int order = 1;
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            order = 2;
-        }
-
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
