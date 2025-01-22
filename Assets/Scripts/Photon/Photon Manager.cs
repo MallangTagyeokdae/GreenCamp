@@ -146,7 +146,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         Debug.Log($"join room: {PhotonNetwork.CurrentRoom.Name} Successed");
         Debug.Log("joined room title: " + PhotonNetwork.CurrentRoom.CustomProperties["Title"]);
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
-        lobbyController.SetState("TeamSelect");
+        if(!PhotonNetwork.IsMasterClient){
+            lobbyController.SetState("TeamSelect");
+        }
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
