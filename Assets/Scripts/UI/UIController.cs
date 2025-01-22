@@ -43,7 +43,7 @@ public class UIController : MonoBehaviour
                 SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
                 break;
         }
-        return selectedUI;
+        return CheckUpdateUI(selectedUI, currentUI);
     }
     public UIContainer SetUnitUI(int UIindex, Unit unit)
     {
