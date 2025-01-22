@@ -19,7 +19,7 @@ public class Archer : Unit
                 unitCurrentHealth: 50,
                 unitCost: 0,
                 unitPower: 35,
-                unitPowerRange: 3,
+                unitPowerRange: 14,
                 unitMoveSpeed: 3,
                 populationCost: 1)
     {
@@ -35,7 +35,7 @@ public class Archer : Unit
         this.unitCurrentHealth = 50;
         this.unitCost = 0;
         this.unitPower = 35;
-        this.unitPowerRange = 3;
+        this.unitPowerRange = 14;
         this.unitMoveSpeed = 3;
         this.populationCost = 1;
     }

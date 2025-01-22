@@ -5,9 +5,15 @@ using UnityEngine.UI;
 
 public class PlaySoundHandler : MonoBehaviour
 {
-    public GameObject masterSlider;
-    public GameObject bgmSlider;
-    public GameObject effectSlider;
+    private GameObject masterSlider;
+    private GameObject bgmSlider;
+    private GameObject effectSlider;
+
+    private void Awake() {
+        masterSlider = SoundManager.instance.masterSlider;
+        bgmSlider = SoundManager.instance.bgmSlider;
+        effectSlider = SoundManager.instance.effectSlider;
+    }
 
 
     public void PlaySound(string soundName){
@@ -61,6 +67,19 @@ public class PlaySoundHandler : MonoBehaviour
         SoundManager.instance.ReleaseBackGroundMusicMute();
     }
 
-    
+    public void SaveSoundSetting(){
+        PlayerPrefs.SetFloat("bgmVolume", bgmSlider.GetComponent<Slider>().value);
+        PlayerPrefs.SetFloat("effectVolume", effectSlider.GetComponent<Slider>().value);
+        PlayerPrefs.SetFloat("masterVolume", masterSlider.GetComponent<Slider>().value);
 
+        Debug.Log($"bgm: {bgmSlider.GetComponent<Slider>().value}");
+        Debug.Log($"effect: {effectSlider.GetComponent<Slider>().value}");
+        Debug.Log($"master: {masterSlider.GetComponent<Slider>().value}");
+    }
+
+    public void LoadSoundSetting(){
+        bgmSlider.GetComponent<Slider>().value = PlayerPrefs.HasKey("bgmVolume")? PlayerPrefs.GetFloat("bgmVolume") : 1f;
+        effectSlider.GetComponent<Slider>().value = PlayerPrefs.HasKey("effectVolume") ? PlayerPrefs.GetFloat("effectVolume") : 1f;
+        masterSlider.GetComponent<Slider>().value = PlayerPrefs.HasKey("masterVolume") ? PlayerPrefs.GetFloat("masterVolume"): 1f;
+    }
 }
