@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         if(PhotonNetwork.IsMasterClient)
         {
             int[] randomNums = MakeRandom(4);
-            GameStatus.instance.GetComponent<PhotonView>().RPC("CreateCommand", RpcTarget.Others, randomNums[1]);
+            gameObject.GetComponent<PhotonView>().RPC("CreateCommand", RpcTarget.Others, randomNums[1]);
             CreateCommand(randomNums[0]);
         }
 
