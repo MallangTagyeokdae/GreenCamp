@@ -820,7 +820,11 @@ public class GameManager : MonoBehaviour
                     foreach(GameObject gameObject in clickedObject)
                     {
                         if(gameObject.TryGetComponent(out Unit unit))
+                        {
                             StopCoroutine(unit.unitBehaviour);
+                            unit.animator.SetBool("isWalking",false);
+                            unit.animator.SetBool("isAttacking",false);
+                        }
                     }
 
                 } else if(clickedObj.TryGetComponent(out Barrack barrack))
