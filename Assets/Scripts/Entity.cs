@@ -23,6 +23,8 @@ public class Entity : MonoBehaviour
     public float maxHealth { get; set; }
     public float currentHealth { get; set; }
     public int population { get; set; }
+    
+    public GameObject clickedEffect;
 
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)
     {

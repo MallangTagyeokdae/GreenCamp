@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Healer : Unit
 {
+    public GameObject HealingEffect;
     public Healer(string teamID, int unitID, Vector3 unitLocation)
                 : base(
                 teamID,
