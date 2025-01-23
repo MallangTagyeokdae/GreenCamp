@@ -12,7 +12,7 @@ public class Tanker : Unit
                 unitLocation,
                 unitMaxHealth: 150,
                 unitCurrentHealth: 150,
-                unitCost: 0,
+                unitCost: 50,
                 unitPower: 15,
                 unitPowerRange: 3,
                 unitMoveSpeed: 1,
@@ -26,10 +26,11 @@ public class Tanker : Unit
         this.unitLocation = unitLocation;
         this.maxHealth = 150;
         this.currentHealth = 150;
-        this.unitCost = 0;
+        this.unitCost = 50;
         this.unitPower = 15;
         this.unitPowerRange = 3;
         this.unitMoveSpeed = 1;
         this.populationCost = 1;
+        this.population = 2;
     }
 }

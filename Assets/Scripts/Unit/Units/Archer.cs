@@ -19,7 +19,7 @@ public class Archer : Unit
                 unitLocation,
                 unitMaxHealth: 50,
                 unitCurrentHealth: 50,
-                unitCost: 0,
+                unitCost: 40,
                 unitPower: 35,
                 unitPowerRange: 14,
                 unitMoveSpeed: 3,
@@ -35,10 +35,11 @@ public class Archer : Unit
         this.unitLocation = unitLocation;
         this.maxHealth = 50;
         this.currentHealth = 50;
-        this.unitCost = 0;
+        this.unitCost = 40;
         this.unitPower = 35;
         this.unitPowerRange = 14;
         this.unitMoveSpeed = 3;
         this.populationCost = 1;
+        this.population = 1;
     }
 }

@@ -112,13 +112,9 @@ public class BuildingController : MonoBehaviour
                 break;
         }
 
-        /*if(_teamID == buildingObject.GetComponent<Building>().teamID){
-            buildingObject.transform.SetParent(myBuildings.transform);
-        }
-        else{
-            buildingObject.transform.SetParent(enemyBuildings.transform);
-        }*/
-
+        int[] data = GameStatus.instance.CheckObjName(buildingType);
+        newBuilding.returnCost = data[0];
+        newBuilding.returnPopulation = data[1];
         _buildingID++;
         return newBuilding;
     }
@@ -191,6 +187,8 @@ public class BuildingController : MonoBehaviour
             DestroyBuilding(building);
             GameManager.instance.SetBuildingListUI();
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
+
+            GameStatus.instance.currentBuildingCount -= building.population;
         } else if(building.state.Equals(Building.State.InProgress))
         {
             switch(building.inProgressItem)
@@ -198,12 +196,19 @@ public class BuildingController : MonoBehaviour
                 case Building.InProgressItem.LevelUP:
                     building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
                     break;
+                case Building.InProgressItem.Soldier:
+                case Building.InProgressItem.Archer:
+                case Building.InProgressItem.Tanker:
+                case Building.InProgressItem.Healer:
+                    GameStatus.instance.currentUnitCount -= building.returnPopulation;
+                    break;
                 default:
                     break;
             }
             SetBuildingState(building, Building.State.Built, "none");
             GameManager.instance.ReloadBuildingUI(building);
         }
+        GameStatus.instance.currentResourceCount += Mathf.FloorToInt(building.returnCost * 0.7f); // 취소하면 비용의 70프로만 돌려줌 소숫점아래 버림
     }
 
     private async Task StartTimer(float time)

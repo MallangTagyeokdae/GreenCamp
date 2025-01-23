@@ -12,7 +12,7 @@ public class Healer : Unit
                 unitLocation,
                 unitMaxHealth: 85,
                 unitCurrentHealth: 85,
-                unitCost: 0,
+                unitCost: 65,
                 unitPower: 0,
                 unitPowerRange: 4,
                 unitMoveSpeed: 1,
@@ -26,10 +26,11 @@ public class Healer : Unit
         this.unitLocation = unitLocation;
         this.maxHealth = 85;
         this.currentHealth = 85;
-        this.unitCost = 0;
+        this.unitCost = 65;
         this.unitPower = 0;
         this.unitPowerRange = 4;
         this.unitMoveSpeed = 1;
         this.populationCost = 1;
+        this.population = 2;
     }
 }

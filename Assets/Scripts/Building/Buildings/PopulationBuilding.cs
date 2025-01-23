@@ -30,11 +30,13 @@ public class PopulationBuilding : Building
         this.currentHealth = 0;
         this.progress = 0;
         this.level = 1;
-        this.cost = 0;
+        this.cost = 25;
+        this.levelUpCost = 100;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 15f;
         this.underGrid = colliders;
+        this.population = 1;
     }
 
     [PunRPC]

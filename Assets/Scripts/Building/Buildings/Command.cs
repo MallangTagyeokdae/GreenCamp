@@ -34,12 +34,14 @@ public class Command : Building
         this.currentHealth = 0;
         this.level = 1;
         this.cost = 0;
+        this.levelUpCost = 100;
         this.attackPower = 10;
         this.attackRange = 10;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 10f;
         this.underGrid = colliders;
+        this.population = 0;
     }
 
 

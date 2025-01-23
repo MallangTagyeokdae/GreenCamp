@@ -12,7 +12,7 @@ public class Soldier : Unit
                 unitLocation,
                 unitMaxHealth: 100,
                 unitCurrentHealth: 100,
-                unitCost: 0,
+                unitCost: 30,
                 unitPower: 30,
                 unitPowerRange: 3,
                 unitMoveSpeed: 2,
@@ -26,11 +26,12 @@ public class Soldier : Unit
         this.unitLocation = unitLocation;
         this.maxHealth = 100;
         this.currentHealth = 100;
-        this.unitCost = 0;
+        this.unitCost = 30;
         this.unitPower = 30;
         this.unitPowerRange = 3;
         this.unitMoveSpeed = 2;
         this.populationCost = 1;
+        this.population = 1;
     }
 }
 

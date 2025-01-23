@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     public string unitInfo;
     public List<UIContainer> UILists; // 유닛, 건물과 관련된 UI들
     public List<UIContainer> Options; // 로딩, 자원, 배경과 관련된 UI들
+    public List<TMP_Text> infoText; // Header에 있는 텍스트들 ( 0: 자원, 1: 현재유닛인구, 2: 최대인구, 3: 현재건물인구, 4: 최대건물인구)
     public BuildingController buildingController;
     private TMP_Text _level;
     private TMP_Text _health;
@@ -28,15 +29,15 @@ public class UIController : MonoBehaviour
         }
         return currentUI;
     }
-    public UIContainer SetBuildingListUI(int UIindex)
+    public UIContainer SetBuildingListUI(int UIindex, int commandLevel)
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
         switch(GameManager.instance.gameState)
         {
             case  GameStates.InGame:
-                SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiElements, 4, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
-                SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiLockElements, 4, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
+                SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiElements, commandLevel, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
+                SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiLockElements, commandLevel, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
                 break;
             case GameStates.ConstructionMode:
                 SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, false);
@@ -200,6 +201,9 @@ public class UIController : MonoBehaviour
         switch(level)
         {
             case 1:
+                action(uIButtons.GetRange(0,3), state);
+                action(uIButtons.GetRange(3,1), !state);
+                break;
             case 2:
             case 3:
             case 4:

@@ -31,7 +31,10 @@ public abstract class Building : Entity
     public Vector3 location { get; set; }
     public float progress { get; set; }
     public int cost { get; set; }
+    public int levelUpCost { get; set; }
     public int level { get; set; }
+    public int returnCost { get; set; }
+    public int returnPopulation { get; set; }
     public Slider healthBar { get; set; }
     public Slider progressBar { get; set; }
     public float time { get; set; }
