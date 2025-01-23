@@ -438,6 +438,7 @@ public class GameManager : MonoBehaviour
 
         building.returnCost = building.levelUpCost; // 작업 취소되면 돌려줄 비용을 레벨업 비용으로 저장
 
+        ReloadingGameStatus(building);
         ReloadBuildingUI(building);
     }
 
@@ -472,6 +473,20 @@ public class GameManager : MonoBehaviour
                     SetBuildingInfo(6, building);
                     break;
             }
+        }
+    }
+    
+
+    public void ReloadingGameStatus(Building building)
+    {
+        switch(building)
+        {
+            case ResourceBuilding:
+                GameStatus.instance.resourcePerSecond += 1;
+                break;
+            case PopulationBuilding:
+                GameStatus.instance.maxUnitCount += 10;
+                break;
         }
     }
 
