@@ -410,6 +410,7 @@ public class GameManager : MonoBehaviour
                     buildingController.SetBuildingState(building, Building.State.Built, "None");
 
                     UpdateUnitPopulationUI();
+                    UpdateBuildingPopulationUI();
                 }
 
                 ReloadBuildingUI(building);
