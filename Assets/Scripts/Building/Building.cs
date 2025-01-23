@@ -35,7 +35,6 @@ public abstract class Building : Entity
     public int level { get; set; }
     public int returnCost { get; set; }
     public int returnPopulation { get; set; }
-    public Slider healthBar { get; set; }
     public Slider progressBar { get; set; }
     public float time { get; set; }
     public float loadingTime{ get; set; }
