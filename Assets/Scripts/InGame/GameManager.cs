@@ -153,6 +153,8 @@ public class GameManager : MonoBehaviour
     // ====================================================
 
     // ================== 클릭 관련 함수 ======================
+    //clickedObject에서 제가하는 함수 따로 설정해야할듯
+    //스스로가 click에 대한 boolean 변수를 따로 가지고 있는건?
     public void SetClickedObject(GameObject gameObject)
     {
         if (CheckState("InGame"))
@@ -180,15 +182,16 @@ public class GameManager : MonoBehaviour
     // 리팩토링때 조져야함
     public void AddClickedObject(GameObject gameObject)
     {
+        if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
+        {
+            gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
+        }
+
         if (clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 15)
         {
             if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
             {
                 clickedObject.Add(gameObject);
-                if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
-                {
-                    gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
-                }
                 unitController.SetActiveHealthBar(gameObject, true);
                 if (clickedObject.Count == 1) SetUnitInfo(7, clickedObject[0]);
                 else if (clickedObject.Count >= 3)
@@ -203,10 +206,7 @@ public class GameManager : MonoBehaviour
             if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
             {
                 clickedObject.Add(gameObject);
-                if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
-                {
-                    gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
-                }
+
                 unitController.SetActiveHealthBar(gameObject, true);
                 if (clickedObject.Count == 2) SetUnitInfo(7, clickedObject[1]);
                 else if (clickedObject.Count >= 3)
