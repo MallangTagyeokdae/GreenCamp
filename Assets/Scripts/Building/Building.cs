@@ -60,6 +60,10 @@ public abstract class Building : Entity
         this.loadingTime = 10f;
     }
 
+    private void Awake() {
+        clickedEffect = transform.Find("ClickedEffect").gameObject;
+    }
+
     public virtual void InitTime()
     {
         time = 0f;

@@ -6125,8 +6125,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -54.336254, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3350673157581375249}
   - {fileID: 7449230183334207858}
@@ -6390,6 +6390,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   teamID: 
+  clickedEffect: {fileID: 0}
   healthBar: {fileID: 6922770217836032722}
   state: 0
   animator: {fileID: 0}
@@ -20019,7 +20020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5329887860975645673, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5329887860975645673, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
       propertyPath: m_LocalPosition.z
