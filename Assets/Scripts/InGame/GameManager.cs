@@ -481,7 +481,7 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }*/
-            if (unit.state == Unit.State.Idle)
+            if (unit.state == Unit.State.Idle || unit.order == Unit.Order.Offensive)
             {
                 if (unit.unitBehaviour != null)
                 {
@@ -821,9 +821,8 @@ public class GameManager : MonoBehaviour
                     {
                         if(gameObject.TryGetComponent(out Unit unit))
                         {
+                            unit.ChangeState("Idle");
                             StopCoroutine(unit.unitBehaviour);
-                            unit.animator.SetBool("isWalking",false);
-                            unit.animator.SetBool("isAttacking",false);
                         }
                     }
 
