@@ -27,6 +27,7 @@ public class Entity : MonoBehaviour
     public Slider healthBar;
     
     public GameObject clickedEffect;
+    public GameObject enemyClickedEffect;
 
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)
     {
