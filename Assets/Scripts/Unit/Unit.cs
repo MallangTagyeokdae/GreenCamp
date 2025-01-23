@@ -37,7 +37,6 @@ public abstract class Unit : Entity
     // private Collider u
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
-    public Slider healthBar;
     public State state = State.Idle;
 
     [HideInInspector] public Animator animator;

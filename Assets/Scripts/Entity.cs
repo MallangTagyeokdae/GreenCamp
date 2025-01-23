@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public enum CollisionRange
 {
@@ -23,6 +24,7 @@ public class Entity : MonoBehaviour
     public float maxHealth { get; set; }
     public float currentHealth { get; set; }
     public int population { get; set; }
+    public Slider healthBar;
     
     public GameObject clickedEffect;
 
@@ -66,6 +68,7 @@ public class Entity : MonoBehaviour
     public void SyncAttack()
     {
         currentHealth -= 10;
+        healthBar.value = currentHealth/maxHealth;
     }
 
 }
