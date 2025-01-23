@@ -159,10 +159,12 @@ public class BuildingController : MonoBehaviour
                 building.GetComponent<Command>().attackPower += 5;
                 break;
             case ResourceBuilding:
-                GameStatus.instance.resourcePerSecond += 1;
+                GameStatus.instance.resourcePerSecond += .5f;
+                building.GetComponent<ResourceBuilding>().increasePersent += .5f;
                 break;
             case PopulationBuilding:
-                GameStatus.instance.maxUnitCount += 10;
+                GameStatus.instance.maxUnitCount += 5;
+                building.GetComponent<PopulationBuilding>().increasePersent += 5;
                 break;
             case Defender:
                 building.GetComponent<Defender>().attackPower += 5;
@@ -211,9 +213,9 @@ public class BuildingController : MonoBehaviour
         building.inProgressItem = item;
     }
 
-    public void SetSponPos(Vector3 newLocation, Building building)
+    public void SetSponPos(Vector3 newLocation, Barrack barrack)
     {
-        building.GetComponent<Barrack>().SetSponPos(newLocation);
+        barrack.SetSponPos(newLocation);
     }
     
     public void CancelProgress(Building building)

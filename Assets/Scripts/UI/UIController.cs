@@ -129,6 +129,8 @@ public class UIController : MonoBehaviour
         UpdateHealth(selectedUI, clickedBuilding);
         // 이름 설정
         UpdateName(selectedUI, clickedBuilding);
+        // 그 외 정보들 설정
+        UpdateElementInfo(selectedUI, clickedBuilding);
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
@@ -251,6 +253,26 @@ public class UIController : MonoBehaviour
             SetProgressBar(currentUI, currentHealth, maxHealth);
         }
         SetHealth(currentUI, currentHealth, maxHealth);
+    }
+
+    public void UpdateElementInfo(UIContainer selectedUI, Building clickedBuilding)
+    {
+        if(selectedUI.Equals(UILists[1])) return;
+        switch(clickedBuilding)
+        {
+            case Command:
+                selectedUI.GetComponent<UIElement>().elementInfo.text = clickedBuilding.GetComponent<Command>().attackPower.ToString();
+                break;
+            case Defender:
+                selectedUI.GetComponent<UIElement>().elementInfo.text = clickedBuilding.GetComponent<Defender>().attackPower.ToString();
+                break;
+            case ResourceBuilding:
+                selectedUI.GetComponent<UIElement>().elementInfo.text = clickedBuilding.GetComponent<ResourceBuilding>().increasePersent.ToString();
+                break;
+            case PopulationBuilding:
+                selectedUI.GetComponent<UIElement>().elementInfo.text = clickedBuilding.GetComponent<PopulationBuilding>().increasePersent.ToString();
+                break;
+        }
     }
 
     public void SetHealth(UIContainer currentUI, int currentHealth, int maxHealth)

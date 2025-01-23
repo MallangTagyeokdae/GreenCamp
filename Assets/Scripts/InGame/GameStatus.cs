@@ -27,8 +27,8 @@ public class GameStatus : MonoBehaviour
     }
     public string teamID { get; set; }
     public int maxResourceCount { get; set; }
-    public int currentResourceCount { get; set; }
-    public int resourcePerSecond { get; set; }
+    public float currentResourceCount { get; set; }
+    public float resourcePerSecond { get; set; }
     public int maxUnitCount { get; set; }
     public int currentUnitCount { get; set; }
     public int maxBuildingCount { get; set; }
@@ -126,7 +126,7 @@ public class GameStatus : MonoBehaviour
         } else if(building.GetComponent<Command>())
         {
             return true;
-        } else if(!building.GetComponent<Command>() && building.level < commandLevel + 1)
+        } else if(!building.GetComponent<Command>() && building.level <= commandLevel + 1)
         {
             return true;
         }
