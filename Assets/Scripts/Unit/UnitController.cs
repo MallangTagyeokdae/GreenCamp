@@ -199,25 +199,26 @@ public class UnitController : MonoBehaviour
             AnimatorStateInfo stateInfo = unit.animator.GetCurrentAnimatorStateInfo(0);
             float progress = stateInfo.normalizedTime % 1;
 
-            if (progress >= 0.37f && unit.animator.GetBool("Attacked") == false)
+            if (progress >= 0.34f && unit.animator.GetBool("Attacked") == false)
             {
                 unit.animator.SetBool("Attacked", true);
                 Debug.Log("attack check");
+                if (unit.TryGetComponent(out Archer archer))
+                {
+                    StartCoroutine(LaunchArrow(archer, enemy));
+                }
                 enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient);
+
             }
+
+
             else if (progress < 0.1f)
             {
                 unit.animator.SetBool("Attacked", false);
             }
-            if (unit.TryGetComponent(out Archer archer))
-            {
-                StartCoroutine(LaunchArrow(archer, enemy));
-                yield return new WaitForSeconds(1);
-            }
-            else
-            {
-                yield return null;
-            }
+
+            yield return null;
+
         }
 
 
@@ -230,8 +231,11 @@ public class UnitController : MonoBehaviour
     public IEnumerator LaunchArrow(Archer archer, GameObject enemy)
     {
         Vector3 rot = (enemy.transform.position - archer.transform.position).normalized;
-        GameObject arrow = Instantiate(archer.arrow, new Vector3(archer.transform.position.x, 1.0f, archer.transform.position.z), Quaternion.LookRotation(rot) * Quaternion.Euler(-90, 0, 0));
-
+        // GameObject arrow = Instantiate(archer.arrow, new Vector3(archer.transform.position.x, 1.0f, archer.transform.position.z), Quaternion.LookRotation(rot) * Quaternion.Euler(-90, 0, 0));
+        GameObject arrow = archer.arrow;
+        arrow.transform.position = new Vector3(archer.transform.position.x, 1.0f, archer.transform.position.z);
+        arrow.transform.rotation = Quaternion.LookRotation(rot) * Quaternion.Euler(-90, 0, 0);
+        arrow.SetActive(true);
         while (Vector3.Distance(arrow.transform.position, new Vector3(enemy.transform.position.x, 1.0f, enemy.transform.position.z)) > 1.0f)
         {
             rot = (enemy.transform.position - arrow.transform.position).normalized;
@@ -245,7 +249,7 @@ public class UnitController : MonoBehaviour
                                                           Time.deltaTime * 25);
             yield return null;
         }
-        Destroy(arrow);
+        arrow.SetActive(false);
     }
 
     /*  1. 새로운 유닛을 설정할 때는 triggerStay가 아니라 trigger가 enter할 때마다 들어온 유닛을 list에 추가한다.
