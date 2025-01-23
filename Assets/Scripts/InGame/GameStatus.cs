@@ -38,10 +38,10 @@ public class GameStatus : MonoBehaviour
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
         maxResourceCount = 1000;
         currentResourceCount = 0;
-        resourcePerSecond = 5;
-        maxUnitCount = 7;
+        resourcePerSecond = 1;
+        maxUnitCount = 10;
         currentUnitCount = 0;
-        maxBuildingCount = 7;
+        maxBuildingCount = 1;
         currentBuildingCount = 0;
     }
 
@@ -111,6 +111,27 @@ public class GameStatus : MonoBehaviour
                 break;
         }
         return true;
+    }
+
+    public bool CanLevelUp(Building building, int commandLevel)
+    {
+        if(building.level > 5)
+        {
+            Debug.Log("최대레벨");
+            return false;
+        } else if(currentResourceCount < building.levelUpCost)
+        {
+            Debug.Log("자원 부족");
+            return false;
+        } else if(building.GetComponent<Command>())
+        {
+            return true;
+        } else if(!building.GetComponent<Command>() && building.level < commandLevel + 1)
+        {
+            return true;
+        }
+        Debug.Log("건물레벨 <= 커멘드 레벨 + 1 이 되어야함");
+        return false;
     }
 
     public void SetResources(string objectName, string objectType)

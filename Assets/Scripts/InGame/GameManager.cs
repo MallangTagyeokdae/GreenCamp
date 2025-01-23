@@ -111,7 +111,11 @@ public class GameManager : MonoBehaviour
         // 본진 생성
         Building building = buildingController.CreateBuilding(startingPoint, buildingType, new Vector3(-90, 90, 0), gridHandler.constructionGrids);
         // 본진 초기값 세팅
-        buildingController.initCommand(building);
+        Debug.Log(building.name);
+        building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
+        buildingController.SetBuildingState(building, Building.State.Built, "None");
+
+        building.returnCost = building.levelUpCost; // 작업 취소되면 돌려줄 비용을 레벨업 비용으로 저장
     }
     public void SetState(string newState)
     {
@@ -324,10 +328,6 @@ public class GameManager : MonoBehaviour
     private async Task OrderUnitCreation(Barrack barrack, GameObject targetOBJ)
     {
         var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
-        
-        int[] data = GameStatus.instance.CheckObjName(unitType);
-        barrack.returnCost = data[0];
-        barrack.returnPopulation = data[1];
 
         buildingController.SetBuildingState(barrack, Building.State.InProgress, unitType);
         ReloadBuildingUI(barrack);
@@ -364,23 +364,27 @@ public class GameManager : MonoBehaviour
     {
         if (clickedObject[0].TryGetComponent(out Building building))
         {
-            if(building.level < 5)
+            if(GameStatus.instance.CanLevelUp(building, _commandLevel))
             {
                 var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
                 buildingController.SetBuildingState(building, Building.State.InProgress, "LevelUP");
+
+                GameStatus.instance.currentResourceCount -= building.levelUpCost;
+
                 building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, true);
                 ReloadBuildingUI(building);
 
                 tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-                await OrderCreate(building, building.level * 10f, cts.Token);
+                if(await OrderCreate(building, building.level * 10f, cts.Token))
+                {
+                    tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
-                tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
-
-                building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
-                buildingController.UpgradeBuilding(building);
-                buildingController.SetBuildingState(building, Building.State.Built, "None");
+                    building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
+                    buildingController.UpgradeBuilding(building);
+                    buildingController.SetBuildingState(building, Building.State.Built, "None");
+                }
 
                 ReloadBuildingUI(building);
             }
@@ -390,12 +394,15 @@ public class GameManager : MonoBehaviour
     {
         var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
+
         // 건물 아래 Grid를 Builted로 변경
         gridHandler.SetGridsToBuilted();
 
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
         building.InitTime();
+        
+        buildingController.SetBuildingState(building, Building.State.InCreating, "None");
 
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
         await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time), cts.Token);

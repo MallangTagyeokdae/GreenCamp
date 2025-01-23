@@ -31,7 +31,7 @@ public class Command : Building
         this.type = "Command";
         this.location = buildingLocation;
         this.maxHealth = 500;
-        this.currentHealth = 0;
+        this.currentHealth = 500;
         this.level = 1;
         this.cost = 0;
         this.levelUpCost = 100;
