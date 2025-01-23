@@ -72,6 +72,7 @@ public abstract class Unit : Entity
         healthBar.gameObject.SetActive(false);
         rigidbody = gameObject.GetComponent<Rigidbody>();
         rigidbody.isKinematic = true;
+        clickedEffect = transform.Find("ClickedEffect").gameObject;
     }
 
     private void Start()
