@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,7 +17,8 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (root.TryGetComponent(out Entity entity))
+        root = gameObject.transform.parent.gameObject;
+        if (root.TryGetComponent(out Entity entity) && root.GetComponent<PhotonView>().IsMine)
         {
             entity.OnChildTriggerEnter(other.gameObject, collisionRange);
         }
@@ -24,7 +26,8 @@ public class CollisionDetection : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (root.TryGetComponent(out Entity entity))
+        root = gameObject.transform.parent.gameObject;
+        if (root.TryGetComponent(out Entity entity)&& root.GetComponent<PhotonView>().IsMine)
         {
             entity.OnChildTriggerExit(other.gameObject, collisionRange);
         }
