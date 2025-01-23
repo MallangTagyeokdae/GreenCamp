@@ -38,10 +38,10 @@ public class GameStatus : MonoBehaviour
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
         maxResourceCount = 1000;
         currentResourceCount = 0;
-        resourcePerSecond = 5;
-        maxUnitCount = 7;
+        resourcePerSecond = 1;
+        maxUnitCount = 10;
         currentUnitCount = 0;
-        maxBuildingCount = 7;
+        maxBuildingCount = 1;
         currentBuildingCount = 0;
     }
 
@@ -85,21 +85,112 @@ public class GameStatus : MonoBehaviour
     // ------------------------------------------------
     // Building Create 체크 관련 함수들
 
-    public bool canCreateBuilding(Building building)
+    public bool CanCreate(string objectName, string objectType) // 생성할 객체의 이름, 객체의 종류를 받아서 생성가능 여부를 리턴
     {
-        if (this.currentResourceCount < building.cost)
+        int[] data = CheckObjName(objectName);
+        if (currentResourceCount < data[0])
         {
             Debug.Log("자원부족");
             return false;
         }
-        if (this.maxBuildingCount < this.currentBuildingCount + 1)
+        switch(objectType)
         {
-            Debug.Log("건물 인구수 부족");
-            return false;
+            case "Unit":
+                if(maxUnitCount < currentUnitCount + data[1])
+                {
+                    Debug.Log("인구수 부족");
+                    return false;
+                }
+                break;
+            case "Building":
+                if (maxBuildingCount < currentBuildingCount + data[1])
+                {
+                    Debug.Log("건물 인구수 부족");
+                    return false;
+                }
+                break;
         }
         return true;
     }
 
+    public bool CanLevelUp(Building building, int commandLevel)
+    {
+        if(building.level > 5)
+        {
+            Debug.Log("최대레벨");
+            return false;
+        } else if(currentResourceCount < building.levelUpCost)
+        {
+            Debug.Log("자원 부족");
+            return false;
+        } else if(building.GetComponent<Command>())
+        {
+            return true;
+        } else if(!building.GetComponent<Command>() && building.level < commandLevel + 1)
+        {
+            return true;
+        }
+        Debug.Log("건물레벨 <= 커멘드 레벨 + 1 이 되어야함");
+        return false;
+    }
+
+    public void SetResources(string objectName, string objectType)
+    {
+        int[] data = CheckObjName(objectName);
+        
+        currentResourceCount -= data[0];
+
+        switch(objectType)
+        {
+            case "Unit":
+                currentUnitCount += data[1];
+                break;
+            case "Building":
+                currentBuildingCount += data[1];
+                break;
+        }
+    }
+
+    public int[] CheckObjName(string objectName) // 생성할 객체의 이름을 받아 종류에 따른 비용, 인구수를 담은 배열을 리턴함
+    {
+        int[] data = new int[2]; // 0: cost / 1: population
+        switch(objectName)
+        {
+            case "Soldier":
+                data[0] = 30;
+                data[1] = 1;
+                break;
+            case "Archer":
+                data[0] = 40;
+                data[1] = 1;
+                break;
+            case "Tankder":
+                data[0] = 50;
+                data[1] = 2;
+                break;
+            case "Healer":
+                data[0] = 65;
+                data[1] = 2;
+                break;
+            case "Barrack":
+                data[0] = 50;
+                data[1] = 1;
+                break;
+            case "PopulationBuilding":
+                data[0] = 25;
+                data[1] = 1;
+                break;
+            case "ResourceBuilding":
+                data[0] = 45;
+                data[1] = 1;
+                break;
+            case "Defender":
+                data[0] = 25;
+                data[1] = 1;
+                break;
+        }
+        return data;
+    }
     // ------------------------------------------------
 
 }

@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
     //-----------------------------
-
+    private int _commandLevel = 1;
     private Coroutine masterTimer;
 
     void Start()
@@ -89,6 +89,8 @@ public class GameManager : MonoBehaviour
         await uIController.CountDown();
         SetState("InGame");
         currentUI.Show();
+        UpdateUnitPopulationUI();
+        UpdateBuildingPopulationUI();
         target.SetActive(true);
         if (PhotonNetwork.IsMasterClient)
         {
@@ -111,7 +113,11 @@ public class GameManager : MonoBehaviour
         // 본진 생성
         Building building = buildingController.CreateBuilding(startingPoint, buildingType, new Vector3(-90, 90, 0), gridHandler.constructionGrids);
         // 본진 초기값 세팅
-        buildingController.initCommand(building);
+        Debug.Log(building.name);
+        building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
+        buildingController.SetBuildingState(building, Building.State.Built, "None");
+
+        building.returnCost = building.levelUpCost; // 작업 취소되면 돌려줄 비용을 레벨업 비용으로 저장
     }
     public void SetState(string newState)
     {
@@ -260,7 +266,7 @@ public class GameManager : MonoBehaviour
     //=================== UI 변경 관련 함수들 ===================
     public void SetBuildingListUI() // 건설할 건물 띄워주는 UI, Ground Inspector창에서 직접 넣어줌
     {
-        currentUI = uIController.SetBuildingListUI(0);
+        currentUI = uIController.SetBuildingListUI(0, _commandLevel);
     }
     public void SetBuildingInfo(int UIindex, Building building)
     {
@@ -286,6 +292,22 @@ public class GameManager : MonoBehaviour
         unit.healthBar.value = (float)(unit.currentHealth * 1.0 / unit.maxHealth);
         // unit.healthBar.gameObject.SetActive(true);
     }
+
+    [PunRPC]
+    public void UpdateResourceUI()
+    {
+        uIController.infoText[0].text = GameStatus.instance.currentResourceCount.ToString();
+    }
+    public void UpdateUnitPopulationUI()
+    {
+        uIController.infoText[1].text = GameStatus.instance.currentUnitCount.ToString();
+        uIController.infoText[2].text = GameStatus.instance.maxUnitCount.ToString();
+    }
+    public void UpdateBuildingPopulationUI()
+    {
+        uIController.infoText[3].text = GameStatus.instance.currentBuildingCount.ToString();
+        uIController.infoText[4].text = GameStatus.instance.maxBuildingCount.ToString();
+    }
     // =====================================================
 
 
@@ -295,11 +317,18 @@ public class GameManager : MonoBehaviour
         if (gridHandler.CheckCanBuilt() && CheckState("ConstructionMode")) // 건물이 생성가능한지 확인하는 조건문 나중에 자원, 건물인구수 체크하는것도 추가해야함
         // 건물생성가능여부를 판단하는 기능을 하는 함수를 만들어서 조건문에 넣도록 개선해야함
         {
-            Vector3 buildingPos = gridHandler.CalculateGridScale();
-            DelayBuildingCreation(buildingPos);
-            grid.SetActive(false);
-            SetState("InGame");
-            SetBuildingListUI();
+            if(GameStatus.instance.CanCreate(buildingType, "Building"))
+            {
+                Vector3 buildingPos = gridHandler.CalculateGridScale();
+                DelayBuildingCreation(buildingPos);
+                GameStatus.instance.SetResources(buildingType, "Building");
+
+                UpdateResourceUI();
+                UpdateBuildingPopulationUI();
+            }
+                grid.SetActive(false);
+                SetState("InGame");
+                SetBuildingListUI();
         }
     }
     public async void CreateUnit()
@@ -307,31 +336,45 @@ public class GameManager : MonoBehaviour
         GameObject targetOBJ = clickedObject[0];
         if (targetOBJ.TryGetComponent(out Barrack barrack))
         {
-            if (barrack.state == Building.State.Built)
+            if (barrack.state == Building.State.Built && GameStatus.instance.CanCreate(unitType, "Unit"))
             {
-                var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
-                buildingController.SetBuildingState(barrack, Building.State.InProgress, unitType);
-                ReloadBuildingUI(barrack);
+                OrderUnitCreation(barrack, targetOBJ);
 
-                Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
-                buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5.5f); // 유닛이 생성되는 기본값
+                GameStatus.instance.SetResources(unitType, "Unit");
 
-                tasks[targetOBJ] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
-                Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos, cts.Token); // 유닛 생성
-
-                tasks.Remove(targetOBJ); // 유닛 생성이 완료되면 딕셔너리에서 제거해줌
-
-                Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
-
-                // 유닛을 destination으로 이동명령 내리기
-                GameObject unitObject = createdUnit.gameObject;
-
-                buildingController.SetBuildingState(barrack, Building.State.Built, "None");
-                createdUnit.unitBehaviour = StartCoroutine(unitController.Move(unitObject, destination, 1));
-
+                UpdateResourceUI();
+                UpdateUnitPopulationUI();
                 ReloadBuildingUI(barrack);
             }
         }
+    }
+
+    private async Task OrderUnitCreation(Barrack barrack, GameObject targetOBJ)
+    {
+        var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
+
+        buildingController.SetBuildingState(barrack, Building.State.InProgress, unitType);
+        ReloadBuildingUI(barrack);
+
+        Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
+        buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5.5f); // 유닛이 생성되는 기본값
+
+        tasks[targetOBJ] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
+        Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos, cts.Token); // 유닛 생성
+
+        if(createdUnit == null) return;
+                
+        tasks.Remove(targetOBJ); // 유닛 생성이 완료되면 딕셔너리에서 제거해줌
+
+        Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
+
+        // 유닛을 destination으로 이동명령 내리기
+        GameObject unitObject = createdUnit.gameObject;
+
+        buildingController.SetBuildingState(barrack, Building.State.Built, "None");
+        createdUnit.unitBehaviour = StartCoroutine(unitController.Move(unitObject, destination, 1));
+
+        ReloadBuildingUI(barrack);
     }
     // =====================================================
 
@@ -345,23 +388,27 @@ public class GameManager : MonoBehaviour
     {
         if (clickedObject[0].TryGetComponent(out Building building))
         {
-            if (building.level < 5)
+            if(GameStatus.instance.CanLevelUp(building, _commandLevel))
             {
                 var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
                 buildingController.SetBuildingState(building, Building.State.InProgress, "LevelUP");
+
+                GameStatus.instance.currentResourceCount -= building.levelUpCost;
+
                 building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, true);
                 ReloadBuildingUI(building);
 
                 tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-                await OrderCreate(building, building.level * 10f, cts.Token);
+                if(await OrderCreate(building, building.level * 10f, cts.Token))
+                {
+                    tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
-                tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
-
-                building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
-                buildingController.UpgradeBuilding(building);
-                buildingController.SetBuildingState(building, Building.State.Built, "None");
+                    building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
+                    buildingController.UpgradeBuilding(building);
+                    buildingController.SetBuildingState(building, Building.State.Built, "None");
+                }
 
                 ReloadBuildingUI(building);
             }
@@ -371,12 +418,15 @@ public class GameManager : MonoBehaviour
     {
         var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
+
         // 건물 아래 Grid를 Builted로 변경
         gridHandler.SetGridsToBuilted();
 
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
         building.InitTime();
+        
+        buildingController.SetBuildingState(building, Building.State.InCreating, "None");
 
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
         await StartTimer(building.loadingTime, (float time) => UpdateBuildingHealth(building, time), cts.Token);
@@ -385,6 +435,8 @@ public class GameManager : MonoBehaviour
 
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
         buildingController.SetBuildingState(building, Building.State.Built, "None");
+
+        building.returnCost = building.levelUpCost; // 작업 취소되면 돌려줄 비용을 레벨업 비용으로 저장
 
         ReloadBuildingUI(building);
     }
@@ -516,39 +568,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //피격시 idle상태로 변환 후 해당 유닛에게 어택명령?
     public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos, CancellationToken token)
     {
+        bool progressState = true;
         switch (unitType)
         {
             case "Soldier":
-                await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(barrack, 2f, token);
                 break;
             case "Archer":
-                await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(barrack, 2f, token);
                 break;
             case "Tanker":
-                await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(barrack, 2f, token);
                 break;
             case "Healer":
-                await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(barrack, 2f, token);
                 break;
         }
-        return unitController.CreateUnit(buildingPos, unitType);
+        return progressState == true ? unitController.CreateUnit(buildingPos, unitType) : null;
     }
 
-    private async Task OrderCreate(Building building, float totalTime, CancellationToken token)
+    private async Task<bool> OrderCreate(Building building, float totalTime, CancellationToken token)
     {
         building.InitOrderTime(totalTime);
-        await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time), token);
-        /*PhotonView photonView = building.GetComponent<PhotonView>();
-        await StartTimer(totalTime, (float time) =>
-        {
-            if (photonView.IsMine)      // IsMine Check
-            {
-                photonView?.RPC("UpdateBuildingProgress", RpcTarget.AllBuffered, building, time);
-            }
-        });*/
+        return await StartTimer(totalTime, (float time) => UpdateBuildingProgress(building, time), token);
     }
     private void UpdateBuildingProgress(Building building, float time)
     {
@@ -563,8 +607,8 @@ public class GameManager : MonoBehaviour
 
 
     // =================== 타이머 함수 ======================== 
-    private async Task StartTimer(float time, Action<float> action, CancellationToken token)
-    {
+    private async Task<bool> StartTimer(float time, Action<float> action, CancellationToken token)
+    { 
         try
         {
             float start = 0f;
@@ -575,10 +619,11 @@ public class GameManager : MonoBehaviour
                 action.Invoke(start);
                 await Task.Yield();
             }
-        }
-        catch (OperationCanceledException)
+            return true;
+        } catch (OperationCanceledException)
         {
             Debug.Log("작업취소");
+            return false;
         }
     }
 
@@ -591,11 +636,11 @@ public class GameManager : MonoBehaviour
             if (time > 1f)
             {
                 GameStatus.instance.GetComponent<PhotonView>().RPC("UpdateResource", RpcTarget.All);
+                gameObject.GetComponent<PhotonView>().RPC("UpdateResourceUI", RpcTarget.All);
                 time = 0f;
             }
             yield return null;
         }
-
     }
     // =====================================================
 
@@ -628,6 +673,9 @@ public class GameManager : MonoBehaviour
                         cts.Dispose();
                         tasks.Remove(building.gameObject);
                         buildingController.CancelProgress(building);
+                        UpdateResourceUI();
+                        UpdateBuildingPopulationUI();
+                        UpdateUnitPopulationUI();
                     }
                 }
                 break;

@@ -40,7 +40,7 @@ public class BuildingController : MonoBehaviour
             case "Command":
 
                 // Command 객체를 넣어준다. -> 오브젝트를 통해서 건물의 정보를 알 수 있게 하기위해
-                Command _newCommand = buildingObject.AddComponent<Command>();
+                Command _newCommand = buildingObject.GetComponent<Command>();
                 // Command 정보 초기화
                 _newCommand.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar, grids);
 
@@ -112,13 +112,9 @@ public class BuildingController : MonoBehaviour
                 break;
         }
 
-        /*if(_teamID == buildingObject.GetComponent<Building>().teamID){
-            buildingObject.transform.SetParent(myBuildings.transform);
-        }
-        else{
-            buildingObject.transform.SetParent(enemyBuildings.transform);
-        }*/
-
+        int[] data = GameStatus.instance.CheckObjName(buildingType);
+        newBuilding.returnCost = data[0];
+        newBuilding.returnPopulation = data[1];
         _buildingID++;
         return newBuilding;
     }
@@ -140,7 +136,7 @@ public class BuildingController : MonoBehaviour
     public async Task DestroyBuilding(Building building)
     {
         building.gameObject.tag = "Untagged";
-        SetBuildingState(building,Building.State.Destroy,"none");
+        SetBuildingState(building,Building.State.Destroy,"None");
         building.SetProgressMesh1();
         building.ActiveDestroyEffect();
         await StartTimer(5f);
@@ -152,15 +148,37 @@ public class BuildingController : MonoBehaviour
     {
         float healthPercent = building.currentHealth / building.maxHealth;
         building.maxHealth += building.level * 50;
+        Debug.Log(healthPercent);
         building.currentHealth = Mathf.FloorToInt(building.currentHealth * healthPercent);
-        
         building.level++;
+
+        switch(building)
+        {
+            case Command:
+                GameStatus.instance.maxBuildingCount += 3;
+                building.GetComponent<Command>().attackPower += 5;
+                break;
+            case ResourceBuilding:
+                GameStatus.instance.resourcePerSecond += 1;
+                break;
+            case PopulationBuilding:
+                GameStatus.instance.maxUnitCount += 10;
+                break;
+            case Defender:
+                building.GetComponent<Defender>().attackPower += 5;
+                break;
+        }
     }
 
     public void SetBuildingState(Building building, Building.State state, string progressType) // 빌딩 상태 업데이트하는 함수
     {
         switch(state)
         {
+            case Building.State.InCreating:
+                int[] data = GameStatus.instance.CheckObjName(building.type);
+                building.returnCost = data[0];
+                building.returnPopulation = data[1];
+                break;
             case Building.State.Destroy:
             case Building.State.Built:
                 building.healthBar.gameObject.SetActive(false);
@@ -176,6 +194,20 @@ public class BuildingController : MonoBehaviour
         }
         building.state = state;
         Enum.TryParse(progressType, out Building.InProgressItem item);
+        switch(item)
+        {
+            case Building.InProgressItem.LevelUP:
+                building.returnCost = building.levelUpCost;
+                break;
+            case Building.InProgressItem.Soldier:
+            case Building.InProgressItem.Archer:
+            case Building.InProgressItem.Tanker:
+            case Building.InProgressItem.Healer:
+                int[] data = GameStatus.instance.CheckObjName(progressType);
+                building.returnCost = data[0];
+                building.returnPopulation = data[1];
+                break;
+        }
         building.inProgressItem = item;
     }
 
@@ -191,6 +223,8 @@ public class BuildingController : MonoBehaviour
             DestroyBuilding(building);
             GameManager.instance.SetBuildingListUI();
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
+
+            GameStatus.instance.currentBuildingCount -= building.population;
         } else if(building.state.Equals(Building.State.InProgress))
         {
             switch(building.inProgressItem)
@@ -198,12 +232,19 @@ public class BuildingController : MonoBehaviour
                 case Building.InProgressItem.LevelUP:
                     building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
                     break;
+                case Building.InProgressItem.Soldier:
+                case Building.InProgressItem.Archer:
+                case Building.InProgressItem.Tanker:
+                case Building.InProgressItem.Healer:
+                    GameStatus.instance.currentUnitCount -= building.returnPopulation;
+                    break;
                 default:
                     break;
             }
-            SetBuildingState(building, Building.State.Built, "none");
+            SetBuildingState(building, Building.State.Built, "None");
             GameManager.instance.ReloadBuildingUI(building);
         }
+        GameStatus.instance.currentResourceCount += Mathf.FloorToInt(building.returnCost * 0.7f); // 취소하면 비용의 70프로만 돌려줌 소숫점아래 버림
     }
 
     private async Task StartTimer(float time)
@@ -214,15 +255,5 @@ public class BuildingController : MonoBehaviour
             start += Time.deltaTime;
             await Task.Yield();
         }
-    }
-
-    public void initCommand(Building building)
-    {
-        building.currentHealth = building.maxHealth;
-        
-        building.healthBar.gameObject.SetActive(false);
-        building.progressBar.gameObject.SetActive(false);
-        building.progress = 0;
-        building.time = 0;
     }
 }
