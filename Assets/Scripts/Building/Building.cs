@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,6 +65,7 @@ public abstract class Building : Entity
 
     private void Awake() {
         clickedEffect = transform.Find("ClickedEffect").gameObject;
+        //end = new CancellationTokenSource();
     }
 
     public virtual void InitTime()

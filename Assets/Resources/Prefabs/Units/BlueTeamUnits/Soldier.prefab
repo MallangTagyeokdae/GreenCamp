@@ -3100,6 +3100,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: Attacked
+  - Type: 4
+    SynchronizeType: 0
+    Name: isDead
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -3128,8 +3131,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   teamID: 
-  clickedEffect: {fileID: 0}
   healthBar: {fileID: 0}
+  clickedEffect: {fileID: 0}
   state: 0
   animator: {fileID: 0}
   order: 0
