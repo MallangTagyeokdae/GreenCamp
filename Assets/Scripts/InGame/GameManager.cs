@@ -240,6 +240,7 @@ public class GameManager : MonoBehaviour
             if (gameObject.GetComponent<Entity>() == null)
             {
                 if (targetObject != null) targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
+                targetObject = null;
             }
             if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().teamID != GameStatus.instance.teamID)
             {
