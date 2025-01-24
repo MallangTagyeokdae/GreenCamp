@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,6 +30,7 @@ public class Entity : MonoBehaviour
     
     public GameObject clickedEffect;
     public GameObject enemyClickedEffect;
+    private CancellationTokenSource end = new CancellationTokenSource();
 
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)
     {
@@ -68,8 +71,23 @@ public class Entity : MonoBehaviour
     [PunRPC]
     public void SyncAttack()
     {
+        end.Cancel();
         currentHealth -= 10;
         healthBar.value = currentHealth/maxHealth;
+        Task.Run(() => ActiveHealthBar(end));
     }
 
+    private void ActiveHealthBar(CancellationTokenSource end)
+    {
+        float time;
+        GameObject parent = healthBar.gameObject.transform.parent.gameObject;
+        if (parent.activeSelf)
+        {
+            parent.SetActive(true);
+        }
+        for (time = 0f; time < 3; time += Time.deltaTime)
+        {
+        }
+        parent.SetActive(false);
+    }
 }

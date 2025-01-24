@@ -262,8 +262,8 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case GameStates.InGame:
-                if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1)
-                    buildingController.SetSponPos(newLocation, building);
+                if (clickedObject[0].TryGetComponent(out Barrack barrack) && clickedObject.Count == 1)
+                    buildingController.SetSponPos(newLocation, barrack);
                 MoveUnit(newLocation, 1);
                 break;
             case GameStates.ConstructionMode:
@@ -330,7 +330,7 @@ public class GameManager : MonoBehaviour
     [PunRPC]
     public void UpdateResourceUI()
     {
-        uIController.infoText[0].text = GameStatus.instance.currentResourceCount.ToString();
+        uIController.infoText[0].text = Mathf.FloorToInt(GameStatus.instance.currentResourceCount).ToString();
     }
     public void UpdateUnitPopulationUI()
     {
@@ -442,6 +442,9 @@ public class GameManager : MonoBehaviour
                     building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
                     buildingController.UpgradeBuilding(building);
                     buildingController.SetBuildingState(building, Building.State.Built, "None");
+
+                    UpdateUnitPopulationUI();
+                    UpdateBuildingPopulationUI();
                 }
 
                 ReloadBuildingUI(building);
@@ -472,6 +475,8 @@ public class GameManager : MonoBehaviour
 
         building.returnCost = building.levelUpCost; // 작업 취소되면 돌려줄 비용을 레벨업 비용으로 저장
 
+        ReloadingGameStatus(building);
+        UpdateUnitPopulationUI();
         ReloadBuildingUI(building);
     }
 
@@ -506,6 +511,20 @@ public class GameManager : MonoBehaviour
                     SetBuildingInfo(6, building);
                     break;
             }
+        }
+    }
+    
+
+    public void ReloadingGameStatus(Building building)
+    {
+        switch(building)
+        {
+            case ResourceBuilding:
+                GameStatus.instance.resourcePerSecond += building.GetComponent<ResourceBuilding>().increasePersent;
+                break;
+            case PopulationBuilding:
+                GameStatus.instance.maxUnitCount += building.GetComponent<PopulationBuilding>().increasePersent;
+                break;
         }
     }
 

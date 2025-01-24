@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class PopulationBuilding : Building
 {
+    public int increasePersent { get; set; }
     public PopulationBuilding(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
         teamID,
@@ -37,6 +38,7 @@ public class PopulationBuilding : Building
         this.loadingTime = 15f;
         this.underGrid = colliders;
         this.population = 1;
+        this.increasePersent = 10;
     }
 
     [PunRPC]
