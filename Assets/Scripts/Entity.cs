@@ -72,7 +72,9 @@ public class Entity : MonoBehaviour
     public void SyncAttack()
     {
         //end.Cancel();
-        StopCoroutine(end);
+        if(end != null){
+            StopCoroutine(end);
+        }
         currentHealth -= 10;
         healthBar.value = currentHealth/maxHealth;
         //Task.Run(() => ActiveHealthBarAsync(end));
@@ -81,11 +83,11 @@ public class Entity : MonoBehaviour
     private IEnumerator ActiveHealthBar(){
         float time;
         GameObject parent = healthBar.gameObject.transform.parent.gameObject;
-        if (healthBar.gameObject.activeSelf)
+        if (!healthBar.gameObject.activeSelf)
         {
             healthBar.gameObject.SetActive(true);
         }
-        Debug.Log("실행이 아예 안되나?");
+        //Debug.Log("실행이 아예 안되나?");
         for (time = 0f; time < 3; time += Time.deltaTime)
         {
             Debug.Log($"heath bar check: {time}");
