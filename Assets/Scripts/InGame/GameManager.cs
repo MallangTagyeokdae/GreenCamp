@@ -175,10 +175,6 @@ public class GameManager : MonoBehaviour
                     {
                         obj.GetComponent<Entity>().clickedEffect.SetActive(false);
                     }
-                    else
-                    {
-                        obj.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
-                    }
                 }
 
             }
@@ -189,10 +185,6 @@ public class GameManager : MonoBehaviour
                 if (gameObject.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
                 {
                     gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
-                }
-                else
-                {
-                    gameObject.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
                 }
             }
             clickedObject.Add(gameObject);
@@ -208,10 +200,6 @@ public class GameManager : MonoBehaviour
             if (gameObject.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
             {
                 gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
-            }
-            else
-            {
-                gameObject.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
             }
         }
 
@@ -249,9 +237,11 @@ public class GameManager : MonoBehaviour
     {
         if (CheckState("InGame"))
         {
+            targetObject.TryGetComponent(out Entity target);
             gameObject.TryGetComponent(out Entity entity);
             if (entity.teamID != GameStatus.instance.teamID)
             {
+                target.enemyClickedEffect.SetActive(false);
                 targetObject = gameObject;
                 entity.enemyClickedEffect.SetActive(true);
             }
@@ -513,11 +503,11 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
+
 
     public void ReloadingGameStatus(Building building)
     {
-        switch(building)
+        switch (building)
         {
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += building.GetComponent<ResourceBuilding>().increasePersent;
