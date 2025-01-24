@@ -27,10 +27,10 @@ public class Entity : MonoBehaviour
     public float currentHealth { get; set; }
     public int population { get; set; }
     public Slider healthBar;
-    
     public GameObject clickedEffect;
     public GameObject enemyClickedEffect;
-    private CancellationTokenSource end = new CancellationTokenSource();
+    //private CancellationTokenSource end = new CancellationTokenSource();
+    Coroutine end;
 
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)
     {
@@ -71,23 +71,43 @@ public class Entity : MonoBehaviour
     [PunRPC]
     public void SyncAttack()
     {
-        end.Cancel();
+        //end.Cancel();
+        StopCoroutine(end);
         currentHealth -= 10;
         healthBar.value = currentHealth/maxHealth;
-        Task.Run(() => ActiveHealthBar(end));
+        //Task.Run(() => ActiveHealthBarAsync(end));
+        end = StartCoroutine(ActiveHealthBar());
     }
-
-    private void ActiveHealthBar(CancellationTokenSource end)
-    {
+    private IEnumerator ActiveHealthBar(){
         float time;
         GameObject parent = healthBar.gameObject.transform.parent.gameObject;
-        if (parent.activeSelf)
+        if (healthBar.gameObject.activeSelf)
         {
-            parent.SetActive(true);
+            healthBar.gameObject.SetActive(true);
         }
+        Debug.Log("실행이 아예 안되나?");
         for (time = 0f; time < 3; time += Time.deltaTime)
         {
+            Debug.Log($"heath bar check: {time}");
+            yield return null;
         }
-        parent.SetActive(false);
+        healthBar.gameObject.SetActive(false);
     }
+    /*public async Task ActiveHealthBarAsync(CancellationTokenSource end)
+    { 
+        float time;
+        GameObject parent = healthBar.gameObject.transform.parent.gameObject;
+        Debug.Log($"parent name: {healthBar.gameObject}");
+        if (healthBar.gameObject.activeSelf)
+        {
+            healthBar.gameObject.SetActive(true);
+        }
+        Debug.Log("실행이 아예 안되나?");
+        for (time = 0f; time < 3; time += Time.deltaTime)
+        {
+            Debug.Log($"heath bar check: {time}");
+            await Task.Yield();
+        }
+        healthBar.gameObject.SetActive(false);
+    }*/
 }
