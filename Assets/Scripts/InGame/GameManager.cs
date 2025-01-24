@@ -237,10 +237,13 @@ public class GameManager : MonoBehaviour
     {
         if (CheckState("InGame"))
         {
-            targetObject.TryGetComponent(out Entity target);
+            if (gameObject.GetComponent<Entity>() == null)
+            {
+                if (targetObject != null) targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
+            }
             if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().teamID != GameStatus.instance.teamID)
             {
-                if (targetObject != null) target.enemyClickedEffect.SetActive(false);
+                if (targetObject != null) targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
                 targetObject = gameObject;
                 gameObject.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
             }
@@ -271,6 +274,7 @@ public class GameManager : MonoBehaviour
         {
             case GameStates.InGame:
                 SetClickedObject(ground);
+                SetTargetObject(ground);
                 SetBuildingListUI();
                 break;
             case GameStates.SetMoveRot:
