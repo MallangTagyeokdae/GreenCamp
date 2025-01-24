@@ -238,12 +238,11 @@ public class GameManager : MonoBehaviour
         if (CheckState("InGame"))
         {
             targetObject.TryGetComponent(out Entity target);
-            gameObject.TryGetComponent(out Entity entity);
-            if (entity.teamID != GameStatus.instance.teamID)
+            if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().teamID != GameStatus.instance.teamID)
             {
-                target.enemyClickedEffect.SetActive(false);
+                if (targetObject != null) target.enemyClickedEffect.SetActive(false);
                 targetObject = gameObject;
-                entity.enemyClickedEffect.SetActive(true);
+                gameObject.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
             }
         }
     }
