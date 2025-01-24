@@ -67,6 +67,7 @@ public abstract class Building : Entity
     private void Awake()
     {
         clickedEffect = transform.Find("ClickedEffect").gameObject;
+
         enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
         clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
         clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) =>
