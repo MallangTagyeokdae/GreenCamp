@@ -38,7 +38,7 @@ public abstract class Building : Entity
     public int returnPopulation { get; set; }
     public Slider progressBar { get; set; }
     public float time { get; set; }
-    public float loadingTime{ get; set; }
+    public float loadingTime { get; set; }
     public List<Collider> underGrid { get; set; }
     public State state = State.InCreating;
     public InProgressItem inProgressItem = InProgressItem.None;
@@ -48,6 +48,7 @@ public abstract class Building : Entity
     public GameObject destroyEffect;
     public GameObject completeEffect;
     public GameObject levelUpEffect;
+    public ClickEventHandler clickEventHandler;
 
     public Building(string teamID, int ID, string type, Vector3 location,
     int maxHealth, int cost, int level)
@@ -63,15 +64,23 @@ public abstract class Building : Entity
         this.loadingTime = 10f;
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         clickedEffect = transform.Find("ClickedEffect").gameObject;
+        enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
+        clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
+        clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) =>
+        {
+            GameManager.instance.SetTargetObject(gameObject);
+        }
+        );
         //end = new CancellationTokenSource();
     }
 
     public virtual void InitTime()
     {
         time = 0f;
-        loadingTime = 30/10f;
+        loadingTime = 30 / 10f;
         //gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
         this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
     }
@@ -81,7 +90,7 @@ public abstract class Building : Entity
         float incrementPerSec = maxHealth / loadingTime;
         time = update;
         this.currentHealth += incrementPerSec * Time.deltaTime;
-        this.progress = time/loadingTime*100;
+        this.progress = time / loadingTime * 100;
 
         this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
         this.progressBar.value = (float)this.progress / 100;
@@ -90,10 +99,12 @@ public abstract class Building : Entity
 
     public virtual void UpdateMesh() //
     {
-        if (time > loadingTime/2 && time < loadingTime) {
+        if (time > loadingTime / 2 && time < loadingTime)
+        {
             //this.gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
             this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh2", RpcTarget.AllBuffered);
-        } else if (time > loadingTime)
+        }
+        else if (time > loadingTime)
         {
             //this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
             this.gameObject.GetComponent<PhotonView>().RPC("SetCompleteMesh", RpcTarget.AllBuffered);
@@ -116,31 +127,37 @@ public abstract class Building : Entity
     }
 
     [PunRPC]
-    public virtual void SetProgressMesh1(){
+    public virtual void SetProgressMesh1()
+    {
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
     [PunRPC]
-    public virtual void SetProgressMesh2(){
+    public virtual void SetProgressMesh2()
+    {
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
     }
     [PunRPC]
-    public virtual void SetCompleteMesh(){
+    public virtual void SetCompleteMesh()
+    {
         gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
     }
 
     [PunRPC]
-    public virtual void GenerateCompleteEffect(){
+    public virtual void GenerateCompleteEffect()
+    {
         completeEffect.SetActive(true);
     }
 
     [PunRPC]
-    public virtual void ActiveLevelUpEffect(bool active = true){
+    public virtual void ActiveLevelUpEffect(bool active = true)
+    {
         levelUpEffect.SetActive(active);
     }
-    
+
     [PunRPC]
-    public virtual void ActiveDestroyEffect() {
+    public virtual void ActiveDestroyEffect()
+    {
         destroyEffect.SetActive(true);
     }
 

@@ -36,7 +36,7 @@ public class GameStatus : MonoBehaviour
     public void InitGameStatus()
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
-        maxResourceCount = 1000;
+        maxResourceCount = 10000;
         currentResourceCount = 10000;
         resourcePerSecond = 1;
         maxUnitCount = 10;
@@ -71,7 +71,7 @@ public class GameStatus : MonoBehaviour
         currentResourceCount += resourcePerSecond;
     }
 
-    
+
     public void UpdateUnitCount()
     {
         currentUnitCount++;
@@ -93,10 +93,10 @@ public class GameStatus : MonoBehaviour
             Debug.Log("자원부족");
             return false;
         }
-        switch(objectType)
+        switch (objectType)
         {
             case "Unit":
-                if(maxUnitCount < currentUnitCount + data[1])
+                if (maxUnitCount < currentUnitCount + data[1])
                 {
                     Debug.Log("인구수 부족");
                     return false;
@@ -115,18 +115,21 @@ public class GameStatus : MonoBehaviour
 
     public bool CanLevelUp(Building building, int commandLevel)
     {
-        if(building.level > 5)
+        if (building.level > 5)
         {
             Debug.Log("최대레벨");
             return false;
-        } else if(currentResourceCount < building.levelUpCost)
+        }
+        else if (currentResourceCount < building.levelUpCost)
         {
             Debug.Log("자원 부족");
             return false;
-        } else if(building.GetComponent<Command>())
+        }
+        else if (building.GetComponent<Command>())
         {
             return true;
-        } else if(!building.GetComponent<Command>() && building.level <= commandLevel + 1)
+        }
+        else if (!building.GetComponent<Command>() && building.level <= commandLevel + 1)
         {
             return true;
         }
@@ -137,10 +140,10 @@ public class GameStatus : MonoBehaviour
     public void SetResources(string objectName, string objectType)
     {
         int[] data = CheckObjName(objectName);
-        
+
         currentResourceCount -= data[0];
 
-        switch(objectType)
+        switch (objectType)
         {
             case "Unit":
                 currentUnitCount += data[1];
@@ -154,7 +157,7 @@ public class GameStatus : MonoBehaviour
     public int[] CheckObjName(string objectName) // 생성할 객체의 이름을 받아 종류에 따른 비용, 인구수를 담은 배열을 리턴함
     {
         int[] data = new int[2]; // 0: cost / 1: population
-        switch(objectName)
+        switch (objectName)
         {
             case "Soldier":
                 data[0] = 30;
