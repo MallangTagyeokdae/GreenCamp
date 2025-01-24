@@ -44,6 +44,9 @@ public abstract class Unit : Entity
     private new Rigidbody rigidbody;
 
     public Coroutine unitBehaviour;
+    public ClickEventHandler clickEventHandler;
+
+
 
     public Order order = Order.Idle;
 
@@ -73,6 +76,13 @@ public abstract class Unit : Entity
         rigidbody = gameObject.GetComponent<Rigidbody>();
         rigidbody.isKinematic = true;
         clickedEffect = transform.Find("ClickedEffect").gameObject;
+        enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
+        clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
+        clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) =>
+        {
+            GameManager.instance.SetTargetObject(gameObject);
+        }
+        );
     }
 
     private void Start()

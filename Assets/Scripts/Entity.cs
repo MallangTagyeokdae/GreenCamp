@@ -28,7 +28,8 @@ public class Entity : MonoBehaviour
     public int population { get; set; }
     public Slider healthBar;
     public GameObject clickedEffect;
-    //public CancellationTokenSource end;
+    public GameObject enemyClickedEffect;
+    //private CancellationTokenSource end = new CancellationTokenSource();
     Coroutine end;
 
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)

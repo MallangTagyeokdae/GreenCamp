@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     public GameObject clickEffect;
     public UIContainer currentUI; // 현재 보이고 있는 UI를 갖고 있음
     public List<GameObject> clickedObject; // 현재 선택된 게임 Object
+    public GameObject targetObject;
     public EffectHandler effectHandler;
     public GridHandler gridHandler;
     public GameObject target;
@@ -170,7 +171,14 @@ public class GameManager : MonoBehaviour
             {
                 if (obj.GetComponent<Entity>() != null && obj.GetComponent<Entity>().clickedEffect != null)
                 {
-                    obj.GetComponent<Entity>().clickedEffect.SetActive(false);
+                    if (obj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+                    {
+                        obj.GetComponent<Entity>().clickedEffect.SetActive(false);
+                    }
+                    else
+                    {
+                        obj.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
+                    }
                 }
 
             }
@@ -178,7 +186,14 @@ public class GameManager : MonoBehaviour
 
             if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
             {
-                gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
+                if (gameObject.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+                {
+                    gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
+                }
+                else
+                {
+                    gameObject.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
+                }
             }
             clickedObject.Add(gameObject);
             unitController.SetActiveHealthBar(gameObject, true);
@@ -190,7 +205,14 @@ public class GameManager : MonoBehaviour
     {
         if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
         {
-            gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
+            if (gameObject.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+            {
+                gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
+            }
+            else
+            {
+                gameObject.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
+            }
         }
 
         if (clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 15)
@@ -220,6 +242,18 @@ public class GameManager : MonoBehaviour
                     uIController.ActiveFalseUI(8);
                     SetGroupUnitUI(8, 1);
                 }
+            }
+        }
+    }
+    public void SetTargetObject(GameObject gameObject)
+    {
+        if (CheckState("InGame"))
+        {
+            gameObject.TryGetComponent(out Entity entity);
+            if (entity.teamID != GameStatus.instance.teamID)
+            {
+                targetObject = gameObject;
+                entity.enemyClickedEffect.SetActive(true);
             }
         }
     }
@@ -317,7 +351,7 @@ public class GameManager : MonoBehaviour
         if (gridHandler.CheckCanBuilt() && CheckState("ConstructionMode")) // 건물이 생성가능한지 확인하는 조건문 나중에 자원, 건물인구수 체크하는것도 추가해야함
         // 건물생성가능여부를 판단하는 기능을 하는 함수를 만들어서 조건문에 넣도록 개선해야함
         {
-            if(GameStatus.instance.CanCreate(buildingType, "Building"))
+            if (GameStatus.instance.CanCreate(buildingType, "Building"))
             {
                 Vector3 buildingPos = gridHandler.CalculateGridScale();
                 DelayBuildingCreation(buildingPos);
@@ -326,9 +360,9 @@ public class GameManager : MonoBehaviour
                 UpdateResourceUI();
                 UpdateBuildingPopulationUI();
             }
-                grid.SetActive(false);
-                SetState("InGame");
-                SetBuildingListUI();
+            grid.SetActive(false);
+            SetState("InGame");
+            SetBuildingListUI();
         }
     }
     public async void CreateUnit()
@@ -362,8 +396,8 @@ public class GameManager : MonoBehaviour
         tasks[targetOBJ] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
         Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos, cts.Token); // 유닛 생성
 
-        if(createdUnit == null) return;
-                
+        if (createdUnit == null) return;
+
         tasks.Remove(targetOBJ); // 유닛 생성이 완료되면 딕셔너리에서 제거해줌
 
         Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
@@ -388,7 +422,7 @@ public class GameManager : MonoBehaviour
     {
         if (clickedObject[0].TryGetComponent(out Building building))
         {
-            if(GameStatus.instance.CanLevelUp(building, _commandLevel))
+            if (GameStatus.instance.CanLevelUp(building, _commandLevel))
             {
                 var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
@@ -401,7 +435,7 @@ public class GameManager : MonoBehaviour
 
                 tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-                if(await OrderCreate(building, building.level * 10f, cts.Token))
+                if (await OrderCreate(building, building.level * 10f, cts.Token))
                 {
                     tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
@@ -428,7 +462,7 @@ public class GameManager : MonoBehaviour
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
         building.InitTime();
-        
+
         buildingController.SetBuildingState(building, Building.State.InCreating, "None");
 
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
@@ -627,7 +661,7 @@ public class GameManager : MonoBehaviour
 
     // =================== 타이머 함수 ======================== 
     private async Task<bool> StartTimer(float time, Action<float> action, CancellationToken token)
-    { 
+    {
         try
         {
             float start = 0f;
@@ -639,7 +673,8 @@ public class GameManager : MonoBehaviour
                 await Task.Yield();
             }
             return true;
-        } catch (OperationCanceledException)
+        }
+        catch (OperationCanceledException)
         {
             Debug.Log("작업취소");
             return false;
