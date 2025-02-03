@@ -215,6 +215,7 @@ MonoBehaviour:
   healthBar: {fileID: 2579093876378188609}
   clickedEffect: {fileID: 0}
   enemyClickedEffect: {fileID: 0}
+  progressBar: {fileID: 5971038891646231793}
   state: 0
   inProgressItem: 0
   progressMesh1: {fileID: 4300000, guid: 9018b9e829e697640b479e00dd8fdcc0, type: 3}
@@ -391,6 +392,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7710135278675748104, guid: 30a5be267f27644bf9f6d4a62f0dfdfd, type: 3}
   m_PrefabInstance: {fileID: 2765096952263635461}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5971038891646231793 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8395551086385944308, guid: 30a5be267f27644bf9f6d4a62f0dfdfd, type: 3}
+  m_PrefabInstance: {fileID: 2765096952263635461}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3048443331026933955
 PrefabInstance:
   m_ObjectHideFlags: 0
