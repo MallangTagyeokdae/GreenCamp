@@ -8,6 +8,11 @@ using UnityEngine.UI;
 
 public class Barrack : Building
 {
+    private void Awake()
+    {
+        this.maxHealth = 500;
+        this.currentHealth = 0;
+    }
     public Vector3 _sponPos { get; set; }
     public Barrack(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
@@ -27,8 +32,6 @@ public class Barrack : Building
         this.ID = buildingID;
         this.type = "Barrack";
         this.location = buildingLocation;
-        this.maxHealth = 500;
-        this.currentHealth = 0;
         this.progress = 0;
         this.level = 1;
         this.cost = 50;

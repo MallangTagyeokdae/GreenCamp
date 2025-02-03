@@ -76,6 +76,7 @@ public class Entity : MonoBehaviour
             StopCoroutine(end);
         }
         currentHealth -= 10;
+        Debug.Log(currentHealth + " / " + maxHealth);
         healthBar.value = currentHealth/maxHealth;
         //Task.Run(() => ActiveHealthBarAsync(end));
         end = StartCoroutine(ActiveHealthBar());
@@ -90,7 +91,7 @@ public class Entity : MonoBehaviour
         //Debug.Log("실행이 아예 안되나?");
         for (time = 0f; time < 3; time += Time.deltaTime)
         {
-            Debug.Log($"heath bar check: {time}");
+            // Debug.Log($"heath bar check: {time}");
             yield return null;
         }
         healthBar.gameObject.SetActive(false);
