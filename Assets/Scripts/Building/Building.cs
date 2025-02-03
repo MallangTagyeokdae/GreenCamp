@@ -70,7 +70,7 @@ public abstract class Building : Entity
 
         enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
         clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
-        clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) =>
+        clickEventHandler.rightClickDownEvent.AddListener((Vector3 pos) =>
         {
             GameManager.instance.SetTargetObject(gameObject);
         }
