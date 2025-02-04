@@ -530,7 +530,7 @@ public class GameManager : MonoBehaviour
     public void ReloadingGameStatus(Building building)
     {
         switch (building)
-        { 
+        {
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += building.GetComponent<ResourceBuilding>().increasePersent;
                 break;
@@ -671,7 +671,7 @@ public class GameManager : MonoBehaviour
     // =====================================================
 
     // =================== 객체 파괴 함수 ======================
-    
+
     public void DestroyEntity(GameObject entity)
     {
         if (entity.TryGetComponent(out Building building))
@@ -679,7 +679,7 @@ public class GameManager : MonoBehaviour
             // InCreating이면 CancelProgress를 실행시킴 -> 건물 파괴, 건설비 리턴
             // InProgress이면 CancelProgress를 실행 -> 진행중인 작업 취소, 돈 리턴, State가 Built로 바뀜
             // Built이면 State를 Destory로 바꾸고 다시 CancelProgress를 실행
-            switch(building.state)
+            switch (building.state)
             {
                 case Building.State.InCreating:
                 case Building.State.InProgress:
@@ -687,21 +687,26 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            if(building.state == Building.State.Built)
+            if (building.state == Building.State.Built)
             {
                 buildingController.SetBuildingState(building, Building.State.Destroy, "None");
                 buildingController.CancelProgress(building);
-            } 
+            }
+        }
         else if (entity.TryGetComponent(out Unit unit))
         {
+            if (unit.unitBehaviour != null)
+            {
+                StopCoroutine(unit.unitBehaviour);
+                Debug.Log("코루틴 정지!!!!!!!!!!!!!!!!!!!");
+            }
             unitController.DestroyUnit(unit);
-            // 유닛 컨트롤러에서 전체 인구수 -1 하는 로직 추가
         }
 
         UpdateResourceUI();
         UpdateBuildingPopulationUI();
         UpdateUnitPopulationUI();
-        }
+
     }
 
     // ======================================================
