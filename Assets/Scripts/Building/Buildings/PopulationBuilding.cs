@@ -41,6 +41,11 @@ public class PopulationBuilding : Building
         this.increasePersent = 10;
     }
 
+    public override void DestroyEntity()
+    {
+        Destroy(gameObject);
+    }
+
     [PunRPC]
     public override void SetProgressMesh1(){
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;

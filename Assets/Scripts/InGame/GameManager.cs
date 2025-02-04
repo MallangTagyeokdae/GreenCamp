@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Doozy.Runtime.UIManager.Containers;
 using Photon.Pun;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public enum GameStates
 {
@@ -368,14 +369,16 @@ public class GameManager : MonoBehaviour
 
     public void UpdateEventUI(GameObject eventedObject)
     {
-        if (eventedObject.TryGetComponent(out Building building))
+        if(clickedObject[0] == eventedObject)
         {
-            ReloadBuildingUI(building);
-        }
-        else if (eventedObject.TryGetComponent(out Unit unit))
-        {
-            SetUnitInfo(7, unit.gameObject);
-
+            if (eventedObject.TryGetComponent(out Building building))
+            {
+                ReloadBuildingUI(building);
+            }
+            else if (eventedObject.TryGetComponent(out Unit unit))
+            {
+                SetUnitInfo(7, unit.gameObject);
+            }
         }
     }
     // =====================================================
@@ -679,20 +682,25 @@ public class GameManager : MonoBehaviour
             // InCreating이면 CancelProgress를 실행시킴 -> 건물 파괴, 건설비 리턴
             // InProgress이면 CancelProgress를 실행 -> 진행중인 작업 취소, 돈 리턴, State가 Built로 바뀜
             // Built이면 State를 Destory로 바꾸고 다시 CancelProgress를 실행
-            switch (building.state)
+            if (tasks.TryGetValue(building.gameObject, out var cts))
             {
-                case Building.State.InCreating:
-                case Building.State.InProgress:
-                    buildingController.CancelProgress(building);
-                    break;
-            }
-
-            if (building.state == Building.State.Built)
-            {
-                buildingController.SetBuildingState(building, Building.State.Destroy, "None");
+                cts.Cancel();
+                cts.Dispose();
+                tasks.Remove(building.gameObject);
                 buildingController.CancelProgress(building);
             }
-        }
+
+            if(building != null) 
+            {
+                switch(building.state)
+                {
+                    case Building.State.Built:
+                        buildingController.DestroyBuilding(building); 
+                        break;
+                }
+            }
+
+        } 
         else if (entity.TryGetComponent(out Unit unit))
         {
             if (unit.unitBehaviour != null)
@@ -706,7 +714,6 @@ public class GameManager : MonoBehaviour
         UpdateResourceUI();
         UpdateBuildingPopulationUI();
         UpdateUnitPopulationUI();
-
     }
 
     // ======================================================
@@ -728,7 +735,6 @@ public class GameManager : MonoBehaviour
         }
         catch (OperationCanceledException)
         {
-            Debug.Log("작업취소");
             return false;
         }
     }
