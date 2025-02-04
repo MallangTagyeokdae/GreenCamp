@@ -9,6 +9,7 @@ public class TeamSelect : LobbyState
     private GameObject _uiGameObject = GameObject.Find("UI");
     private GameObject _teamSelectPage = GameObject.Find("SelectTeamUI");
     private GameObject _gameStartBtn;
+    public bool conitinueNext = true;
     public void InitPage()
     {
         _uiGameObject.SetActive(false);
@@ -30,5 +31,8 @@ public class TeamSelect : LobbyState
     {
         _uiGameObject.SetActive(true);
         // _teamSelectPage.SetActive(false);
+    }
+    public bool Continue(){
+        return true;
     }
 }

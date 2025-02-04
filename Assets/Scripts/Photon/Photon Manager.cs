@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro.Examples;
 using Unity.VisualScripting;
+using TMPro;
 //using ExitGames.Client.Photon;
 //using Photon.Pun.Demo.Cockpit;
 
@@ -25,7 +26,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     }
     private List<RoomInfo> _roomList;// = new List<RoomInfo>();
     private readonly string version = "1.0f";
-    private string userId = "Charlie";
     public LobbyController lobbyController;
     public UserInfo userInfo;
     void Awake()
@@ -42,10 +42,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         PhotonNetwork.AutomaticallySyncScene = true;
         //같은 버전의 유저끼리 접속을 허용
         PhotonNetwork.GameVersion = version;
-        //유저 아이디 할당
-        PhotonNetwork.NickName = userId;
         //포톤 서버와 통신횟수 설정. 초당 30회
         Debug.Log(PhotonNetwork.SendRate);
+    }
+
+    public void ConnectGame(string nickName){
+        //유저 아이디 할당
+        PhotonNetwork.NickName = nickName;
         //서버 접속
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -54,7 +57,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected to Master!");
-        Debug.Log($"PhotonNetwork.InLobby = {PhotonNetwork.InLobby}");
         PhotonNetwork.JoinLobby(); // 로비 입장
         //base.OnConnectedToMaster();
     }

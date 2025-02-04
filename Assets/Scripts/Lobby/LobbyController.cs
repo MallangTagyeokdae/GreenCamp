@@ -16,7 +16,6 @@ using Photon.Pun;
 public class LobbyController : MonoBehaviour
 {
     public RoomInfo currentRoom;
-    public UnityEvent loggedIn;
     public ScrollRect scrollRect;
     public GameObject prefab;
     public Transform parent;
@@ -28,28 +27,39 @@ public class LobbyController : MonoBehaviour
     {
         _roomList = new List<string>();
         _roomObjects = new Dictionary<string, GameObject>();
-        state = new Home();
+        SetState("LogIn");
     }
 
-    public void LogIn()
+    public void SetState(string stateName)
     {
-        loggedIn.Invoke();
-        //outGameState.SetLobbyState("Login");
-    }
-
-    public void SetState(string stateName){
-        this.state.OutPage(stateName);
-        switch (stateName){
-            case "Home": state = new Home(); break;
-            case "Single": state = new Single(); break;
-            case "Multi": state = new Multi(); break;
-            case "Setting": state = new Setting(); break;
-            case "TeamSelect": state = new TeamSelect(); break;
+        bool continueNext = true;
+        if (this.state != null)
+        {
+            continueNext = this.state.Continue();
+            Debug.Log($"continueNext: {continueNext}");
+            if(continueNext){
+                this.state.OutPage(stateName);
+            }
         }
-        this.state.InitPage();
+
+        if (continueNext)
+        {
+            switch (stateName)
+            {
+                case "Home": state = new Home(); break;
+                case "Single": state = new Single(); break;
+                case "Multi": state = new Multi(); break;
+                case "Setting": state = new Setting(); break;
+                case "TeamSelect": state = new TeamSelect(); break;
+                case "LogIn": state = new LogIn(); break;
+            }
+            this.state.InitPage();
+        }
+
     }
 
-    public void CreateRoom(){
+    public void CreateRoom()
+    {
     }
 
     public void updateRoomList(List<RoomInfo> roomList)
@@ -74,20 +84,23 @@ public class LobbyController : MonoBehaviour
 
                 room.name = roomInfo.Name;
                 string roomname = room.name.Substring(room.name.IndexOf("~") + 1);
-                if(roomname == null){
+                if (roomname == null)
+                {
                     room.transform.Find("Title").gameObject.GetComponent<TMP_Text>().text = "";
                 }
-                else{
+                else
+                {
                     room.transform.Find("Title").gameObject.GetComponent<TMP_Text>().text = roomname;
                 }
             }
-            else{
+            else
+            {
                 room = _roomObjects[roomInfo.Name]; //기존에 존재하는 방일 경우 room에 해당 방의 GameObject를 대입
             }
 
             room.transform.Find("UserCount").gameObject.GetComponent<TMP_Text>().text = roomInfo.PlayerCount + " / " + roomInfo.MaxPlayers; //방의 인원 수를 변경.
-            
-            
+
+
         } //rooms에 현재 남은 room의 list가 name으로 입력되어 있음
 
         foreach (string roomName in _roomList)

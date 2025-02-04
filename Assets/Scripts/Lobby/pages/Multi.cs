@@ -13,6 +13,7 @@ public class Multi : LobbyState
     private UIButton _createRoomBtn;
     private UIButton _cancelBtn;
     private Transform parent;
+    public bool conitinueNext = true;
 
     public void InitPage()
     { //하드코딩했음,,,
@@ -35,11 +36,21 @@ public class Multi : LobbyState
     }
     void CreateRoom()
     {
-        if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.JoinedLobby && _createRoomBtn.isSelected)
-
-            PhotonManager.instance.CreateRoom(_roomName.text);
+        if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.JoinedLobby && _createRoomBtn.isSelected){
+            if(_roomName.text == ""){
+                PhotonManager.instance.CreateRoom(PhotonNetwork.NickName + "님의 방");
+            }
+            else{
+                PhotonManager.instance.CreateRoom(_roomName.text);
+            }
+        }
     }
+    
     public void OutPage(string next)
     {
+    }
+
+    public bool Continue(){
+        return true;
     }
 }

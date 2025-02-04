@@ -118,14 +118,6 @@ public class BuildingController : MonoBehaviour
         _buildingID++;
         return newBuilding;
     }
-    // 디버깅용
-    public void PrintList(Dictionary<int, Building> buildings)
-    {
-        for (int i = 0; i < _buildingID; i++)
-        {
-            Debug.Log(buildings[i].type);
-        }
-    }
 
     public void BuildingAttacked(int buildingID, int damage)
     {
@@ -136,9 +128,11 @@ public class BuildingController : MonoBehaviour
     public async Task DestroyBuilding(Building building)
     {
         building.gameObject.tag = "Untagged";
-        SetBuildingState(building,Building.State.Destroy,"None");
         building.SetProgressMesh1();
         building.ActiveDestroyEffect();
+
+        GameStatus.instance.currentBuildingCount -= building.population;
+
         await StartTimer(5f);
         GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
         building.DestroyEntity();
@@ -154,7 +148,7 @@ public class BuildingController : MonoBehaviour
         switch(building)
         {
             case Command:
-                GameStatus.instance.maxBuildingCount += 3;
+                GameStatus.instance.IncreaseMaxBuildingCount(4 * building.level);
                 building.GetComponent<Command>().attackPower += 5;
                 break;
             case ResourceBuilding:
@@ -181,6 +175,8 @@ public class BuildingController : MonoBehaviour
                 building.returnPopulation = data[1];
                 break;
             case Building.State.Destroy:
+                DestroyBuilding(building);
+                return;
             case Building.State.Built:
                 building.healthBar.gameObject.SetActive(false);
                 building.progressBar.gameObject.SetActive(false);
@@ -194,8 +190,6 @@ public class BuildingController : MonoBehaviour
                 break;
 
         }
-
-        if(state == Building.State.Destroy) DestroyBuilding(building);
 
         building.state = state;
         Enum.TryParse(progressType, out Building.InProgressItem item);
@@ -223,39 +217,34 @@ public class BuildingController : MonoBehaviour
     
     public void CancelProgress(Building building)
     {
-        if(building.state.Equals(Building.State.InCreating))
+        switch (building.state)
         {
-            SetBuildingState(building, Building.State.Destroy, "None");
-            if(GameManager.instance.clickedObject[0] == building)
-            {
-                GameManager.instance.SetBuildingListUI();
-                GameManager.instance.SetClickedObject(GameManager.instance.ground);
-            }
-        } else if(building.state.Equals(Building.State.InProgress))
-        {
-            switch(building.inProgressItem)
-            {
-                case Building.InProgressItem.LevelUP:
-                    building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
-                    break;
-                case Building.InProgressItem.Soldier:
-                case Building.InProgressItem.Archer:
-                case Building.InProgressItem.Tanker:
-                case Building.InProgressItem.Healer:
-                    GameStatus.instance.currentUnitCount -= building.returnPopulation;
-                    break;
-                default:
-                    break;
-            }
-            SetBuildingState(building, Building.State.Built, "None");
-            GameManager.instance.ReloadBuildingUI(building);
-        } else if(building.state.Equals(Building.State.Destroy))
-        {
-            DestroyBuilding(building);
-            GameManager.instance.SetBuildingListUI();
-            GameManager.instance.SetClickedObject(GameManager.instance.ground);
-
-            GameStatus.instance.currentBuildingCount -= building.population;
+            case Building.State.InCreating:
+                if(GameManager.instance.clickedObject[0] == building.gameObject)
+                {
+                    GameManager.instance.SetBuildingListUI();
+                    GameManager.instance.SetClickedObject(GameManager.instance.ground);
+                }
+                SetBuildingState(building, Building.State.Destroy, "None");
+                break;
+            case Building.State.InProgress:
+                switch(building.inProgressItem)
+                {
+                    case Building.InProgressItem.LevelUP:
+                        building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
+                        break;
+                    case Building.InProgressItem.Soldier:
+                    case Building.InProgressItem.Archer:
+                    case Building.InProgressItem.Tanker:
+                    case Building.InProgressItem.Healer:
+                        GameStatus.instance.currentUnitCount -= building.returnPopulation;
+                        break;
+                    default:
+                        break;
+                }
+                SetBuildingState(building, Building.State.Built, "None");
+                GameManager.instance.ReloadBuildingUI(building);
+                break;
         }
         GameStatus.instance.currentResourceCount += Mathf.FloorToInt(building.returnCost * 0.7f); // 취소하면 비용의 70프로만 돌려줌 소숫점아래 버림
     }

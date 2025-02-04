@@ -41,6 +41,11 @@ public class ResourceBuilding : Building
         this.increasePersent = 1f;
     }
 
+    public override void DestroyEntity()
+    {
+        Destroy(gameObject);
+    }
+
     [PunRPC]
     public override void SetProgressMesh1(){
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
