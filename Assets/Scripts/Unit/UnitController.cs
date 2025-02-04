@@ -127,7 +127,8 @@ public class UnitController : MonoBehaviour
     public void DestroyUnit(Unit unit)
     {
         // if (unitDictionary.ContainsKey(unitID)) unitDictionary.Remove(unitID); // 유닛 딕셔너리에서 유닛 삭제
-        GameStatus.instance.currentUnitCount -= unit.populationCost;
+        unit.DestroyEntity();
+        // GameStatus.instance.currentUnitCount -= unit.populationCost;
     }
 
     // =================== 유닛 행동 함수 ===================
