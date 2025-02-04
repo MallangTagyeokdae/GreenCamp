@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: c3146ed0a4a0840a8a5285210e84d6bc
 ModelImporter:
-  serializedVersion: 26
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       1: 100000
@@ -173,7 +173,7 @@ ModelImporter:
     second: //RootNode
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -182,6 +182,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -223,7 +224,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 1
+        functionName: CheckDie
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -288,26 +296,35 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -318,7 +335,6 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
   humanDescription:
     serializedVersion: 3
     human:
@@ -666,20 +682,17 @@ ModelImporter:
     - name: weapon_ak47
       parentName: 
       position: {x: -0.000000048446655, y: -0.00000009689331, z: -0.000000024223327}
-      rotation: {x: 0.00000075707237, y: -0.00000010120589, z: -0.00000003811642,
-        w: 1}
+      rotation: {x: 0.00000075707237, y: -0.00000010120589, z: -0.00000003811642, w: 1}
       scale: {x: 0.35428697, y: 0.35428712, z: 0.35428673}
     - name: weapon_deserteagle
       parentName: 
       position: {x: -0.000000042390823, y: -0.00000009689331, z: 0.000000024223327}
-      rotation: {x: 0.00000028192423, y: -0.000000006607531, z: 0.00000024448119,
-        w: 1}
+      rotation: {x: 0.00000028192423, y: -0.000000006607531, z: 0.00000024448119, w: 1}
       scale: {x: 0.42284155, y: 0.42284167, z: 0.42284137}
     - name: weapon_tester
       parentName: 
       position: {x: 0.000000006055832, y: 0, z: 0}
-      rotation: {x: 0.00000002538204, y: -0.0000000031727547, z: -0.0000000031727547,
-        w: 1}
+      rotation: {x: 0.00000002538204, y: -0.0000000031727547, z: -0.0000000031727547, w: 1}
       scale: {x: 1.1741502, y: 1.17415, z: 1.17415}
     - name: Body_01_blackjacket
       parentName: 
@@ -938,10 +951,14 @@ ModelImporter:
     hasTranslationDoF: 1
     hasExtraRoot: 0
     skeletonHasParents: 0
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 02ded044b8e0963439276550f50be6f9,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 02ded044b8e0963439276550f50be6f9, type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -123,9 +124,10 @@ public class UnitController : MonoBehaviour
     {
         Unit selectedUnit = unitDictionary[unitID];
     }
-    public void destroyUnit(int unitID)
+    public void DestroyUnit(Unit unit)
     {
-
+        // if (unitDictionary.ContainsKey(unitID)) unitDictionary.Remove(unitID); // 유닛 딕셔너리에서 유닛 삭제
+        GameStatus.instance.currentUnitCount -= unit.populationCost;
     }
 
     // =================== 유닛 행동 함수 ===================
