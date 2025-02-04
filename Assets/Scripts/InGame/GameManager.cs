@@ -671,8 +671,7 @@ public class GameManager : MonoBehaviour
     // =====================================================
 
     // =================== 객체 파괴 함수 ======================
-
-    [PunRPC]
+    
     public void DestroyEntity(GameObject entity)
     {
         if (entity.TryGetComponent(out Building building))
