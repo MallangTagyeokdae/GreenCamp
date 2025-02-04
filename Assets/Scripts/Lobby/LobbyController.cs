@@ -21,11 +21,13 @@ public class LobbyController : MonoBehaviour
     public GameObject prefab;
     public Transform parent;
     private List<string> _roomList;
+    private Dictionary<string, GameObject> _roomObjects;
     // Start is called before the first frame update
     private LobbyState state;
     void Start()
     {
         _roomList = new List<string>();
+        _roomObjects = new Dictionary<string, GameObject>();
         state = new Home();
     }
 
@@ -56,9 +58,14 @@ public class LobbyController : MonoBehaviour
         foreach (RoomInfo roomInfo in roomList)
         {
             rooms.Add(roomInfo.Name);
+
+            GameObject room;
+
             if (!_roomList.Contains(roomInfo.Name))
             {
-                GameObject room = Instantiate(prefab, parent);
+                room = Instantiate(prefab, parent);
+                _roomObjects.Add(roomInfo.Name, room); //새로운 방이면 dictionary에 GameObject와 방 이름을 dictionary로 저장
+
                 room.transform.Find("EnterBtn").GetComponent<UIButton>().pressedState.stateEvent.Event.AddListener(() =>
                 {
                     PhotonManager.instance.JoinRoom(roomInfo);
@@ -74,6 +81,13 @@ public class LobbyController : MonoBehaviour
                     room.transform.Find("Title").gameObject.GetComponent<TMP_Text>().text = roomname;
                 }
             }
+            else{
+                room = _roomObjects[roomInfo.Name]; //기존에 존재하는 방일 경우 room에 해당 방의 GameObject를 대입
+            }
+
+            room.transform.Find("UserCount").gameObject.GetComponent<TMP_Text>().text = roomInfo.PlayerCount + " / " + roomInfo.MaxPlayers; //방의 인원 수를 변경.
+            
+            
         } //rooms에 현재 남은 room의 list가 name으로 입력되어 있음
 
         foreach (string roomName in _roomList)
@@ -83,6 +97,7 @@ public class LobbyController : MonoBehaviour
                 GameObject go = parent.Find(roomName).gameObject;
                 if (go != null)
                 {
+                    _roomObjects.Remove(roomName);
                     Destroy(go); // 해당 룸 네임을 가진 방을 파괴
                 }
             }
