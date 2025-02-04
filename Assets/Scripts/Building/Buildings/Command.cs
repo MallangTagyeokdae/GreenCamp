@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class Command : Building
 {
+    void Awake()
+    {
+        this.maxHealth = 500;
+        this.currentHealth = 500;
+    }
+
     public int attackPower { get; set; }
     public int attackRange { get; set; }
     
@@ -30,8 +36,6 @@ public class Command : Building
         this.ID = buildingID;
         this.type = "Command";
         this.location = buildingLocation;
-        this.maxHealth = 500;
-        this.currentHealth = 500;
         this.level = 1;
         this.cost = 0;
         this.levelUpCost = 100;
@@ -50,6 +54,11 @@ public class Command : Building
         time = 0f;
         loadingTime = .1f;
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+    }
+
+    public override void DestroyEntity()
+    {
+        
     }
 
     [PunRPC]

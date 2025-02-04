@@ -60,26 +60,43 @@ public class Entity : MonoBehaviour
 
 
     [PunRPC]
-    public void AttackRequest()
+    public void AttackRequest(int damage)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All);
+            // MasterClient에서 체력을 계산
+            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All, currentHealth-damage); // 계산한 체력을 넘겨줘서 동기화시킴
         }
     }
 
     [PunRPC]
-    public void SyncAttack()
+    public void SyncAttack(int health)
     {
         //end.Cancel();
         if(end != null){
             StopCoroutine(end);
         }
-        currentHealth -= 10;
+        currentHealth = health;
         Debug.Log(currentHealth + " / " + maxHealth);
         healthBar.value = currentHealth/maxHealth;
         //Task.Run(() => ActiveHealthBarAsync(end));
         end = StartCoroutine(ActiveHealthBar());
+
+        GameManager.instance.UpdateEventUI(gameObject);
+
+        if(currentHealth <= 0)
+        {
+            GameManager.instance.DestroyEntity(gameObject);
+        }
+
+        // if(this.GetComponent<Command>())
+        // {
+        //     if(currentHealth <= 0)
+        //     {
+        //         GameStatus.instance.isWin = false;
+        //         GameManager.instance.SetState("EndGame");
+        //     }
+        // }
     }
     private IEnumerator ActiveHealthBar(){
         float time;
@@ -96,6 +113,9 @@ public class Entity : MonoBehaviour
         }
         healthBar.gameObject.SetActive(false);
     }
+    
+    public virtual void DestroyEntity() {}
+
     /*public async Task ActiveHealthBarAsync(CancellationTokenSource end)
     { 
         float time;

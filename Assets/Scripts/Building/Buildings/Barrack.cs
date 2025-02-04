@@ -62,4 +62,5 @@ public class Barrack : Building
     public override void SetCompleteMesh(){
         gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
     }
+
 }
