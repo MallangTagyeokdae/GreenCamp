@@ -11,6 +11,7 @@ public class Multi : LobbyState
     private GameObject _popUp;
     private TMP_InputField _roomName;
     private UIButton _createRoomBtn;
+    private UIButton _cancelBtn;
     private Transform parent;
 
     public void InitPage()
@@ -21,9 +22,16 @@ public class Multi : LobbyState
         _roomName = _popUp.transform.Find("RoomNameField").GetComponent<TMP_InputField>();
         _roomName.text = "";
         _createRoomBtn = _popUp.transform.Find("CreateRoomBtn").GetComponent<UIButton>();
+        _cancelBtn = _popUp.transform.Find("CancelBtn").GetComponent<UIButton>();
+        _cancelBtn.onClickEvent.AddListener(InitInputField);
         _createRoomBtn.onClickEvent.AddListener(CreateRoom);
-
         _popUp.SetActive(false);
+    }
+    void InitInputField()
+    {
+        _roomName.text = "";
+        _popUp.SetActive(false);
+        Debug.Log("오잉");
     }
     void CreateRoom()
     {
