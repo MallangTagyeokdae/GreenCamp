@@ -36,9 +36,14 @@ public class Multi : LobbyState
     }
     void CreateRoom()
     {
-        if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.JoinedLobby && _createRoomBtn.isSelected)
-
-            PhotonManager.instance.CreateRoom(_roomName.text);
+        if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.JoinedLobby && _createRoomBtn.isSelected){
+            if(_roomName.text == ""){
+                PhotonManager.instance.CreateRoom(PhotonNetwork.NickName + "님의 방");
+            }
+            else{
+                PhotonManager.instance.CreateRoom(_roomName.text);
+            }
+        }
     }
     
     public void OutPage(string next)

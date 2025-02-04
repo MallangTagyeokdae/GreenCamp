@@ -666,7 +666,7 @@ MonoBehaviour:
         FadeOutShake: 0
       FromValue: {r: 1, g: 1, b: 1, a: 0}
       ToValue: {r: 1, g: 1, b: 1, a: 0}
-      CurrentValue: {r: 1, g: 1, b: 1, a: 0}
+      CurrentValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       Enabled: 1
       StartColor: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       FromReferenceValue: 2
@@ -748,7 +748,7 @@ MonoBehaviour:
         FadeOutShake: 0
       FromValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       ToValue: {r: 0.41799998, g: 0.5963548, b: 1, a: 0.2}
-      CurrentValue: {r: 0.41799998, g: 0.5963548, b: 1, a: 0.19215687}
+      CurrentValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       Enabled: 1
       StartColor: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       FromReferenceValue: 1
@@ -911,14 +911,14 @@ MonoBehaviour:
         Elasticity: 1
         FadeOutShake: 0
       FromValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
-      ToValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
+      ToValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
       CurrentValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       Enabled: 1
       StartColor: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       FromReferenceValue: 1
       ToReferenceValue: 2
       FromCustomValue: {r: 1, g: 1, b: 1, a: 1}
-      ToCustomValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
+      ToCustomValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
       FromHueOffset: 0
       ToHueOffset: -0.027777778
       FromSaturationOffset: 0
@@ -994,13 +994,13 @@ MonoBehaviour:
         FadeOutShake: 0
       FromValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       ToValue: {r: 0.5647059, g: 0.64692813, b: 0.8549019, a: 0.100000024}
-      CurrentValue: {r: 1, g: 1, b: 1, a: 1}
+      CurrentValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       Enabled: 1
       StartColor: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       FromReferenceValue: 1
-      ToReferenceValue: 0
+      ToReferenceValue: 2
       FromCustomValue: {r: 1, g: 1, b: 1, a: 1}
-      ToCustomValue: {r: 1, g: 1, b: 1, a: 1}
+      ToCustomValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
       FromHueOffset: 0
       ToHueOffset: 0
       FromSaturationOffset: 0
@@ -3891,9 +3891,9 @@ MonoBehaviour:
       Enabled: 1
       StartColor: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
       FromReferenceValue: 1
-      ToReferenceValue: 0
+      ToReferenceValue: 2
       FromCustomValue: {r: 1, g: 1, b: 1, a: 1}
-      ToCustomValue: {r: 1, g: 1, b: 1, a: 1}
+      ToCustomValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
       FromHueOffset: 0
       ToHueOffset: 0
       FromSaturationOffset: 0
@@ -29385,7 +29385,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042924626}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77c6d918500348269ab48ea9646e337b, type: 3}
   m_Name: 
@@ -29450,31 +29450,7 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 506966813}
-            m_TargetAssemblyTypeName: TMPro.TMP_InputField, Unity.TextMeshPro
-            m_MethodName: set_text
-            m_Mode: 5
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 1
-            m_CallState: 2
-          - m_Target: {fileID: 1520799315}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
   SelectedState:
     StateType: 3
     StateEvent:
