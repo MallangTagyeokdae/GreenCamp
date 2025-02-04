@@ -11,7 +11,7 @@ public class Barrack : Building
     private void Awake()
     {
         this.maxHealth = 500;
-        this.currentHealth = 0;
+        this.currentHealth = 1;
     }
     public Vector3 _sponPos { get; set; }
     public Barrack(string teamID, int buildingID, Vector3 buildingLocation)
@@ -47,6 +47,11 @@ public class Barrack : Building
     public void SetSponPos(Vector3 setSponPos)
     {
         this._sponPos = setSponPos;
+    }
+
+    public override void DestroyEntity()
+    {
+        Destroy(gameObject);
     }
 
     [PunRPC]
