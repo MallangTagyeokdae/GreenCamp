@@ -64,20 +64,22 @@ public class Entity : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            currentHealth -= damage;
+            Debug.Log("CurrentHealth : "+currentHealth + " / damage : " + damage);
+            // currentHealth -= damage;
             // MasterClient에서 체력을 계산
             this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All, currentHealth); // 계산한 체력을 넘겨줘서 동기화시킴
         }
     }
 
     [PunRPC]
-    public void SyncAttack(int health)
+    public void SyncAttack(float health)
     {
         //end.Cancel();
         if(end != null){
             StopCoroutine(end);
         }
-        currentHealth = health;
+        currentHealth -= 10;
+        // currentHealth = health;
         Debug.Log(currentHealth + " / " + maxHealth);
         healthBar.value = currentHealth/maxHealth;
         //Task.Run(() => ActiveHealthBarAsync(end));

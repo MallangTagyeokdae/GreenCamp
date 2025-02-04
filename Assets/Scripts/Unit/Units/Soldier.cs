@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Soldier : Unit
 {
+    void Start()
+    {
+        this.maxHealth = 100;
+        this.currentHealth = 100;
+        this.unitPower = 30;
+    }
+
     public Soldier(string teamID, int unitID, Vector3 unitLocation)
                 : base(
                 teamID,
@@ -24,10 +31,7 @@ public class Soldier : Unit
         this.unitID = unitID;
         this.unitType = "Soldier";
         this.unitLocation = unitLocation;
-        this.maxHealth = 100;
-        this.currentHealth = 100;
         this.unitCost = 30;
-        this.unitPower = 30;
         this.unitPowerRange = 3;
         this.unitMoveSpeed = 2;
         this.populationCost = 1;

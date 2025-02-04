@@ -204,7 +204,7 @@ public class UnitController : MonoBehaviour
             if (progress >= 0.34f && unit.animator.GetBool("Attacked") == false)
             {
                 unit.animator.SetBool("Attacked", true);
-                Debug.Log("attack check");
+                Debug.Log("attack check / " + progress);
                 if (unit.TryGetComponent(out Archer archer))
                 {
                     StartCoroutine(LaunchArrow(archer, enemy));
