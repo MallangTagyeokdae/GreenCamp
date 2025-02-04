@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
                 gameState = state;
                 break;
             case GameStates.EndGame:
-                gameObject.GetComponent<PhotonView>().RPC("ShowGameResult",RpcTarget.All);
+                gameObject.GetComponent<PhotonView>().RPC("ShowGameResult", RpcTarget.All);
                 target.SetActive(false);
                 gameState = state;
                 break;
@@ -368,10 +368,11 @@ public class GameManager : MonoBehaviour
 
     public void UpdateEventUI(GameObject eventedObject)
     {
-        if(eventedObject.TryGetComponent(out Building building))
+        if (eventedObject.TryGetComponent(out Building building))
         {
             ReloadBuildingUI(building);
-        } else if(eventedObject.TryGetComponent(out Unit unit))
+        }
+        else if (eventedObject.TryGetComponent(out Unit unit))
         {
             SetUnitInfo(7, unit.gameObject);
 
@@ -672,21 +673,22 @@ public class GameManager : MonoBehaviour
 
     public void DestroyEntity(GameObject entity)
     {
-        if(entity.TryGetComponent(out Building building))
+        if (entity.TryGetComponent(out Building building))
         {
             // InCreating이면 CancelProgress를 실행시킴 -> 건물 파괴, 건설비 리턴
             // InProgress이면 CancelProgress를 실행 -> 진행중인 작업 취소, 돈 리턴
             //               State를 Destroy로 바꾸고 다시 CancelProgress를 실행
             // Built이면 State를 Destory로 바꾸고 다시 CancelProgress를 실행
-            if(building.state == Building.State.InProgress)
+            if (building.state == Building.State.InProgress)
             {
                 buildingController.CancelProgress(building);
                 buildingController.SetBuildingState(building, Building.State.Destroy, "None");
 
             }
-        } else if(entity.TryGetComponent(out Unit unit))
+        }
+        else if (entity.TryGetComponent(out Unit unit))
         {
-            unit.DestroyEntity();
+            unitController.DestroyUnit(unit);
             // 유닛 컨트롤러에서 전체 인구수 -1 하는 로직 추가
         }
 
