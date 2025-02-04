@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Tanker : Unit
 {
+    void Start()
+    {
+        this.maxHealth = 150;
+        this.currentHealth = 150;
+        this.unitPower = 15;
+    }
     public Tanker(string teamID, int unitID, Vector3 unitLocation)
                 : base(
                 teamID,
@@ -24,10 +30,7 @@ public class Tanker : Unit
         this.unitID = unitID;
         this.unitType = "Tanker";
         this.unitLocation = unitLocation;
-        this.maxHealth = 150;
-        this.currentHealth = 150;
         this.unitCost = 50;
-        this.unitPower = 15;
         this.unitPowerRange = 3;
         this.unitMoveSpeed = 1;
         this.populationCost = 1;

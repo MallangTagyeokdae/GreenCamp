@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class Defender : Building
 {
+    private void Awake()
+    {
+        this.maxHealth = 200;
+        this.currentHealth = .1f;
+    }
     public int attackPower { get; set; }
     public int attackRange { get; set; }
     
@@ -31,8 +36,6 @@ public class Defender : Building
         this.ID = buildingID;
         this.type = "Defender";
         this.location = buildingLocation;
-        this.maxHealth = 200;
-        this.currentHealth = .1f;
         this.progress = 0;
         this.level = 1;
         this.cost = 25;
