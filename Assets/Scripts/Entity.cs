@@ -86,17 +86,9 @@ public class Entity : MonoBehaviour
 
         if(currentHealth <= 0)
         {
-            GameManager.instance.DestroyEntity(gameObject);
+            GameManager.instance.GetComponent<PhotonView>().RPC("DestroyEntity", RpcTarget.All, gameObject);
         }
 
-        // if(this.GetComponent<Command>())
-        // {
-        //     if(currentHealth <= 0)
-        //     {
-        //         GameStatus.instance.isWin = false;
-        //         GameManager.instance.SetState("EndGame");
-        //     }
-        // }
     }
     private IEnumerator ActiveHealthBar(){
         float time;
