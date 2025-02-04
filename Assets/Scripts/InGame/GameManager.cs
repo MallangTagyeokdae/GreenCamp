@@ -533,7 +533,7 @@ public class GameManager : MonoBehaviour
     public void ReloadingGameStatus(Building building)
     {
         switch (building)
-        { 
+        {
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += building.GetComponent<ResourceBuilding>().increasePersent;
                 break;
@@ -703,9 +703,12 @@ public class GameManager : MonoBehaviour
         } 
         else if (entity.TryGetComponent(out Unit unit))
         {
-            Debug.Log(entity.name+" 얘 죽음");
+            if (unit.unitBehaviour != null)
+            {
+                StopCoroutine(unit.unitBehaviour);
+                Debug.Log("코루틴 정지!!!!!!!!!!!!!!!!!!!");
+            }
             unitController.DestroyUnit(unit);
-            // 유닛 컨트롤러에서 전체 인구수 -1 하는 로직 추가
         }
 
         UpdateResourceUI();

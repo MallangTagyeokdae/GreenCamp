@@ -6,6 +6,7 @@ using UnityEngine;
 public class Setting : LobbyState{
     [SerializeField]
     private readonly GameObject page;
+    public bool conitinueNext = true;
     private float _masterVol;
     private float _bgmVol;
     private float _effectVol;
@@ -14,5 +15,8 @@ public class Setting : LobbyState{
     }
     public void OutPage(string next){
 
+    }
+    public bool Continue(){
+        return true;
     }
 }
