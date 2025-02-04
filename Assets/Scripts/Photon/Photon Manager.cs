@@ -58,7 +58,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     {
         Debug.Log("Connected to Master!");
         PhotonNetwork.JoinLobby(); // 로비 입장
-        Debug.Log($"Hello {PhotonNetwork.NickName}");
         //base.OnConnectedToMaster();
     }
 
