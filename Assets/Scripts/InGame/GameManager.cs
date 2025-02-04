@@ -368,14 +368,16 @@ public class GameManager : MonoBehaviour
 
     public void UpdateEventUI(GameObject eventedObject)
     {
-        if (eventedObject.TryGetComponent(out Building building))
+        if(clickedObject[0] == eventedObject)
         {
-            ReloadBuildingUI(building);
-        }
-        else if (eventedObject.TryGetComponent(out Unit unit))
-        {
-            SetUnitInfo(7, unit.gameObject);
-
+            if (eventedObject.TryGetComponent(out Building building))
+            {
+                ReloadBuildingUI(building);
+            }
+            else if (eventedObject.TryGetComponent(out Unit unit))
+            {
+                SetUnitInfo(7, unit.gameObject);
+            }
         }
     }
     // =====================================================
@@ -671,7 +673,7 @@ public class GameManager : MonoBehaviour
     // =====================================================
 
     // =================== 객체 파괴 함수 ======================
-    
+
     public void DestroyEntity(GameObject entity)
     {
         if (entity.TryGetComponent(out Building building))
@@ -679,21 +681,10 @@ public class GameManager : MonoBehaviour
             // InCreating이면 CancelProgress를 실행시킴 -> 건물 파괴, 건설비 리턴
             // InProgress이면 CancelProgress를 실행 -> 진행중인 작업 취소, 돈 리턴, State가 Built로 바뀜
             // Built이면 State를 Destory로 바꾸고 다시 CancelProgress를 실행
-            switch(building.state)
-            {
-                case Building.State.InCreating:
-                case Building.State.InProgress:
-                    buildingController.CancelProgress(building);
-                    break;
-            }
-
-            if(building.state == Building.State.Built)
-            {
-                buildingController.SetBuildingState(building, Building.State.Destroy, "None");
-                buildingController.CancelProgress(building);
-            } 
+        } 
         else if (entity.TryGetComponent(out Unit unit))
         {
+            Debug.Log(entity.name+" 얘 죽음");
             unitController.DestroyUnit(unit);
             // 유닛 컨트롤러에서 전체 인구수 -1 하는 로직 추가
         }
@@ -701,7 +692,6 @@ public class GameManager : MonoBehaviour
         UpdateResourceUI();
         UpdateBuildingPopulationUI();
         UpdateUnitPopulationUI();
-        }
     }
 
     // ======================================================

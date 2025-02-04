@@ -139,7 +139,7 @@ public class BuildingController : MonoBehaviour
         SetBuildingState(building,Building.State.Destroy,"None");
         building.SetProgressMesh1();
         building.ActiveDestroyEffect();
-        await StartTimer(5f);
+        // await StartTimer(5f);
         GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
         building.DestroyEntity();
     }
@@ -225,12 +225,13 @@ public class BuildingController : MonoBehaviour
     {
         if(building.state.Equals(Building.State.InCreating))
         {
-            SetBuildingState(building, Building.State.Destroy, "None");
             if(GameManager.instance.clickedObject[0] == building)
             {
                 GameManager.instance.SetBuildingListUI();
-                GameManager.instance.SetClickedObject(GameManager.instance.ground);
+                GameManager.instance.clickedObject[0] = GameManager.instance.ground;
             }
+            SetBuildingState(building, Building.State.Destroy, "None");
+
         } else if(building.state.Equals(Building.State.InProgress))
         {
             switch(building.inProgressItem)
@@ -249,13 +250,6 @@ public class BuildingController : MonoBehaviour
             }
             SetBuildingState(building, Building.State.Built, "None");
             GameManager.instance.ReloadBuildingUI(building);
-        } else if(building.state.Equals(Building.State.Destroy))
-        {
-            DestroyBuilding(building);
-            GameManager.instance.SetBuildingListUI();
-            GameManager.instance.SetClickedObject(GameManager.instance.ground);
-
-            GameStatus.instance.currentBuildingCount -= building.population;
         }
         GameStatus.instance.currentResourceCount += Mathf.FloorToInt(building.returnCost * 0.7f); // 취소하면 비용의 70프로만 돌려줌 소숫점아래 버림
     }
