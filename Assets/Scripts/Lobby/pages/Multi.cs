@@ -13,6 +13,7 @@ public class Multi : LobbyState
     private UIButton _createRoomBtn;
     private UIButton _cancelBtn;
     private Transform parent;
+    public bool conitinueNext = true;
 
     public void InitPage()
     { //하드코딩했음,,,
@@ -39,7 +40,12 @@ public class Multi : LobbyState
 
             PhotonManager.instance.CreateRoom(_roomName.text);
     }
+    
     public void OutPage(string next)
     {
+    }
+
+    public bool Continue(){
+        return true;
     }
 }

@@ -9,4 +9,7 @@ public class Home : LobbyState{
 
     }
     public void OutPage(string next){}
+    public bool Continue(){
+        return true;
+    }
 }

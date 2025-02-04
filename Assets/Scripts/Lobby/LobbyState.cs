@@ -6,6 +6,7 @@ using UnityEngine;
 
 public interface LobbyState
 {
-    public void InitPage(){}
-    public void OutPage(string next){}
+    public void InitPage();
+    public void OutPage(string next);
+    public bool Continue();
 }
