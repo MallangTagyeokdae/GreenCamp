@@ -68,14 +68,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     //RoomList가 update될 때마다 실행
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        foreach(RoomInfo room in roomList){
-            if(room.RemovedFromList){
+        foreach (RoomInfo room in roomList)
+        {
+            if (room.RemovedFromList)
+            {
                 _roomList.Remove(room);
             }
-            else if(_roomList.Contains(room)){
+            else if (_roomList.Contains(room))
+            {
                 continue;
             }
-            else{
+            else
+            {
                 _roomList.Add(room);
             }
         }
@@ -93,7 +97,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         roomOptions.MaxPlayers = 2; // 최대 플레이어 수 설정
         roomOptions.EmptyRoomTtl = 1000; //n msec 동안 방 파괴 x
         ///string titlecheck = (string)roomInfo.CustomProperties["Title"];
-        
+
 
         if (PhotonNetwork.CreateRoom(roomName + "~" + roomTitle, roomOptions))
         {
@@ -146,9 +150,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         Debug.Log($"join room: {PhotonNetwork.CurrentRoom.Name} Successed");
         Debug.Log("joined room title: " + PhotonNetwork.CurrentRoom.CustomProperties["Title"]);
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
-        if(!PhotonNetwork.IsMasterClient){
-            lobbyController.SetState("TeamSelect");
-        }
+        lobbyController.SetState("TeamSelect");
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -198,7 +200,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     //방에 있는 유저들의 씬을 게임씬으로 변경
     public void StartGame()
     {
-        if(PhotonNetwork.InRoom){
+        if (PhotonNetwork.InRoom)
+        {
             PhotonNetwork.LoadLevel("GameScene");
         }
         /*if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
