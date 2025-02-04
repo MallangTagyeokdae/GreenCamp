@@ -28,7 +28,7 @@ public class ResourceBuilding : Building
         this.type = "ResourceBuilding";
         this.location = buildingLocation;
         this.maxHealth = 250;
-        this.currentHealth = 1;
+        this.currentHealth = .1f;
         this.progress = 0;
         this.level = 1;
         this.cost = 45;

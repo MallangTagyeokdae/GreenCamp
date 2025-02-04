@@ -529,7 +529,7 @@ public class GameManager : MonoBehaviour
     public void ReloadingGameStatus(Building building)
     {
         switch (building)
-        {
+        { 
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += building.GetComponent<ResourceBuilding>().increasePersent;
                 break;
