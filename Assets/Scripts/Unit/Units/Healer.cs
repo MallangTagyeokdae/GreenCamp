@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Healer : Unit
 {
+    void Start()
+    {
+        this.maxHealth = 85;
+        this.currentHealth = 85;
+        this.unitPower = 0;
+    }
     public GameObject HealingEffect;
     public Healer(string teamID, int unitID, Vector3 unitLocation)
                 : base(
@@ -25,10 +31,7 @@ public class Healer : Unit
         this.unitID = unitID;
         this.unitType = "Healer";
         this.unitLocation = unitLocation;
-        this.maxHealth = 85;
-        this.currentHealth = 85;
         this.unitCost = 65;
-        this.unitPower = 0;
         this.unitPowerRange = 4;
         this.unitMoveSpeed = 1;
         this.populationCost = 1;
