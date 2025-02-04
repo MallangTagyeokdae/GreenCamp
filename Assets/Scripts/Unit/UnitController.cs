@@ -207,7 +207,7 @@ public class UnitController : MonoBehaviour
                 {
                     StartCoroutine(LaunchArrow(archer, enemy));
                 }
-                enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient);
+                enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
 
             }
 

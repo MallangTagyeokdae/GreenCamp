@@ -186,6 +186,7 @@ public class BuildingController : MonoBehaviour
                 building.progressBar.gameObject.SetActive(false);
                 building.progress = 0;
                 building.time = 0;
+                building.returnCost = 0;
                 break;
             case Building.State.InProgress:
                 building.progressBar.gameObject.SetActive(true);
@@ -244,6 +245,13 @@ public class BuildingController : MonoBehaviour
             }
             SetBuildingState(building, Building.State.Built, "None");
             GameManager.instance.ReloadBuildingUI(building);
+        } else if(building.state.Equals(Building.State.Destroy))
+        {
+            DestroyBuilding(building);
+            GameManager.instance.SetBuildingListUI();
+            GameManager.instance.SetClickedObject(GameManager.instance.ground);
+
+            GameStatus.instance.currentBuildingCount -= building.population;
         }
         GameStatus.instance.currentResourceCount += Mathf.FloorToInt(building.returnCost * 0.7f); // 취소하면 비용의 70프로만 돌려줌 소숫점아래 버림
     }

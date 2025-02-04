@@ -394,4 +394,19 @@ public class UIController : MonoBehaviour
             Options[3].GetComponent<UIContainer>().Hide();
         }
     }
+
+    public void SetEndResult()
+    {
+        bool isWin = GameStatus.instance.isWin;
+        TMP_Text resultText = Options[4].transform.Find("Result").GetComponent<TMP_Text>();
+
+        Options[4].Show();
+        if(isWin)
+        {
+            resultText.text = "승리";
+        } else
+        {
+            resultText.text = "패배";
+        }
+    }
 }

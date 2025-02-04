@@ -2,16 +2,11 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
-using Doozy.Runtime.Common;
 using Doozy.Runtime.UIManager.Containers;
 using Photon.Pun;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using ExitGames.Client.Photon.StructWrapping;
 
 public enum GameStates
 {
@@ -143,6 +138,8 @@ public class GameManager : MonoBehaviour
                 gameState = state;
                 break;
             case GameStates.EndGame:
+                gameObject.GetComponent<PhotonView>().RPC("ShowGameResult",RpcTarget.All);
+                target.SetActive(false);
                 gameState = state;
                 break;
         }
@@ -325,6 +322,12 @@ public class GameManager : MonoBehaviour
     {
         uIController.infoText[0].text = Mathf.FloorToInt(GameStatus.instance.currentResourceCount).ToString();
     }
+
+    [PunRPC]
+    public void ShowGameResult()
+    {
+        uIController.SetEndResult();
+    }
     public void UpdateUnitPopulationUI()
     {
         uIController.infoText[1].text = GameStatus.instance.currentUnitCount.ToString();
@@ -334,6 +337,44 @@ public class GameManager : MonoBehaviour
     {
         uIController.infoText[3].text = GameStatus.instance.currentBuildingCount.ToString();
         uIController.infoText[4].text = GameStatus.instance.maxBuildingCount.ToString();
+    }
+
+
+    public void ReloadBuildingUI(Building building)
+    { // 건물이 생성완료 됐을 때 건물을 클릭하고 있으면 건물 UI로 바꿔준다.
+        if (clickedObject[0].name == building.name)
+        {
+            switch (building.type)
+            {
+                case "Command":
+                    SetBuildingInfo(2, building);
+                    break;
+                case "Barrack":
+                    SetBuildingInfo(3, building);
+                    break;
+                case "PopulationBuilding":
+                    SetBuildingInfo(4, building);
+                    break;
+                case "ResourceBuilding":
+                    SetBuildingInfo(5, building);
+                    break;
+                case "Defender":
+                    SetBuildingInfo(6, building);
+                    break;
+            }
+        }
+    }
+
+    public void UpdateEventUI(GameObject eventedObject)
+    {
+        if(eventedObject.TryGetComponent(out Building building))
+        {
+            ReloadBuildingUI(building);
+        } else if(eventedObject.TryGetComponent(out Unit unit))
+        {
+            SetUnitInfo(7, unit.gameObject);
+
+        }
     }
     // =====================================================
 
@@ -482,31 +523,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ReloadBuildingUI(Building building)
-    { // 건물이 생성완료 됐을 때 건물을 클릭하고 있으면 건물 UI로 바꿔준다.
-        if (clickedObject[0].name == building.name)
-        {
-            switch (building.type)
-            {
-                case "Command":
-                    SetBuildingInfo(2, building);
-                    break;
-                case "Barrack":
-                    SetBuildingInfo(3, building);
-                    break;
-                case "PopulationBuilding":
-                    SetBuildingInfo(4, building);
-                    break;
-                case "ResourceBuilding":
-                    SetBuildingInfo(5, building);
-                    break;
-                case "Defender":
-                    SetBuildingInfo(6, building);
-                    break;
-            }
-        }
-    }
-
 
     public void ReloadingGameStatus(Building building)
     {
@@ -651,6 +667,34 @@ public class GameManager : MonoBehaviour
 
     // =====================================================
 
+    // =================== 객체 파괴 함수 ======================
+
+    public void DestroyEntity(GameObject entity)
+    {
+        if(entity.TryGetComponent(out Building building))
+        {
+            // InCreating이면 CancelProgress를 실행시킴 -> 건물 파괴, 건설비 리턴
+            // InProgress이면 CancelProgress를 실행 -> 진행중인 작업 취소, 돈 리턴
+            //               State를 Destroy로 바꾸고 다시 CancelProgress를 실행
+            // Built이면 State를 Destory로 바꾸고 다시 CancelProgress를 실행
+            if(building.state == Building.State.InProgress)
+            {
+                buildingController.CancelProgress(building);
+                buildingController.SetBuildingState(building, Building.State.Destroy, "None");
+
+            }
+        } else if(entity.TryGetComponent(out Unit unit))
+        {
+            unit.DestroyEntity();
+            // 유닛 컨트롤러에서 전체 인구수 -1 하는 로직 추가
+        }
+
+        UpdateResourceUI();
+        UpdateBuildingPopulationUI();
+        UpdateUnitPopulationUI();
+    }
+
+    // ======================================================
 
     // =================== 타이머 함수 ======================== 
     private async Task<bool> StartTimer(float time, Action<float> action, CancellationToken token)
