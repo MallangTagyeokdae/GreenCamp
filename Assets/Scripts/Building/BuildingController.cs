@@ -141,7 +141,7 @@ public class BuildingController : MonoBehaviour
         building.ActiveDestroyEffect();
         await StartTimer(5f);
         GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
-        Destroy(building.gameObject);
+        building.DestroyEntity();
     }
 
     public void UpgradeBuilding(Building building)
@@ -194,6 +194,9 @@ public class BuildingController : MonoBehaviour
                 break;
 
         }
+
+        if(state == Building.State.Destroy) DestroyBuilding(building);
+
         building.state = state;
         Enum.TryParse(progressType, out Building.InProgressItem item);
         switch(item)
@@ -222,11 +225,12 @@ public class BuildingController : MonoBehaviour
     {
         if(building.state.Equals(Building.State.InCreating))
         {
-            DestroyBuilding(building);
-            GameManager.instance.SetBuildingListUI();
-            GameManager.instance.SetClickedObject(GameManager.instance.ground);
-
-            GameStatus.instance.currentBuildingCount -= building.population;
+            SetBuildingState(building, Building.State.Destroy, "None");
+            if(GameManager.instance.clickedObject[0] == building)
+            {
+                GameManager.instance.SetBuildingListUI();
+                GameManager.instance.SetClickedObject(GameManager.instance.ground);
+            }
         } else if(building.state.Equals(Building.State.InProgress))
         {
             switch(building.inProgressItem)

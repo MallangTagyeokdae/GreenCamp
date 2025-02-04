@@ -670,20 +670,26 @@ public class GameManager : MonoBehaviour
 
     // =================== 객체 파괴 함수 ======================
 
+    [PunRPC]
     public void DestroyEntity(GameObject entity)
     {
         if(entity.TryGetComponent(out Building building))
         {
             // InCreating이면 CancelProgress를 실행시킴 -> 건물 파괴, 건설비 리턴
-            // InProgress이면 CancelProgress를 실행 -> 진행중인 작업 취소, 돈 리턴
-            //               State를 Destroy로 바꾸고 다시 CancelProgress를 실행
+            // InProgress이면 CancelProgress를 실행 -> 진행중인 작업 취소, 돈 리턴, State가 Built로 바뀜
             // Built이면 State를 Destory로 바꾸고 다시 CancelProgress를 실행
-            if(building.state == Building.State.InProgress)
+            switch(building.state)
             {
-                buildingController.CancelProgress(building);
-                buildingController.SetBuildingState(building, Building.State.Destroy, "None");
-
+                case Building.State.InCreating:
+                case Building.State.InProgress:
+                    buildingController.CancelProgress(building);
+                    break;
             }
+            if(building.state == Building.State.Built)
+            {
+                buildingController.SetBuildingState(building, Building.State.Destroy, "None");
+                buildingController.CancelProgress(building);
+            } 
         } else if(entity.TryGetComponent(out Unit unit))
         {
             unit.DestroyEntity();
