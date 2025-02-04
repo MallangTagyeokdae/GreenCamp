@@ -369,7 +369,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateEventUI(GameObject eventedObject)
     {
-        if(clickedObject[0] == eventedObject)
+        if (clickedObject[0] == eventedObject)
         {
             if (eventedObject.TryGetComponent(out Building building))
             {
@@ -588,7 +588,6 @@ public class GameManager : MonoBehaviour
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
             {
-                Debug.Log(unit.order);
                 return;
             }
 
@@ -690,23 +689,35 @@ public class GameManager : MonoBehaviour
                 buildingController.CancelProgress(building);
             }
 
-            if(building != null) 
+            if (building != null)
             {
-                switch(building.state)
+                switch (building.state)
                 {
                     case Building.State.Built:
-                        buildingController.DestroyBuilding(building); 
+                        buildingController.DestroyBuilding(building);
                         break;
                 }
             }
 
-        } 
+        }
         else if (entity.TryGetComponent(out Unit unit))
         {
             if (unit.unitBehaviour != null)
             {
                 StopCoroutine(unit.unitBehaviour);
                 Debug.Log("코루틴 정지!!!!!!!!!!!!!!!!!!!");
+            }
+            if (clickedObject.Contains(entity))
+            {
+                if (clickedObject.Count == 1)
+                {
+                    clickedObject[0] = ground;
+
+                }
+                else
+                {
+                    clickedObject.Remove(entity);
+                }
             }
             unitController.DestroyUnit(unit);
         }
