@@ -194,7 +194,7 @@ public class UnitController : MonoBehaviour
         ally.TryGetComponent(out Unit unit);
         unit.ChangeState("Attack");
 
-        while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
+        while (unit.attackList.Contains(enemy) && enemy.GetComponent<Entity>().currentHealth > 0) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
 
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
@@ -218,6 +218,10 @@ public class UnitController : MonoBehaviour
             else if (progress < 0.1f)
             {
                 unit.animator.SetBool("Attacked", false);
+            }
+            if (enemy.GetComponent<Entity>().currentHealth < 0)
+            {
+                unit.attackList.Remove(enemy);
             }
 
             yield return null;
