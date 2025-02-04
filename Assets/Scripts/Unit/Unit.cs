@@ -47,7 +47,6 @@ public abstract class Unit : Entity
     public ClickEventHandler clickEventHandler;
 
 
-
     public Order order = Order.Idle;
 
     private void Awake()
