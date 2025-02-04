@@ -28,7 +28,7 @@ public class PopulationBuilding : Building
         this.type = "PopulationBuilding";
         this.location = buildingLocation;
         this.maxHealth = 200;
-        this.currentHealth = 0;
+        this.currentHealth = 1;
         this.progress = 0;
         this.level = 1;
         this.cost = 25;

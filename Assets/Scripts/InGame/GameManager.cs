@@ -701,6 +701,7 @@ public class GameManager : MonoBehaviour
         UpdateResourceUI();
         UpdateBuildingPopulationUI();
         UpdateUnitPopulationUI();
+        }
     }
 
     // ======================================================
