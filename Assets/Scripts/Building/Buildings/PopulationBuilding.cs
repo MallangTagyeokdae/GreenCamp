@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class PopulationBuilding : Building
 {
+    private void Awake()
+    {
+        this.maxHealth = 200;
+        this.currentHealth = .1f;
+    }
     public int increasePersent { get; set; }
     public PopulationBuilding(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
@@ -27,8 +32,6 @@ public class PopulationBuilding : Building
         this.ID = buildingID;
         this.type = "PopulationBuilding";
         this.location = buildingLocation;
-        this.maxHealth = 200;
-        this.currentHealth = .1f;
         this.progress = 0;
         this.level = 1;
         this.cost = 25;

@@ -6,6 +6,12 @@ using UnityEngine.UI;
 // Unit을 상속받는 자식 Archer Class
 public class Archer : Unit
 {
+    void Start()
+    {
+        this.maxHealth = 50;
+        this.currentHealth = 50;
+        this.unitPower = 35;
+    }
     public GameObject arrow;
     // teamID, unitID, unitLocation은 생성자 호출 시 전달된 값으로 초기화됨 (생성자 매개변수로 전달되어 부모 클래스에서 초기화됨)
 
@@ -33,10 +39,7 @@ public class Archer : Unit
         this.unitID = unitID;
         this.unitType = "Archer";
         this.unitLocation = unitLocation;
-        this.maxHealth = 50;
-        this.currentHealth = 50;
         this.unitCost = 40;
-        this.unitPower = 35;
         this.unitPowerRange = 14;
         this.unitMoveSpeed = 3;
         this.populationCost = 1;
