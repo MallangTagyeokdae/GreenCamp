@@ -64,8 +64,9 @@ public class Entity : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            currentHealth -= damage;
             // MasterClient에서 체력을 계산
-            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All, currentHealth-damage); // 계산한 체력을 넘겨줘서 동기화시킴
+            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All, currentHealth); // 계산한 체력을 넘겨줘서 동기화시킴
         }
     }
 
@@ -86,7 +87,7 @@ public class Entity : MonoBehaviour
 
         if(currentHealth <= 0)
         {
-            GameManager.instance.GetComponent<PhotonView>().RPC("DestroyEntity", RpcTarget.All, gameObject);
+            // GameManager.instance.GetComponent<PhotonView>().RPC("DestroyEntity", RpcTarget.All, gameObject);
         }
 
     }
