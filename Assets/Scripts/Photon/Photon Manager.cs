@@ -70,13 +70,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     {
         foreach (RoomInfo room in roomList)
         {
-            if (room.RemovedFromList)
+            if (room.RemovedFromList )
             {
                 _roomList.Remove(room);
             }
             else if (_roomList.Contains(room))
             {
-                continue;
+                _roomList[_roomList.IndexOf(room)] = room;
             }
             else
             {
