@@ -64,18 +64,21 @@ public class Entity : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log("CurrentHealth : "+currentHealth + " / damage : " + damage);
+            currentHealth -= damage;
             // MasterClient에서 체력을 계산
-            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All, currentHealth-damage); // 계산한 체력을 넘겨줘서 동기화시킴
+            this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All, currentHealth); // 계산한 체력을 넘겨줘서 동기화시킴
         }
     }
 
     [PunRPC]
-    public void SyncAttack(int health)
+    public void SyncAttack(float health)
     {
         //end.Cancel();
         if(end != null){
             StopCoroutine(end);
         }
+        // currentHealth -= 10;
         currentHealth = health;
         Debug.Log(currentHealth + " / " + maxHealth);
         healthBar.value = currentHealth/maxHealth;
@@ -86,7 +89,7 @@ public class Entity : MonoBehaviour
 
         if(currentHealth <= 0)
         {
-            GameManager.instance.GetComponent<PhotonView>().RPC("DestroyEntity", RpcTarget.All, gameObject);
+            GameManager.instance.DestroyEntity(gameObject);
         }
 
     }

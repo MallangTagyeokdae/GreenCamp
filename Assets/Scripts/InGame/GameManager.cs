@@ -518,7 +518,8 @@ public class GameManager : MonoBehaviour
 
     private void UpdateBuildingHealth(Building building, float time)
     { // 건물이 생성될 때 체력을 업데이트 해주는 함수
-        building.GetComponent<PhotonView>().RPC("UpdateCreateBuildingTime", RpcTarget.All, time);
+        building.UpdateCreateBuildingTime(time);
+        // building.GetComponent<PhotonView>().RPC("UpdateCreateBuildingTime", RpcTarget.All, time);
         if (clickedObject[0].GetComponent<Building>() == building)
         {
             uIController.UpdateHealth(currentUI, building);
@@ -529,7 +530,7 @@ public class GameManager : MonoBehaviour
     public void ReloadingGameStatus(Building building)
     {
         switch (building)
-        {
+        { 
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += building.GetComponent<ResourceBuilding>().increasePersent;
                 break;
@@ -670,8 +671,7 @@ public class GameManager : MonoBehaviour
     // =====================================================
 
     // =================== 객체 파괴 함수 ======================
-
-    [PunRPC]
+    
     public void DestroyEntity(GameObject entity)
     {
         if (entity.TryGetComponent(out Building building))
