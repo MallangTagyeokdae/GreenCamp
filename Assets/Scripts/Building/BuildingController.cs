@@ -133,6 +133,11 @@ public class BuildingController : MonoBehaviour
 
         GameStatus.instance.currentBuildingCount -= building.population;
 
+        foreach(Collider collider in building.GetComponents<Collider>())
+        {
+            collider.enabled = false;
+        }
+
         await StartTimer(5f);
         GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
         building.DestroyEntity();
