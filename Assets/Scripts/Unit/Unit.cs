@@ -24,7 +24,8 @@ public abstract class Unit : Entity
     {
         Idle,
         Move,
-        Attack
+        Attack,
+        Die
     }
 
 
@@ -133,7 +134,7 @@ public abstract class Unit : Entity
 
     private void OnIdleEnter()
     { //attackList와 aggList 내의 null 값들을 전부 제거해준 후 attack또는 aggro 함수를 실행해준다.
-        foreach (GameObject enemy in attackList)
+        foreach (GameObject enemy in attackList.ToList())
         {
             if (enemy == null)
             {
@@ -141,7 +142,7 @@ public abstract class Unit : Entity
             }
         }
 
-        foreach (GameObject enemy in aggList)
+        foreach (GameObject enemy in aggList.ToList())
         {
             if (enemy == null)
             {
@@ -208,6 +209,12 @@ public abstract class Unit : Entity
                 rigidbody.isKinematic = true;
                 animator.SetBool("isAttacking", true);
                 break;
+            case "Die":
+                foreach(Collider collider in GetComponents<Collider>())
+                {
+                    collider.enabled = false;
+                }
+                break;
         }
     }
 
@@ -245,6 +252,7 @@ public abstract class Unit : Entity
     //새로운 객체를 찾아야 하는 경우 -> 유닛의 상태가 idle이 되었을 때(이동을 완료했을 때, 공격하던 객체가 죽었을 때, 공격하던 객체가 어그로 범위를 벗어났을 때)
     public override void DestroyEntity()
     {
+        SetState("Die");
         animator.SetTrigger("isDead");
         Debug.Log("애니메이션 실행되니?");
     }
