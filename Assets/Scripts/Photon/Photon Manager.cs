@@ -27,6 +27,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
     private List<RoomInfo> _roomList;// = new List<RoomInfo>();
     private readonly string version = "1.0f";
     public LobbyController lobbyController;
+    public TeamUIController teamUIController;
     public UserInfo userInfo;
     void Awake()
     {
@@ -174,7 +175,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
         ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-
+        teamUIController.OnTeamSelect(PhotonNetwork.LocalPlayer, teamName);
         Debug.Log($"Team set to: {teamName}");
     }
 
@@ -211,5 +212,4 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
             PhotonNetwork.LoadLevel("GameScene");
         }*/
     }
-
 }
