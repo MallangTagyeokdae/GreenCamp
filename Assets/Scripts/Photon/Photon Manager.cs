@@ -151,10 +151,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
 
     public override void OnJoinedRoom()
     {
-        Debug.Log($"join room: {PhotonNetwork.CurrentRoom.Name} Successed");
-        Debug.Log("joined room title: " + PhotonNetwork.CurrentRoom.CustomProperties["Title"]);
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
         lobbyController.SetState("TeamSelect");
+        foreach(Player player in PhotonNetwork.PlayerList){
+            teamUIController.OnTeamSelect(player);
+        }
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
