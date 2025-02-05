@@ -174,8 +174,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public void SetTeam(string teamName)
     {
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
-        ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
+        ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
+        ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerTeam);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
         teamUIController.SendTeamSelect();
         //master에게 팀 명단을 갱신하라는 rpc -> master에서 갱신 후 다른 클라이언트들에게 명단 갱신 명령
         Debug.Log($"Team set to: {teamName}");
@@ -185,6 +187,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public string GetTeam(Player player)
     {
         if (player.CustomProperties.TryGetValue("team", out object teamName))
+        {
+            return (string)teamName;
+        }
+        return "Null";
+    }
+
+    public string GetPreviousTeam(Player player)
+    {
+        if (player.CustomProperties.TryGetValue("previousTeam", out object teamName))
         {
             return (string)teamName;
         }
@@ -232,12 +243,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         {
             case 1: // 팀 선택 이벤트
                 Player player = (Player)photonEvent.CustomData;
-                //teamUIController.OnTeamSelect(player);
-                Debug.Log($"{player.NickName}: {GetTeam(player)}");
+                teamUIController.OnTeamSelect(player);
                 break;
 
             default:
-                Debug.Log("Unknown event received: " + photonEvent.Code);
+                //Debug.Log("Unknown event received: " + photonEvent.Code);
                 break;
         }
     }
