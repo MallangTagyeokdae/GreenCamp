@@ -237,7 +237,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
                 break;
 
             default:
-                Debug.Log("Unknown event received: " + photonEvent.Code);
+                // Debug.Log("Unknown event received: " + photonEvent.Code);
                 break;
         }
     }

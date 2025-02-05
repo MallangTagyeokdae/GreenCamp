@@ -200,7 +200,6 @@ public class UnitController : MonoBehaviour
             {
                 Debug.Log("적 죽음, 리스트에서 제거");
                 unit.attackList.Remove(enemy);
-                
                 break;
             }
 
@@ -220,11 +219,7 @@ public class UnitController : MonoBehaviour
                         StartCoroutine(LaunchArrow(archer, enemy));
                     }
                     enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
-                } else
-                {
-                    Debug.Log("적 체력 0미만");
                 }
-                enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
             }
 
             else if (progress < 0.1f)
