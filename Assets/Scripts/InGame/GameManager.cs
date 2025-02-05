@@ -385,6 +385,7 @@ public class GameManager : MonoBehaviour
 
 
     // =================== 객체 생성 함수들 ===================
+    [PunRPC]
     public void OrderCreateBuilding()
     {
         if(PhotonNetwork.IsMasterClient)
