@@ -563,21 +563,17 @@ public class GameManager : MonoBehaviour
             {
                 StopCoroutine(selectedUnit.unitBehaviour);
             }
-
-            if(selectedUnit.aggList == null){
-                Debug.Log($"aggList: {selectedUnit.aggList == null}");
+            if(selectedUnit.aggList.Count == 0){
                 selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, newLocation, order));
             }
-            else if (selectedUnit.attackList == null){
+            else if (selectedUnit.attackList.Count == 0){
                 foreach(GameObject enemy in selectedUnit.aggList){
-                    Debug.Log($"attackList: {selectedUnit.attackList == null}");
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, enemy, 3)); // aggro
                     break;
                 }
             }
             else{
                 foreach(GameObject enemy in selectedUnit.attackList){
-                    Debug.Log($"alskdflakj: {selectedUnit.attackList == null}");
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, enemy));
                     break;
                 }
