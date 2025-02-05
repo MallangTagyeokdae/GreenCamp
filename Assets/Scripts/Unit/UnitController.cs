@@ -194,7 +194,7 @@ public class UnitController : MonoBehaviour
         ally.TryGetComponent(out Unit unit);
         unit.ChangeState("Attack");
 
-        while (unit.attackList.Contains(enemy) && enemy != null) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
+        while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
 
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
@@ -204,16 +204,13 @@ public class UnitController : MonoBehaviour
 
             if (progress >= 0.34f && unit.animator.GetBool("Attacked") == false)
             {
+                unit.animator.SetBool("Attacked", true);
                 // Debug.Log("attack check / " + progress);
-                if(enemy.GetComponent<Unit>().currentHealth > 0)
+                if (unit.TryGetComponent(out Archer archer))
                 {
-                    unit.animator.SetBool("Attacked", true);
-                    if (unit.TryGetComponent(out Archer archer))
-                    {
-                        StartCoroutine(LaunchArrow(archer, enemy));
-                    }
-                    enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
+                    StartCoroutine(LaunchArrow(archer, enemy));
                 }
+                enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
 
             }
 
@@ -226,6 +223,9 @@ public class UnitController : MonoBehaviour
             yield return null;
 
         }
+
+
+
 
         unit.SetOrder(0);
         unit.ChangeState("Idle");
