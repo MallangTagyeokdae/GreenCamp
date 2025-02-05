@@ -281,7 +281,7 @@ public class GameManager : MonoBehaviour
                 SetState("InGame");
                 break;
             case GameStates.SetTargetMode:
-                MoveUnit(newLocation, 2);
+                Attang(newLocation, 2);
                 SetState("InGame");
                 break;
         }
@@ -550,6 +550,37 @@ public class GameManager : MonoBehaviour
     public void SetUnitType(string unitType)
     {
         this.unitType = unitType;
+    }
+
+    public void Attang(Vector3 newLocation, int order){
+        foreach(GameObject go in clickedObject)
+        {
+            go.TryGetComponent(out Unit selectedUnit);
+            if(selectedUnit == null){
+                continue;
+            }
+            if (selectedUnit.unitBehaviour != null)
+            {
+                StopCoroutine(selectedUnit.unitBehaviour);
+            }
+
+            if(selectedUnit.aggList != null){
+                selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, newLocation, order));
+            }
+            else if (selectedUnit.attackList != null){
+                foreach(GameObject enemy in selectedUnit.aggList){
+                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, enemy, 3)); // aggro
+                    break;
+                }
+            }
+            else{
+                foreach(GameObject enemy in selectedUnit.attackList){
+                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, enemy));
+                    break;
+                }
+                
+            }
+        }
     }
 
 
