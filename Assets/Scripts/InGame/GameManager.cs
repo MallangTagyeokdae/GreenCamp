@@ -385,15 +385,6 @@ public class GameManager : MonoBehaviour
 
 
     // =================== 객체 생성 함수들 ===================
-    [PunRPC]
-    public void OrderCreateBuilding()
-    {
-        if(PhotonNetwork.IsMasterClient)
-        {
-            gameObject.GetComponent<PhotonView>().RPC("CreateBuilding", RpcTarget.All);
-        }
-    }
-    [PunRPC]
     public void CreateBuilding()
     {
         if (gridHandler.CheckCanBuilt() && CheckState("ConstructionMode")) // 건물이 생성가능한지 확인하는 조건문 나중에 자원, 건물인구수 체크하는것도 추가해야함
@@ -530,8 +521,8 @@ public class GameManager : MonoBehaviour
 
     private void UpdateBuildingHealth(Building building, float time)
     { // 건물이 생성될 때 체력을 업데이트 해주는 함수
-        building.UpdateCreateBuildingTime(time);
-        // building.GetComponent<PhotonView>().RPC("UpdateCreateBuildingTime", RpcTarget.All, time);
+        // building.UpdateCreateBuildingTime(time);
+        building.GetComponent<PhotonView>().RPC("UpdateCreateBuildingTime", RpcTarget.All, time);
         if (clickedObject[0].GetComponent<Building>() == building)
         {
             uIController.UpdateHealth(currentUI, building);

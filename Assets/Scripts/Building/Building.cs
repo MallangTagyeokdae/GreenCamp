@@ -86,7 +86,7 @@ public abstract class Building : Entity
         this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
     }
 
-    // [PunRPC]
+    [PunRPC]
     public virtual void UpdateCreateBuildingTime(float update)
     {
         float incrementPerSec = maxHealth / loadingTime;
