@@ -88,7 +88,7 @@ public abstract class Building : Entity, IPunObservable
 
     public virtual void UpdateCreateBuildingTime(float update)
     {
-        if(gameObject.GetComponent<PhotonView>().IsMine)
+        if(gameObject.GetComponent<PhotonView>().IsMine || PhotonNetwork.IsMasterClient)
         {
             float incrementPerSec = maxHealth / loadingTime;
             time = update;
@@ -98,6 +98,8 @@ public abstract class Building : Entity, IPunObservable
             this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
             this.progressBar.value = (float)this.progress / 100;
             UpdateMesh();
+
+            gameObject.GetComponent<PhotonView>().RequestOwnership();
         }
     }
 
@@ -165,7 +167,7 @@ public abstract class Building : Entity, IPunObservable
         destroyEffect.SetActive(true);
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if(stream.IsWriting)
         {
