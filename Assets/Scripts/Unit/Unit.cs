@@ -133,7 +133,7 @@ public abstract class Unit : Entity
 
     private void OnIdleEnter()
     { //attackList와 aggList 내의 null 값들을 전부 제거해준 후 attack또는 aggro 함수를 실행해준다.
-        foreach (GameObject enemy in attackList)
+        foreach (GameObject enemy in attackList.ToList())
         {
             if (enemy == null)
             {
@@ -141,7 +141,7 @@ public abstract class Unit : Entity
             }
         }
 
-        foreach (GameObject enemy in aggList)
+        foreach (GameObject enemy in aggList.ToList())
         {
             if (enemy == null)
             {
