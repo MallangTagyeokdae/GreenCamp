@@ -196,6 +196,13 @@ public class UnitController : MonoBehaviour
 
         while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
+            if(enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0)
+            {
+                Debug.Log("적 죽음, 리스트에서 제거");
+                unit.attackList.Remove(enemy);
+                
+                break;
+            }
 
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             ally.transform.rotation = Quaternion.LookRotation(rot);
@@ -204,29 +211,28 @@ public class UnitController : MonoBehaviour
 
             if (progress >= 0.34f && unit.animator.GetBool("Attacked") == false)
             {
-                unit.animator.SetBool("Attacked", true);
                 // Debug.Log("attack check / " + progress);
-                if (unit.TryGetComponent(out Archer archer))
+                if(enemy.GetComponent<Entity>().currentHealth > 0)
                 {
-                    StartCoroutine(LaunchArrow(archer, enemy));
+                    unit.animator.SetBool("Attacked", true);
+                    if (unit.TryGetComponent(out Archer archer))
+                    {
+                        StartCoroutine(LaunchArrow(archer, enemy));
+                    }
+                    enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
+                } else
+                {
+                    Debug.Log("적 체력 0미만");
                 }
                 enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
-
             }
-
 
             else if (progress < 0.1f)
             {
                 unit.animator.SetBool("Attacked", false);
             }
-
             yield return null;
-
         }
-
-
-
-
         unit.SetOrder(0);
         unit.ChangeState("Idle");
 
