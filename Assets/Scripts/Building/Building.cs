@@ -169,11 +169,13 @@ public abstract class Building : Entity, IPunObservable
     {
         if(stream.IsWriting)
         {
+            Debug.Log("난 보내는중임"+currentHealth);
             stream.SendNext(currentHealth);
             stream.SendNext(state);
         }
         else
         {
+            Debug.Log("난 받는중임"+currentHealth);
             currentHealth = (float)stream.ReceiveNext();
             state = (State)stream.ReceiveNext();
         }
