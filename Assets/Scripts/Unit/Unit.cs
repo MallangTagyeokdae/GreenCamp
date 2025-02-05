@@ -214,6 +214,7 @@ public abstract class Unit : Entity
                 {
                     collider.enabled = false;
                 }
+                GameStatus.instance.currentUnitCount -= population;
                 break;
         }
     }
