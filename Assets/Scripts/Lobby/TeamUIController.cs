@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Components;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TeamUIController : MonoBehaviour
 {
@@ -14,17 +16,9 @@ public class TeamUIController : MonoBehaviour
     public GameObject RedBtn;
     public GameObject RedPlayer;
 
-    public void test1(){
-        //OnTeamSelect(PhotonNetwork.LocalPlayer);
-    }
-    public void test2(){
-        DeselectTeam(PhotonNetwork.LocalPlayer);
-    }
-
-    public void OnTeamSelect(Player player, string team){
+    public void OnTeamSelect(Player player){
         DeselectTeam(player);
-        _playerTeam = team;
-        Debug.Log($"디자ㅓㅊ마ㅣㅓㄴ어ㅣㅏ미나엎: {_playerTeam}");
+        _playerTeam = PhotonManager.instance.GetTeam(player);
         if(_playerTeam == "Blue"){
             if(player != PhotonNetwork.LocalPlayer){
                 BlueBtn.GetComponent<UIButton>().interactable = false;
@@ -44,6 +38,14 @@ public class TeamUIController : MonoBehaviour
         else{
             Debug.Log("No team selected");
         }
+    }
+
+    public void SendTeamSelect(){
+        byte eventCode = 1;
+        object player = PhotonNetwork.LocalPlayer; //팀을 변경한 플레이어 정보를 모든 클라이언트에게 전송
+        RaiseEventOptions options = new RaiseEventOptions {Receivers = ReceiverGroup.All}; //ALL, OTHERS, MASTER CLIENT 중에서 선택 (서버에 동기화되는 시점과 타이밍을 맞추기 위해서 ALL사용)
+        SendOptions sendOptions = new SendOptions{Reliability = true}; // TCP, UDP 통신 중에서 선택
+        PhotonNetwork.RaiseEvent(eventCode, player, options, sendOptions);
     }
 
     public void DeselectTeam(Player player){

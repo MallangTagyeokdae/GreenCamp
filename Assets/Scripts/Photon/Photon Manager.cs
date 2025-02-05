@@ -6,10 +6,11 @@ using Photon.Realtime;
 using TMPro.Examples;
 using Unity.VisualScripting;
 using TMPro;
+using ExitGames.Client.Photon;
 //using ExitGames.Client.Photon;
 //using Photon.Pun.Demo.Cockpit;
 
-public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviour > MonoBehaviourPunCallbacks로 변경(MonoBehaviour에서 photon 관련 behavior가 추가된 버전)
+public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상속을 MonoBehaviour > MonoBehaviourPunCallbacks로 변경(MonoBehaviour에서 photon 관련 behavior가 추가된 버전)
 {
     private static PhotonManager _instance;
     public static PhotonManager instance
@@ -175,7 +176,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
         ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-        teamUIController.OnTeamSelect(PhotonNetwork.LocalPlayer, teamName);
+        teamUIController.SendTeamSelect();
+        //master에게 팀 명단을 갱신하라는 rpc -> master에서 갱신 후 다른 클라이언트들에게 명단 갱신 명령
         Debug.Log($"Team set to: {teamName}");
     }
 
@@ -211,5 +213,32 @@ public class PhotonManager : MonoBehaviourPunCallbacks // 상속을 MonoBehaviou
         {
             PhotonNetwork.LoadLevel("GameScene");
         }*/
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this); // 이벤트 리스너 등록
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this); // 이벤트 리스너 해제
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        switch (photonEvent.Code)
+        {
+            case 1: // 팀 선택 이벤트
+                Player player = (Player)photonEvent.CustomData;
+                //teamUIController.OnTeamSelect(player);
+                Debug.Log($"{player.NickName}: {GetTeam(player)}");
+                break;
+
+            default:
+                Debug.Log("Unknown event received: " + photonEvent.Code);
+                break;
+        }
     }
 }
