@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Building : Entity
+public abstract class Building : Entity, IPunObservable
 {
     public enum State
     {
@@ -86,17 +86,19 @@ public abstract class Building : Entity
         this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
     }
 
-    [PunRPC]
     public virtual void UpdateCreateBuildingTime(float update)
     {
-        float incrementPerSec = maxHealth / loadingTime;
-        time = update;
-        this.currentHealth += incrementPerSec * Time.deltaTime;
-        this.progress = time / loadingTime * 100;
+        if(gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            float incrementPerSec = maxHealth / loadingTime;
+            time = update;
+            this.currentHealth += incrementPerSec * Time.deltaTime;
+            this.progress = time / loadingTime * 100;
 
-        this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
-        this.progressBar.value = (float)this.progress / 100;
-        UpdateMesh();
+            this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
+            this.progressBar.value = (float)this.progress / 100;
+            UpdateMesh();
+        }
     }
 
     public virtual void UpdateMesh() //
@@ -161,6 +163,20 @@ public abstract class Building : Entity
     public virtual void ActiveDestroyEffect()
     {
         destroyEffect.SetActive(true);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if(stream.IsWriting)
+        {
+            stream.SendNext(currentHealth);
+            stream.SendNext(state);
+        }
+        else
+        {
+            currentHealth = (float)stream.ReceiveNext();
+            state = (State)stream.ReceiveNext();
+        }
     }
 
 }
