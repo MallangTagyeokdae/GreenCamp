@@ -455,19 +455,7 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 663450742}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
   HighlightedState:
     StateType: 1
     StateEvent:
@@ -480,14 +468,6 @@ MonoBehaviour:
     StateType: 2
     StateEvent:
       EventName: Pressed
-      Runners: []
-      Event:
-        m_PersistentCalls:
-          m_Calls: []
-  SelectedState:
-    StateType: 3
-    StateEvent:
-      EventName: Selected
       Runners: []
       Event:
         m_PersistentCalls:
@@ -504,18 +484,14 @@ MonoBehaviour:
               m_StringArgument: Blue
               m_BoolArgument: 0
             m_CallState: 2
-          - m_Target: {fileID: 663450742}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: Blue
-              m_BoolArgument: 1
-            m_CallState: 2
+  SelectedState:
+    StateType: 3
+    StateEvent:
+      EventName: Selected
+      Runners: []
+      Event:
+        m_PersistentCalls:
+          m_Calls: []
   DisabledState:
     StateType: 4
     StateEvent:
@@ -993,7 +969,7 @@ MonoBehaviour:
         Elasticity: 1
         FadeOutShake: 0
       FromValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
-      ToValue: {r: 0.5647059, g: 0.64692813, b: 0.8549019, a: 0.100000024}
+      ToValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
       CurrentValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
       Enabled: 1
       StartColor: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.6}
@@ -3348,19 +3324,7 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 609588771}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
   HighlightedState:
     StateType: 1
     StateEvent:
@@ -3388,18 +3352,6 @@ MonoBehaviour:
               m_FloatArgument: 0
               m_StringArgument: Red
               m_BoolArgument: 0
-            m_CallState: 2
-          - m_Target: {fileID: 609588771}
-            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-            m_MethodName: SetActive
-            m_Mode: 6
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: Red
-              m_BoolArgument: 1
             m_CallState: 2
   SelectedState:
     StateType: 3
@@ -3886,7 +3838,7 @@ MonoBehaviour:
         Elasticity: 1
         FadeOutShake: 0
       FromValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
-      ToValue: {r: 0.8470588, g: 0.5411765, b: 0.5411765, a: 0.19803923}
+      ToValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
       CurrentValue: {r: 1, g: 1, b: 1, a: 1}
       Enabled: 1
       StartColor: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
@@ -4128,6 +4080,7 @@ GameObject:
   - component: {fileID: 292106735}
   - component: {fileID: 292106734}
   - component: {fileID: 292106733}
+  - component: {fileID: 292106737}
   m_Layer: 5
   m_Name: SelectTeamUI
   m_TagString: Untagged
@@ -4221,6 +4174,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &292106737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292106732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530a1d6ef21238d4b9bef9c799b27cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BlueBtn: {fileID: 17366355}
+  BluePlayer: {fileID: 1387859513}
+  RedBtn: {fileID: 270686202}
+  RedPlayer: {fileID: 1639781072}
 --- !u!1001 &297091909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7133,7 +7102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &609588772
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7402,7 +7371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &663450743
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9842,6 +9811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyController: {fileID: 119623202}
+  teamUIController: {fileID: 292106737}
   userInfo: {fileID: 11400000, guid: cf1c2eec7b2ce254a8482ff0e0078806, type: 2}
 --- !u!4 &910434097
 Transform:
