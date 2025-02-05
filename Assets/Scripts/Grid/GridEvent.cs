@@ -36,7 +36,7 @@ public class GridEvent : MonoBehaviour
         _clickEventHandler = GetComponent<ClickEventHandler>();
         _clickEventHandler.mouseHoverEvent.AddListener((Vector3 pos) => GameManager.instance.gridHandler.HoveredGrid(pos));
         _clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) => {
-            GameManager.instance.GetComponent<PhotonView>().RPC("CreateBuilding", RpcTarget.MasterClient);
+            GameManager.instance.CreateBuilding();
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
         });
     }
