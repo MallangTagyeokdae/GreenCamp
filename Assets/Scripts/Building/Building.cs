@@ -99,7 +99,11 @@ public abstract class Building : Entity
         if(tempSaveHealth - currentHealth > 1f)
         {
             Debug.Log("업데이트될 체력 : " + tempSaveHealth + " / 현재 체력 : " + currentHealth);
-            gameObject.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.All,tempSaveHealth, progress, state);
+            gameObject.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.AllBuffered,tempSaveHealth, progress, state.ToString());
+            
+            // currentHealth = tempSaveHealth;
+            // healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
+            // progressBar.value = (float)this.progress / 100;
         }
         UpdateMesh();
     }
@@ -169,13 +173,15 @@ public abstract class Building : Entity
     }
 
     [PunRPC]
-    public void SyncBuildingHealth(float health, float progress, State state)
+    public void SyncBuildingHealth(float health, float progress, string state)
     {
-        this.currentHealth = health;
-        this.progress = progress;
-        this.state = state;
+        Enum.TryParse(state, out State currentState);
 
-        Debug.Log("바뀐 체력 : " + currentHealth + " / 현재 진행율 : " + progress);
+        currentHealth = health;
+        this.progress = progress;
+        this.state = currentState;
+
+        Debug.Log("바뀐 체력 : " + currentHealth + " / 현재 진행률 : " + progress);
 
         healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
         progressBar.value = (float)this.progress / 100;
