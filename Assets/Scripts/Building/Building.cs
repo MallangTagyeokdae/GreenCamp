@@ -98,17 +98,7 @@ public abstract class Building : Entity
         progress = time / loadingTime * 100;
         if(tempSaveHealth - currentHealth > 1f)
         {
-            PhotonView pv = gameObject.GetComponent<PhotonView>();
-            if (pv == null)
-            {
-                Debug.LogError("PhotonView를 찾을 수 없습니다! gameObject: " + gameObject.name);
-                return;
-            }
-            pv.RPC("SetBuildingHealth", RpcTarget.AllBuffered, tempSaveHealth, progress);
-            
-            // currentHealth = tempSaveHealth;
-            // healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
-            // progressBar.value = (float)this.progress / 100;
+            gameObject.GetComponent<PhotonView>().RPC("SetBuildingHealth", RpcTarget.AllBuffered, tempSaveHealth, progress);
         }
         healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
         progressBar.value = (float)this.progress / 100;
@@ -182,13 +172,21 @@ public abstract class Building : Entity
     [PunRPC]
     public void SetBuildingHealth(float health, float progress)
     {
-        // Enum.TryParse(state, out State currentState);
-
         currentHealth = health;
         this.progress = progress;
-        // this.state = currentState;
+    }
 
-        Debug.Log("바뀐 체력 : " + currentHealth + " / 현재 진행률 : " + progress);
+    [PunRPC]
+    public void SyncSetDestroy()
+    {
+        gameObject.GetComponent<PhotonView>().RPC("SyncSetTag", RpcTarget.AllBuffered, "Untagged");
+        gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
+        gameObject.GetComponent<PhotonView>().RPC("ActiveDestroyEffect", RpcTarget.AllBuffered);
+
+        foreach(Collider collider in gameObject.GetComponents<Collider>())
+        {
+            collider.enabled = false;
+        }
     }
 
 }
