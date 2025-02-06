@@ -94,7 +94,7 @@ public abstract class Building : Entity
         time = update;
         float changeHealth = currentHealth + incrementPerSec * Time.deltaTime;
         progress = time / loadingTime * 100;
-        if(Mathf.Abs(changeHealth - currentHealth) > 1f)
+        if(changeHealth - currentHealth > 1f)
         {
             currentHealth = changeHealth;
             gameObject.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.All,currentHealth, progress, state);
@@ -171,6 +171,7 @@ public abstract class Building : Entity
     [PunRPC]
     public void SyncBuildingHealth(float health, float progress, State state)
     {
+        Debug.Log("체력 업데이트 됨");
         this.currentHealth = health;
         this.progress = progress;
         this.state = state;

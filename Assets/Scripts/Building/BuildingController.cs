@@ -19,6 +19,7 @@ public class BuildingController : MonoBehaviour
         _buildingID = 0;
     }
 
+    [PunRPC]
     public Building CreateBuilding(Vector3 buildingLocation, string buildingType, Vector3 rot, List<Collider> grids)
     // 건물 생성
     {
