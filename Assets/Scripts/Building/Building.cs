@@ -88,7 +88,7 @@ public abstract class Building : Entity, IPunObservable
 
     public virtual void UpdateCreateBuildingTime(float update)
     {
-        if(PhotonNetwork.IsMasterClient)
+        if(gameObject.GetComponent<PhotonView>().IsMine)
         {
             float incrementPerSec = maxHealth / loadingTime;
             time = update;
@@ -165,33 +165,19 @@ public abstract class Building : Entity, IPunObservable
         destroyEffect.SetActive(true);
     }
 
-    [PunRPC]
-    public void RequestHealthSync(int viewID)
-    {
-        PhotonView targetView = PhotonView.Find(viewID);
-        if(targetView != null)
-        {
-            targetView.RPC("SyncHealth", RpcTarget.OthersBuffered, this.currentHealth);
-        }
-    }
-
-    [PunRPC]
-    public void SyncHealth(float health)
-    {
-        this.currentHealth = health;
-    }
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if(stream.IsWriting)
         {
-            Debug.Log("난 보내는중임"+currentHealth);
+            Debug.Log($"[SEND] {gameObject.GetComponent<PhotonView>().Owner.NickName} - 체력: {currentHealth}");
             stream.SendNext(currentHealth);
             stream.SendNext(progress);
             stream.SendNext(state);
         }
         else
         {
-            Debug.Log("난 받는중임"+currentHealth);
+            float oldHealth = currentHealth;
+            Debug.Log($"[RECEIVE] {PhotonNetwork.NickName} - 체력 업데이트: {oldHealth} -> {currentHealth}");
             currentHealth = (float)stream.ReceiveNext();
             progress = (float)stream.ReceiveNext();
             state = (State)stream.ReceiveNext();
