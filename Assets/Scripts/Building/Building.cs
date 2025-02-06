@@ -98,7 +98,13 @@ public abstract class Building : Entity
         progress = time / loadingTime * 100;
         if(tempSaveHealth - currentHealth > 1f)
         {
-            gameObject.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.AllBuffered,tempSaveHealth, progress);
+            PhotonView pv = gameObject.GetComponent<PhotonView>();
+            if (pv == null)
+            {
+                Debug.LogError("PhotonView를 찾을 수 없습니다! gameObject: " + gameObject.name);
+                return;
+            }
+            pv.RPC("SetBuildingHealth", RpcTarget.AllBuffered, tempSaveHealth, progress);
             
             // currentHealth = tempSaveHealth;
             // healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
@@ -174,7 +180,7 @@ public abstract class Building : Entity
     }
 
     [PunRPC]
-    public void SyncBuildingHealth(float health, float progress)
+    public void SetBuildingHealth(float health, float progress)
     {
         // Enum.TryParse(state, out State currentState);
 
