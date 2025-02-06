@@ -12,8 +12,10 @@ using UnityEngine.UIElements;
 public class TeamUIController : MonoBehaviour
 {
     public GameObject BlueToggle;
+    public GameObject BlueToggleImg;
     public GameObject BluePlayer;
     public GameObject RedToggle;
+    public GameObject RedToggleImg;
     public GameObject RedPlayer;
     public void OnTeamSelect(Player player)
     {
@@ -24,6 +26,7 @@ public class TeamUIController : MonoBehaviour
             if (player != PhotonNetwork.LocalPlayer)
             {
                 BlueToggle.GetComponent<UIToggle>().interactable = false;
+                BlueToggleImg.SetActive(true);
             }
             BluePlayer.transform.parent.gameObject.SetActive(true);
             BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
@@ -34,6 +37,7 @@ public class TeamUIController : MonoBehaviour
             if (player != PhotonNetwork.LocalPlayer)
             {
                 RedToggle.GetComponent<UIToggle>().interactable = false;
+                RedToggleImg.SetActive(true);
             }
             RedPlayer.transform.parent.gameObject.SetActive(true);
             RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
@@ -42,6 +46,8 @@ public class TeamUIController : MonoBehaviour
         else
         {
             Debug.Log("No team selected");
+            RedToggleImg.SetActive(false);
+            BlueToggleImg.SetActive(false);
         }
     }
 
@@ -55,6 +61,7 @@ public class TeamUIController : MonoBehaviour
             if (player != PhotonNetwork.LocalPlayer)
             {
                 BlueToggle.GetComponent<UIToggle>().interactable = true;
+                BlueToggleImg.SetActive(false);
             }
             BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
             BluePlayer.transform.parent.gameObject.SetActive(false);
@@ -65,6 +72,7 @@ public class TeamUIController : MonoBehaviour
             if (player != PhotonNetwork.LocalPlayer)
             {
                 RedToggle.GetComponent<UIToggle>().interactable = true;
+                RedToggleImg.SetActive(false);
             }
             RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
             RedPlayer.transform.parent.gameObject.SetActive(false);
@@ -73,6 +81,8 @@ public class TeamUIController : MonoBehaviour
         else
         {
             Debug.Log("No team selected");
+            RedToggleImg.SetActive(false);
+            BlueToggleImg.SetActive(false);
         }
     }
 
