@@ -208,7 +208,7 @@ public class UnitController : MonoBehaviour
 
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             ally.transform.rotation = Quaternion.LookRotation(rot);
-            AnimatorStateInfo stateInfo = unit.animator.GetCurrentAnimatorStateInfo(0);
+            /*AnimatorStateInfo stateInfo = unit.animator.GetCurrentAnimatorStateInfo(0);
             float progress = stateInfo.normalizedTime % 1;
 
             if (progress >= 0.34f && unit.animator.GetBool("Attacked") == false)
@@ -221,16 +221,13 @@ public class UnitController : MonoBehaviour
                     {
                         enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
                     }
-                    /*else{
-                        enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
-                    }*/
                 }
             }
 
             else if (progress < 0.1f)
             {
                 unit.animator.SetBool("Attacked", false);
-            }
+            }*/
             yield return null;
         }
         unit.SetOrder(0);

@@ -271,4 +271,11 @@ public abstract class Unit : Entity
         gameObject.tag = tag;
     }
 
+    public void AttackReq(){
+        if (gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            target.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unitPower);
+        }
+    }
+
 }

@@ -53,6 +53,9 @@ MonoBehaviour:
   - ShowGameResult
   - SetBuildingHealth
   - Shoot2
+  - SyncSetDestroy
+  - DestroyEntity
+  - SyncSetTag
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
