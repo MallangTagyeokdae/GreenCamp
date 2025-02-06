@@ -17,6 +17,20 @@ public class TeamUIController : MonoBehaviour
     public GameObject RedToggle;
     public GameObject RedToggleImg;
     public GameObject RedPlayer;
+    public void FirstTeamSelect(bool IsMasterClient)
+    {
+        if (IsMasterClient == true)
+        {
+
+            RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
+            RedToggle.GetComponent<UIToggle>().Select();
+        }
+        else
+        {
+            BlueToggle.GetComponent<UIToggle>().SetIsOn(true, true);
+            BlueToggle.GetComponent<UIToggle>().Select();
+        }
+    }
     public void OnTeamSelect(Player player)
     {
         string playerTeam = PhotonManager.instance.GetTeam(player);
