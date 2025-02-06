@@ -1048,8 +1048,8 @@ public class GameManager : MonoBehaviour
                     {
                         if (gameObject.TryGetComponent(out Unit unit))
                         {
-                            unit.ChangeState("Idle");
                             StopCoroutine(unit.unitBehaviour);
+                            unit.ChangeState("Idle");
                         }
                     }
 
