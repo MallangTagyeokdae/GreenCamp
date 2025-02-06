@@ -20,6 +20,7 @@ public class TeamUIController : MonoBehaviour
     public void Init(Player player)
     {
         Debug.Log("일단이게실행이돼야해");
+        DeselectTeam(player);
         string playerTeam = PhotonManager.instance.GetTeam(player);
         if (playerTeam == "Red")
         {
@@ -31,7 +32,6 @@ public class TeamUIController : MonoBehaviour
             BlueToggleImg.SetActive(false);
             BluePlayer.transform.parent.gameObject.SetActive(false);
         }
-        DeselectTeam(player);
 
     }
     public void FirstTeamSelect(bool IsMasterClient)
