@@ -25,6 +25,12 @@ public class BuildingController : MonoBehaviour
         _teamID = GameStatus.instance.teamID;
         // 객체 생성
         buildingObject = PhotonNetwork.Instantiate($"Prefabs/Buildings/{_teamID}TeamBuildings/{buildingType}", buildingLocation, Quaternion.Euler(rot));
+
+        PhotonView photonView = buildingObject.GetComponent<PhotonView>();
+        if(!PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RequestHealthSync", RpcTarget.MasterClient, photonView.ViewID);
+        }
         buildingObject.name = buildingType + _buildingID.ToString(); // 새로 생성될 오브젝트에 고유한 이름을 붙여줌
         GameObject gameObject = buildingObject; // SetClickedObject에 넣을 임의 변수 만듦 -> call by value로 되기 떄문에 buildingObject가 바뀌어도 값이 안바뀜
         // 좌클릭 했을 때 callback 함수 넣어줌
