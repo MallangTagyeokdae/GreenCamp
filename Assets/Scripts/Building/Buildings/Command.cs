@@ -56,6 +56,7 @@ public class Command : Building
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
     }
 
+    [PunRPC]
     public override void DestroyEntity()
     {
         GameStatus.instance.isWin = false;

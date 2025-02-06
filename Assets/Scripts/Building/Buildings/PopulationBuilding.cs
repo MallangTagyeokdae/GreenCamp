@@ -44,6 +44,7 @@ public class PopulationBuilding : Building
         this.increasePersent = 10;
     }
 
+    [PunRPC]
     public override void DestroyEntity()
     {
         Destroy(gameObject);

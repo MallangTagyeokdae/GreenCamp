@@ -46,6 +46,7 @@ public class ResourceBuilding : Building
         this.increasePersent = 1f;
     }
 
+    [PunRPC]
     public override void DestroyEntity()
     {
         Destroy(gameObject);

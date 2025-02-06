@@ -48,6 +48,8 @@ public class Barrack : Building
     {
         this._sponPos = setSponPos;
     }
+
+    [PunRPC]
     public override void DestroyEntity()
     {
         Destroy(gameObject);
