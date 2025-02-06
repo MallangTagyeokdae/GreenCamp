@@ -122,19 +122,18 @@ public class BuildingController : MonoBehaviour
 
     public async Task DestroyBuilding(Building building)
     {
-        building.gameObject.tag = "Untagged";
-        building.SetProgressMesh1();
-        building.ActiveDestroyEffect();
-
         GameStatus.instance.currentBuildingCount -= building.population;
+        building.GetComponent<PhotonView>().RPC("SyncSetDestroy",RpcTarget.AllBuffered);
 
-        foreach(Collider collider in building.GetComponents<Collider>())
+        if(building.type == "Command")
         {
-            collider.enabled = false;
+            building.DestroyEntity();
+            return;
         }
 
         await StartTimer(5f);
         GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
+        // building.GetComponent<PhotonView>().RPC("DestroyEntity",RpcTarget.AllBuffered);
         building.DestroyEntity();
     }
 

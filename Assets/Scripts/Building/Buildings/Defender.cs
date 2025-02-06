@@ -62,4 +62,8 @@ public class Defender : Building
     public override void SetCompleteMesh(){
         gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
     }
+    public override void DestroyEntity()
+    {
+        Destroy(gameObject);
+    }
 }
