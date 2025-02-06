@@ -36,7 +36,6 @@ public class LobbyController : MonoBehaviour
         if (this.state != null)
         {
             continueNext = this.state.Continue();
-            Debug.Log($"continueNext: {continueNext}");
             if(continueNext){
                 this.state.OutPage(stateName);
             }
