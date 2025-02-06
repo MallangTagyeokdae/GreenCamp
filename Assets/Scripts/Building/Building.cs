@@ -75,6 +75,8 @@ public abstract class Building : Entity, IPunObservable
             GameManager.instance.SetTargetObject(gameObject);
         }
         );
+
+        Debug.Log($"{gameObject.name} - Owner: {gameObject.GetComponent<PhotonView>().Owner}, IsMine: {gameObject.GetComponent<PhotonView>().IsMine}");
         //end = new CancellationTokenSource();
     }
 
@@ -167,6 +169,8 @@ public abstract class Building : Entity, IPunObservable
 
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        Debug.Log($"{gameObject.name} - OnPhotonSerializeView 호출됨, IsWriting: {stream.IsWriting}");
+
         if(stream.IsWriting)
         {
             Debug.Log($"[SEND] {gameObject.GetComponent<PhotonView>().Owner.NickName} - 체력: {currentHealth}");
