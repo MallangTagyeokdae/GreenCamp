@@ -39,10 +39,12 @@ public class TeamUIController : MonoBehaviour
 
         if (IsMasterClient == true)
         {
+            RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
             RedToggle.GetComponent<UIToggle>().Select();
         }
         else
         {
+            BlueToggle.GetComponent<UIToggle>().SetIsOn(true, true);
             BlueToggle.GetComponent<UIToggle>().Select();
         }
     }
