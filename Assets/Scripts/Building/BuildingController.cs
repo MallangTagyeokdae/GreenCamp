@@ -19,7 +19,6 @@ public class BuildingController : MonoBehaviour
         _buildingID = 0;
     }
 
-    [PunRPC]
     public Building CreateBuilding(Vector3 buildingLocation, string buildingType, Vector3 rot, List<Collider> grids)
     // 건물 생성
     {
@@ -119,12 +118,6 @@ public class BuildingController : MonoBehaviour
         newBuilding.returnPopulation = data[1];
         _buildingID++;
         return newBuilding;
-    }
-
-    public void BuildingAttacked(int buildingID, int damage)
-    {
-        Building selectedBuilding = buildingDictionary[buildingID];
-
     }
 
     public async Task DestroyBuilding(Building building)
