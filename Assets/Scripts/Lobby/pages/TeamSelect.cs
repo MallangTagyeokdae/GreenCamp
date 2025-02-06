@@ -19,16 +19,8 @@ public class TeamSelect : LobbyState
     {
         _uiGameObject.SetActive(false);
         _gameStartBtn = _teamSelectPage.transform.Find("GameStartBtn").gameObject;
-        _blueToggle = _teamSelectPage.transform.Find("UIToggleGroup/BlueTeamToggle").gameObject;
-        _redToggle = _teamSelectPage.transform.Find("UIToggleGroup/RedTeamToggle").gameObject;
-        foreach (Transform child in _blueToggle.transform)
-        {
-            child.gameObject.SetActive(false);  // 자식 오브젝트 비활성화
-        }
-        foreach (Transform child in _redToggle.transform)
-        {
-            child.gameObject.SetActive(false);  // 자식 오브젝트 비활성화
-        }
+        _blueToggle = _teamSelectPage.transform.Find("UIToggleGroup/BlueTeamToggle/Image").gameObject;
+        _redToggle = _teamSelectPage.transform.Find("UIToggleGroup/RedTeamToggle/Image").gameObject;
         if (PhotonNetwork.IsMasterClient)
         {
             _gameStartBtn.GetComponent<UIButton>().interactable = true;

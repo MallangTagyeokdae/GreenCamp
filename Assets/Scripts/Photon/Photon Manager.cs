@@ -160,15 +160,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
         lobbyController.SetState("TeamSelect");
         teamUIController.FirstTeamSelect(PhotonNetwork.IsMasterClient);
-        // if (PhotonNetwork.IsMasterClient)
-        // {
-
-        //     teamUIController.RedToggle.GetComponent<UIToggle>().Select();
-        // }
-        // else
-        // {
-        //     teamUIController.BlueToggle.GetComponent<UIToggle>().Select();
-        // }
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             teamUIController.OnTeamSelect(player);
