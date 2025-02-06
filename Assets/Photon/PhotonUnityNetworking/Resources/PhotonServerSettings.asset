@@ -39,23 +39,20 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
-  - UpdateBuildingProgress
   - SetCompleteMesh
   - SetProgressMesh1
   - SetProgressMesh2
   - AttackRequest
   - SyncAttack
   - GenerateCompleteEffect
-  - GenerateLevelUpEffect
   - ActiveLevelUpEffect
   - ActiveDestroyEffect
-  - UpdateUnitCount
   - UpdateResource
   - CreateCommand
   - UpdateResourceUI
-  - UpdateCreateBuildingTime
   - ShowGameResult
-  - DestroyEntity
+  - SetBuildingHealth
+  - Shoot2
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

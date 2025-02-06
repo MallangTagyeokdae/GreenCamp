@@ -12,6 +12,7 @@ public class Arrow : MonoBehaviour
     private Coroutine coroutine;
     private UnityEngine.Vector3 initPos;
 
+
     private void Awake(){
         initPos = transform.localPosition;
     }
@@ -46,12 +47,12 @@ public class Arrow : MonoBehaviour
     private IEnumerator Launch(){
         UnityEngine.Vector3 currentPos;
         UnityEngine.Vector3 targetPos;
-        for(float time = 0f; time < 0.5f; time += Time.deltaTime){
+        for(float time = 0f; time < 1f; time += Time.deltaTime){
             currentPos = gameObject.transform.position;
-            targetPos = _tartget.transform.position;
+            targetPos = _tartget.transform.position + new UnityEngine.Vector3(0, 1.2f, 0);
             float distance = UnityEngine.Vector3.Distance(currentPos, targetPos);
             UnityEngine.Vector3 dir = (targetPos - currentPos).normalized;
-            transform.position += dir * distance * time/0.5f;
+            transform.position += dir * distance * time/1f;
 
             yield return null;
         }
