@@ -10,7 +10,7 @@ public class Defender : Building
     private void Awake()
     {
         this.maxHealth = 200;
-        this.currentHealth = .1f;
+        this.currentHealth = 0;
     }
     public int attackPower { get; set; }
     public int attackRange { get; set; }

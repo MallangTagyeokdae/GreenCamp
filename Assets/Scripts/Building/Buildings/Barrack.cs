@@ -11,7 +11,7 @@ public class Barrack : Building
     private void Awake()
     {
         this.maxHealth = 500;
-        this.currentHealth = .1f;
+        this.currentHealth = 0;
     }
     public Vector3 _sponPos { get; set; }
     public Barrack(string teamID, int buildingID, Vector3 buildingLocation)

@@ -10,7 +10,7 @@ public class ResourceBuilding : Building
     private void Awake()
     {
         this.maxHealth = 250;
-        this.currentHealth = .1f;
+        this.currentHealth = 0f;
     }
     public float increasePersent { get; set; }
     public ResourceBuilding(string teamID, int buildingID, Vector3 buildingLocation)
