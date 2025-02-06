@@ -114,6 +114,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     //player가 방을 떠날 때 콜백되는 함수
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        teamUIController.Init(otherPlayer);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
             Debug.Log("No player left");
@@ -182,6 +183,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         userInfo.InitUserInfo();
         PhotonNetwork.LeaveRoom();
+        // teamUIController.Init();
         PhotonNetwork.JoinLobby();
     }
     //---------------------------------------------------------------------------------------------------------------------
