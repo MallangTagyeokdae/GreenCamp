@@ -1856,10 +1856,10 @@ GameObject:
   m_Component:
   - component: {fileID: 130853843}
   - component: {fileID: 130853844}
-  - component: {fileID: 130853848}
   - component: {fileID: 130853847}
   - component: {fileID: 130853846}
   - component: {fileID: 130853845}
+  - component: {fileID: 130853848}
   m_Layer: 5
   m_Name: BlueTeamToggle
   m_TagString: Untagged
@@ -2053,7 +2053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
+  m_Color: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2155,15 +2155,15 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
-      ToValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
-      CurrentValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
+      FromValue: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
+      ToValue: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
+      CurrentValue: {r: 0, g: 0, b: 0, a: 0}
       Enabled: 1
-      StartColor: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
+      StartColor: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
       FromReferenceValue: 1
-      ToReferenceValue: 2
+      ToReferenceValue: 0
       FromCustomValue: {r: 1, g: 1, b: 1, a: 1}
-      ToCustomValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
+      ToCustomValue: {r: 1, g: 1, b: 1, a: 1}
       FromHueOffset: 0
       ToHueOffset: 0
       FromSaturationOffset: 0
@@ -2173,7 +2173,7 @@ MonoBehaviour:
       FromAlphaOffset: 0
       ToAlphaOffset: 0
     UseCustomStartValue: 0
-    CustomStartValue: {r: 1, g: 1, b: 1, a: 1}
+    CustomStartValue: {r: 0, g: 0, b: 0, a: 0}
   OffAnimation:
     OnPlayCallback:
       m_PersistentCalls:
@@ -2237,15 +2237,15 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
-      ToValue: {r: 1, g: 1, b: 1, a: 0}
-      CurrentValue: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
+      FromValue: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
+      ToValue: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
+      CurrentValue: {r: 0, g: 0, b: 0, a: 0}
       Enabled: 1
-      StartColor: {r: 0.41960785, g: 0.59607846, b: 1, a: 0.69803923}
+      StartColor: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
       FromReferenceValue: 1
-      ToReferenceValue: 2
+      ToReferenceValue: 0
       FromCustomValue: {r: 1, g: 1, b: 1, a: 1}
-      ToCustomValue: {r: 1, g: 1, b: 1, a: 0}
+      ToCustomValue: {r: 1, g: 1, b: 1, a: 1}
       FromHueOffset: 0
       ToHueOffset: 0
       FromSaturationOffset: 0
@@ -2253,9 +2253,9 @@ MonoBehaviour:
       FromLightnessOffset: 0
       ToLightnessOffset: 0
       FromAlphaOffset: 0
-      ToAlphaOffset: 0
+      ToAlphaOffset: -1
     UseCustomStartValue: 0
-    CustomStartValue: {r: 1, g: 1, b: 1, a: 1}
+    CustomStartValue: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &135178190
 GameObject:
   m_ObjectHideFlags: 0
@@ -13075,10 +13075,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1364732107}
   - component: {fileID: 1364732108}
-  - component: {fileID: 1364732112}
   - component: {fileID: 1364732111}
   - component: {fileID: 1364732110}
   - component: {fileID: 1364732109}
+  - component: {fileID: 1364732112}
   m_Layer: 5
   m_Name: RedTeamToggle
   m_TagString: Untagged
@@ -13376,7 +13376,7 @@ MonoBehaviour:
         FadeOutShake: 0
       FromValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
       ToValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
-      CurrentValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
+      CurrentValue: {r: 0, g: 0, b: 0, a: 0}
       Enabled: 1
       StartColor: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
       FromReferenceValue: 1
@@ -13392,7 +13392,7 @@ MonoBehaviour:
       FromAlphaOffset: 0
       ToAlphaOffset: 0
     UseCustomStartValue: 0
-    CustomStartValue: {r: 1, g: 1, b: 1, a: 1}
+    CustomStartValue: {r: 0, g: 0, b: 0, a: 0}
   OffAnimation:
     OnPlayCallback:
       m_PersistentCalls:
@@ -13457,14 +13457,14 @@ MonoBehaviour:
         Elasticity: 1
         FadeOutShake: 0
       FromValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
-      ToValue: {r: 1, g: 1, b: 1, a: 0}
-      CurrentValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
+      ToValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
+      CurrentValue: {r: 0, g: 0, b: 0, a: 0}
       Enabled: 1
       StartColor: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
       FromReferenceValue: 1
-      ToReferenceValue: 2
+      ToReferenceValue: 0
       FromCustomValue: {r: 1, g: 1, b: 1, a: 1}
-      ToCustomValue: {r: 1, g: 1, b: 1, a: 0}
+      ToCustomValue: {r: 1, g: 1, b: 1, a: 1}
       FromHueOffset: 0
       ToHueOffset: 0
       FromSaturationOffset: 0
@@ -13472,9 +13472,9 @@ MonoBehaviour:
       FromLightnessOffset: 0
       ToLightnessOffset: 0
       FromAlphaOffset: 0
-      ToAlphaOffset: 0
+      ToAlphaOffset: -1
     UseCustomStartValue: 0
-    CustomStartValue: {r: 1, g: 1, b: 1, a: 1}
+    CustomStartValue: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1372308549
 GameObject:
   m_ObjectHideFlags: 0
