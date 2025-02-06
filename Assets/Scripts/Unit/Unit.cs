@@ -40,6 +40,7 @@ public abstract class Unit : Entity
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
     public State state = State.Idle;
+    public GameObject target;
 
     [HideInInspector] public Animator animator;
     private new Rigidbody rigidbody;

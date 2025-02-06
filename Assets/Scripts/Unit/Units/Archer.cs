@@ -47,7 +47,10 @@ public class Archer : Unit
     }
 
     public void Shoot(){
-        Debug.Log("shoot!!!");
         arrow.SetActive(true);
+        arrow.TryGetComponent(out Arrow arr);
+        arr.SetTarget(target);
+        arr.SetUnit(this);
+        arr.LaunchArrow();
     }
 }

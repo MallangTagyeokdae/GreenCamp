@@ -193,6 +193,7 @@ public class UnitController : MonoBehaviour
     {
         ally.TryGetComponent(out Unit unit);
         unit.ChangeState("Attack");
+        unit.target = enemy;
 
         while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
@@ -217,9 +218,6 @@ public class UnitController : MonoBehaviour
                     if (!ally.TryGetComponent(out Archer archer))
                     {
                         enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
-                    }
-                    else{
-                        Debug.Log("뭐지");
                     }
                     /*else{
                         enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
