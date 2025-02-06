@@ -17,17 +17,32 @@ public class TeamUIController : MonoBehaviour
     public GameObject RedToggle;
     public GameObject RedToggleImg;
     public GameObject RedPlayer;
+    public void Init(Player player)
+    {
+        Debug.Log("일단이게실행이돼야해");
+        string playerTeam = PhotonManager.instance.GetTeam(player);
+        if (playerTeam == "Red")
+        {
+            RedToggleImg.SetActive(false);
+            RedPlayer.transform.parent.gameObject.SetActive(false);
+        }
+        else
+        {
+            BlueToggleImg.SetActive(false);
+            BluePlayer.transform.parent.gameObject.SetActive(false);
+        }
+        DeselectTeam(player);
+
+    }
     public void FirstTeamSelect(bool IsMasterClient)
     {
+
         if (IsMasterClient == true)
         {
-
-            RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
             RedToggle.GetComponent<UIToggle>().Select();
         }
         else
         {
-            BlueToggle.GetComponent<UIToggle>().SetIsOn(true, true);
             BlueToggle.GetComponent<UIToggle>().Select();
         }
     }
@@ -60,8 +75,6 @@ public class TeamUIController : MonoBehaviour
         else
         {
             Debug.Log("No team selected");
-            RedToggleImg.SetActive(false);
-            BlueToggleImg.SetActive(false);
         }
     }
 
@@ -95,8 +108,6 @@ public class TeamUIController : MonoBehaviour
         else
         {
             Debug.Log("No team selected");
-            RedToggleImg.SetActive(false);
-            BlueToggleImg.SetActive(false);
         }
     }
 
