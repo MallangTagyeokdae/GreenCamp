@@ -2024,19 +2024,7 @@ MonoBehaviour:
         m_Calls: []
   OnValueChangedCallback:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   ToggleGroup: {fileID: 2009968879}
 --- !u!114 &130853845
 MonoBehaviour:
@@ -3350,12 +3338,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530a1d6ef21238d4b9bef9c799b27cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlueToggle: {fileID: 0}
+  BlueToggle: {fileID: 130853842}
   BluePlayer: {fileID: 1387859513}
-  RedToggle: {fileID: 0}
+  RedToggle: {fileID: 1364732106}
   RedPlayer: {fileID: 1639781072}
-  toggleGroup: {fileID: 0}
-  activeToggle: {fileID: 0}
 --- !u!1001 &297091909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29079,7 +29065,7 @@ MonoBehaviour:
     Event:
       m_PersistentCalls:
         m_Calls: []
-  FirstToggle: {fileID: 0}
+  FirstToggle: {fileID: 1364732108}
 --- !u!1 &2042924626
 GameObject:
   m_ObjectHideFlags: 0
