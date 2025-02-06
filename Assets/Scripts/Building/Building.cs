@@ -88,7 +88,7 @@ public abstract class Building : Entity, IPunObservable
 
     public virtual void UpdateCreateBuildingTime(float update)
     {
-        if(gameObject.GetComponent<PhotonView>().IsMine || PhotonNetwork.IsMasterClient)
+        if(PhotonNetwork.IsMasterClient)
         {
             float incrementPerSec = maxHealth / loadingTime;
             time = update;
@@ -98,8 +98,6 @@ public abstract class Building : Entity, IPunObservable
             this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
             this.progressBar.value = (float)this.progress / 100;
             UpdateMesh();
-
-            gameObject.GetComponent<PhotonView>().RequestOwnership();
         }
     }
 
@@ -167,19 +165,39 @@ public abstract class Building : Entity, IPunObservable
         destroyEffect.SetActive(true);
     }
 
+    [PunRPC]
+    public void RequestHealthSync(int viewID)
+    {
+        PhotonView targetView = PhotonView.Find(viewID);
+        if(targetView != null)
+        {
+            targetView.RPC("SyncHealth", RpcTarget.OthersBuffered, this.currentHealth);
+        }
+    }
+
+    [PunRPC]
+    public void SyncHealth(float health)
+    {
+        this.currentHealth = health;
+    }
     public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if(stream.IsWriting)
         {
             Debug.Log("난 보내는중임"+currentHealth);
             stream.SendNext(currentHealth);
+            stream.SendNext(progress);
             stream.SendNext(state);
         }
         else
         {
             Debug.Log("난 받는중임"+currentHealth);
             currentHealth = (float)stream.ReceiveNext();
+            progress = (float)stream.ReceiveNext();
             state = (State)stream.ReceiveNext();
+
+            healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
+            progressBar.value = (float)progress / 100;
         }
     }
 
