@@ -6,7 +6,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Building : Entity, IPunObservable
+public abstract class Building : Entity
 {
     public enum State
     {
@@ -85,22 +85,23 @@ public abstract class Building : Entity, IPunObservable
         time = 0f;
         loadingTime = 30 / 10f;
         //gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
-        this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
+        gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
     }
 
     public virtual void UpdateCreateBuildingTime(float update)
     {
-        if(gameObject.GetComponent<PhotonView>().IsMine)
+        float incrementPerSec = maxHealth / loadingTime;
+        time = update;
+        float changeHealth = currentHealth + incrementPerSec * Time.deltaTime;
+        progress = time / loadingTime * 100;
+        if(Mathf.Abs(changeHealth - currentHealth) > 1f)
         {
-            float incrementPerSec = maxHealth / loadingTime;
-            time = update;
-            this.currentHealth += incrementPerSec * Time.deltaTime;
-            this.progress = time / loadingTime * 100;
-
-            this.healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
-            this.progressBar.value = (float)this.progress / 100;
-            UpdateMesh();
+            currentHealth = changeHealth;
+            gameObject.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.All,currentHealth, progress, state);
         }
+        healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
+        progressBar.value = (float)this.progress / 100;
+        UpdateMesh();
     }
 
     public virtual void UpdateMesh() //
@@ -108,19 +109,19 @@ public abstract class Building : Entity, IPunObservable
         if (time > loadingTime / 2 && time < loadingTime)
         {
             //this.gameObject.GetComponent<MeshFilter>().mesh = progressMesh2;
-            this.gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh2", RpcTarget.AllBuffered);
+            gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh2", RpcTarget.AllBuffered);
         }
         else if (time > loadingTime)
         {
             //this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
-            this.gameObject.GetComponent<PhotonView>().RPC("SetCompleteMesh", RpcTarget.AllBuffered);
+            gameObject.GetComponent<PhotonView>().RPC("SetCompleteMesh", RpcTarget.AllBuffered);
             gameObject.GetComponent<PhotonView>().RPC("GenerateCompleteEffect", RpcTarget.All);
         }
     }
 
     public virtual void InitOrderTime(float totalTime)//
     {
-        this.state = State.InProgress;
+        state = State.InProgress;
         time = 0f;
         loadingTime = totalTime;
     }
@@ -128,8 +129,8 @@ public abstract class Building : Entity, IPunObservable
     public virtual void UpdateOrderTime(float update)//
     {
         time = update;
-        this.progress = time / loadingTime * 100;
-        this.progressBar.value = (float)this.progress / 100;
+        progress = time / loadingTime * 100;
+        progressBar.value = (float)progress / 100;
     }
 
     [PunRPC]
@@ -167,28 +168,12 @@ public abstract class Building : Entity, IPunObservable
         destroyEffect.SetActive(true);
     }
 
-    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    [PunRPC]
+    public void SyncBuildingHealth(float health, float progress, State state)
     {
-        Debug.Log($"{gameObject.name} - OnPhotonSerializeView 호출됨, IsWriting: {stream.IsWriting}");
-
-        if(stream.IsWriting)
-        {
-            Debug.Log($"[SEND] {gameObject.GetComponent<PhotonView>().Owner.NickName} - 체력: {currentHealth}");
-            stream.SendNext(currentHealth);
-            stream.SendNext(progress);
-            stream.SendNext(state);
-        }
-        else
-        {
-            float oldHealth = currentHealth;
-            Debug.Log($"[RECEIVE] {PhotonNetwork.NickName} - 체력 업데이트: {oldHealth} -> {currentHealth}");
-            currentHealth = (float)stream.ReceiveNext();
-            progress = (float)stream.ReceiveNext();
-            state = (State)stream.ReceiveNext();
-
-            healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
-            progressBar.value = (float)progress / 100;
-        }
+        this.currentHealth = health;
+        this.progress = progress;
+        this.state = state;
     }
 
 }
