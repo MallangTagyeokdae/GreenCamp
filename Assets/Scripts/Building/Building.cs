@@ -177,6 +177,12 @@ public abstract class Building : Entity
     }
 
     [PunRPC]
+    public void SyncSetTag(string tag)
+    {
+        gameObject.tag = tag;
+    }
+
+    [PunRPC]
     public void SyncSetDestroy()
     {
         gameObject.GetComponent<PhotonView>().RPC("SyncSetTag", RpcTarget.AllBuffered, "Untagged");
