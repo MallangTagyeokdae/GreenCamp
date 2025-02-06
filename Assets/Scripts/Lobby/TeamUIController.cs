@@ -19,24 +19,42 @@ public class TeamUIController : MonoBehaviour
     public GameObject RedPlayer;
     public void Init(Player player)
     {
-        Debug.Log("일단이게실행이돼야해");
-        DeselectTeam(player);
-        string playerTeam = PhotonManager.instance.GetTeam(player);
-        if (playerTeam == "Red")
+        // Debug.Log("일단이게실행이돼야해");
+        // DeselectTeam(player);
+        // string playerTeam = PhotonManager.instance.GetTeam(player);
+        // if (playerTeam == "Red")
+        // {
+        //     RedToggleImg.SetActive(false);
+        //     RedPlayer.transform.parent.gameObject.SetActive(false);
+        // }
+        // else
+        // {
+        //     BlueToggleImg.SetActive(false);
+        //     BluePlayer.transform.parent.gameObject.SetActive(false);
+        // }
+        //팀 선택 이전에 팀이 있었으면 처리할 것들
+        string playerTeam = PhotonManager.instance.GetTeam(player); //이전 팀으로 해야하는데,,?
+        if (playerTeam == "Blue")
         {
-            RedToggleImg.SetActive(false);
-            RedPlayer.transform.parent.gameObject.SetActive(false);
-        }
-        else
-        {
+            BlueToggle.GetComponent<UIToggle>().interactable = true;
             BlueToggleImg.SetActive(false);
             BluePlayer.transform.parent.gameObject.SetActive(false);
         }
 
+        else if (playerTeam == "Red")
+        {
+            RedToggle.GetComponent<UIToggle>().interactable = true;
+            RedToggleImg.SetActive(false);
+            RedPlayer.transform.parent.gameObject.SetActive(false);
+        }
+
+        else
+        {
+            Debug.Log("No team selected");
+        }
     }
     public void FirstTeamSelect(bool IsMasterClient)
     {
-
         if (IsMasterClient == true)
         {
             RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
