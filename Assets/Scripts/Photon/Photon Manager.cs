@@ -114,8 +114,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     //player가 방을 떠날 때 콜백되는 함수
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        lobbyController.SetState("TeamSelect");
+
         teamUIController.Init(otherPlayer);
+        lobbyController.SetState("TeamSelect");
         Debug.Log("마스터 클라이언트가 되나? :" + PhotonNetwork.IsMasterClient);
         teamUIController.FirstTeamSelect(PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
@@ -158,8 +159,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnJoinedRoom()
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
-        lobbyController.SetState("TeamSelect");
+
         teamUIController.FirstTeamSelect(PhotonNetwork.IsMasterClient);
+        lobbyController.SetState("TeamSelect");
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             teamUIController.OnTeamSelect(player);

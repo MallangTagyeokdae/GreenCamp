@@ -19,20 +19,6 @@ public class TeamUIController : MonoBehaviour
     public GameObject RedPlayer;
     public void Init(Player player)
     {
-        // Debug.Log("일단이게실행이돼야해");
-        // DeselectTeam(player);
-        // string playerTeam = PhotonManager.instance.GetTeam(player);
-        // if (playerTeam == "Red")
-        // {
-        //     RedToggleImg.SetActive(false);
-        //     RedPlayer.transform.parent.gameObject.SetActive(false);
-        // }
-        // else
-        // {
-        //     BlueToggleImg.SetActive(false);
-        //     BluePlayer.transform.parent.gameObject.SetActive(false);
-        // }
-        //팀 선택 이전에 팀이 있었으면 처리할 것들
         string playerTeam = PhotonManager.instance.GetTeam(player); //이전 팀으로 해야하는데,,?
         if (playerTeam == "Blue")
         {
@@ -104,7 +90,7 @@ public class TeamUIController : MonoBehaviour
     public void DeselectTeam(Player player)
     {
         //팀 선택 이전에 팀이 있었으면 처리할 것들
-        string playerTeam = PhotonManager.instance.GetPreviousTeam(player); //이전 팀으로 해야하는데,,?
+        string playerTeam = PhotonManager.instance.GetTeam(player); //이전 팀으로 해야하는데,,?
         if (playerTeam == "Blue")
         {
             if (player != PhotonNetwork.LocalPlayer)
