@@ -170,6 +170,8 @@ public class UnitController : MonoBehaviour
         {
             Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
 
+            Debug.Log(moveDirection.ToString());
+            
             if (moveDirection != Vector3.zero)
             {
                 unit.transform.rotation = Quaternion.LookRotation(moveDirection);
@@ -215,7 +217,7 @@ public class UnitController : MonoBehaviour
                 if(enemy.GetComponent<Entity>().currentHealth > 0)
                 {
                     unit.animator.SetBool("Attacked", true);
-                    if (!ally.TryGetComponent(out Archer archer))
+                    if (!ally.GetComponent<Archer>() && ally.GetComponent<PhotonView>().IsMine)
                     {
                         enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
                     }
