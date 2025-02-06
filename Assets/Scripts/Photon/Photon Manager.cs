@@ -48,7 +48,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         Debug.Log(PhotonNetwork.SendRate);
     }
 
-    public void ConnectGame(string nickName){
+    public void ConnectGame(string nickName)
+    {
         //유저 아이디 할당
         PhotonNetwork.NickName = nickName;
         //서버 접속
@@ -74,7 +75,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         foreach (RoomInfo room in roomList)
         {
-            if (room.RemovedFromList )
+            if (room.RemovedFromList)
             {
                 _roomList.Remove(room);
             }
@@ -153,7 +154,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
         lobbyController.SetState("TeamSelect");
-        foreach(Player player in PhotonNetwork.PlayerList){
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SetTeam("Red");
+        }
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
             teamUIController.OnTeamSelect(player);
         }
     }
