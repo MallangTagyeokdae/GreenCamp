@@ -137,7 +137,7 @@ public abstract class Unit : Entity
     { //attackList와 aggList 내의 null 값들을 전부 제거해준 후 attack또는 aggro 함수를 실행해준다.
         foreach (GameObject enemy in attackList.ToList())
         {
-            if (enemy == null)
+            if (enemy == null || enemy.CompareTag("Untagged"))
             {
                 attackList.Remove(enemy);
             }
@@ -145,7 +145,7 @@ public abstract class Unit : Entity
 
         foreach (GameObject enemy in aggList.ToList())
         {
-            if (enemy == null)
+            if (enemy == null || enemy.CompareTag("Untagged"))
             {
                 aggList.Remove(enemy);
             }
