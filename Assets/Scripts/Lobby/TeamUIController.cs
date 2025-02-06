@@ -45,13 +45,11 @@ public class TeamUIController : MonoBehaviour
         {
             RedToggleImg.SetActive(true);
             RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
-            RedToggle.GetComponent<UIToggle>().Select();
         }
         else
         {
             BlueToggleImg.SetActive(true);
             BlueToggle.GetComponent<UIToggle>().SetIsOn(true, true);
-            BlueToggle.GetComponent<UIToggle>().Select();
         }
     }
     public void OnTeamSelect(Player player)
@@ -90,7 +88,7 @@ public class TeamUIController : MonoBehaviour
     public void DeselectTeam(Player player)
     {
         //팀 선택 이전에 팀이 있었으면 처리할 것들
-        string playerTeam = PhotonManager.instance.GetTeam(player); //이전 팀으로 해야하는데,,?
+        string playerTeam = PhotonManager.instance.GetPreviousTeam(player); //이전 팀으로 해야하는데,,?
         if (playerTeam == "Blue")
         {
             if (player != PhotonNetwork.LocalPlayer)

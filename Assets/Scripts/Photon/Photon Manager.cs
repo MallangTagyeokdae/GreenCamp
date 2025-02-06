@@ -115,10 +115,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
 
-        teamUIController.Init(otherPlayer);
-        lobbyController.SetState("TeamSelect");
-        Debug.Log("마스터 클라이언트가 되나? :" + PhotonNetwork.IsMasterClient);
-        teamUIController.FirstTeamSelect(PhotonNetwork.IsMasterClient);
+        // teamUIController.Init(otherPlayer);
+        // lobbyController.SetState("TeamSelect");
+        // teamUIController.FirstTeamSelect(PhotonNetwork.IsMasterClient);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
             Debug.Log("No player left");
@@ -159,9 +158,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnJoinedRoom()
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
-
-        teamUIController.FirstTeamSelect(PhotonNetwork.IsMasterClient);
         lobbyController.SetState("TeamSelect");
+        // teamUIController.FirstTeamSelect(PhotonNetwork.IsMasterClient);
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             teamUIController.OnTeamSelect(player);

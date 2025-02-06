@@ -21,6 +21,8 @@ public class TeamSelect : LobbyState
         _gameStartBtn = _teamSelectPage.transform.Find("GameStartBtn").gameObject;
         _blueToggle = _teamSelectPage.transform.Find("UIToggleGroup/BlueTeamToggle/Image").gameObject;
         _redToggle = _teamSelectPage.transform.Find("UIToggleGroup/RedTeamToggle/Image").gameObject;
+        _blueToggle.SetActive(false);
+        _redToggle.SetActive(false);
         if (PhotonNetwork.IsMasterClient)
         {
             _gameStartBtn.GetComponent<UIButton>().interactable = true;
