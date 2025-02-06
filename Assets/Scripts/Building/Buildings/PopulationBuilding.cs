@@ -10,7 +10,7 @@ public class PopulationBuilding : Building
     private void Awake()
     {
         this.maxHealth = 200;
-        this.currentHealth = .1f;
+        this.currentHealth = 0;
     }
     public int increasePersent { get; set; }
     public PopulationBuilding(string teamID, int buildingID, Vector3 buildingLocation)

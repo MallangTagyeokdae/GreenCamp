@@ -39,6 +39,7 @@ public abstract class Building : Entity
     public Slider progressBar;
     public float time { get; set; }
     public float loadingTime { get; set; }
+    public float tempSaveHealth { get; set; }
     public List<Collider> underGrid { get; set; }
     public State state = State.InCreating;
     public InProgressItem inProgressItem = InProgressItem.None;
@@ -67,6 +68,7 @@ public abstract class Building : Entity
     private void Awake()
     {
         clickedEffect = transform.Find("ClickedEffect").gameObject;
+        tempSaveHealth = 0;
 
         enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
         clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
@@ -92,15 +94,13 @@ public abstract class Building : Entity
     {
         float incrementPerSec = maxHealth / loadingTime;
         time = update;
-        float changeHealth = currentHealth + incrementPerSec * Time.deltaTime;
+        tempSaveHealth += incrementPerSec * Time.deltaTime;
         progress = time / loadingTime * 100;
-        if(changeHealth - currentHealth > 1f)
+        if(tempSaveHealth - currentHealth > 1f)
         {
-            currentHealth = changeHealth;
-            gameObject.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.All,currentHealth, progress, state);
+            Debug.Log("업데이트될 체력 : " + tempSaveHealth + " / 현재 체력 : " + currentHealth);
+            gameObject.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.All,tempSaveHealth, progress, state);
         }
-        healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
-        progressBar.value = (float)this.progress / 100;
         UpdateMesh();
     }
 
@@ -171,10 +171,14 @@ public abstract class Building : Entity
     [PunRPC]
     public void SyncBuildingHealth(float health, float progress, State state)
     {
-        Debug.Log("체력 업데이트 됨");
         this.currentHealth = health;
         this.progress = progress;
         this.state = state;
+
+        Debug.Log("바뀐 체력 : " + currentHealth + " / 현재 진행율 : " + progress);
+
+        healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
+        progressBar.value = (float)this.progress / 100;
     }
 
 }
