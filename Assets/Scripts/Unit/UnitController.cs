@@ -214,11 +214,16 @@ public class UnitController : MonoBehaviour
                 if(enemy.GetComponent<Entity>().currentHealth > 0)
                 {
                     unit.animator.SetBool("Attacked", true);
-                    if (unit.TryGetComponent(out Archer archer))
+                    if (!ally.TryGetComponent(out Archer archer))
                     {
-                        StartCoroutine(LaunchArrow(archer, enemy));
+                        enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
                     }
-                    enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
+                    else{
+                        Debug.Log("뭐지");
+                    }
+                    /*else{
+                        enemy.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unit.unitPower);
+                    }*/
                 }
             }
 
@@ -235,11 +240,11 @@ public class UnitController : MonoBehaviour
     public IEnumerator LaunchArrow(Archer archer, GameObject enemy)
     {
         Vector3 rot = (enemy.transform.position - archer.transform.position).normalized;
-        // GameObject arrow = Instantiate(archer.arrow, new Vector3(archer.transform.position.x, 1.0f, archer.transform.position.z), Quaternion.LookRotation(rot) * Quaternion.Euler(-90, 0, 0));
         GameObject arrow = archer.arrow;
         arrow.transform.position = new Vector3(archer.transform.position.x, 1.0f, archer.transform.position.z);
         arrow.transform.rotation = Quaternion.LookRotation(rot) * Quaternion.Euler(-90, 0, 0);
         arrow.SetActive(true);
+
         while (Vector3.Distance(arrow.transform.position, new Vector3(enemy.transform.position.x, 1.0f, enemy.transform.position.z)) > 1.0f)
         {
             rot = (enemy.transform.position - arrow.transform.position).normalized;
@@ -252,6 +257,10 @@ public class UnitController : MonoBehaviour
                                                           new Vector3(enemy.transform.position.x, 1.0f, enemy.transform.position.z),
                                                           Time.deltaTime * 25);
             yield return null;
+        }
+        
+        for(float time = 0; time < 0.5f; time += Time.deltaTime){
+            
         }
         arrow.SetActive(false);
     }

@@ -45,4 +45,9 @@ public class Archer : Unit
         this.populationCost = 1;
         this.population = 1;
     }
+
+    public void Shoot(){
+        Debug.Log("shoot!!!");
+        arrow.SetActive(true);
+    }
 }
