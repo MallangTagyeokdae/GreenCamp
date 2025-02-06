@@ -22,15 +22,17 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject == _tartget){
-            _tartget.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, _unit.unitPower);
-            StopCoroutine(coroutine);
-            gameObject.SetActive(false);
+            if(gameObject.transform.parent.gameObject.GetComponent<PhotonView>().IsMine == false){  //화살을 쏜 유닛이 자신의 유닛이 아닌 경우 return
+                StopCoroutine(coroutine);
+                gameObject.SetActive(false);
+                return;
+            }
+            else{
+                _tartget.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, _unit.unitPower);  //화살을 쏜 유닛이 자신의 유닛인 경우 적에게 맞았을 때 마스터 클라이언트에게 판정을 요구
+                StopCoroutine(coroutine);
+                gameObject.SetActive(false);
+            }        
         }
-    }
-
-    public IEnumerator Shoot(){
-
-        yield return null;
     }
 
     public void SetTarget(GameObject target){
