@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,10 +48,19 @@ public class Archer : Unit
     }
 
     public void Shoot(){
-        arrow.SetActive(true);
-        arrow.TryGetComponent(out Arrow arr);
-        arr.SetTarget(target);
-        arr.SetUnit(this);
-        arr.LaunchArrow();
+        gameObject.GetComponent<PhotonView>().RPC("Shoot2", RpcTarget.All, target.GetComponent<PhotonView>().ViewID);
+    }
+
+
+    [PunRPC]
+    public void Shoot2(int viewID){
+        PhotonView targetView = PhotonView.Find(viewID);
+        if(targetView != null){
+            arrow.SetActive(true);
+            arrow.TryGetComponent(out Arrow arr);
+            arr.SetTarget(targetView.gameObject);
+            arr.SetUnit(this);
+            arr.LaunchArrow();
+        }
     }
 }

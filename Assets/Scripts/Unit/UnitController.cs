@@ -235,33 +235,6 @@ public class UnitController : MonoBehaviour
         unit.ChangeState("Idle");
 
     }
-    public IEnumerator LaunchArrow(Archer archer, GameObject enemy)
-    {
-        Vector3 rot = (enemy.transform.position - archer.transform.position).normalized;
-        GameObject arrow = archer.arrow;
-        arrow.transform.position = new Vector3(archer.transform.position.x, 1.0f, archer.transform.position.z);
-        arrow.transform.rotation = Quaternion.LookRotation(rot) * Quaternion.Euler(-90, 0, 0);
-        arrow.SetActive(true);
-
-        while (Vector3.Distance(arrow.transform.position, new Vector3(enemy.transform.position.x, 1.0f, enemy.transform.position.z)) > 1.0f)
-        {
-            rot = (enemy.transform.position - arrow.transform.position).normalized;
-            Vector3 forward = new Vector3(rot.x, 0, rot.z);
-            if (forward.sqrMagnitude > 0.01f)
-            {
-                arrow.transform.rotation = Quaternion.LookRotation(forward) * Quaternion.Euler(-90, 0, 0);
-            }
-            arrow.transform.position = Vector3.MoveTowards(arrow.transform.position,
-                                                          new Vector3(enemy.transform.position.x, 1.0f, enemy.transform.position.z),
-                                                          Time.deltaTime * 25);
-            yield return null;
-        }
-        
-        for(float time = 0; time < 0.5f; time += Time.deltaTime){
-            
-        }
-        arrow.SetActive(false);
-    }
 
     /*  1. 새로운 유닛을 설정할 때는 triggerStay가 아니라 trigger가 enter할 때마다 들어온 유닛을 list에 추가한다.
         2. 공격중인 유닛이 죽으면 list에 저장된 유닛들 중 list.RemoveAll(unit => unit == null)을 해준 뒤(죽어서 사라지는 유닛의 경우 ontriggerexit의 콜백을 하지 않기 때문) 새로운 유닛을 설정
