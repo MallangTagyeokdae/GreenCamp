@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Doozy.Runtime.UIManager.Components;
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -14,16 +15,6 @@ public class TeamUIController : MonoBehaviour
     public GameObject BluePlayer;
     public GameObject RedToggle;
     public GameObject RedPlayer;
-    public UIToggleGroup toggleGroup;
-    public UIToggle activeToggle;
-
-    // public void TeamSelect(Player player, bool isOn)
-    // {
-    //     if(isOn == false) return;
-    //     string playerTeam = PhotonManager.instance.GetTeam(player);
-    //     UIToggle activeToggle = toggleGroup.GetComponentsInChildren<UIToggle>()
-    //                                 .FirstOrDefault(toggle => toggle.IsOn);
-    // }
     public void OnTeamSelect(Player player)
     {
         string playerTeam = PhotonManager.instance.GetTeam(player);

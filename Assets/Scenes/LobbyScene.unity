@@ -3338,12 +3338,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530a1d6ef21238d4b9bef9c799b27cd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlueToggle: {fileID: 0}
+  BlueToggle: {fileID: 130853842}
   BluePlayer: {fileID: 1387859513}
-  RedToggle: {fileID: 0}
+  RedToggle: {fileID: 1364732106}
   RedPlayer: {fileID: 1639781072}
-  toggleGroup: {fileID: 0}
-  activeToggle: {fileID: 0}
 --- !u!1001 &297091909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29038,7 +29036,7 @@ MonoBehaviour:
   ToggleGroup: {fileID: 2009968879}
   OverrideInteractabilityForToggles: 0
   ToggleGroupValue: 0
-  Mode: 1
+  Mode: 2
   HasMixedValues: 0
   AutoSort: 0
   OnToggleGroupMixedValuesCallback:
@@ -29047,7 +29045,7 @@ MonoBehaviour:
     Event:
       m_PersistentCalls:
         m_Calls: []
-  FirstToggle: {fileID: 0}
+  FirstToggle: {fileID: 1364732108}
 --- !u!1 &2042924626
 GameObject:
   m_ObjectHideFlags: 0

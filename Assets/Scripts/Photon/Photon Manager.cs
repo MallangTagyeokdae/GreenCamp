@@ -7,6 +7,7 @@ using TMPro.Examples;
 using Unity.VisualScripting;
 using TMPro;
 using ExitGames.Client.Photon;
+using Doozy.Runtime.UIManager.Components;
 //using ExitGames.Client.Photon;
 //using Photon.Pun.Demo.Cockpit;
 
@@ -154,6 +155,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
         lobbyController.SetState("TeamSelect");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            teamUIController.RedToggle.GetComponent<UIToggle>().Select();
+        }
+        else
+        {
+            teamUIController.BlueToggle.GetComponent<UIToggle>().Select();
+        }
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             teamUIController.OnTeamSelect(player);
