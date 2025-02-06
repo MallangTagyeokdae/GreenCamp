@@ -99,7 +99,7 @@ public abstract class Building : Entity
         if(tempSaveHealth - currentHealth > 1f)
         {
             Debug.Log("업데이트될 체력 : " + tempSaveHealth + " / 현재 체력 : " + currentHealth);
-            gameObject.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.AllBuffered,tempSaveHealth, progress, state.ToString());
+            gameObject.GetComponent<PhotonView>().RPC("tlqkftoRldi", RpcTarget.AllBuffered,tempSaveHealth, progress, state.ToString());
             
             // currentHealth = tempSaveHealth;
             // healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
