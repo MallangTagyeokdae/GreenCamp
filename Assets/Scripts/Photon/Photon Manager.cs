@@ -36,6 +36,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         // 이 객체가 씬 전환 시 파괴되지 않도록 설정
         DontDestroyOnLoad(this.gameObject);
         _roomList = new List<RoomInfo>();
+
     }
 
     // Start is called before the first frame update
@@ -115,7 +116,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         lobbyController.SetState("TeamSelect");
-        SetTeam("Red");
+        SetTeam("");
+
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
             Debug.Log("No player left");
@@ -150,18 +152,31 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
 
     public void JoinRoom(RoomInfo room)
     {
+        SetTeam("");
         PhotonNetwork.JoinRoom(room.Name);
     }
 
     public override void OnJoinedRoom()
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
+        AddCallbackFunc();
         lobbyController.SetState("TeamSelect");
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
         }
     }
+    public void AddCallbackFunc()
+    {
+        // 기존 리스너 제거
+        teamUIController.RedToggle.onClickEvent.RemoveAllListeners();
+        teamUIController.BlueToggle.onClickEvent.RemoveAllListeners();
+
+        // 새로운 리스너 추가
+        teamUIController.RedToggle.onClickEvent.AddListener(() => SetTeam("Red"));
+        teamUIController.BlueToggle.onClickEvent.AddListener(() => SetTeam("Blue"));
+    }
+
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
@@ -173,7 +188,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public void LeaveRoom()
     {
         userInfo.InitUserInfo();
-        SetTeam("null");
         lobbyController.SetState("TeamSelect");
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
@@ -182,10 +196,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public void SetTeam(string teamName)
     {
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
-        ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
+        // ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
         ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerTeam);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
+        // PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
         teamUIController.SendTeamSelect();
         //master에게 팀 명단을 갱신하라는 rpc -> master에서 갱신 후 다른 클라이언트들에게 명단 갱신 명령
         Debug.Log($"Team set to: {teamName}");

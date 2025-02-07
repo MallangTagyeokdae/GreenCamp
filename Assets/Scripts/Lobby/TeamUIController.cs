@@ -11,112 +11,78 @@ using UnityEngine.UIElements;
 
 public class TeamUIController : MonoBehaviour
 {
-    public GameObject BlueToggle;
+    public UIToggle BlueToggle;
     public GameObject BlueToggleImg;
     public GameObject BluePlayer;
-    public GameObject RedToggle;
+    public UIToggle RedToggle;
     public GameObject RedToggleImg;
     public GameObject RedPlayer;
+
     public void OnTeamSelect(Player player, bool IsMasterClient)
     {
         string playerTeam = PhotonManager.instance.GetTeam(player);
-        DeselectTeam(player, IsMasterClient);
+        // DeselectTeam(player, IsMasterClient);
+        Debug.Log("현재 팀: " + playerTeam);
         if (playerTeam == "Blue" && BlueToggleImg.activeSelf == false)
         {
-            if (player != PhotonNetwork.LocalPlayer)
-            {
-                BlueToggleImg.SetActive(true);
-                Debug.Log("OnSelect 함수: 로컬 플레이어가 아님 -> 블루 이미지 켜기");
-            }
-            BluePlayer.transform.parent.gameObject.SetActive(true);
-            BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
+            ActiveBlue(player);
         }
 
         else if (playerTeam == "Red" && RedToggleImg.activeSelf == false)
         {
-            if (player != PhotonNetwork.LocalPlayer)
-            {
-                RedToggleImg.SetActive(true);
-                Debug.Log("OnSelect 함수: 로컬 플레이어가 아님 -> 레드 이미지 켜기");
-            }
-            RedPlayer.transform.parent.gameObject.SetActive(true);
-            RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
+            ActiveRed(player);
         }
 
-        else if (playerTeam == "null" && IsMasterClient == false)
+        else if (playerTeam == "" && IsMasterClient == false)
         {
             if (RedToggleImg.activeSelf == true)
             {
-                if (player != PhotonNetwork.LocalPlayer)
-                {
-                    BlueToggleImg.SetActive(true);
-                    Debug.Log("Select 함수: 방장이 레드 -> 나는 블루");
-                }
-                BluePlayer.transform.parent.gameObject.SetActive(true);
-                BlueToggle.GetComponent<UIToggle>().Select();
-                BlueToggle.GetComponent<UIToggle>().SetIsOn(true, true);
-                BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
+                ActiveBlue(player);
             }
             else
             {
-                if (player != PhotonNetwork.LocalPlayer)
-                {
-                    RedToggleImg.SetActive(true);
-                    Debug.Log("select 함수: 방장이 블루 -> 나는 레드");
-                }
-                RedPlayer.transform.parent.gameObject.SetActive(true);
-                RedToggle.GetComponent<UIToggle>().Select();
-                RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
-                RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
+                ActiveRed(player);
             }
+        }
+        else if (playerTeam == "" && IsMasterClient)
+        {
+            ActiveRed(player);
         }
     }
 
-
-    public void DeselectTeam(Player player, bool IsMasterClient)
+    private void ActiveBlue(Player player)
     {
-        //팀 선택 이전에 팀이 있었으면 처리할 것들
-        string playerPreviousTeam = PhotonManager.instance.GetPreviousTeam(player); //이전 팀으로 해야하는데,,?
-
-        if (playerPreviousTeam == "Blue")
+        if (player != PhotonNetwork.LocalPlayer)
         {
-            if (player != PhotonNetwork.LocalPlayer)
-            {
-                // BlueToggle.GetComponent<UIToggle>().interactable = true;
-                BlueToggleImg.SetActive(false);
-            }
-            // BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
-            BluePlayer.transform.parent.gameObject.SetActive(false);
+            RedToggleImg.SetActive(false);
+            BlueToggleImg.SetActive(true);
+            Debug.Log("OnSelect 함수: 로컬 플레이어가 아님 -> 블루 이미지 켜기");
         }
-
-        else if (playerPreviousTeam == "Red")
-        {
-            if (player != PhotonNetwork.LocalPlayer)
-            {
-                // RedToggle.GetComponent<UIToggle>().interactable = true;
-                RedToggleImg.SetActive(false);
-            }
-            // RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
-            RedPlayer.transform.parent.gameObject.SetActive(false);
-        }
-
         else
         {
-            Debug.Log("Deselct 함수: 아무것도 선택 안 함");
-
-            if (IsMasterClient)
-            {
-                if (player != PhotonNetwork.LocalPlayer)
-                {
-                    RedToggleImg.SetActive(true);
-                    Debug.Log("Deselect 함수: 로컬 플레이어가 아님 -> 레드 이미지 켜기");
-                }
-                RedPlayer.transform.parent.gameObject.SetActive(true);
-                RedToggle.GetComponent<UIToggle>().Select();
-                RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
-                RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
-            }
+            RedPlayer.transform.parent.gameObject.SetActive(false);
         }
+        BluePlayer.transform.parent.gameObject.SetActive(true);
+        BlueToggle.Select();
+        BlueToggle.SetIsOn(true, true);
+        BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
+    }
+    private void ActiveRed(Player player)
+    {
+        if (player != PhotonNetwork.LocalPlayer)
+        {
+            RedToggleImg.SetActive(true);
+            BlueToggleImg.SetActive(false);
+            Debug.Log("select 함수: 방장이 블루 -> 나는 레드");
+        }
+        else
+        {
+            BluePlayer.transform.parent.gameObject.SetActive(false);
+        }
+        RedPlayer.transform.parent.gameObject.SetActive(true);
+        RedToggle.Select();
+        RedToggle.SetIsOn(true, true);
+        RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
     }
 
     public void SendTeamSelect()
@@ -129,3 +95,52 @@ public class TeamUIController : MonoBehaviour
         PhotonNetwork.RaiseEvent(eventCode, player, options, sendOptions);
     }
 }
+
+
+
+// public void DeselectTeam(Player player, bool IsMasterClient)
+// {
+//     //팀 선택 이전에 팀이 있었으면 처리할 것들
+//     string playerPreviousTeam = PhotonManager.instance.GetPreviousTeam(player); //이전 팀으로 해야하는데,,?
+//     Debug.Log("이전 팀: " + playerPreviousTeam);
+
+//     if (playerPreviousTeam == "Blue")
+//     {
+//         if (player != PhotonNetwork.LocalPlayer)
+//         {
+//             // BlueToggle.interactable = true;
+//             BlueToggleImg.SetActive(false);
+//         }
+//         // BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
+//         BluePlayer.transform.parent.gameObject.SetActive(false);
+//     }
+
+//     else if (playerPreviousTeam == "Red")
+//     {
+//         if (player != PhotonNetwork.LocalPlayer)
+//         {
+//             // RedToggle.interactable = true;
+//             RedToggleImg.SetActive(false);
+//         }
+//         // RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
+//         RedPlayer.transform.parent.gameObject.SetActive(false);
+//     }
+
+//     else
+//     {
+//         Debug.Log("Deselct 함수: 아무것도 선택 안 함");
+
+//         if (IsMasterClient)
+//         {
+//             if (player != PhotonNetwork.LocalPlayer)
+//             {
+//                 RedToggleImg.SetActive(true);
+//                 Debug.Log("Deselect 함수: 로컬 플레이어가 아님 -> 레드 이미지 켜기");
+//             }
+//             RedPlayer.transform.parent.gameObject.SetActive(true);
+//             RedToggle.Select();
+//             RedToggle.SetIsOn(true, true);
+//             RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
+//         }
+//     }
+// }
