@@ -23,32 +23,31 @@ public class TeamUIController : MonoBehaviour
         string playerTeam = PhotonManager.instance.GetTeam(player);
         // DeselectTeam(player, IsMasterClient);
         Debug.Log("현재 팀: " + playerTeam);
-        if (playerTeam == "Blue")
+        if (playerTeam == "Blue" || playerTeam == "")
         {
             if (IsMasterClient == true)
             {
-                ActiveBlue(player);
-                BlueToggle.interactable = false;
-            }
-            else
-            {
-                if (BlueToggleImg.activeSelf == true)
+                if (player == PhotonNetwork.LocalPlayer)
+                {
+                    ActiveBlue(player);
+                }
+                else
                 {
                     ActiveRed(player);
                 }
             }
+
         }
         else
         {
 
             if (IsMasterClient == true)
             {
-                ActiveRed(player);
-                RedToggle.interactable = false;
-            }
-            else
-            {
-                if (RedToggleImg.activeSelf == true)
+                if (player == PhotonNetwork.LocalPlayer)
+                {
+                    ActiveRed(player);
+                }
+                else
                 {
                     ActiveBlue(player);
                 }
@@ -88,8 +87,6 @@ public class TeamUIController : MonoBehaviour
                 BlueToggleImg.SetActive(false);
             }
             RedToggleImg.SetActive(true);
-
-
             Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
         }
     }
