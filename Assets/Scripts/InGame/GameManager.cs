@@ -614,8 +614,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("공격 범위에 뭔가 감지됐다.");
             if (!unit.attackList.Contains(enemy))
             {
+                Debug.Log(enemy.name + " 가 어택 리스트에 추가됨");
                 unit.attackList.Add(enemy);
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
@@ -648,8 +650,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("어그로 범위에 뭔가 감지됐다.");
             if (!unit.aggList.Contains(enemy))
             {
+                Debug.Log(enemy.name + " 가 어그로 리스트에 추가됨");
                 unit.aggList.Add(enemy);
             }
             /*if (unit.order == Unit.Order.Move || unit.order == Unit.Order.Offensive || unit.state == Unit.State.Attack)
