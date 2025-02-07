@@ -563,15 +563,18 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(selectedUnit.unitBehaviour);
             }
             if(selectedUnit.aggList.Count == 0){
+                Debug.Log("그냥 이동중");
                 selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, newLocation, order));
             }
             else if (selectedUnit.attackList.Count == 0){
+                Debug.Log("어그로 범위에 들어와서 공격하러 가는중");
                 foreach(GameObject enemy in selectedUnit.aggList){
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, enemy, 3)); // aggro
                     break;
                 }
             }
             else{
+                Debug.Log("공격범위 안에 들어와서 공격중");
                 foreach(GameObject enemy in selectedUnit.attackList){
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, enemy));
                     break;
