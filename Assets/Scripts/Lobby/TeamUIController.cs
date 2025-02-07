@@ -66,6 +66,7 @@ public class TeamUIController : MonoBehaviour
             {
                 BlueToggleImg.SetActive(true);
             }
+            RedToggle.SetIsOn(true, false);
         }
     }
 
@@ -82,14 +83,11 @@ public class TeamUIController : MonoBehaviour
 
         if (player != PhotonNetwork.LocalPlayer)
         {
-            if (BlueToggleImg.activeSelf)
-            {
-                BlueToggleImg.SetActive(false);
-            }
             if (!RedToggleImg.activeSelf)
             {
                 RedToggleImg.SetActive(true);
             }
+            BlueToggle.SetIsOn(true, false);
         }
     }
 

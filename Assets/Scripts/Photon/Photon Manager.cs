@@ -163,18 +163,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                if (GetTeam(PhotonNetwork.MasterClient) == "Red")
-                {
-                    SetTeam("Blue");
-                }
-                else
-                {
-                    SetTeam("Red");
-                }
-            }
-
         }
     }
     private bool isRedListenerAdded = false;
