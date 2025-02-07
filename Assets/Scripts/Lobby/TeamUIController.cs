@@ -25,24 +25,36 @@ public class TeamUIController : MonoBehaviour
         Debug.Log("현재 팀: " + playerTeam);
         if (playerTeam == "Blue")
         {
-            if (BlueToggleImg.activeSelf == false)
+            if (IsMasterClient == true)
             {
+
                 ActiveBlue(player);
+                BlueToggle.interactable = false;
+                RedToggle.interactable = true;
             }
             else
             {
-                ActiveRed(player);
+                if (BlueToggleImg.activeSelf == true)
+                {
+                    ActiveRed(player);
+                }
             }
         }
         else
         {
-            if (RedToggleImg.activeSelf == false)
+
+            if (IsMasterClient == true)
             {
                 ActiveRed(player);
+                RedToggle.interactable = false;
+                BlueToggle.interactable = true;
             }
             else
             {
-                ActiveBlue(player);
+                if (RedToggleImg.activeSelf == true)
+                {
+                    ActiveBlue(player);
+                }
             }
         }
     }
@@ -57,10 +69,11 @@ public class TeamUIController : MonoBehaviour
 
         if (player != PhotonNetwork.LocalPlayer)
         {
-            RedToggleImg.SetActive(false);
+            if (RedToggleImg.activeSelf)
+            {
+                RedToggleImg.SetActive(false);
+            }
             BlueToggleImg.SetActive(true);
-            BlueToggle.interactable = false;
-            RedToggle.interactable = true;
             Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
         }
         else
@@ -81,10 +94,13 @@ public class TeamUIController : MonoBehaviour
         RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
         if (player != PhotonNetwork.LocalPlayer)
         {
+            if (BlueToggleImg.activeSelf)
+            {
+                BlueToggleImg.SetActive(false);
+            }
             RedToggleImg.SetActive(true);
-            BlueToggleImg.SetActive(false);
-            BlueToggle.interactable = true;
-            RedToggle.interactable = false;
+
+
             Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
         }
         else
