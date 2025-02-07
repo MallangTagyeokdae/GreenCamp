@@ -58,14 +58,10 @@ public class TeamUIController : MonoBehaviour
         }
 
         BluePlayer.transform.parent.gameObject.SetActive(true);
-        BlueToggle.SetIsOn(true, false);
+        BlueToggle.SetIsOn(true, true);
         BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
+        if (!BlueToggleImg.activeSelf) BlueToggleImg.SetActive(true);
 
-        if (isMasterClient == false) // 일반 플레이어라면
-        {
-            RedToggle.SetIsOn(true, false);
-            if (!RedToggleImg.activeSelf) RedToggleImg.SetActive(true);
-        }
     }
 
     private void ActiveRed(Player player, bool isMasterClient)
@@ -78,14 +74,9 @@ public class TeamUIController : MonoBehaviour
         }
 
         RedPlayer.transform.parent.gameObject.SetActive(true);
-        RedToggle.SetIsOn(true, false);
+        RedToggle.SetIsOn(true, true);
         RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
-
-        if (isMasterClient == false) // 일반 플레이어라면
-        {
-            if (!RedToggleImg.activeSelf) RedToggleImg.SetActive(true);
-            BlueToggle.SetIsOn(false, false);
-        }
+        if (!RedToggleImg.activeSelf) RedToggleImg.SetActive(true);
     }
 
 
