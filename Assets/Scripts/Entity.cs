@@ -87,6 +87,9 @@ public class Entity : MonoBehaviour
 
         GameManager.instance.UpdateEventUI(gameObject);
 
+        if(gameObject.GetComponent<Unit>().state == Unit.State.Die) return;
+        if(gameObject.GetComponent<Building>().state == Building.State.Destroy) return;
+
         if(currentHealth <= 0)
         {
             GameManager.instance.DestroyEntity(gameObject);

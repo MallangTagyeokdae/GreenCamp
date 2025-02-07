@@ -170,8 +170,6 @@ public class UnitController : MonoBehaviour
         {
             Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
 
-            Debug.Log(moveDirection.ToString());
-            
             if (moveDirection != Vector3.zero)
             {
                 unit.transform.rotation = Quaternion.LookRotation(moveDirection);
