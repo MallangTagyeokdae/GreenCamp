@@ -152,7 +152,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
 
     public void JoinRoom(RoomInfo room)
     {
-        SetTeam("Red");
         PhotonNetwork.JoinRoom(room.Name);
     }
 
@@ -163,6 +162,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
         lobbyController.SetState("TeamSelect");
         foreach (Player player in PhotonNetwork.PlayerList)
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                if (GetTeam(PhotonNetwork.MasterClient) == "Red")
+                {
+                    SetTeam("Blue");
+                }
+                else
+                {
+                    SetTeam("Red");
+                }
+            }
             teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
         }
     }
