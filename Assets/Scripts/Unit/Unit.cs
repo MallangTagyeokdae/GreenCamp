@@ -33,6 +33,7 @@ public abstract class Unit : Entity
     public int unitID { get; set; }
     public string unitType { get; set; }
     public Vector3 unitLocation { get; set; }
+    public Vector3 destination { get; set; }
     public int unitCost { get; set; }
     public int unitPower { get; set; }
     public int unitPowerRange { get; set; }
@@ -135,7 +136,6 @@ public abstract class Unit : Entity
 
     private void OnIdleEnter()
     { //attackList와 aggList 내의 null 값들을 전부 제거해준 후 attack또는 aggro 함수를 실행해준다.
-        Debug.Log("foreach문 돌리기전 attackListCount : " + attackList.Count() + "어그로 List Count : " + aggList.Count());
 
         foreach (GameObject enemy in attackList.ToList())
         {
@@ -152,8 +152,6 @@ public abstract class Unit : Entity
                 aggList.Remove(enemy);
             }
         }
-
-        Debug.Log("foreach문 돌린후 attackListCount : " + attackList.Count() + "어그로 List Count : " + aggList.Count());
 
         if (attackList.Count != 0)
         {
@@ -199,6 +197,7 @@ public abstract class Unit : Entity
         switch (newState)
         {
             case "Idle":
+                destination = Vector3.zero;
                 state = State.Idle;
                 rigidbody.isKinematic = true;
                 OnIdleEnter();
