@@ -116,7 +116,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         lobbyController.SetState("TeamSelect");
-        SetTeam("");
+        SetTeam("Red");
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
@@ -152,14 +152,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
 
     public void JoinRoom(RoomInfo room)
     {
-        SetTeam("");
+        SetTeam("Blue");
         PhotonNetwork.JoinRoom(room.Name);
     }
 
     public override void OnJoinedRoom()
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
-
         AddCallbackFunc();
         lobbyController.SetState("TeamSelect");
         foreach (Player player in PhotonNetwork.PlayerList)
