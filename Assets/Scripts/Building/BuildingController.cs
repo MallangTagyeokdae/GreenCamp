@@ -134,7 +134,6 @@ public class BuildingController : MonoBehaviour
         await StartTimer(5f);
         GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
         building.GetComponent<PhotonView>().RPC("DestroyEntity",RpcTarget.AllBuffered);
-        // building.DestroyEntity();
     }
 
     public void UpgradeBuilding(Building building)
