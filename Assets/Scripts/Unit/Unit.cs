@@ -189,6 +189,7 @@ public abstract class Unit : Entity
         }
     }
 
+    [PunRPC]
     public void SetState(string newState)
     {
         switch (newState)
@@ -211,11 +212,11 @@ public abstract class Unit : Entity
                 animator.SetBool("isAttacking", true);
                 break;
             case "Die":
+                state = State.Die;
                 foreach(Collider collider in GetComponents<Collider>())
                 {
                     collider.enabled = false;
                 }
-                GameStatus.instance.currentUnitCount -= population;
                 break;
         }
     }
@@ -255,14 +256,13 @@ public abstract class Unit : Entity
     public override void DestroyEntity()
     {
         gameObject.GetComponent<PhotonView>().RPC("SyncSetTag", RpcTarget.AllBuffered, "Untagged");
-        SetState("Die");
+        gameObject.GetComponent<PhotonView>().RPC("SetState", RpcTarget.AllBuffered, "Die");
+        GameStatus.instance.currentUnitCount -= population;
         animator.SetTrigger("isDead");
-        Debug.Log("애니메이션 실행되니?");
     }
     public void CheckDie()
     {
         Destroy(gameObject);
-        Debug.Log("CheckDie 함수 실행되는지 디버깅");
     }
 
     [PunRPC]
