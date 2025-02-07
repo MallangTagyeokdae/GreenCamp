@@ -156,6 +156,7 @@ public class UnitController : MonoBehaviour
         }
 
         unit.transform.position = newLocation;
+        unit.destination = Vector3.zero;
         unit.SetOrder(0);
         unit.ChangeState("Idle");
     }
@@ -200,6 +201,7 @@ public class UnitController : MonoBehaviour
             if(enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0)
             {
                 unit.attackList.Remove(enemy);
+                unit.aggList.Remove(enemy);
                 break;
             }
 
@@ -207,9 +209,9 @@ public class UnitController : MonoBehaviour
             ally.transform.rotation = Quaternion.LookRotation(rot);
             yield return null;
         }
+        
         unit.SetOrder(0);
         unit.ChangeState("Idle");
-
     }
 
     /*  1. 새로운 유닛을 설정할 때는 triggerStay가 아니라 trigger가 enter할 때마다 들어온 유닛을 list에 추가한다.

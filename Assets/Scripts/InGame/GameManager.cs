@@ -281,7 +281,10 @@ public class GameManager : MonoBehaviour
                 SetState("InGame");
                 break;
             case GameStates.SetTargetMode:
-                Attang(newLocation, 2);
+                foreach(GameObject gameObject in clickedObject)
+                {
+                    Attang(newLocation, 2, gameObject);
+                }
                 SetState("InGame");
                 break;
         }
@@ -551,32 +554,31 @@ public class GameManager : MonoBehaviour
         this.unitType = unitType;
     }
 
-    public void Attang(Vector3 newLocation, int order){
-        foreach(GameObject go in clickedObject)
+    public void Attang(Vector3 newLocation, int order, GameObject orderedObjs){
+
+        if(orderedObjs.TryGetComponent(out Unit selectedUnit))
         {
-            go.TryGetComponent(out Unit selectedUnit);
-            if(selectedUnit == null){
-                continue;
-            }
+            Debug.Log(newLocation.ToString());
+            selectedUnit.destination = newLocation;
             if (selectedUnit.unitBehaviour != null)
             {
                 StopCoroutine(selectedUnit.unitBehaviour);
             }
             if(selectedUnit.aggList.Count == 0){
-                Debug.Log("그냥 이동중");
-                selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, newLocation, order));
+                Debug.Log(selectedUnit.name +" 그냥 이동중 " + selectedUnit.attackList.Count() + " / " + selectedUnit.aggList.Count());
+                selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, selectedUnit.destination, order));
             }
             else if (selectedUnit.attackList.Count == 0){
                 Debug.Log("어그로 범위에 들어와서 공격하러 가는중");
                 foreach(GameObject enemy in selectedUnit.aggList){
-                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, enemy, 3)); // aggro
+                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, 3)); // aggro
                     break;
                 }
             }
             else{
                 Debug.Log("공격범위 안에 들어와서 공격중");
                 foreach(GameObject enemy in selectedUnit.attackList){
-                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, enemy));
+                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
                     break;
                 }
                 
@@ -614,8 +616,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            // Debug.Log("공격 범위에 뭔가 감지됐다.");
             if (!unit.attackList.Contains(enemy))
             {
+                // Debug.Log(enemy.name + " 가 어택 리스트에 추가됨");
                 unit.attackList.Add(enemy);
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
@@ -648,8 +652,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            // Debug.Log("어그로 범위에 뭔가 감지됐다.");
             if (!unit.aggList.Contains(enemy))
             {
+                // Debug.Log(enemy.name + " 가 어그로 리스트에 추가됨");
                 unit.aggList.Add(enemy);
             }
             /*if (unit.order == Unit.Order.Move || unit.order == Unit.Order.Offensive || unit.state == Unit.State.Attack)
@@ -1065,6 +1071,7 @@ public class GameManager : MonoBehaviour
                         {
                             StopCoroutine(unit.unitBehaviour);
                             unit.ChangeState("Idle");
+                            unit.SetOrder(0);
                         }
                     }
 
