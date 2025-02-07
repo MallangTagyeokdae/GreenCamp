@@ -21,43 +21,29 @@ public class TeamUIController : MonoBehaviour
     public void OnTeamSelect(Player player, bool IsMasterClient)
     {
         string playerTeam = PhotonManager.instance.GetTeam(player);
-        // DeselectTeam(player, IsMasterClient);
         Debug.Log("현재 팀: " + playerTeam);
-        if (playerTeam == "Blue" || playerTeam == "")
-        {
-            if (IsMasterClient == true)
-            {
-                if (player == PhotonNetwork.LocalPlayer)
-                {
-                    ActiveBlue(player);
-                }
-                else
-                {
-                    ActiveRed(player);
-                }
-            }
 
+        if (string.IsNullOrEmpty(playerTeam) || playerTeam == "Blue")
+        {
+            ActiveBlue(player, IsMasterClient);
+        }
+        else if (playerTeam == "Red")
+        {
+            ActiveRed(player, IsMasterClient);
         }
         else
         {
-
-            if (IsMasterClient == true)
-            {
-                if (player == PhotonNetwork.LocalPlayer)
-                {
-                    ActiveRed(player);
-                }
-                else
-                {
-                    ActiveBlue(player);
-                }
-            }
+            RedToggle.interactable = false;
+            BlueToggle.interactable = false;
         }
     }
 
-    private void ActiveBlue(Player player)
+    private void ActiveBlue(Player player, bool IsMasterClient)
     {
-
+        if (PhotonNetwork.PlayerList.Length == 1)
+        {
+            RedPlayer.transform.parent.gameObject.SetActive(false);
+        }
         BluePlayer.transform.parent.gameObject.SetActive(true);
         BlueToggle.Select();
         BlueToggle.SetIsOn(true, true);
@@ -69,27 +55,39 @@ public class TeamUIController : MonoBehaviour
             {
                 RedToggleImg.SetActive(false);
             }
-            BlueToggleImg.SetActive(true);
-            Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
+            if (!BlueToggleImg.activeSelf)
+            {
+                BlueToggleImg.SetActive(true);
+            }
+            Debug.Log("방장 아님");
         }
     }
-    private void ActiveRed(Player player)
-    {
 
+    private void ActiveRed(Player player, bool IsMasterClient)
+    {
+        if (PhotonNetwork.PlayerList.Length == 1)
+        {
+            BluePlayer.transform.parent.gameObject.SetActive(false);
+        }
         RedPlayer.transform.parent.gameObject.SetActive(true);
         RedToggle.Select();
         RedToggle.SetIsOn(true, true);
         RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
+
         if (player != PhotonNetwork.LocalPlayer)
         {
             if (BlueToggleImg.activeSelf)
             {
                 BlueToggleImg.SetActive(false);
             }
-            RedToggleImg.SetActive(true);
-            Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
+            if (!RedToggleImg.activeSelf)
+            {
+                RedToggleImg.SetActive(true);
+            }
+            Debug.Log("방장임");
         }
     }
+
 
     public void SendTeamSelect()
     {
