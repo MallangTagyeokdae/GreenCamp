@@ -77,7 +77,6 @@ public class TeamUIController : MonoBehaviour
     private void ActiveRed(Player player)
     {
 
-
         RedPlayer.transform.parent.gameObject.SetActive(true);
         RedToggle.Select();
         RedToggle.SetIsOn(true, true);
