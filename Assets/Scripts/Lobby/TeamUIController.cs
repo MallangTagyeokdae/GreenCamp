@@ -49,37 +49,49 @@ public class TeamUIController : MonoBehaviour
 
     private void ActiveBlue(Player player)
     {
-        if (player != PhotonNetwork.LocalPlayer)
-        {
-            RedToggleImg.SetActive(false);
-            BlueToggleImg.SetActive(true);
-            Debug.Log("OnSelect 함수: 로컬 플레이어가 아님 -> 블루 이미지 켜기");
-        }
-        else
-        {
-            RedPlayer.transform.parent.gameObject.SetActive(false);
-        }
+
         BluePlayer.transform.parent.gameObject.SetActive(true);
         BlueToggle.Select();
         BlueToggle.SetIsOn(true, true);
         BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
-    }
-    private void ActiveRed(Player player)
-    {
+
         if (player != PhotonNetwork.LocalPlayer)
         {
-            RedToggleImg.SetActive(true);
-            BlueToggleImg.SetActive(false);
-            Debug.Log("select 함수: 방장이 블루 -> 나는 레드");
+            RedToggleImg.SetActive(false);
+            BlueToggleImg.SetActive(true);
+            BlueToggle.interactable = false;
+            RedToggle.interactable = true;
+            Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
         }
         else
         {
-            BluePlayer.transform.parent.gameObject.SetActive(false);
+            if (RedPlayer.GetComponent<TMP_Text>().text == player.NickName)
+            {
+                RedPlayer.transform.parent.gameObject.SetActive(false);
+            }
         }
+    }
+    private void ActiveRed(Player player)
+    {
+
+
         RedPlayer.transform.parent.gameObject.SetActive(true);
         RedToggle.Select();
         RedToggle.SetIsOn(true, true);
         RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
+        if (player != PhotonNetwork.LocalPlayer)
+        {
+            RedToggleImg.SetActive(true);
+            BlueToggleImg.SetActive(false);
+            BlueToggle.interactable = true;
+            RedToggle.interactable = false;
+            Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
+        }
+        else
+        {
+            if (BluePlayer.GetComponent<TMP_Text>().text == player.NickName)
+            { BluePlayer.transform.parent.gameObject.SetActive(false); }
+        }
     }
 
     public void SendTeamSelect()
