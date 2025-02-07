@@ -43,12 +43,32 @@ public class TeamUIController : MonoBehaviour
             RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
         }
 
-        else if (playerTeam == "null")
+        else if (playerTeam == "null" && IsMasterClient == false)
         {
-            BlueToggleImg.SetActive(false);
-            BluePlayer.transform.parent.gameObject.SetActive(false);
-            RedToggleImg.SetActive(false);
-            RedPlayer.transform.parent.gameObject.SetActive(false);
+            if (RedToggleImg.activeSelf == true)
+            {
+                if (player != PhotonNetwork.LocalPlayer)
+                {
+                    BlueToggleImg.SetActive(true);
+                    Debug.Log("Select 함수: 방장이 레드 -> 나는 블루");
+                }
+                BluePlayer.transform.parent.gameObject.SetActive(true);
+                BlueToggle.GetComponent<UIToggle>().Select();
+                BlueToggle.GetComponent<UIToggle>().SetIsOn(true, true);
+                BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
+            }
+            else
+            {
+                if (player != PhotonNetwork.LocalPlayer)
+                {
+                    RedToggleImg.SetActive(true);
+                    Debug.Log("select 함수: 방장이 블루 -> 나는 레드");
+                }
+                RedPlayer.transform.parent.gameObject.SetActive(true);
+                RedToggle.GetComponent<UIToggle>().Select();
+                RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
+                RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
+            }
         }
     }
 
@@ -95,9 +115,6 @@ public class TeamUIController : MonoBehaviour
                 RedToggle.GetComponent<UIToggle>().Select();
                 RedToggle.GetComponent<UIToggle>().SetIsOn(true, true);
                 RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
-            }
-            else
-            {
             }
         }
     }
