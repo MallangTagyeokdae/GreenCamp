@@ -64,11 +64,6 @@ public class TeamUIController : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            RedToggle.interactable = false;
-            BlueToggle.interactable = false;
-        }
     }
 
     private void ActiveBlue(Player player)
@@ -84,10 +79,6 @@ public class TeamUIController : MonoBehaviour
 
         if (player != PhotonNetwork.LocalPlayer)
         {
-            if (RedToggleImg.activeSelf)
-            {
-                RedToggleImg.SetActive(false);
-            }
             if (!BlueToggleImg.activeSelf)
             {
                 BlueToggleImg.SetActive(true);

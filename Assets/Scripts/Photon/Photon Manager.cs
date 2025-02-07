@@ -152,6 +152,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
 
     public void JoinRoom(RoomInfo room)
     {
+        SetTeam("Red");
         PhotonNetwork.JoinRoom(room.Name);
     }
 
