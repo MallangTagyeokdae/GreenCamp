@@ -27,10 +27,8 @@ public class TeamUIController : MonoBehaviour
         {
             if (IsMasterClient == true)
             {
-
                 ActiveBlue(player);
                 BlueToggle.interactable = false;
-                RedToggle.interactable = true;
             }
             else
             {
@@ -47,7 +45,6 @@ public class TeamUIController : MonoBehaviour
             {
                 ActiveRed(player);
                 RedToggle.interactable = false;
-                BlueToggle.interactable = true;
             }
             else
             {
@@ -76,13 +73,6 @@ public class TeamUIController : MonoBehaviour
             BlueToggleImg.SetActive(true);
             Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
         }
-        else
-        {
-            if (RedPlayer.GetComponent<TMP_Text>().text == player.NickName)
-            {
-                RedPlayer.transform.parent.gameObject.SetActive(false);
-            }
-        }
     }
     private void ActiveRed(Player player)
     {
@@ -102,11 +92,6 @@ public class TeamUIController : MonoBehaviour
 
 
             Debug.Log("로컬 사용자가 아님 -> 블루 이미지 켜기");
-        }
-        else
-        {
-            if (BluePlayer.GetComponent<TMP_Text>().text == player.NickName)
-            { BluePlayer.transform.parent.gameObject.SetActive(false); }
         }
     }
 
