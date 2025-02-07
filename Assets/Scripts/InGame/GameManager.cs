@@ -725,24 +725,36 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
+            if(clickedObject[0] == entity && clickedObject.Count() == 1)
+            // 건물이 선택되어있고, 크기가 1인경우 (드래그 했을 때 건물이 첫번째 인덱스에 들어간 상황은 유닛 UI가 뜬 상태이기 떄문에)
+            {
+                SetClickedObject(ground);
+                SetBuildingListUI();
+            }
         }
         else if (entity.TryGetComponent(out Unit unit))
         {
             if (unit.unitBehaviour != null)
             {
                 StopCoroutine(unit.unitBehaviour);
-                Debug.Log("코루틴 정지!!!!!!!!!!!!!!!!!!!");
             }
             if (clickedObject.Contains(entity))
+            // UI 업데이트해줌
             {
                 if (clickedObject.Count == 1)
                 {
-                    clickedObject[0] = ground;
-
+                    SetClickedObject(ground);
+                    SetBuildingListUI();
+                }
+                else if(clickedObject[0].GetComponent<Unit>())
+                {
+                    clickedObject.Remove(entity);
+                    SetGroupUnitUI(8,0);
                 }
                 else
                 {
                     clickedObject.Remove(entity);
+                    SetGroupUnitUI(8,1);   
                 }
             }
             unitController.DestroyUnit(unit);
