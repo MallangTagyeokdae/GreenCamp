@@ -169,6 +169,7 @@ public class UnitController : MonoBehaviour
         while (enemy != null)
         {
             Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
+
             if (moveDirection != Vector3.zero)
             {
                 unit.transform.rotation = Quaternion.LookRotation(moveDirection);

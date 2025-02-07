@@ -87,7 +87,7 @@ public class Entity : MonoBehaviour
 
         GameManager.instance.UpdateEventUI(gameObject);
 
-        if(currentHealth <= 0)
+        if(currentHealth <= 0 && CheckIsDie(gameObject))
         {
             GameManager.instance.DestroyEntity(gameObject);
         }
@@ -110,6 +110,24 @@ public class Entity : MonoBehaviour
     }
     
     public virtual void DestroyEntity() {}
+
+    private bool CheckIsDie(GameObject entity)
+    {
+        if(entity.TryGetComponent(out Unit unit))
+        {
+            if(unit.state == Unit.State.Die)
+            {
+                return false;
+            }
+        } else if(entity.TryGetComponent(out Building building))
+        {
+            if(building.state == Building.State.Destroy)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /*public async Task ActiveHealthBarAsync(CancellationTokenSource end)
     { 

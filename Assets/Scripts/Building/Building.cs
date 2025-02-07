@@ -179,6 +179,7 @@ public abstract class Building : Entity
     [PunRPC]
     public void SyncSetTag(string tag)
     {
+        Debug.Log("건물 파괴");
         gameObject.tag = tag;
     }
 
