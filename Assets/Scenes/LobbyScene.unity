@@ -2238,7 +2238,7 @@ MonoBehaviour:
         Elasticity: 1
         FadeOutShake: 0
       FromValue: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
-      ToValue: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
+      ToValue: {r: 0.41960788, g: 0.5840523, b: 1, a: 0}
       CurrentValue: {r: 0, g: 0, b: 0, a: 0}
       Enabled: 1
       StartColor: {r: 0.4196079, g: 0.5840523, b: 1, a: 0.69803923}
@@ -3232,7 +3232,6 @@ GameObject:
   - component: {fileID: 292106735}
   - component: {fileID: 292106734}
   - component: {fileID: 292106733}
-  - component: {fileID: 292106737}
   m_Layer: 5
   m_Name: SelectTeamUI
   m_TagString: Untagged
@@ -3327,24 +3326,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &292106737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292106732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 530a1d6ef21238d4b9bef9c799b27cd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BlueToggle: {fileID: 130853842}
-  BlueToggleImg: {fileID: 1241637339}
-  BluePlayer: {fileID: 1387859513}
-  RedToggle: {fileID: 1364732106}
-  RedToggleImg: {fileID: 706820003}
-  RedPlayer: {fileID: 1639781072}
 --- !u!1001 &297091909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9020,6 +9001,7 @@ GameObject:
   m_Component:
   - component: {fileID: 910434097}
   - component: {fileID: 910434096}
+  - component: {fileID: 910434098}
   m_Layer: 0
   m_Name: PhotonManager
   m_TagString: Untagged
@@ -9040,7 +9022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyController: {fileID: 119623202}
-  teamUIController: {fileID: 292106737}
+  teamUIController: {fileID: 910434098}
   userInfo: {fileID: 11400000, guid: cf1c2eec7b2ce254a8482ff0e0078806, type: 2}
 --- !u!4 &910434097
 Transform:
@@ -9057,6 +9039,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &910434098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910434095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 530a1d6ef21238d4b9bef9c799b27cd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BlueToggle: {fileID: 130853842}
+  BlueToggleImg: {fileID: 1241637339}
+  BluePlayer: {fileID: 1387859513}
+  RedToggle: {fileID: 1364732106}
+  RedToggleImg: {fileID: 706820003}
+  RedPlayer: {fileID: 1639781072}
 --- !u!1 &929762850
 GameObject:
   m_ObjectHideFlags: 0
@@ -13457,7 +13457,7 @@ MonoBehaviour:
         Elasticity: 1
         FadeOutShake: 0
       FromValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
-      ToValue: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
+      ToValue: {r: 1, g: 0.38823536, b: 0.38823536, a: 0}
       CurrentValue: {r: 0, g: 0, b: 0, a: 0}
       Enabled: 1
       StartColor: {r: 1, g: 0.3882353, b: 0.3882353, a: 0.69803923}
@@ -26600,7 +26600,7 @@ MonoBehaviour:
   HighlightedState:
     StateType: 1
     StateEvent:
-      EventName: Highlighted
+      EventName: Highlighted State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -26612,7 +26612,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 910434096}
+            m_TargetAssemblyTypeName: PhotonManager, Assembly-CSharp
+            m_MethodName: SetTeam
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Red
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
