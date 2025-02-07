@@ -21,15 +21,48 @@ public class TeamUIController : MonoBehaviour
     public void OnTeamSelect(Player player, bool IsMasterClient)
     {
         string playerTeam = PhotonManager.instance.GetTeam(player);
-        Debug.Log("현재 팀: " + playerTeam);
+        string masterTeam = PhotonManager.instance.GetTeam(PhotonNetwork.MasterClient);
+        Debug.Log("내 팀: " + playerTeam + ", 내가 방장: " + IsMasterClient + ", 방장 팀:" + masterTeam);
 
         if (string.IsNullOrEmpty(playerTeam) || playerTeam == "Blue")
         {
-            ActiveBlue(player, IsMasterClient);
+            if (IsMasterClient)
+            {
+                ActiveBlue(player);
+            }
+            else
+            {
+                if (masterTeam == "Red") // 방장 팀이 레드면
+                {
+                    // 블루팀 선택
+                    ActiveBlue(player);
+                }
+                else
+                {
+                    //레드팀 선택
+                    ActiveRed(player);
+                }
+            }
         }
         else if (playerTeam == "Red")
         {
-            ActiveRed(player, IsMasterClient);
+            if (IsMasterClient)
+            {
+                ActiveRed(player);
+            }
+            else
+            {
+                if (masterTeam == "Red") // 방장 팀이 레드면
+                {
+                    // 블루팀 선택
+                    ActiveBlue(player);
+                }
+                else
+                {
+                    //레드팀 선택
+                    ActiveRed(player);
+                }
+            }
         }
         else
         {
@@ -38,7 +71,7 @@ public class TeamUIController : MonoBehaviour
         }
     }
 
-    private void ActiveBlue(Player player, bool IsMasterClient)
+    private void ActiveBlue(Player player)
     {
         if (PhotonNetwork.PlayerList.Length == 1)
         {
@@ -59,11 +92,10 @@ public class TeamUIController : MonoBehaviour
             {
                 BlueToggleImg.SetActive(true);
             }
-            Debug.Log("방장 아님");
         }
     }
 
-    private void ActiveRed(Player player, bool IsMasterClient)
+    private void ActiveRed(Player player)
     {
         if (PhotonNetwork.PlayerList.Length == 1)
         {
@@ -84,7 +116,6 @@ public class TeamUIController : MonoBehaviour
             {
                 RedToggleImg.SetActive(true);
             }
-            Debug.Log("방장임");
         }
     }
 
