@@ -179,8 +179,14 @@ public abstract class Building : Entity
     [PunRPC]
     public void SyncSetTag(string tag)
     {
-        Debug.Log("건물 파괴");
+        Debug.Log("건물 파괴 / 상태 : " + state);
         gameObject.tag = tag;
+    }
+
+    [PunRPC]
+    public void SetStateDestroy()
+    {
+        state = State.Destroy;
     }
 
     [PunRPC]
@@ -189,6 +195,7 @@ public abstract class Building : Entity
         gameObject.GetComponent<PhotonView>().RPC("SyncSetTag", RpcTarget.AllBuffered, "Untagged");
         gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
         gameObject.GetComponent<PhotonView>().RPC("ActiveDestroyEffect", RpcTarget.AllBuffered);
+        gameObject.GetComponent<PhotonView>().RPC("SetStateDestroy", RpcTarget.AllBuffered);
 
         foreach(Collider collider in gameObject.GetComponents<Collider>())
         {
