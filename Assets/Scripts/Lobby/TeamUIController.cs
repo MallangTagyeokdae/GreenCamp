@@ -18,78 +18,76 @@ public class TeamUIController : MonoBehaviour
     public GameObject RedToggleImg;
     public GameObject RedPlayer;
 
-    public void OnTeamSelect(Player player, bool IsMasterClient)
+    public void OnTeamSelect(Player player, bool isMasterClient)
     {
         string playerTeam = PhotonManager.instance.GetTeam(player);
         string masterTeam = PhotonManager.instance.GetTeam(PhotonNetwork.MasterClient);
-        Debug.Log("내 팀: " + playerTeam + ", 내가 방장: " + IsMasterClient + ", 방장 팀:" + masterTeam);
 
-        if (IsMasterClient)
+        Debug.Log($"내 팀: {playerTeam}, 방장 여부: {isMasterClient}, 방장 팀: {masterTeam}");
+
+        if (isMasterClient)
         {
-            if (string.IsNullOrEmpty(playerTeam) || playerTeam == "Blue")
+            if (string.IsNullOrEmpty(masterTeam) || masterTeam == "Blue")
             {
-                ActiveBlue(player);
+                ActiveBlue(player, true);
             }
-            else if (playerTeam == "Red")
+            else if (masterTeam == "Red")
             {
-                ActiveRed(player);
+                ActiveRed(player, true);
             }
         }
         else
         {
             if (masterTeam == "Red")
             {
-                ActiveBlue(player);
+                ActiveBlue(player, false);
             }
             else
             {
-                ActiveRed(player);
+                ActiveRed(player, false);
             }
         }
-
     }
-
-    private void ActiveBlue(Player player)
+    private void ActiveBlue(Player player, bool isMasterClient)
     {
-        if (PhotonNetwork.PlayerList.Length == 1)
+        if (PhotonNetwork.PlayerList.Length == 1) // 방에 혼자 있을 때
         {
             RedPlayer.transform.parent.gameObject.SetActive(false);
+            RedToggleImg.SetActive(false);
+            BlueToggleImg.SetActive(false);
         }
+
         BluePlayer.transform.parent.gameObject.SetActive(true);
-        BlueToggle.Select();
-        BlueToggle.SetIsOn(true, true);
+        BlueToggle.SetIsOn(true, false);
         BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
 
-        if (player != PhotonNetwork.LocalPlayer)
+        if (isMasterClient == false) // 일반 플레이어라면
         {
-            if (!BlueToggleImg.activeSelf)
-            {
-                BlueToggleImg.SetActive(true);
-            }
             RedToggle.SetIsOn(true, false);
+            if (!RedToggleImg.activeSelf) RedToggleImg.SetActive(true);
         }
     }
 
-    private void ActiveRed(Player player)
+    private void ActiveRed(Player player, bool isMasterClient)
     {
-        if (PhotonNetwork.PlayerList.Length == 1)
+        if (PhotonNetwork.PlayerList.Length == 1) // 방에 혼자 있을 때
         {
             BluePlayer.transform.parent.gameObject.SetActive(false);
+            RedToggleImg.SetActive(false);
+            BlueToggleImg.SetActive(false);
         }
+
         RedPlayer.transform.parent.gameObject.SetActive(true);
-        RedToggle.Select();
-        RedToggle.SetIsOn(true, true);
+        RedToggle.SetIsOn(true, false);
         RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
 
-        if (player != PhotonNetwork.LocalPlayer)
+        if (isMasterClient == false) // 일반 플레이어라면
         {
-            if (!RedToggleImg.activeSelf)
-            {
-                RedToggleImg.SetActive(true);
-            }
-            BlueToggle.SetIsOn(true, false);
+            if (!RedToggleImg.activeSelf) RedToggleImg.SetActive(true);
+            BlueToggle.SetIsOn(false, false);
         }
     }
+
 
 
     public void SendTeamSelect()

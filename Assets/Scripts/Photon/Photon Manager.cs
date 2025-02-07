@@ -162,7 +162,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
         lobbyController.SetState("TeamSelect");
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
+            teamUIController.OnTeamSelect(player,PhotonNetwork.IsMasterClient);
         }
     }
     private bool isRedListenerAdded = false;
