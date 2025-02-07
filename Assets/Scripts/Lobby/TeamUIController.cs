@@ -24,46 +24,29 @@ public class TeamUIController : MonoBehaviour
         string masterTeam = PhotonManager.instance.GetTeam(PhotonNetwork.MasterClient);
         Debug.Log("내 팀: " + playerTeam + ", 내가 방장: " + IsMasterClient + ", 방장 팀:" + masterTeam);
 
-        if (string.IsNullOrEmpty(playerTeam) || playerTeam == "Blue")
+        if (IsMasterClient)
         {
-            if (IsMasterClient)
+            if (string.IsNullOrEmpty(playerTeam) || playerTeam == "Blue")
+            {
+                ActiveBlue(player);
+            }
+            else if (playerTeam == "Red")
+            {
+                ActiveRed(player);
+            }
+        }
+        else
+        {
+            if (masterTeam == "Red")
             {
                 ActiveBlue(player);
             }
             else
             {
-                if (masterTeam == "Red") // 방장 팀이 레드면
-                {
-                    // 블루팀 선택
-                    ActiveBlue(player);
-                }
-                else
-                {
-                    //레드팀 선택
-                    ActiveRed(player);
-                }
-            }
-        }
-        else if (playerTeam == "Red")
-        {
-            if (IsMasterClient)
-            {
                 ActiveRed(player);
             }
-            else
-            {
-                if (masterTeam == "Red") // 방장 팀이 레드면
-                {
-                    // 블루팀 선택
-                    ActiveBlue(player);
-                }
-                else
-                {
-                    //레드팀 선택
-                    ActiveRed(player);
-                }
-            }
         }
+
     }
 
     private void ActiveBlue(Player player)

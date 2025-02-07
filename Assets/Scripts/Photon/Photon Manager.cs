@@ -162,6 +162,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
         lobbyController.SetState("TeamSelect");
         foreach (Player player in PhotonNetwork.PlayerList)
         {
+            teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
             if (!PhotonNetwork.IsMasterClient)
             {
                 if (GetTeam(PhotonNetwork.MasterClient) == "Red")
@@ -173,7 +174,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
                     SetTeam("Red");
                 }
             }
-            teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
+
         }
     }
     private bool isRedListenerAdded = false;
