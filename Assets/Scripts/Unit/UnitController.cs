@@ -199,7 +199,6 @@ public class UnitController : MonoBehaviour
         {
             if(enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0)
             {
-                Debug.Log("적 죽음, 리스트에서 제거");
                 unit.attackList.Remove(enemy);
                 break;
             }
