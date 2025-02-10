@@ -159,27 +159,33 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
         lobbyController.SetState("TeamSelect");
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            // 마스터의 팀을 가져오고 SetTeam(남는팀)
+            string masterTeam = GetTeam(PhotonNetwork.MasterClient);
+            SetTeam(masterTeam == "Red" ? "Blue" : "Red");
+        }
         foreach (Player player in PhotonNetwork.PlayerList) // 이미 선택된 팀 ui 갱신
         {
             teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
             teamUIController.UpdateNicknameUI(player.NickName, GetTeam(player));
         }
-        if (!PhotonNetwork.IsMasterClient)
+
+    }
+
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged.ContainsKey("team")) // 팀 속성이 바뀌었을 때 실행
         {
-            // 마스터의 팀을 가져오고 SetTeam(남는팀)
-            string masterTeam = GetTeam(PhotonNetwork.MasterClient);
-            if (masterTeam == "Red")
+            if (!PhotonNetwork.IsMasterClient)
             {
-                SetTeam("Blue");
-            }
-            else
-            {
-                SetTeam("Red");
+                // 마스터의 팀을 가져오고 SetTeam(남는팀)
+                Debug.Log("마스터 팀 변경됨");
+                string masterTeam = GetTeam(PhotonNetwork.MasterClient);
+                SetTeam(masterTeam == "Red" ? "Blue" : "Red");
             }
         }
     }
-
-
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.Log($"failed to join room, available rooms: {PhotonNetwork.CountOfRooms}");
