@@ -158,48 +158,26 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnJoinedRoom()
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
-        AddCallbackFunc();
         lobbyController.SetState("TeamSelect");
-        foreach (Player player in PhotonNetwork.PlayerList)
+        foreach (Player player in PhotonNetwork.PlayerList) // 이미 선택된 팀 ui 갱신
         {
             teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
             teamUIController.UpdateNicknameUI(player.NickName, GetTeam(player));
         }
-    }
-    private bool isRedListenerAdded = false;
-    private bool isBlueListenerAdded = false;
-
-    public void AddCallbackFunc()
-    {
-        RemoveCallbackFunc();
-        if (!isRedListenerAdded)
+        if (!PhotonNetwork.IsMasterClient)
         {
-            teamUIController.RedToggle.onClickEvent.AddListener(() => SetTeam("Red"));
-            isRedListenerAdded = true;
-        }
-
-        if (!isBlueListenerAdded)
-        {
-            teamUIController.BlueToggle.onClickEvent.AddListener(() => SetTeam("Blue"));
-            isBlueListenerAdded = true;
+            // 마스터의 팀을 가져오고 SetTeam(남는팀)
+            string masterTeam = GetTeam(PhotonNetwork.MasterClient);
+            if (masterTeam == "Red")
+            {
+                SetTeam("Blue");
+            }
+            else
+            {
+                SetTeam("Red");
+            }
         }
     }
-
-    public void RemoveCallbackFunc()
-    {
-        if (isRedListenerAdded)
-        {
-            teamUIController.RedToggle.onClickEvent.RemoveListener(() => SetTeam("Red"));
-            isRedListenerAdded = false;
-        }
-
-        if (isBlueListenerAdded)
-        {
-            teamUIController.BlueToggle.onClickEvent.RemoveListener(() => SetTeam("Blue"));
-            isBlueListenerAdded = false;
-        }
-    }
-
 
 
     public override void OnJoinRoomFailed(short returnCode, string message)

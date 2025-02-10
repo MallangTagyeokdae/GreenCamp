@@ -29,7 +29,7 @@ public class TeamUIController : MonoBehaviour
         {
             RedToggle.interactable = true;
             BlueToggle.interactable = true;
-            if (string.IsNullOrEmpty(masterTeam) || masterTeam == "Blue")
+            if (masterTeam == "Blue")
             {
                 ActiveBlue(player);
             }
@@ -45,18 +45,10 @@ public class TeamUIController : MonoBehaviour
             if (masterTeam == "Red")
             {
                 ActiveBlue(player);
-                if (playerTeam != "Blue")
-                {
-                    PhotonManager.instance.SetTeam("Blue");
-                }
             }
             else
             {
                 ActiveRed(player);
-                if (playerTeam != "Red")
-                {
-                    PhotonManager.instance.SetTeam("Red");
-                }
             }
         }
     }
