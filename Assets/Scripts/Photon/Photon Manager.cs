@@ -193,7 +193,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         {
             if (!PhotonNetwork.IsMasterClient)
             {
-                if (changedProps != PhotonNetwork.LocalPlayer.CustomProperties)
+                if (changedProps["team"] == PhotonNetwork.LocalPlayer.CustomProperties["team"])
                 {
                     Debug.Log("마스터의 팀이 변경됨");
                     string masterTeam = changedProps["team"].ToString();
