@@ -55,6 +55,14 @@ public class TeamUIController : MonoBehaviour
                 }
             }
         }
+        if (playerTeam == "Blue")
+        {
+            BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
+        }
+        if (playerTeam == "Red")
+        {
+            RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
+        }
     }
 
     private void ActiveBlue(Player player, string playerTeam)
@@ -68,10 +76,7 @@ public class TeamUIController : MonoBehaviour
 
         BluePlayer.transform.parent.gameObject.SetActive(true);
         BlueToggle.SetIsOn(true, false);
-        if (playerTeam == "Blue")
-        {
-            BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
-        }
+        
 
         if (player != PhotonNetwork.LocalPlayer)
         {
@@ -94,10 +99,7 @@ public class TeamUIController : MonoBehaviour
 
         RedPlayer.transform.parent.gameObject.SetActive(true);
         RedToggle.SetIsOn(true, false);
-        if (playerTeam == "Red")
-        {
-            RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
-        }
+        
         if (player != PhotonNetwork.LocalPlayer)
         {
             if (!RedToggleImg.activeSelf)
