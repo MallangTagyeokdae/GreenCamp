@@ -27,28 +27,34 @@ public class TeamUIController : MonoBehaviour
 
         if (isMasterClient)
         {
+            // 방장이 팀을 선택하지 않았거나 기본적으로 Blue 팀이면 Blue 배정
             if (string.IsNullOrEmpty(masterTeam) || masterTeam == "Blue")
             {
-                ActiveBlue(player, true);
+                ActiveBlue(player);
             }
             else if (masterTeam == "Red")
             {
-                ActiveRed(player, true);
+                ActiveRed(player);
             }
         }
         else
         {
+            // 방장이 선택한 팀이 Red라면, 나머지 플레이어는 Blue로
             if (masterTeam == "Red")
             {
-                ActiveBlue(player, false);
+                ActiveBlue(player);
+                PhotonManager.instance.SetTeam("Blue");
             }
+            // 방장이 Blue라면, 나머지 플레이어는 Red로
             else
             {
-                ActiveRed(player, false);
+                ActiveRed(player);
+                PhotonManager.instance.SetTeam("Red");
             }
         }
     }
-    private void ActiveBlue(Player player, bool isMasterClient)
+
+    private void ActiveBlue(Player player)
     {
         if (PhotonNetwork.PlayerList.Length == 1) // 방에 혼자 있을 때
         {
@@ -58,13 +64,12 @@ public class TeamUIController : MonoBehaviour
         }
 
         BluePlayer.transform.parent.gameObject.SetActive(true);
-        BlueToggle.SetIsOn(true, true);
+        BlueToggle.SetIsOn(true, false);
         BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
         if (!BlueToggleImg.activeSelf) BlueToggleImg.SetActive(true);
-
     }
 
-    private void ActiveRed(Player player, bool isMasterClient)
+    private void ActiveRed(Player player)
     {
         if (PhotonNetwork.PlayerList.Length == 1) // 방에 혼자 있을 때
         {
@@ -74,10 +79,11 @@ public class TeamUIController : MonoBehaviour
         }
 
         RedPlayer.transform.parent.gameObject.SetActive(true);
-        RedToggle.SetIsOn(true, true);
+        RedToggle.SetIsOn(true, false); // 이벤트 발생 X
         RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
         if (!RedToggleImg.activeSelf) RedToggleImg.SetActive(true);
     }
+
 
 
 
