@@ -145,6 +145,13 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+    public void Back2Lobby()
+    {
+        if (CheckState("EndGame"))
+        {
+            PhotonManager.instance.LeaveRoom();
+        }
+    }
 
     public bool CheckState(string checkState)
     {
@@ -551,32 +558,39 @@ public class GameManager : MonoBehaviour
         this.unitType = unitType;
     }
 
-    public void Attang(Vector3 newLocation, int order){
-        foreach(GameObject go in clickedObject)
+    public void Attang(Vector3 newLocation, int order)
+    {
+        foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
-            if(selectedUnit == null){
+            if (selectedUnit == null)
+            {
                 continue;
             }
             if (selectedUnit.unitBehaviour != null)
             {
                 StopCoroutine(selectedUnit.unitBehaviour);
             }
-            if(selectedUnit.aggList.Count == 0){
+            if (selectedUnit.aggList.Count == 0)
+            {
                 selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, newLocation, order));
             }
-            else if (selectedUnit.attackList.Count == 0){
-                foreach(GameObject enemy in selectedUnit.aggList){
+            else if (selectedUnit.attackList.Count == 0)
+            {
+                foreach (GameObject enemy in selectedUnit.aggList)
+                {
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, enemy, 3)); // aggro
                     break;
                 }
             }
-            else{
-                foreach(GameObject enemy in selectedUnit.attackList){
+            else
+            {
+                foreach (GameObject enemy in selectedUnit.attackList)
+                {
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, enemy));
                     break;
                 }
-                
+
             }
         }
     }
