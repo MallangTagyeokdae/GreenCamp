@@ -27,6 +27,8 @@ public class TeamUIController : MonoBehaviour
 
         if (isMasterClient)
         {
+            RedToggle.interactable = true;
+            BlueToggle.interactable = true;
             if (string.IsNullOrEmpty(masterTeam) || masterTeam == "Blue")
             {
                 ActiveBlue(player);
@@ -38,6 +40,8 @@ public class TeamUIController : MonoBehaviour
         }
         else
         {
+            RedToggle.interactable = false;
+            BlueToggle.interactable = false;
             if (masterTeam == "Red")
             {
                 ActiveBlue(player);
