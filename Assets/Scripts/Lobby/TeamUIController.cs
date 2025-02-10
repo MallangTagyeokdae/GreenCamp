@@ -21,81 +21,105 @@ public class TeamUIController : MonoBehaviour
     public void OnTeamSelect(Player player, bool isMasterClient)
     {
         string playerTeam = PhotonManager.instance.GetTeam(player);
-        string masterTeam = PhotonManager.instance.GetTeam(PhotonNetwork.MasterClient);
-
-        Debug.Log($"내 팀: {playerTeam}, 방장 여부: {isMasterClient}, 방장 팀: {masterTeam}");
-
         if (isMasterClient)
         {
             RedToggle.interactable = true;
             BlueToggle.interactable = true;
-            if (masterTeam == "Blue")
-            {
-                ActiveBlue(player);
-            }
-            else if (masterTeam == "Red")
-            {
-                ActiveRed(player);
-            }
         }
         else
         {
             RedToggle.interactable = false;
             BlueToggle.interactable = false;
-            if (masterTeam == "Red")
-            {
-                ActiveBlue(player);
-            }
-            else
-            {
-                ActiveRed(player);
-            }
         }
+        ActiveTeam(player, playerTeam);
     }
-
-    private void ActiveBlue(Player player)
+    private void ActiveTeam(Player player, string team)
     {
-        if (PhotonNetwork.PlayerList.Length == 1)
+        if (team == "Red")
         {
-            RedPlayer.transform.parent.gameObject.SetActive(false);
-            RedToggleImg.SetActive(false);
-            BlueToggleImg.SetActive(false);
-        }
-
-        BluePlayer.transform.parent.gameObject.SetActive(true);
-        BlueToggle.SetIsOn(true, false);
-
-
-        if (player != PhotonNetwork.LocalPlayer)
-        {
-            if (!BlueToggleImg.activeSelf)
+            if (PhotonNetwork.PlayerList.Length == 1)
             {
-                BlueToggleImg.SetActive(true);
+                BluePlayer.transform.parent.gameObject.SetActive(false);
+                RedToggleImg.SetActive(false);
+                BlueToggleImg.SetActive(false);
+            }
+
+            RedPlayer.transform.parent.gameObject.SetActive(true);
+            RedToggle.SetIsOn(true, false);
+
+            if (player != PhotonNetwork.LocalPlayer)
+            {
+                if (!RedToggleImg.activeSelf)
+                {
+                    RedToggleImg.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            if (PhotonNetwork.PlayerList.Length == 1)
+            {
+                RedPlayer.transform.parent.gameObject.SetActive(false);
+                RedToggleImg.SetActive(false);
+                BlueToggleImg.SetActive(false);
+            }
+
+            BluePlayer.transform.parent.gameObject.SetActive(true);
+            BlueToggle.SetIsOn(true, false);
+
+
+            if (player != PhotonNetwork.LocalPlayer)
+            {
+                if (!BlueToggleImg.activeSelf)
+                {
+                    BlueToggleImg.SetActive(true);
+                }
             }
         }
     }
+    // private void ActiveBlue(Player player)
+    // {
+    //     if (PhotonNetwork.PlayerList.Length == 1)
+    //     {
+    //         RedPlayer.transform.parent.gameObject.SetActive(false);
+    //         RedToggleImg.SetActive(false);
+    //         BlueToggleImg.SetActive(false);
+    //     }
 
-    private void ActiveRed(Player player)
-    {
+    //     BluePlayer.transform.parent.gameObject.SetActive(true);
+    //     BlueToggle.SetIsOn(true, false);
 
-        if (PhotonNetwork.PlayerList.Length == 1)
-        {
-            BluePlayer.transform.parent.gameObject.SetActive(false);
-            RedToggleImg.SetActive(false);
-            BlueToggleImg.SetActive(false);
-        }
 
-        RedPlayer.transform.parent.gameObject.SetActive(true);
-        RedToggle.SetIsOn(true, false);
+    //     if (player != PhotonNetwork.LocalPlayer)
+    //     {
+    //         if (!BlueToggleImg.activeSelf)
+    //         {
+    //             BlueToggleImg.SetActive(true);
+    //         }
+    //     }
+    // }
 
-        if (player != PhotonNetwork.LocalPlayer)
-        {
-            if (!RedToggleImg.activeSelf)
-            {
-                RedToggleImg.SetActive(true);
-            }
-        }
-    }
+    // private void ActiveRed(Player player)
+    // {
+
+    //     if (PhotonNetwork.PlayerList.Length == 1)
+    //     {
+    //         BluePlayer.transform.parent.gameObject.SetActive(false);
+    //         RedToggleImg.SetActive(false);
+    //         BlueToggleImg.SetActive(false);
+    //     }
+
+    //     RedPlayer.transform.parent.gameObject.SetActive(true);
+    //     RedToggle.SetIsOn(true, false);
+
+    //     if (player != PhotonNetwork.LocalPlayer)
+    //     {
+    //         if (!RedToggleImg.activeSelf)
+    //         {
+    //             RedToggleImg.SetActive(true);
+    //         }
+    //     }
+    // }
     public void UpdateNicknameUI(string playerName, string teamName)
     {
         if (teamName == "Blue")

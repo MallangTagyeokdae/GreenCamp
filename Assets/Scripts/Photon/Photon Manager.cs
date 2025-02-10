@@ -162,7 +162,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         lobbyController.SetState("TeamSelect");
         if (!PhotonNetwork.IsMasterClient)
         {
-            // 마스터의 팀을 가져오고 SetTeam(남는팀)
             string masterTeam = GetTeam(PhotonNetwork.MasterClient);
             SetTeam(masterTeam == "Red" ? "Blue" : "Red");
         }
@@ -197,7 +196,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
                 string masterTeam = GetTeam(PhotonNetwork.MasterClient);
                 if (GetTeam(PhotonNetwork.LocalPlayer) == masterTeam)
                 {
-                    Debug.Log("마스터의 팀이 변경됨: " + masterTeam);
                     SetTeam(masterTeam == "Red" ? "Blue" : "Red");
                 }
             }
