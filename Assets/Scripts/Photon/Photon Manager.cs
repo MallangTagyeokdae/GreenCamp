@@ -191,13 +191,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         if (changedProps.ContainsKey("team"))
         {
-            Debug.Log(targetPlayer.NickName + "의 팀이 변경됨: " + changedProps["team"]);
             if (!PhotonNetwork.IsMasterClient)
             {
-                // 마스터의 팀을 가져오고 SetTeam(남는팀)
-                Debug.Log("마스터 팀 변경됨");
-                string masterTeam = GetTeam(PhotonNetwork.MasterClient);
-                SetTeam(masterTeam == "Red" ? "Blue" : "Red");
+                string masterTeam = changedProps["team"].ToString();
+                if (masterTeam == PhotonNetwork.MasterClient.CustomProperties["team"].ToString())
+                {
+                    Debug.Log("마스터의 팀이 변경됨");
+                    SetTeam(masterTeam == "Red" ? "Blue" : "Red");
+                }
             }
         }
     }
