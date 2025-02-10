@@ -111,6 +111,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
             Debug.Log("Created room with name: " + roomName + roomTitle);
         }
     }
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        if (propertiesThatChanged.ContainsKey("team"))
+        {
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                string updatedTeam = (string)player.CustomProperties["team"];
+                teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
+                teamUIController.UpdateNicknameUI(player.NickName, updatedTeam);
+            }
+        }
+    }
 
     //player가 방을 떠날 때 콜백되는 함수
     public override void OnPlayerLeftRoom(Player otherPlayer)
