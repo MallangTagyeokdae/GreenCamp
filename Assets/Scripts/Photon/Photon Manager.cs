@@ -173,20 +173,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
 
     }
 
-    // public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-    // {
-    //     Debug.Log("팀 변경했을 때 이 함수가 실행이 안 되나?");
-    //     if (propertiesThatChanged.ContainsKey("team")) // 팀 속성이 바뀌었을 때 실행
-    //     {
-    //         if (!PhotonNetwork.IsMasterClient)
-    //         {
-    //             // 마스터의 팀을 가져오고 SetTeam(남는팀)
-    //             Debug.Log("마스터 팀 변경됨");
-    //             string masterTeam = GetTeam(PhotonNetwork.MasterClient);
-    //             SetTeam(masterTeam == "Red" ? "Blue" : "Red");
-    //         }
-    //     }
-    // }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         if (changedProps.ContainsKey("team"))
@@ -224,9 +210,28 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerTeam);
         // PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
-        teamUIController.SendTeamSelect();
+        teamUIController.SendTeamSelect(1);
         //master에게 팀 명단을 갱신하라는 rpc -> master에서 갱신 후 다른 클라이언트들에게 명단 갱신 명령
         Debug.Log($"Team set to: {teamName}");
+    }
+    public void ChangeTeam()
+    {
+        // foreach (Player player in PhotonNetwork.PlayerList)
+        // {
+        //     ExitGames.Client.Photon.Hashtable newTeam = new ExitGames.Client.Photon.Hashtable();
+        //     if (GetTeam(player) == "Red")
+        //     {
+        //         newTeam["team"] = "Blue";
+        //     }
+        //     else
+        //     {
+        //         newTeam["team"] = "Red";
+        //     }
+        //     player.SetCustomProperties(newTeam);
+        // }
+
+        teamUIController.SendTeamSelect(1);
+        Debug.Log("팀 변경 완료");
     }
 
     // 플레이어의 팀 정보 확인 메서드
@@ -285,15 +290,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
 
     public void OnEvent(EventData photonEvent)
     {
+        Player player = (Player)photonEvent.CustomData;
+        string playerTeam = GetTeam(player);
+        string masterTeam = GetTeam(PhotonNetwork.MasterClient);
         switch (photonEvent.Code)
         {
             case 1: // 팀 선택 이벤트
-                Player player = (Player)photonEvent.CustomData;
-                string teamName = GetTeam(player);
                 teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
-                teamUIController.UpdateNicknameUI(player.NickName, teamName);
+                teamUIController.UpdateNicknameUI(player.NickName, playerTeam);
                 break;
-
+            case 2:
+                break;
             default:
                 //Debug.Log("Unknown event received: " + photonEvent.Code);
                 break;
