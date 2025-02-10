@@ -162,7 +162,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         lobbyController.SetState("TeamSelect");
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            teamUIController.OnTeamSelect(player,PhotonNetwork.IsMasterClient);
+            teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
         }
     }
     private bool isRedListenerAdded = false;
@@ -288,7 +288,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         {
             case 1: // 팀 선택 이벤트
                 Player player = (Player)photonEvent.CustomData;
+                string teamName = GetTeam(player);
                 teamUIController.OnTeamSelect(player, PhotonNetwork.IsMasterClient);
+                teamUIController.UpdateNicknameUI(player.NickName, teamName);
                 break;
 
             default:
