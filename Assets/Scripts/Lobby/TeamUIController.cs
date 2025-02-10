@@ -59,14 +59,6 @@ public class TeamUIController : MonoBehaviour
                 }
             }
         }
-        if (playerTeam == "Blue")
-        {
-            BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
-        }
-        if (playerTeam == "Red")
-        {
-            RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
-        }
     }
 
     private void ActiveBlue(Player player)
