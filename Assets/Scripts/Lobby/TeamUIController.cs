@@ -29,11 +29,11 @@ public class TeamUIController : MonoBehaviour
         {
             if (string.IsNullOrEmpty(masterTeam) || masterTeam == "Blue")
             {
-                ActiveBlue(player, playerTeam);
+                ActiveBlue(player, masterTeam);
             }
             else if (masterTeam == "Red")
             {
-                ActiveRed(player, playerTeam);
+                ActiveRed(player, masterTeam);
             }
         }
         else
