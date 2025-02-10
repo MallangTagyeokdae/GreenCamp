@@ -69,7 +69,13 @@ public class TeamUIController : MonoBehaviour
         BluePlayer.transform.parent.gameObject.SetActive(true);
         BlueToggle.SetIsOn(true, false);
         BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
-        if (!BlueToggleImg.activeSelf) BlueToggleImg.SetActive(true);
+        if (player != PhotonNetwork.LocalPlayer)
+        {
+            if (!BlueToggleImg.activeSelf)
+            {
+                BlueToggleImg.SetActive(true);
+            }
+        }
     }
 
     private void ActiveRed(Player player)
@@ -84,7 +90,13 @@ public class TeamUIController : MonoBehaviour
         RedPlayer.transform.parent.gameObject.SetActive(true);
         RedToggle.SetIsOn(true, false);
         RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
-        if (!RedToggleImg.activeSelf) RedToggleImg.SetActive(true);
+        if (player != PhotonNetwork.LocalPlayer)
+        {
+            if (!RedToggleImg.activeSelf)
+            {
+                RedToggleImg.SetActive(true);
+            }
+        }
     }
 
 
