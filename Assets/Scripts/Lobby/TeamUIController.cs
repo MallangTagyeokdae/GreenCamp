@@ -98,7 +98,6 @@ public class TeamUIController : MonoBehaviour
         {
             RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
         }
-        RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
         if (player != PhotonNetwork.LocalPlayer)
         {
             if (!RedToggleImg.activeSelf)
