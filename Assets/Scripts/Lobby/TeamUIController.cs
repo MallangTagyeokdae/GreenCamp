@@ -43,13 +43,19 @@ public class TeamUIController : MonoBehaviour
             if (masterTeam == "Red")
             {
                 ActiveBlue(player);
-                PhotonManager.instance.SetTeam("Blue");
+                if (playerTeam != "Blue")
+                {
+                    PhotonManager.instance.SetTeam("Blue");
+                }
             }
             // 방장이 Blue라면, 나머지 플레이어는 Red로
             else
             {
                 ActiveRed(player);
-                PhotonManager.instance.SetTeam("Red");
+                if (playerTeam != "Red")
+                {
+                    PhotonManager.instance.SetTeam("Red");
+                }
             }
         }
     }
