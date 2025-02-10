@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using TMPro;
 using ExitGames.Client.Photon;
 using Doozy.Runtime.UIManager.Components;
+using Photon.Pun.UtilityScripts;
 //using ExitGames.Client.Photon;
 //using Photon.Pun.Demo.Cockpit;
 
@@ -193,10 +194,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         {
             if (!PhotonNetwork.IsMasterClient)
             {
-                if (PhotonNetwork.MasterClient.CustomProperties["team"] == PhotonNetwork.LocalPlayer.CustomProperties["team"])
+                string masterTeam = GetTeam(PhotonNetwork.MasterClient);
+                if (GetTeam(PhotonNetwork.LocalPlayer) == masterTeam)
                 {
-                    Debug.Log("마스터의 팀이 변경됨");
-                    string masterTeam = PhotonNetwork.MasterClient.CustomProperties["team"].ToString();
+                    Debug.Log("마스터의 팀이 변경됨: " + masterTeam);
                     SetTeam(masterTeam == "Red" ? "Blue" : "Red");
                 }
             }
