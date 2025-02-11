@@ -7,6 +7,7 @@ using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,6 +19,7 @@ public class TeamUIController : MonoBehaviour
     public UIToggle RedToggle;
     public GameObject RedToggleImg;
     public GameObject RedPlayer;
+    public GameObject StartBtn;
 
     public void OnTeamSelect(Player player)
     {
@@ -74,27 +76,44 @@ public class TeamUIController : MonoBehaviour
         PhotonNetwork.RaiseEvent(eventCode, player, options, sendOptions);
     }
 
-    
+    public void ChangeTeam(){
+        byte eventCode = 3;
+        object player = PhotonNetwork.LocalPlayer; //팀을 변경한 플레이어 정보를 모든 클라이언트에게 전송
+        RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.All }; //ALL, OTHERS, MASTER CLIENT 중에서 선택 (서버에 동기화되는 시점과 타이밍을 맞추기 위해서 ALL사용)
+        SendOptions sendOptions = new SendOptions { Reliability = true }; // TCP, UDP 통신 중에서 선택
+        PhotonNetwork.RaiseEvent(eventCode, player, options, sendOptions);
+    }
 
     public void DeselectTeam(Player player){
         //Deselect시에 roomproperty false로 변경
         Debug.Log($"이름: {player.NickName}");
         if(PhotonManager.instance.GetTeam(player) == "Red"){
             RedPlayer.transform.parent.gameObject.SetActive(false);
+            RedToggle.GetComponent<UIToggle>().interactable = true;
+            RedToggleImg.SetActive(false);
             if(player != PhotonNetwork.LocalPlayer){
-                RedToggle.GetComponent<UIToggle>().interactable = true;
-                RedToggleImg.SetActive(false);
+                
             }
         }
         else if(PhotonManager.instance.GetTeam(player) == "Blue"){
             BluePlayer.transform.parent.gameObject.SetActive(false);
+            BlueToggle.GetComponent<UIToggle>().interactable = true;
+            BlueToggleImg.SetActive(false);
             if(player != PhotonNetwork.LocalPlayer){
-                BlueToggle.GetComponent<UIToggle>().interactable = true;
-                BlueToggleImg.SetActive(false);
+                
             }
         }
         else{
             Debug.Log("No team");
+        }
+    }
+
+    public void ActiveStartButton(){
+        if(PhotonNetwork.IsMasterClient){
+            StartBtn.SetActive(true);
+        }
+        else{
+            StartBtn.SetActive(false);
         }
     }
 }
