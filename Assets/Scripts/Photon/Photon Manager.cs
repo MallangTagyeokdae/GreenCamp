@@ -117,7 +117,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         lobbyController.SetState("TeamSelect");
-        SetTeam("Red");
+        //SetTeam("Red");
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
@@ -153,7 +153,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
 
     public void JoinRoom(RoomInfo room)
     {
-        SetTeam("");
+        //SetTeam("");
         PhotonNetwork.JoinRoom(room.Name);
     }
 
@@ -194,6 +194,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
         // ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
+        Debug.Log($"팀명: {teamName}");
         ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
         PhotonNetwork.CurrentRoom.CustomProperties[teamName] = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerTeam);
