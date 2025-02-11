@@ -117,7 +117,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         teamUIController.DeselectTeam(otherPlayer);
-        otherPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "team", "Null" } });
+        
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
             Debug.Log("No player left");
@@ -190,9 +190,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         userInfo.InitUserInfo();
         //lobbyController.SetState("TeamSelect");
         //방을 나가면서 방의 property에 선택한 팀이 refresh되도록
+        //deselect 하라는 통신 이후에 team을 null로 바꿈
+        teamUIController.SendLeaveRoom();
         if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
         }
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "team", "Null" } });
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
     }
@@ -275,17 +278,21 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
 
     public void OnEvent(EventData photonEvent)
     {
+        Player player;
         switch (photonEvent.Code)
         {
             case 1: // 팀 선택 이벤트
-                Player player = (Player)photonEvent.CustomData;
+                player = (Player)photonEvent.CustomData;
                 teamUIController.OnTeamSelect(player);
                 break;
             
-            case 2: //팀 변경 이벤트
+            case 2:
+                player = (Player)photonEvent.CustomData;
+                teamUIController.DeselectTeam(player);
+                break;
+            case 3: //팀 변경 이벤트
                 //SetTeam(GetTeam(PhotonNetwork.LocalPlayer) == "Red" ? "Blue" : "Red");
                 break;
-
             default:
                 //Debug.Log("Unknown event received: " + photonEvent.Code);
                 break;
