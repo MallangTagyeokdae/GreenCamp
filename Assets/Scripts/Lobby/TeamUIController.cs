@@ -42,6 +42,7 @@ public class TeamUIController : MonoBehaviour
         
         if(player != PhotonNetwork.LocalPlayer){
             BlueToggle.GetComponent<UIToggle>().interactable = false;
+            BlueToggleImg.SetActive(true);
         }
         else{
             BlueToggle.Select();
@@ -56,6 +57,7 @@ public class TeamUIController : MonoBehaviour
         
         if(player != PhotonNetwork.LocalPlayer){
             RedToggle.GetComponent<UIToggle>().interactable = false;
+            RedToggleImg.SetActive(true);
         }
         else{
             RedToggle.Select();
@@ -86,12 +88,14 @@ public class TeamUIController : MonoBehaviour
             RedPlayer.transform.parent.gameObject.SetActive(false);
             if(player != PhotonNetwork.LocalPlayer){
                 RedToggle.GetComponent<UIToggle>().interactable = true;
+                RedToggleImg.SetActive(false);
             }
         }
         else if(PhotonManager.instance.GetTeam(player) == "Blue"){
             BluePlayer.transform.parent.gameObject.SetActive(false);
             if(player != PhotonNetwork.LocalPlayer){
                 BlueToggle.GetComponent<UIToggle>().interactable = true;
+                BlueToggleImg.SetActive(false);
             }
         }
         else{
