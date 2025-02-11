@@ -173,6 +173,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
             SetTeam("Blue");
         }
     }
+
     private bool isRedListenerAdded = false;
     private bool isBlueListenerAdded = false;
 
@@ -199,6 +200,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
         //ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
+        if(GetTeam(PhotonNetwork.LocalPlayer) == teamName){
+            return;
+        };
         teamUIController.DeselectTeam(PhotonNetwork.LocalPlayer);
         ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
 
