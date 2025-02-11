@@ -116,9 +116,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     //player가 방을 떠날 때 콜백되는 함수
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        lobbyController.SetState("TeamSelect");
-        //SetTeam("Red");
-
+        teamUIController.DeselectTeam(otherPlayer);
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
             Debug.Log("No player left");
@@ -188,7 +186,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public void LeaveRoom()
     {
         userInfo.InitUserInfo();
-        lobbyController.SetState("TeamSelect");
+        //lobbyController.SetState("TeamSelect");
+        //방을 나가면서 방의 property에 선택한 팀이 refresh되도록
+        if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
+        }
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
     }
@@ -196,8 +198,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public void SetTeam(string teamName)
     {
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
-        // ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
-        Debug.Log($"팀명: {teamName}");
+        //ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
+        teamUIController.DeselectTeam(PhotonNetwork.LocalPlayer);
         ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
 
         if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
@@ -206,7 +208,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{teamName, true}});
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerTeam);
-        // PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
+        //PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
         teamUIController.SendTeamSelect();
         //master에게 팀 명단을 갱신하라는 rpc -> master에서 갱신 후 다른 클라이언트들에게 명단 갱신 명령
         Debug.Log($"Team set to: {teamName}");
