@@ -118,7 +118,10 @@ public class UnitController : MonoBehaviour
     public void SetActiveHealthBar(GameObject go, bool activeStatus = false)
     {
         if (go.TryGetComponent(out Unit unit))
+        {
+            unit.healthBar.value = (float)(unit.currentHealth * 1.0 / unit.maxHealth);
             unit.healthBar.gameObject.SetActive(activeStatus);
+        }
     }
     public void unitAttacked(int unitID, int damage)
     {
@@ -200,7 +203,7 @@ public class UnitController : MonoBehaviour
 
         while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
-            if(enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0)
+            if (enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0)
             {
                 unit.attackList.Remove(enemy);
                 unit.aggList.Remove(enemy);
@@ -211,8 +214,8 @@ public class UnitController : MonoBehaviour
             ally.transform.rotation = Quaternion.LookRotation(rot);
             yield return null;
         }
-
-        if(unit.order.Equals(Unit.Order.Offensive))
+        
+        if (unit.order.Equals(Unit.Order.Offensive))
         {
             Debug.Log("다시 A땅 실행");
             unit.ChangeState("Move");
