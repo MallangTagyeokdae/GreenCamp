@@ -199,7 +199,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         // ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
         Debug.Log($"팀명: {teamName}");
         ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
+
+        if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
+        }
         PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{teamName, true}});
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerTeam);
         // PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
         teamUIController.SendTeamSelect();
