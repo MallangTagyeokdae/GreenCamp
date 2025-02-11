@@ -20,7 +20,8 @@ public class TeamUIController : MonoBehaviour
 
     public void OnTeamSelect(Player player)
     {
-        DeselectTeam(player);
+        //DeselectTeam(player);
+
         string playerTeam = PhotonManager.instance.GetTeam(player);
         if(playerTeam == "Red"){
             ActiveRed(player);
@@ -38,11 +39,13 @@ public class TeamUIController : MonoBehaviour
         //이름 띄우기
         BluePlayer.transform.parent.gameObject.SetActive(true);
         BluePlayer.GetComponent<TMP_Text>().text = player.NickName;
-
-        BlueToggle.Select();
-        BlueToggle.SetIsOn(true, false);
+        
         if(player != PhotonNetwork.LocalPlayer){
             BlueToggle.GetComponent<UIToggle>().interactable = false;
+        }
+        else{
+            BlueToggle.Select();
+            BlueToggle.SetIsOn(true, false);
         }
     }
     private void ActiveRed(Player player)
@@ -50,12 +53,13 @@ public class TeamUIController : MonoBehaviour
         //이름 띄우기
         RedPlayer.transform.parent.gameObject.SetActive(true);
         RedPlayer.GetComponent<TMP_Text>().text = player.NickName;
-
-        RedToggle.Select();
-        RedToggle.SetIsOn(true, false);
         
         if(player != PhotonNetwork.LocalPlayer){
             RedToggle.GetComponent<UIToggle>().interactable = false;
+        }
+        else{
+            RedToggle.Select();
+            RedToggle.SetIsOn(true, false);
         }
     }
 
@@ -76,7 +80,22 @@ public class TeamUIController : MonoBehaviour
         PhotonNetwork.RaiseEvent(eventCode, log, options, sendOptions);
     }
 
-     public void DeselectTeam(Player player){
-        
+    public void DeselectTeam(Player player){
+        //Deselect시에 roomproperty false로 변경
+        if(PhotonManager.instance.GetTeam(player) == "Red"){
+            RedPlayer.transform.parent.gameObject.SetActive(false);
+            if(player != PhotonNetwork.LocalPlayer){
+                RedToggle.GetComponent<UIToggle>().interactable = true;
+            }
+        }
+        else if(PhotonManager.instance.GetTeam(player) == "Blue"){
+            BluePlayer.transform.parent.gameObject.SetActive(false);
+            if(player != PhotonNetwork.LocalPlayer){
+                BlueToggle.GetComponent<UIToggle>().interactable = true;
+            }
+        }
+        else{
+            Debug.Log("No team");
+        }
     }
 }
