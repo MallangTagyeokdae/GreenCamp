@@ -214,7 +214,7 @@ public class UnitController : MonoBehaviour
             ally.transform.rotation = Quaternion.LookRotation(rot);
             yield return null;
         }
-
+        
         if (unit.order.Equals(Unit.Order.Offensive))
         {
             Debug.Log("다시 A땅 실행");
