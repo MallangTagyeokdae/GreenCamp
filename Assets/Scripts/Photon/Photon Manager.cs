@@ -161,15 +161,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         userInfo.currentRoom = PhotonNetwork.CurrentRoom.Name;
         lobbyController.SetState("TeamSelect");
+
+
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             teamUIController.OnTeamSelect(player);
-            if((bool)PhotonNetwork.CurrentRoom.CustomProperties["Red"] == false){
-                SetTeam("Red");
-            }
-            else{
-                SetTeam("Blue");
-            }
+        }
+        Debug.Log($"Red?:{PhotonNetwork.CurrentRoom.CustomProperties["Red"]}");
+        if((bool)PhotonNetwork.CurrentRoom.CustomProperties["Red"] == false){
+            SetTeam("Red");
+        }
+        else{
+            SetTeam("Blue");
         }
     }
     private bool isRedListenerAdded = false;
@@ -196,7 +199,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         // ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
         Debug.Log($"팀명: {teamName}");
         ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
-        PhotonNetwork.CurrentRoom.CustomProperties[teamName] = true;
+
+        if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
+            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
+        }
+        PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{teamName, true}});
+
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerTeam);
         // PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
         teamUIController.SendTeamSelect();
@@ -268,7 +276,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
                 break;
             
             case 2: //팀 변경 이벤트
-                SetTeam(GetTeam(PhotonNetwork.LocalPlayer) == "Red" ? "Blue" : "Red");
+                //SetTeam(GetTeam(PhotonNetwork.LocalPlayer) == "Red" ? "Blue" : "Red");
                 break;
 
             default:
