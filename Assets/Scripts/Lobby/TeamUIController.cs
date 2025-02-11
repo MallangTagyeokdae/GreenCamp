@@ -83,6 +83,14 @@ public class TeamUIController : MonoBehaviour
         PhotonNetwork.RaiseEvent(eventCode, log, options, sendOptions);
     }
 
+    public void SendLeaveRoom(){
+        byte eventCode = 3;
+        object player = PhotonNetwork.LocalPlayer; //팀을 변경한 플레이어 정보를 모든 클라이언트에게 전송
+        RaiseEventOptions options = new RaiseEventOptions { Receivers = ReceiverGroup.All }; //ALL, OTHERS, MASTER CLIENT 중에서 선택 (서버에 동기화되는 시점과 타이밍을 맞추기 위해서 ALL사용)
+        SendOptions sendOptions = new SendOptions { Reliability = true }; // TCP, UDP 통신 중에서 선택
+        PhotonNetwork.RaiseEvent(eventCode, player, options, sendOptions);
+    }
+
     public void DeselectTeam(Player player){
         //Deselect시에 roomproperty false로 변경
         Debug.Log($"이름: {player.NickName}");
