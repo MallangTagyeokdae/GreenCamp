@@ -117,6 +117,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         teamUIController.DeselectTeam(otherPlayer);
+        otherPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "team", "Null" } });
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
             Debug.Log("No player left");
@@ -192,7 +193,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
         }
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "team", "Null" } });
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
     }
@@ -201,9 +201,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         // 플레이어의 Custom Properties에 "team" 키로 팀 정보 설정
         //ExitGames.Client.Photon.Hashtable previousPlayerTeam = new ExitGames.Client.Photon.Hashtable { { "previousTeam", GetTeam(PhotonNetwork.LocalPlayer) } };
-        if(GetTeam(PhotonNetwork.LocalPlayer) == teamName){
+        /*if(GetTeam(PhotonNetwork.LocalPlayer) == teamName){
             return;
-        };
+        };*/
         teamUIController.DeselectTeam(PhotonNetwork.LocalPlayer);
         ExitGames.Client.Photon.Hashtable playerTeam = new ExitGames.Client.Photon.Hashtable { { "team", teamName } };
 
