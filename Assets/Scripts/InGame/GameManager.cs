@@ -558,26 +558,30 @@ public class GameManager : MonoBehaviour
 
         if(orderedObjs.TryGetComponent(out Unit selectedUnit))
         {
-            Debug.Log(newLocation.ToString());
+            Debug.Log("A땅 목적지 : " + newLocation.ToString() + "유닛 상태 : " + selectedUnit.order + " / " + selectedUnit.state);
+
             selectedUnit.destination = newLocation;
+
             if (selectedUnit.unitBehaviour != null)
             {
                 StopCoroutine(selectedUnit.unitBehaviour);
+                Debug.Log("코루틴 파괴");
             }
+
             if(selectedUnit.aggList.Count == 0){
                 Debug.Log(selectedUnit.name +" 그냥 이동중 " + selectedUnit.attackList.Count() + " / " + selectedUnit.aggList.Count());
                 selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, selectedUnit.destination, order));
             }
             else if (selectedUnit.attackList.Count == 0){
-                Debug.Log("어그로 범위에 들어와서 공격하러 가는중");
                 foreach(GameObject enemy in selectedUnit.aggList){
+                    Debug.Log("어그로 범위에 들어와서 공격하러 가는중 -> " + enemy.name);
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, 3)); // aggro
                     break;
                 }
             }
             else{
-                Debug.Log("공격범위 안에 들어와서 공격중");
                 foreach(GameObject enemy in selectedUnit.attackList){
+                    Debug.Log("공격 범위에 들어와서 공격 시작 -> " + enemy.name);
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
                     break;
                 }
@@ -616,7 +620,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Debug.Log("공격 범위에 뭔가 감지됐다.");
             if (!unit.attackList.Contains(enemy))
             {
                 // Debug.Log(enemy.name + " 가 어택 리스트에 추가됨");
@@ -626,6 +629,7 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
+            Debug.Log("유닛 공격 시작 가는중");
 
             if (unit.unitBehaviour != null)
             {
@@ -643,7 +647,7 @@ public class GameManager : MonoBehaviour
             3. 근데 만약 어그로가 끌린 대상이 있는데 해당 대상이 아닌 다른 유닛이 공격범위에 들어오면?
 
         */
-        int order = 3; //이거 이제 3번이 맞겠다
+        int order; //이거 이제 3번이 맞겠다
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
         if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
@@ -662,12 +666,15 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }*/
-            if (unit.state == Unit.State.Idle || unit.order == Unit.Order.Offensive)
+            if (unit.state == Unit.State.Idle || (unit.order == Unit.Order.Offensive && unit.state == Unit.State.Move))
             {
                 if (unit.unitBehaviour != null)
                 {
                     StopCoroutine(unit.unitBehaviour);
                 }
+
+                Debug.Log("유닛 어그로 끌림 unit order : " + unit.order.ToString());
+                order = (unit.order == Unit.Order.Offensive) ? 2 : 3; // 유닛의 Order가 Offensive면 유지, 아니면 Attack으로 변경
                 unit.unitBehaviour = StartCoroutine(unitController.Move(ally, enemy, order));
             }
         }
