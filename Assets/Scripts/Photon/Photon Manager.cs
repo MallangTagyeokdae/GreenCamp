@@ -192,6 +192,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // ÏÉÅÏ
         if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
         }
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "team", "Null" } });
         PhotonNetwork.LeaveRoom();
         PhotonNetwork.JoinLobby();
     }
