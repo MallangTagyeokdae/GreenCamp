@@ -157,6 +157,7 @@ public class UnitController : MonoBehaviour
 
         unit.transform.position = newLocation;
         unit.destination = Vector3.zero;
+        Debug.Log("지정된 위치로 이동 끝남");
         unit.SetOrder(0);
         unit.ChangeState("Idle");
     }
@@ -185,6 +186,7 @@ public class UnitController : MonoBehaviour
             yield return null;
         }
 
+        Debug.Log("적 유닛으로 이동 끝남");
         unit.SetOrder(0);
         unit.ChangeState("Idle");
     }
@@ -209,9 +211,19 @@ public class UnitController : MonoBehaviour
             ally.transform.rotation = Quaternion.LookRotation(rot);
             yield return null;
         }
-        
-        unit.SetOrder(0);
-        unit.ChangeState("Idle");
+
+        if(unit.order.Equals(Unit.Order.Offensive))
+        {
+            Debug.Log("다시 A땅 실행");
+            unit.ChangeState("Move");
+            GameManager.instance.Attang(unit.destination, 2, unit.gameObject);
+        }
+        else
+        {
+            unit.SetOrder(0);
+            unit.ChangeState("Idle");
+            Debug.Log("공격 끝남");
+        }
     }
 
     /*  1. 새로운 유닛을 설정할 때는 triggerStay가 아니라 trigger가 enter할 때마다 들어온 유닛을 list에 추가한다.
