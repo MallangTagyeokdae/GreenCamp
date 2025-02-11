@@ -191,7 +191,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         //lobbyController.SetState("TeamSelect");
         //방을 나가면서 방의 property에 선택한 팀이 refresh되도록
         //deselect 하라는 통신 이후에 team을 null로 바꿈
-        teamUIController.SendLeaveRoom();
+        teamUIController.SendMessage(2);
         if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
             PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
         }
@@ -217,7 +217,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
 
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerTeam);
         //PhotonNetwork.LocalPlayer.SetCustomProperties(previousPlayerTeam);
-        teamUIController.SendTeamSelect();
+        teamUIController.SendMessage(1);
         //master에게 팀 명단을 갱신하라는 rpc -> master에서 갱신 후 다른 클라이언트들에게 명단 갱신 명령
         Debug.Log($"Team set to: {teamName}");
     }
