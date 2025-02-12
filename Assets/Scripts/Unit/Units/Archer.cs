@@ -53,17 +53,12 @@ public class Archer : Unit
         }
     }*/
 
-    [PunRPC]
-    public void SetTarget(int viewID){
-        target = PhotonView.Find(viewID).gameObject;
-    }
-
-    public void Shoot_(){
+    public void Shoot(){
         //PhotonView targetView = PhotonView.Find(viewID);
         if(target != null){
             arrow.SetActive(true);
             arrow.TryGetComponent(out Arrow arr);
-            arr.SetTarget(target);
+            arr.SetArrowTarget(target);
             arr.SetUnit(this);
             arr.LaunchArrow();
         }

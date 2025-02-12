@@ -613,7 +613,6 @@ public class GameManager : MonoBehaviour
     public void AttackUnit(GameObject ally, GameObject enemy)
     {
         Unit unit = ally.GetComponent<Unit>();
-        Debug.Log($"ally : {ally.name}, enemy: {enemy.name}");
         enemy.TryGetComponent(out Entity enemyEntity);
         if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
         {
@@ -630,13 +629,15 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
-            Debug.Log("유닛 공격 시작 가는중");
 
             if (unit.unitBehaviour != null)
             {
                 StopCoroutine(unit.unitBehaviour);
             }
-            ally.GetComponent<PhotonView>().RPC("SetTarget", RpcTarget.All, enemy.GetComponent<PhotonView>().ViewID);
+            if(enemy != null){
+                Debug.Log($"---------------------------------------name: {enemy.name}");
+                ally.GetComponent<PhotonView>().RPC("SetTarget", RpcTarget.All, enemy.GetComponent<PhotonView>().ViewID);
+            }
             unit.unitBehaviour = StartCoroutine(unitController.Attack(ally, enemy));
         }
     }
