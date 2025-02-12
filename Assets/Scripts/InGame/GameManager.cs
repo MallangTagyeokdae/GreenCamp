@@ -723,6 +723,7 @@ public class GameManager : MonoBehaviour
 
     public void DestroyEntity(GameObject entity)
     {
+        Debug.Log($"entity name: {entity.name}");
         if (entity.TryGetComponent(out Building building))
         {
             // InCreating이면 CancelProgress를 실행시킴 -> 건물 파괴, 건설비 리턴
