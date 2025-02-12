@@ -58,7 +58,7 @@ public class Archer : Unit
         target = PhotonView.Find(viewID).gameObject;
     }
 
-    public void Shoot(){
+    public void Shoot_(){
         //PhotonView targetView = PhotonView.Find(viewID);
         if(target != null){
             arrow.SetActive(true);
