@@ -47,18 +47,23 @@ public class Archer : Unit
         this.population = 1;
     }
 
-    public void Shoot(){
-        gameObject.GetComponent<PhotonView>().RPC("Shoot2", RpcTarget.All, target.GetComponent<PhotonView>().ViewID);
-    }
-
+    /*public void Shoot(){
+        if(gameObject.GetComponent<PhotonView>().IsMine){
+            gameObject.GetComponent<PhotonView>().RPC("Shoot2", RpcTarget.All, target.GetComponent<PhotonView>().ViewID);
+        }
+    }*/
 
     [PunRPC]
-    public void Shoot2(int viewID){
-        PhotonView targetView = PhotonView.Find(viewID);
-        if(targetView != null){
+    public void SetTarget(int viewID){
+        target = PhotonView.Find(viewID).gameObject;
+    }
+
+    public void Shoot(){
+        //PhotonView targetView = PhotonView.Find(viewID);
+        if(target != null){
             arrow.SetActive(true);
             arrow.TryGetComponent(out Arrow arr);
-            arr.SetTarget(targetView.gameObject);
+            arr.SetTarget(target);
             arr.SetUnit(this);
             arr.LaunchArrow();
         }
