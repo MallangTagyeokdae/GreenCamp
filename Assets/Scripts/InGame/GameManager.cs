@@ -613,7 +613,7 @@ public class GameManager : MonoBehaviour
     public void AttackUnit(GameObject ally, GameObject enemy)
     {
         Unit unit = ally.GetComponent<Unit>();
-        ally.GetComponent<PhotonView>().RPC("SetTarget", RpcTarget.All, target.GetComponent<PhotonView>().ViewID);
+        ally.GetComponent<PhotonView>().RPC("SetTarget", RpcTarget.All, enemy.GetComponent<PhotonView>().ViewID);
         enemy.TryGetComponent(out Entity enemyEntity);
         if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
         {
