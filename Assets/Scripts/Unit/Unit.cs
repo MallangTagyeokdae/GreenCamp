@@ -288,4 +288,9 @@ public abstract class Unit : Entity
         }
     }
 
+    [PunRPC]
+    public void SetTarget(int viewID){
+        target = PhotonView.Find(viewID).gameObject;
+    }
+
 }

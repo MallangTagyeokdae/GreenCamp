@@ -36,7 +36,7 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    public void SetTarget(GameObject target){
+    public void SetArrowTarget(GameObject target){
         _tartget = target;
     }
 
