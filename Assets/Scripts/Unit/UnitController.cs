@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ExitGames.Client.Photon.StructWrapping;
+using FischlWorks_FogWar;
 using Photon.Pun;
 using TMPro;
 using Unity.VisualScripting;
@@ -131,6 +132,7 @@ public class UnitController : MonoBehaviour
     {
         // if (unitDictionary.ContainsKey(unitID)) unitDictionary.Remove(unitID); // 유닛 딕셔너리에서 유닛 삭제
         unit.DestroyEntity();
+        GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(unit.GetComponent<Entity>().fowIndex);
         // GameStatus.instance.currentUnitCount -= unit.populationCost;
     }
 

@@ -42,6 +42,7 @@ public class Barrack : Building
         this.loadingTime = 30f;
         this.underGrid = colliders;
         this.population = 1;
+        this.fow = 25;
     }
 
     public void SetSponPos(Vector3 setSponPos)

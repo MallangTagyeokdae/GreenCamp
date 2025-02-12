@@ -46,6 +46,7 @@ public class Command : Building
         this.loadingTime = 10f;
         this.underGrid = colliders;
         this.population = 0;
+        this.fow = 75;
     }
 
 

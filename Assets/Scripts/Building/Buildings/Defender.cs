@@ -47,6 +47,7 @@ public class Defender : Building
         this.loadingTime = 20f;
         this.underGrid = colliders;
         this.population = 1;
+        this.fow = 25;
     }
 
     [PunRPC]
