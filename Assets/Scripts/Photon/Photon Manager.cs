@@ -117,7 +117,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         teamUIController.DeselectTeam(otherPlayer);
-        
+        teamUIController.ActiveStartButton();
         if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
         {
             Debug.Log("No player left");
@@ -291,7 +291,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
                 teamUIController.DeselectTeam(player);
                 break;
             case 3: //팀 변경 이벤트
-                //SetTeam(GetTeam(PhotonNetwork.LocalPlayer) == "Red" ? "Blue" : "Red");
+                SetTeam(GetTeam(PhotonNetwork.LocalPlayer) == "Red" ? "Blue" : "Red");
                 break;
             default:
                 //Debug.Log("Unknown event received: " + photonEvent.Code);
