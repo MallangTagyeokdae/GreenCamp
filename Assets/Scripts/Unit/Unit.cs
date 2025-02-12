@@ -205,13 +205,17 @@ public abstract class Unit : Entity
             case "Move":
                 state = State.Move;
                 rigidbody.isKinematic = false;
-                animator.SetBool("isWalking", true);
+                if(gameObject.GetComponent<PhotonView>().IsMine){
+                    animator.SetBool("isWalking", true);
+                }
                 break;
 
             case "Attack":
                 state = State.Attack;
                 rigidbody.isKinematic = true;
-                animator.SetBool("isAttacking", true);
+                if(gameObject.GetComponent<PhotonView>().IsMine){
+                    animator.SetBool("isAttacking", true);
+                }
                 break;
             case "Die":
                 state = State.Die;
@@ -240,7 +244,9 @@ public abstract class Unit : Entity
                 {
                     break;
                 }
-                animator.SetBool("isWalking", false);
+                if(gameObject.GetComponent<PhotonView>().IsMine){
+                    animator.SetBool("isWalking", false);
+                }
                 SetState(newState);
                 break;
 
@@ -249,7 +255,9 @@ public abstract class Unit : Entity
                 {
                     break;
                 }
-                animator.SetBool("isAttacking", false);
+                if(gameObject.GetComponent<PhotonView>().IsMine){
+                    animator.SetBool("isAttacking", false);
+                }
                 SetState(newState);
                 break;
         }

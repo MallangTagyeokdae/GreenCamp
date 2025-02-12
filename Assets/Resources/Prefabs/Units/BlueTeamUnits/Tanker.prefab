@@ -13716,8 +13716,11 @@ MonoBehaviour:
   teamID: 
   healthBar: {fileID: 1300174168617867986}
   clickedEffect: {fileID: 0}
+  enemyClickedEffect: {fileID: 0}
   state: 0
+  target: {fileID: 0}
   animator: {fileID: 0}
+  clickEventHandler: {fileID: 0}
   order: 0
 --- !u!1 &6189645890645135008
 GameObject:
