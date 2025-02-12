@@ -8,6 +8,7 @@ using Doozy.Runtime.UIManager.Containers;
 using Photon.Pun;
 using UnityEngine;
 using Unity.VisualScripting;
+using FischlWorks_FogWar;
 
 public enum GameStates
 {
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
     public EffectHandler effectHandler;
     public GridHandler gridHandler;
     public GameObject target;
+    public GameObject fogWar;
     public GameStates gameState = GameStates.Loading;
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
@@ -111,6 +113,10 @@ public class GameManager : MonoBehaviour
         Building building = buildingController.CreateBuilding(startingPoint, buildingType, new Vector3(-90, 90, 0), gridHandler.constructionGrids);
         // 본진 초기값 세팅
         Debug.Log(building.name);
+
+        csFogWar.FogRevealer fogRevealer = new csFogWar.FogRevealer(building.transform, building.fow, true);
+        building.fowIndex = fogWar.GetComponent<csFogWar>().AddFogRevealer(fogRevealer);
+
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
         buildingController.SetBuildingState(building, Building.State.Built, "None");
 
@@ -440,6 +446,10 @@ public class GameManager : MonoBehaviour
 
         if (createdUnit == null) return;
 
+        // 안개 시야 설정
+        csFogWar.FogRevealer fogRevealer = new csFogWar.FogRevealer(createdUnit.transform, createdUnit.fow, true);
+        createdUnit.fowIndex = fogWar.GetComponent<csFogWar>().AddFogRevealer(fogRevealer);
+
         tasks.Remove(targetOBJ); // 유닛 생성이 완료되면 딕셔너리에서 제거해줌
 
         Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
@@ -503,6 +513,11 @@ public class GameManager : MonoBehaviour
 
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
+        
+        // 안개 시야 설정
+        csFogWar.FogRevealer fogRevealer = new csFogWar.FogRevealer(building.transform, building.fow, true);
+        building.fowIndex = fogWar.GetComponent<csFogWar>().AddFogRevealer(fogRevealer);
+
         building.InitTime();
 
         buildingController.SetBuildingState(building, Building.State.InCreating, "None");

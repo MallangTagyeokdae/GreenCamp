@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FischlWorks_FogWar;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
@@ -122,6 +123,8 @@ public class BuildingController : MonoBehaviour
 
     public async Task DestroyBuilding(Building building)
     {
+        GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(building.GetComponent<Entity>().fowIndex);
+        
         GameStatus.instance.currentBuildingCount -= building.population;
         building.GetComponent<PhotonView>().RPC("SyncSetDestroy",RpcTarget.AllBuffered);
 

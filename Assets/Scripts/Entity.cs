@@ -26,6 +26,8 @@ public class Entity : MonoBehaviour
     public float maxHealth { get; set; }
     public float currentHealth { get; set; }
     public int population { get; set; }
+    public int fow { get; set; } // 시야
+    public int fowIndex { get; set; } // 시야 정보를 담은 List에서 순서 저장
     public Slider healthBar;
     public GameObject clickedEffect;
     public GameObject enemyClickedEffect;
