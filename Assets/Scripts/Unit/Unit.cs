@@ -37,7 +37,6 @@ public abstract class Unit : Entity
     public int unitCost { get; set; }
     public int unitPower { get; set; }
     public int unitPowerRange { get; set; }
-    // private Collider u
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
     public State state = State.Idle;
