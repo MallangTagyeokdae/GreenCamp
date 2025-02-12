@@ -654,11 +654,12 @@ GameObject:
   - component: {fileID: 7725685943264654335}
   - component: {fileID: 7725685943267554271}
   - component: {fileID: 7725685943266554143}
-  - component: {fileID: 5282281350536615715}
   - component: {fileID: -1079326836089105715}
   - component: {fileID: 2339220590629216921}
   - component: {fileID: -2110901578740699300}
   - component: {fileID: -8196279317058247312}
+  - component: {fileID: 1112463985837728091}
+  - component: {fileID: 8177617413126029549}
   m_Layer: 0
   m_Name: ResourceBuilding
   m_TagString: Clickable
@@ -737,27 +738,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5282281350536615715
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7725685943264554975}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6.736253, y: 6.657968, z: 4.695601}
-  m_Center: {x: 0.072093606, y: -0.03884519, z: 1.6146704}
 --- !u!114 &-1079326836089105715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -868,6 +848,54 @@ MonoBehaviour:
   completeEffect: {fileID: 8385051864837688551}
   levelUpEffect: {fileID: 2049089127028312017}
   clickEventHandler: {fileID: 0}
+--- !u!54 &1112463985837728091
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725685943264554975}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &8177617413126029549
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725685943264554975}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.9575267, y: 6.030292, z: 4.9}
+  m_Center: {x: 0.0119895935, y: -0.018887997, z: 1.8131827}
 --- !u!1 &7851965531564814201
 GameObject:
   m_ObjectHideFlags: 0

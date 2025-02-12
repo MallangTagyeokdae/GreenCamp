@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 1631118528070162760}
   - component: {fileID: 1631118528068868456}
   - component: {fileID: 1631118528067869608}
-  - component: {fileID: 8499897816083107414}
   - component: {fileID: -6744043205098766824}
   - component: {fileID: -629282820452282209}
   - component: {fileID: 930100057350849220}
   - component: {fileID: 5553603136575962577}
+  - component: {fileID: -5216412369222245416}
+  - component: {fileID: 4810435455122512238}
   m_Layer: 0
   m_Name: Defender
   m_TagString: Clickable
@@ -94,27 +95,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8499897816083107414
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1631118528069862760}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.6065662, y: 3.6087694, z: 8.971036}
-  m_Center: {x: 0.06642527, y: -0.0037829082, z: 2.7544618}
 --- !u!114 &-6744043205098766824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +205,54 @@ MonoBehaviour:
   completeEffect: {fileID: 5980002219928934471}
   levelUpEffect: {fileID: 5574544061641680636}
   clickEventHandler: {fileID: 0}
+--- !u!54 &-5216412369222245416
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631118528069862760}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &4810435455122512238
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631118528069862760}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.0798035, y: 4.207426, z: 4.695601}
+  m_Center: {x: -0.030543704, y: -0.047734868, z: 1.6146705}
 --- !u!1 &2004075204602849510
 GameObject:
   m_ObjectHideFlags: 0
