@@ -621,9 +621,18 @@ namespace FischlWorks_FogWar
         public void RemoveFogRevealer(int index)
         {
             FogRevealer fogRevealer = fogRevealers[index];
+            if(fogRevealer == null)
+            {
+                Debug.Log("찾기 실패 시ㅣ 발");
+            }
             if (fogRevealers.Contains(fogRevealer))
             {
                 fogRevealers.Remove(fogRevealer);
+                Debug.Log("삭제 성공");
+            }
+            else
+            {
+                Debug.Log("리스트에서 찾을 수 없음 : " + index);
             }
         }
 
