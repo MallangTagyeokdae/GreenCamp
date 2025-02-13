@@ -162,7 +162,7 @@ public class UnitController : MonoBehaviour
 
         unit.transform.position = newLocation;
         unit.destination = Vector3.zero;
-        Debug.Log("지정된 위치로 이동 끝남");
+        //Debug.Log("지정된 위치로 이동 끝남");
         unit.SetOrder(0);
         unit.ChangeState("Idle");
     }
@@ -191,7 +191,7 @@ public class UnitController : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("적 유닛으로 이동 끝남");
+        //Debug.Log("적 유닛으로 이동 끝남");
         unit.SetOrder(0);
         unit.ChangeState("Idle");
     }
@@ -212,8 +212,6 @@ public class UnitController : MonoBehaviour
                 break;
             }
 
-            Debug.Log($"------------------enemy name: {enemy.name}");
-            Debug.Log($"------------------ally name: {ally.name}");
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             ally.transform.rotation = Quaternion.LookRotation(rot);
             yield return null;
@@ -221,7 +219,6 @@ public class UnitController : MonoBehaviour
         
         if (unit.order.Equals(Unit.Order.Offensive))
         {
-            Debug.Log("다시 A땅 실행");
             unit.ChangeState("Move");
             GameManager.instance.Attang(unit.destination, 2, unit.gameObject);
         }
@@ -229,14 +226,6 @@ public class UnitController : MonoBehaviour
         {
             unit.SetOrder(0);
             unit.ChangeState("Idle");
-            Debug.Log("공격 끝남");
         }
     }
-
-    /*  1. 새로운 유닛을 설정할 때는 triggerStay가 아니라 trigger가 enter할 때마다 들어온 유닛을 list에 추가한다.
-        2. 공격중인 유닛이 죽으면 list에 저장된 유닛들 중 list.RemoveAll(unit => unit == null)을 해준 뒤(죽어서 사라지는 유닛의 경우 ontriggerexit의 콜백을 하지 않기 때문) 새로운 유닛을 설정
-        -> OntriggerStay는 update처럼 매 프레임 단위로 검사를 해야하기 때문에, resource를 낭비할 여지가 있음. 따라서 range 안에 있는 객체들에 대한 list를 관리해야함
-    */
-
-    //move가 있는데 chase를 만들어야할까?
 }
