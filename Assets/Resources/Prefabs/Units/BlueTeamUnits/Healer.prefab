@@ -6108,6 +6108,7 @@ GameObject:
   - component: {fileID: -4863360866163634814}
   - component: {fileID: -7571951784684938579}
   - component: {fileID: 8260119982744828647}
+  - component: {fileID: 2302028604011185352}
   m_Layer: 0
   m_Name: Healer
   m_TagString: Clickable
@@ -6399,10 +6400,28 @@ MonoBehaviour:
   teamID: 
   healthBar: {fileID: 6922770217836032722}
   clickedEffect: {fileID: 0}
+  enemyClickedEffect: {fileID: 0}
   state: 0
+  target: {fileID: 0}
   animator: {fileID: 0}
+  clickEventHandler: {fileID: 0}
   order: 0
   HealingEffect: {fileID: 5369767705352053913}
+--- !u!114 &2302028604011185352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3135998574298575499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogWar: {fileID: 0}
+  visibility: 0
+  additionalRadius: 0
 --- !u!1 &3178201230277339484
 GameObject:
   m_ObjectHideFlags: 0

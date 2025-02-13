@@ -13220,6 +13220,7 @@ GameObject:
   - component: {fileID: -2953485049445277104}
   - component: {fileID: 6380550951748888002}
   - component: {fileID: 1538693576857479876}
+  - component: {fileID: -2594434156255643775}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Clickable
@@ -13517,6 +13518,21 @@ MonoBehaviour:
   clickEventHandler: {fileID: 0}
   order: 0
   arrow: {fileID: 2993285108691833699}
+--- !u!114 &-2594434156255643775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6031986855511284481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogWar: {fileID: 0}
+  visibility: 0
+  additionalRadius: 0
 --- !u!1 &6133691179712431599
 GameObject:
   m_ObjectHideFlags: 0
