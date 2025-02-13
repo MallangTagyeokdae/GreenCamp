@@ -247,9 +247,6 @@ AnimatorStateMachine:
     m_State: {fileID: 358695960037698727}
     m_Position: {x: 1097.2369, y: 1428.6265, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 4263742979186832401}
-    m_Position: {x: 1080, y: 1300, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: -1796661152353296311}
     m_Position: {x: 820, y: 1240, z: 0}
   - serializedVersion: 1
@@ -289,32 +286,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: b6cfad9fdf9f5436281e8208f31cce50, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &4263742979186832401
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: archer_04_attack_A
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 53328a1d961934bd295288d159d3a81d, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

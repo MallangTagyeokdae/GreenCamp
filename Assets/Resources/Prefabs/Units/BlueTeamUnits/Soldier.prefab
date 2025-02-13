@@ -2843,7 +2843,7 @@ GameObject:
   - component: {fileID: -4068318868690271376}
   - component: {fileID: -2557456136307159502}
   - component: {fileID: -197196682809645988}
-  - component: {fileID: -5041541504648279188}
+  - component: {fileID: 942870428486294033}
   - component: {fileID: -3440115888715078214}
   - component: {fileID: 420347122589824385}
   m_Layer: 0
@@ -3031,7 +3031,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: -2557456136307159502}
-  - {fileID: -5041541504648279188}
+  - {fileID: 942870428486294033}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -3078,7 +3078,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &-5041541504648279188
+--- !u!114 &942870428486294033
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3102,7 +3102,7 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: Attacked
-  - Type: 4
+  - Type: 9
     SynchronizeType: 0
     Name: isDead
   m_SynchronizeLayers:
