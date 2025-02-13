@@ -614,7 +614,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
-            if(selectedUnit.state == Unit.State.Die){
+            if(selectedUnit != null && selectedUnit.state == Unit.State.Die){
                 return;
             }
             if (selectedUnit == null)
