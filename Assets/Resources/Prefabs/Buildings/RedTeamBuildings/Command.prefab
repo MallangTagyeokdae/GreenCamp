@@ -455,7 +455,6 @@ GameObject:
   - component: {fileID: -7324201627991995469}
   - component: {fileID: 5636797319355405754}
   - component: {fileID: 4476696531519051010}
-  - component: {fileID: 2433057749829177565}
   - component: {fileID: 7324646272579354967}
   - component: {fileID: -4117775874720778640}
   m_Layer: 0
@@ -646,34 +645,6 @@ MonoBehaviour:
   completeEffect: {fileID: 6486342258340883558}
   levelUpEffect: {fileID: 8265016222868387996}
   clickEventHandler: {fileID: 0}
---- !u!114 &2433057749829177565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5353990028829860153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42d73cb902d75234a9385db6ae1301be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  attTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
-  aggTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  aggTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
-  teamID: Red
-  healthBar: {fileID: 0}
-  clickedEffect: {fileID: 5261416763704370164}
-  enemyClickedEffect: {fileID: 4274837745694598883}
 --- !u!65 &7324646272579354967
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1160,11 +1131,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2218383157601778266, guid: 193b64beca1aa4be98b1458b103ef51d, type: 3}
   m_PrefabInstance: {fileID: 2709480314842555553}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4274837745694598883 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2218383157602042434, guid: 193b64beca1aa4be98b1458b103ef51d, type: 3}
-  m_PrefabInstance: {fileID: 2709480314842555553}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4446921822939149750
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1466,10 +1432,5 @@ PrefabInstance:
 --- !u!4 &3893018668498104151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5329887860975645673, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
-  m_PrefabInstance: {fileID: 9219245703158930622}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5261416763704370164 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3960099710613061450, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
   m_PrefabInstance: {fileID: 9219245703158930622}
   m_PrefabAsset: {fileID: 0}
