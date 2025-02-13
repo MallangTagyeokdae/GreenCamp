@@ -55,8 +55,8 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log($"has key? {PlayerPrefs.HasKey("masterVolume")}");
-        Debug.Log($"volume: {PlayerPrefs.GetFloat("masterVolume")}");
+        //Debug.Log($"has key? {PlayerPrefs.HasKey("masterVolume")}");
+        //Debug.Log($"volume: {PlayerPrefs.GetFloat("masterVolume")}");
         LoadSoundSetting();
     }
 

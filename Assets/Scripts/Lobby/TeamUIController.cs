@@ -24,7 +24,7 @@ public class TeamUIController : MonoBehaviour
     public void OnTeamSelect(Player player)
     {
         //DeselectTeam(player);
-        Debug.Log($"이름: {player.NickName}, 팀: {PhotonManager.instance.GetTeam(player)}");
+        //Debug.Log($"이름: {player.NickName}, 팀: {PhotonManager.instance.GetTeam(player)}");
         string playerTeam = PhotonManager.instance.GetTeam(player);
         if(playerTeam == "Red"){
             ActiveRed(player);
@@ -86,7 +86,7 @@ public class TeamUIController : MonoBehaviour
 
     public void DeselectTeam(Player player){
         //Deselect시에 roomproperty false로 변경
-        Debug.Log($"이름: {player.NickName}");
+        //Debug.Log($"이름: {player.NickName}");
         if(PhotonManager.instance.GetTeam(player) == "Red"){
             RedPlayer.transform.parent.gameObject.SetActive(false);
             RedToggle.GetComponent<UIToggle>().interactable = true;
