@@ -13427,6 +13427,7 @@ GameObject:
   - component: {fileID: -7861697718831393127}
   - component: {fileID: 8271976870040986676}
   - component: {fileID: 1445875119074066540}
+  - component: {fileID: 5797503842643246157}
   m_Layer: 0
   m_Name: Tanker
   m_TagString: Clickable
@@ -13722,6 +13723,21 @@ MonoBehaviour:
   animator: {fileID: 0}
   clickEventHandler: {fileID: 0}
   order: 0
+--- !u!114 &5797503842643246157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6154791723814996376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogWar: {fileID: 0}
+  visibility: 0
+  additionalRadius: 0
 --- !u!1 &6189645890645135008
 GameObject:
   m_ObjectHideFlags: 0

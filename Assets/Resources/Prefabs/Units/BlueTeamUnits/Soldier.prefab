@@ -2845,6 +2845,7 @@ GameObject:
   - component: {fileID: -197196682809645988}
   - component: {fileID: -5041541504648279188}
   - component: {fileID: -3440115888715078214}
+  - component: {fileID: 420347122589824385}
   m_Layer: 0
   m_Name: Soldier
   m_TagString: Clickable
@@ -3140,6 +3141,21 @@ MonoBehaviour:
   animator: {fileID: 0}
   clickEventHandler: {fileID: 0}
   order: 0
+--- !u!114 &420347122589824385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2881834226238106485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogWar: {fileID: 0}
+  visibility: 0
+  additionalRadius: 0
 --- !u!1 &2881834226238107007
 GameObject:
   m_ObjectHideFlags: 0
