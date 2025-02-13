@@ -36,6 +36,6 @@ public class Healer : Unit
         this.unitMoveSpeed = 1;
         this.populationCost = 1;
         this.population = 2;
-        this.fow = 20;
+        this.fow = 30;
     }
 }

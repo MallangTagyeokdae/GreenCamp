@@ -42,7 +42,7 @@ public class PopulationBuilding : Building
         this.underGrid = colliders;
         this.population = 1;
         this.increasePersent = 10;
-        this.fow = 25;
+        this.fow = 40;
     }
 
     [PunRPC]

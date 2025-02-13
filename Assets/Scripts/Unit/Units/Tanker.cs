@@ -32,9 +32,9 @@ public class Tanker : Unit
         this.unitLocation = unitLocation;
         this.unitCost = 50;
         this.unitPowerRange = 3;
-        this.unitMoveSpeed = 1;
+        this.unitMoveSpeed = 4;
         this.populationCost = 1;
         this.population = 2;
-        this.fow = 20;
+        this.fow = 30;
     }
 }
