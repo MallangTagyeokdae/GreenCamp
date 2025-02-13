@@ -17,7 +17,7 @@ public class LogIn : LobbyState
         loginPage = GameObject.Find("LoginPage");
         homePage = GameObject.Find("AfterLoginPage");
         nickName = GameObject.Find("UserInfo").GetComponent<TMP_InputField>();
-        Debug.Log($"check {nickName.name}");
+        //Debug.Log($"check {nickName.name}");
     }
     public void OutPage(string next){
         PhotonManager.instance.ConnectGame(nickName.text);
