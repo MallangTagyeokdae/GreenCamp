@@ -131,8 +131,8 @@ public class UnitController : MonoBehaviour
     public void DestroyUnit(Unit unit)
     {
         // if (unitDictionary.ContainsKey(unitID)) unitDictionary.Remove(unitID); // 유닛 딕셔너리에서 유닛 삭제
-        unit.DestroyEntity();
         GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(unit.GetComponent<Entity>().fowIndex);
+        unit.DestroyEntity();
         // GameStatus.instance.currentUnitCount -= unit.populationCost;
     }
 
