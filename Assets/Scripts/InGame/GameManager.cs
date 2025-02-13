@@ -571,7 +571,6 @@ public class GameManager : MonoBehaviour
 
         if(orderedObjs.TryGetComponent(out Unit selectedUnit))
         {
-            Debug.Log("A땅 목적지 : " + newLocation.ToString() + "유닛 상태 : " + selectedUnit.order + " / " + selectedUnit.state);
             if(selectedUnit.state == Unit.State.Die){
                 return;
             }
@@ -585,19 +584,16 @@ public class GameManager : MonoBehaviour
             }
 
             if(selectedUnit.aggList.Count == 0){
-                Debug.Log(selectedUnit.name +" 그냥 이동중 " + selectedUnit.attackList.Count() + " / " + selectedUnit.aggList.Count());
                 selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, selectedUnit.destination, order));
             }
             else if (selectedUnit.attackList.Count == 0){
                 foreach(GameObject enemy in selectedUnit.aggList){
-                    Debug.Log("어그로 범위에 들어와서 공격하러 가는중 -> " + enemy.name);
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, 3)); // aggro
                     break;
                 }
             }
             else{
                 foreach(GameObject enemy in selectedUnit.attackList){
-                    Debug.Log("공격 범위에 들어와서 공격 시작 -> " + enemy.name);
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
                     break;
                 }
@@ -694,8 +690,6 @@ public class GameManager : MonoBehaviour
                 {
                     StopCoroutine(unit.unitBehaviour);
                 }
-
-                Debug.Log("유닛 어그로 끌림 unit order : " + unit.order.ToString());
                 order = (unit.order == Unit.Order.Offensive) ? 2 : 3; // 유닛의 Order가 Offensive면 유지, 아니면 Attack으로 변경
                 unit.unitBehaviour = StartCoroutine(unitController.Move(ally, enemy, order));
             }
@@ -743,7 +737,6 @@ public class GameManager : MonoBehaviour
 
     public void DestroyEntity(GameObject entity)
     {
-        Debug.Log($"entity name: {entity.name}");
         if (entity.TryGetComponent(out Building building))
         {
             // InCreating이면 CancelProgress를 실행시킴 -> 건물 파괴, 건설비 리턴
