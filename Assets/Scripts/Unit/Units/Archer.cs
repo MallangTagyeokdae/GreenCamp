@@ -48,12 +48,6 @@ public class Archer : Unit
         this.fow = 20;
     }
 
-    /*public void Shoot(){
-        if(gameObject.GetComponent<PhotonView>().IsMine){
-            gameObject.GetComponent<PhotonView>().RPC("Shoot2", RpcTarget.All, target.GetComponent<PhotonView>().ViewID);
-        }
-    }*/
-
     public void Shoot(){
         //PhotonView targetView = PhotonView.Find(viewID);
         if(target != null){
