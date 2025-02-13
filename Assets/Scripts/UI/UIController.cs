@@ -59,8 +59,8 @@ public class UIController : MonoBehaviour
         TMP_Text maxHealth = uIElement.maxHealth;
         Image image = uIElement.image;
         Slider currentHealthBar = uIElement.progressBar;
-        TMP_Text power = selectedUI.transform.Find("LeftSide/LeftBanner/Damage/Damage").GetComponent<TMP_Text>();
-        TMP_Text moveSpeed = selectedUI.transform.Find("LeftSide/LeftBanner/MoveSpeed/Speed").GetComponent<TMP_Text>();
+        TMP_Text power = selectedUI.transform.Find("Center/Damage/Damage").GetComponent<TMP_Text>();
+        TMP_Text moveSpeed = selectedUI.transform.Find("Center/MoveSpeed/Speed").GetComponent<TMP_Text>();
 
         switch(unit.unitType)
         {
