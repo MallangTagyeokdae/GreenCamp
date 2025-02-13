@@ -40,6 +40,7 @@ public abstract class Building : Entity
     public float time { get; set; }
     public float loadingTime { get; set; }
     public float tempSaveHealth { get; set; }
+    public float addedHealth { get; set; }
     public List<Collider> underGrid { get; set; }
     public State state = State.InCreating;
     public InProgressItem inProgressItem = InProgressItem.None;
@@ -96,9 +97,10 @@ public abstract class Building : Entity
         time = update;
         tempSaveHealth += incrementPerSec * Time.deltaTime;
         progress = time / loadingTime * 100;
-        if(tempSaveHealth - currentHealth > 1f)
+        if(tempSaveHealth > 1f)
         {
             gameObject.GetComponent<PhotonView>().RPC("SetBuildingHealth", RpcTarget.AllBuffered, tempSaveHealth, progress);
+            tempSaveHealth = 0;
         }
         healthBar.value = (float)(currentHealth * 1.0 / maxHealth);
         progressBar.value = (float)this.progress / 100;
@@ -172,14 +174,14 @@ public abstract class Building : Entity
     [PunRPC]
     public void SetBuildingHealth(float health, float progress)
     {
-        currentHealth = health;
+        addedHealth += health;
+        currentHealth += health;
         this.progress = progress;
     }
 
     [PunRPC]
     public void SyncSetTag(string tag)
     {
-        Debug.Log("건물 파괴 / 상태 : " + state);
         gameObject.tag = tag;
     }
 

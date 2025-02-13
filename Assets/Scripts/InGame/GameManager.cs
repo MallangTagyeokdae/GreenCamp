@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
     //-----------------------------
-    private int _commandLevel = 1;
+    public int commandLevel = 1;
     private Coroutine masterTimer;
 
     void Start()
@@ -111,8 +111,6 @@ public class GameManager : MonoBehaviour
 
         // 본진 생성
         Building building = buildingController.CreateBuilding(startingPoint, buildingType, new Vector3(-90, 90, 0), gridHandler.constructionGrids);
-        // 본진 초기값 세팅
-        Debug.Log(building.name);
 
         csFogWar.FogRevealer fogRevealer = new csFogWar.FogRevealer(building.transform, building.fow, true);
         building.fowIndex = fogWar.GetComponent<csFogWar>().AddFogRevealer(fogRevealer);
@@ -301,7 +299,7 @@ public class GameManager : MonoBehaviour
     //=================== UI 변경 관련 함수들 ===================
     public void SetBuildingListUI() // 건설할 건물 띄워주는 UI, Ground Inspector창에서 직접 넣어줌
     {
-        currentUI = uIController.SetBuildingListUI(0, _commandLevel);
+        currentUI = uIController.SetBuildingListUI(0, commandLevel);
     }
     public void SetBuildingInfo(int UIindex, Building building)
     {
@@ -474,7 +472,7 @@ public class GameManager : MonoBehaviour
     {
         if (clickedObject[0].TryGetComponent(out Building building))
         {
-            if (GameStatus.instance.CanLevelUp(building, _commandLevel))
+            if (GameStatus.instance.CanLevelUp(building, commandLevel))
             {
                 var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
@@ -527,7 +525,7 @@ public class GameManager : MonoBehaviour
 
         tasks.Remove(building.gameObject); // 건물 생성이 완료되면 딕셔너리에서 제거해줌
 
-        building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
+        buildingController.LastCheckBuildingHealth(building);
         buildingController.SetBuildingState(building, Building.State.Built, "None");
 
         building.returnCost = building.levelUpCost; // 작업 취소되면 돌려줄 비용을 레벨업 비용으로 저장
@@ -814,7 +812,7 @@ public class GameManager : MonoBehaviour
         try
         {
             float start = 0f;
-            while (time > start)
+            while (time >= start)
             {
                 token.ThrowIfCancellationRequested();
                 start += Time.deltaTime;

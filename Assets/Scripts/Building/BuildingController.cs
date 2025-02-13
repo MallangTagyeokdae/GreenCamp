@@ -151,6 +151,7 @@ public class BuildingController : MonoBehaviour
             case Command:
                 GameStatus.instance.IncreaseMaxBuildingCount(4 * building.level);
                 building.GetComponent<Command>().attackPower += 5;
+                GameManager.instance.commandLevel ++;
                 break;
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += .5f;
@@ -248,6 +249,15 @@ public class BuildingController : MonoBehaviour
                 break;
         }
         GameStatus.instance.currentResourceCount += Mathf.FloorToInt(building.returnCost * 0.7f); // 취소하면 비용의 70프로만 돌려줌 소숫점아래 버림
+    }
+
+    public void LastCheckBuildingHealth(Building building)
+    {
+        if(building.addedHealth < building.maxHealth)
+        {
+            building.currentHealth += building.maxHealth - building.addedHealth;
+        }
+        building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
     }
 
     private async Task StartTimer(float time)
