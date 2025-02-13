@@ -38,7 +38,7 @@ public class GameStatus : MonoBehaviour
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
         maxResourceCount = 10000;
-        currentResourceCount = 10000;
+        currentResourceCount = 0;
         resourcePerSecond = 1;
         maxUnitCount = 10;
         currentUnitCount = 0;
@@ -131,11 +131,11 @@ public class GameStatus : MonoBehaviour
         {
             return true;
         }
-        else if (!building.GetComponent<Command>() && building.level <= commandLevel + 1)
+        else if (!building.GetComponent<Command>() && (building.level <= commandLevel))
         {
             return true;
         }
-        Debug.Log("건물레벨 <= 커멘드 레벨 + 1 이 되어야함");
+        Debug.Log("건물레벨 <= 커멘드 레벨이 되어야함");
         return false;
     }
 

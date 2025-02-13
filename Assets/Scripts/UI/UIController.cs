@@ -159,7 +159,7 @@ public class UIController : MonoBehaviour
                 selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[4];
                 break;
             default:
-                selectedUI.GetComponent<UIElement>().image.sprite = null;
+                selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[0];
                 break;
         }
     }
@@ -203,11 +203,11 @@ public class UIController : MonoBehaviour
         switch(level)
         {
             case 1:
+            case 2:
+            case 3:
                 action(uIButtons.GetRange(0,3), state);
                 action(uIButtons.GetRange(3,1), !state);
                 break;
-            case 2:
-            case 3:
             case 4:
                 action(uIButtons.GetRange(0,4), state);
                 break;
