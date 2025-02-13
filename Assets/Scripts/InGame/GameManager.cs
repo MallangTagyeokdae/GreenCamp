@@ -515,7 +515,7 @@ public class GameManager : MonoBehaviour
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
         
         // 안개 시야 설정
-        csFogWar.FogRevealer fogRevealer = new csFogWar.FogRevealer(building.transform, building.fow, true);
+        csFogWar.FogRevealer fogRevealer = new csFogWar.FogRevealer(building.transform, building.fow, false);
         building.fowIndex = fogWar.GetComponent<csFogWar>().AddFogRevealer(fogRevealer);
 
         building.InitTime();

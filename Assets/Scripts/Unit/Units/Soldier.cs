@@ -33,10 +33,10 @@ public class Soldier : Unit
         this.unitLocation = unitLocation;
         this.unitCost = 30;
         this.unitPowerRange = 3;
-        this.unitMoveSpeed = 3;
+        this.unitMoveSpeed = 5;
         this.populationCost = 1;
         this.population = 1;
-        this.fow = 20;
+        this.fow = 30;
     }
 }
 
