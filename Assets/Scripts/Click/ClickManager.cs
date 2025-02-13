@@ -123,23 +123,23 @@ public class ClickManager : MonoBehaviour
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
         }
 
-        // if (Physics.Raycast(ray, out hit, Mathf.Infinity, 7)) 
-        // {
-        //     Vector2 uv = hit.textureCoord;  // Fog 텍스처 좌표 가져오기
-        //     int x = Mathf.FloorToInt(uv.x * fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.width);
-        //     int y = Mathf.FloorToInt(uv.y * fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.height);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 7)) 
+        {
+            Vector2 uv = hit.textureCoord;  // Fog 텍스처 좌표 가져오기
+            int x = Mathf.FloorToInt(uv.x * fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.width);
+            int y = Mathf.FloorToInt(uv.y * fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.height);
 
-        //     Color fogColor = fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.GetPixel(x, y);
-        //     Debug.Log(hit.point.ToString());
-        //     Debug.Log(x + " / " + y);
+            Color fogColor = fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.GetPixel(x, y);
+            Debug.Log(hit.point.ToString());
+            Debug.Log(x + " / " + y);
 
-        //     Debug.Log(fogColor.a);
-        //     if (fogColor.a < 1f)
-        //     {
-        //         Debug.Log("안개 지역 클릭됨! 클릭 무시.");
-        //         return;
-        //     }
-        // }
+            Debug.Log(fogColor.a);
+            if (fogColor.a < 1f)
+            {
+                Debug.Log("안개 지역 클릭됨! 클릭 무시.");
+                return;
+            }
+        }
 
 
         if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
