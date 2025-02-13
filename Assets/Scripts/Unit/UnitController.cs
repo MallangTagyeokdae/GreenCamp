@@ -212,6 +212,8 @@ public class UnitController : MonoBehaviour
                 break;
             }
 
+            Debug.Log($"------------------enemy name: {enemy.name}");
+            Debug.Log($"------------------ally name: {ally.name}");
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             ally.transform.rotation = Quaternion.LookRotation(rot);
             yield return null;

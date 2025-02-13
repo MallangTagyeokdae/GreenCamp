@@ -574,6 +574,9 @@ public class GameManager : MonoBehaviour
         if(orderedObjs.TryGetComponent(out Unit selectedUnit))
         {
             Debug.Log("A땅 목적지 : " + newLocation.ToString() + "유닛 상태 : " + selectedUnit.order + " / " + selectedUnit.state);
+            if(selectedUnit.state == Unit.State.Die){
+                return;
+            }
 
             selectedUnit.destination = newLocation;
 
@@ -611,7 +614,9 @@ public class GameManager : MonoBehaviour
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
-
+            if(selectedUnit.state == Unit.State.Die){
+                return;
+            }
             if (selectedUnit == null)
             {
                 continue;
@@ -629,7 +634,7 @@ public class GameManager : MonoBehaviour
     {
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
-        if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
+        if (enemyEntity == null || unit.teamID == enemyEntity.teamID || unit.state == Unit.State.Die)
         {
             return;
         }
@@ -640,7 +645,7 @@ public class GameManager : MonoBehaviour
                 // Debug.Log(enemy.name + " 가 어택 리스트에 추가됨");
                 unit.attackList.Add(enemy);
             }
-            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack)
+            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
             {
                 return;
             }
@@ -650,7 +655,7 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(unit.unitBehaviour);
             }
             if(enemy != null){
-                Debug.Log($"---------------------------------------name: {enemy.name}");
+                //Debug.Log($"---------------------------------------name: {enemy.name}");
                 ally.GetComponent<PhotonView>().RPC("SetTarget", RpcTarget.All, enemy.GetComponent<PhotonView>().ViewID);
             }
             unit.unitBehaviour = StartCoroutine(unitController.Attack(ally, enemy));
@@ -668,7 +673,7 @@ public class GameManager : MonoBehaviour
         int order; //이거 이제 3번이 맞겠다
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
-        if (enemyEntity == null || unit.teamID == enemyEntity.teamID)
+        if (enemyEntity == null || unit.teamID == enemyEntity.teamID || unit.state == Unit.State.Die)
         {
             return;
         }
@@ -684,6 +689,7 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }*/
+            
             if (unit.state == Unit.State.Idle || (unit.order == Unit.Order.Offensive && unit.state == Unit.State.Move))
             {
                 if (unit.unitBehaviour != null)

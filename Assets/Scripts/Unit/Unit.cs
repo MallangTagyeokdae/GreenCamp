@@ -190,7 +190,7 @@ public abstract class Unit : Entity
         }
     }
 
-    [PunRPC]
+    
     public void SetState(string newState)
     {
         switch (newState)
@@ -227,6 +227,7 @@ public abstract class Unit : Entity
         }
     }
 
+    [PunRPC]
     public void ChangeState(string newState)
     {
         switch (state)
@@ -260,13 +261,16 @@ public abstract class Unit : Entity
                 }
                 SetState(newState);
                 break;
+            
+            case State.Die:
+                break;
         }
     }
     //새로운 객체를 찾아야 하는 경우 -> 유닛의 상태가 idle이 되었을 때(이동을 완료했을 때, 공격하던 객체가 죽었을 때, 공격하던 객체가 어그로 범위를 벗어났을 때)
     public override void DestroyEntity()
     {
         gameObject.GetComponent<PhotonView>().RPC("SyncSetTag", RpcTarget.AllBuffered, "Untagged");
-        gameObject.GetComponent<PhotonView>().RPC("SetState", RpcTarget.AllBuffered, "Die");
+        gameObject.GetComponent<PhotonView>().RPC("ChangeState", RpcTarget.AllBuffered, "Die");
         GameStatus.instance.currentUnitCount -= population;
         animator.SetTrigger("isDead");
     }
