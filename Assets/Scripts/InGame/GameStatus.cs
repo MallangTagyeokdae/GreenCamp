@@ -153,7 +153,7 @@ public class GameStatus : MonoBehaviour
 
     public bool CanUpgradeUnit(Building building, int level, int cost, bool isProgressing)
     {   
-        if(!isProgressing && building.level >= level)
+        if(!isProgressing && (building.level >= level))
         {
             Debug.Log("업그레이드 레벨 <= 건물 레벨이 되어야함");
             if(currentResourceCount >= cost)
