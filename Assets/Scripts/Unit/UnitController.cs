@@ -106,6 +106,12 @@ public class UnitController : MonoBehaviour
             unitObj.transform.SetParent(enemyUnits.transform);
         }*/
         _unitID++;
+        
+        if(_createdUnit.GetComponent<csFogVisibilityAgent>() != null)
+        {
+            Destroy(_createdUnit.GetComponent<csFogVisibilityAgent>());
+        }
+
         return _createdUnit;
 
     }
@@ -131,6 +137,12 @@ public class UnitController : MonoBehaviour
     public void DestroyUnit(Unit unit)
     {
         // if (unitDictionary.ContainsKey(unitID)) unitDictionary.Remove(unitID); // 유닛 딕셔너리에서 유닛 삭제
+        if(unit != null && unit.GetComponent<Entity>() != null)
+        {
+            int fowIndex = unit.GetComponent<Entity>().fowIndex;
+            GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(fowIndex);
+        }
+        
         unit.DestroyEntity();
         GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(unit.GetComponent<Entity>().fowIndex);
         // GameStatus.instance.currentUnitCount -= unit.populationCost;
