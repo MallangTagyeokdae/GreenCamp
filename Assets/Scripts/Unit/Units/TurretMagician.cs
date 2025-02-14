@@ -52,14 +52,14 @@ public class TurretMagician : Unit
         this.fow = 30;
     }
 
-    public void CastFireball(){
+    public void Launch(){
         if(target != null){
             GameObject fireball = Instantiate(fireBall_prefab, fireBallPosition.position, Quaternion.identity);
-            fireball.AddComponent<Arrow>();
-            fireball.TryGetComponent(out Arrow arr);
-            arr.SetArrowTarget(target);
-            arr.SetUnit(this);
-            arr.LaunchArrow();
+            fireball.AddComponent<Projectile>();
+            fireball.TryGetComponent(out Projectile projectile);
+            projectile.SetArrowTarget(target);
+            projectile.SetUnit(this);
+            projectile.LaunchProjectile();
         }
     }
 }

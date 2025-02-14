@@ -25,6 +25,8 @@ public class TurretArcher : Unit
     }
 
     public GameObject arrow;
+    public GameObject arrow_prefab;
+    public Transform arrowPosition;
 
     void Start()
     {
