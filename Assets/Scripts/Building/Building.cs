@@ -23,7 +23,9 @@ public abstract class Building : Entity
         Soldier = 2,
         Archer = 3,
         Tanker = 4,
-        Healer = 5
+        Healer = 5,
+        Damage = 6,
+        Armor = 7
     }
 
     //public string teamID { get; set; }

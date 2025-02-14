@@ -730,6 +730,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public async void UpgradeUnit(string type)
+    {
+        if (clickedObject[0].TryGetComponent(out Building building))
+        {
+            Academy academy = building.GetComponent<Academy>();
+            int upgradeLevel = (type == "Damage") ? academy.damageLevel : academy.armorLevel;
+            bool isUpgrade = (type == "Damage") ? GameStatus.instance.isDamageUpgrade : GameStatus.instance.isDamageUpgrade;
+            if (upgradeLevel < building.level && isUpgrade)
+            {
+                var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
+
+                buildingController.SetBuildingState(building, Building.State.InProgress, type);
+
+                ReloadBuildingUI(building);
+
+                tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
+
+                if (await OrderCreate(building, 10 + upgradeLevel * 10f, cts.Token))
+                {
+                    tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
+
+                    buildingController.SetBuildingState(building, Building.State.Built, "None");
+                }
+
+                ReloadBuildingUI(building);
+            }
+        }
+    }
+
     // =====================================================
 
     // =================== 객체 파괴 함수 ======================

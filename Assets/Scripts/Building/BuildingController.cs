@@ -104,6 +104,17 @@ public class BuildingController : MonoBehaviour
 
                 buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6, newBuilding));
                 break;
+            case "Academy":
+                Academy _newAcademy = buildingObject.GetComponent<Academy>();
+                _newAcademy.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar,grids);
+                
+                buildingDictionary.Add(_buildingID, _newAcademy);
+                newBuilding = _newAcademy;
+                newBuilding.progressMesh1 = _newAcademy.progressMesh1;
+                newBuilding.completeMesh = _newAcademy.completeMesh;
+
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6, newBuilding));
+                break;
             default: //일단 초기화를 위해서 더미데이터를 넣음음
                 Defender defautBuilding = buildingObject.AddComponent<Defender>();
                 defautBuilding.Init(_teamID, _buildingID, buildingLocation, healthBar, progressBar,grids);
@@ -199,6 +210,11 @@ public class BuildingController : MonoBehaviour
         {
             case Building.InProgressItem.LevelUP:
                 building.returnCost = building.levelUpCost;
+                break;
+            case Building.InProgressItem.Damage:
+            case Building.InProgressItem.Armor:
+                Academy academy = building.GetComponent<Academy>();
+                building.returnCost = (item == Building.InProgressItem.Damage) ? academy.damageUpgradeCost : academy.armorUpgradeCost;
                 break;
             case Building.InProgressItem.Soldier:
             case Building.InProgressItem.Archer:
