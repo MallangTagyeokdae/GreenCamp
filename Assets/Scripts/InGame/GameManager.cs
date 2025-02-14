@@ -580,7 +580,6 @@ public class GameManager : MonoBehaviour
             if (selectedUnit.unitBehaviour != null)
             {
                 StopCoroutine(selectedUnit.unitBehaviour);
-                Debug.Log("코루틴 파괴");
             }
 
             if(selectedUnit.aggList.Count == 0){
