@@ -67,7 +67,7 @@ public class Entity : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            currentHealth -= damage;
+            currentHealth -= damage - armor;
             // MasterClient에서 체력을 계산
             this.GetComponent<PhotonView>().RPC("SyncAttack", RpcTarget.All, currentHealth); // 계산한 체력을 넘겨줘서 동기화시킴
         }

@@ -6,9 +6,9 @@ public class Soldier : Unit
 {
     void Start()
     {
-        this.maxHealth = 100;
-        this.currentHealth = 100;
-        this.unitPower = 30;
+        this.maxHealth = 100  + GameStatus.instance.healthIncrease;
+        this.currentHealth = 100  + GameStatus.instance.healthIncrease;
+        this.unitPower = 30 + GameStatus.instance.damageIncrease;
     }
 
     public Soldier(string teamID, int unitID, Vector3 unitLocation)
@@ -37,7 +37,7 @@ public class Soldier : Unit
         this.populationCost = 1;
         this.population = 1;
         this.fow = 30;
-        this.armor = 10;
+        this.armor = 10 + GameStatus.instance.armorIncrease;
     }
 }
 
