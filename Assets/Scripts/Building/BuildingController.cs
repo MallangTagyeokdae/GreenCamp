@@ -123,7 +123,7 @@ public class BuildingController : MonoBehaviour
 
     public async Task DestroyBuilding(Building building)
     {
-        GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(building.GetComponent<Entity>().fowIndex);
+        GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(building.gameObject);
         
         GameStatus.instance.currentBuildingCount -= building.population;
         building.GetComponent<PhotonView>().RPC("SyncSetDestroy",RpcTarget.AllBuffered);

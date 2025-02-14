@@ -618,21 +618,16 @@ namespace FischlWorks_FogWar
 
 
         /// Removes a FogRevealer instance from the list with index
-        public void RemoveFogRevealer(int index)
+        public void RemoveFogRevealer(GameObject target)
         {
-            FogRevealer fogRevealer = fogRevealers[index];
-            if(fogRevealer == null)
+            for(int i=fogRevealers.Count - 1; i >= 0; i--)
             {
-                Debug.Log("찾기 실패 시ㅣ 발");
-            }
-            if (fogRevealers.Contains(fogRevealer))
-            {
-                fogRevealers.Remove(fogRevealer);
-                Debug.Log("삭제 성공");
-            }
-            else
-            {
-                Debug.Log("리스트에서 찾을 수 없음 : " + index);
+                if(fogRevealers[i]._RevealerTransform != null && fogRevealers[i]._RevealerTransform.gameObject == target)
+                {
+                    Debug.Log("제거 : " + target.name);
+                    fogRevealers.RemoveAt(i);
+                    return;
+                }
             }
         }
 
