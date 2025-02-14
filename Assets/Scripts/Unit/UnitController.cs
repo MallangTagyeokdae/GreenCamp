@@ -221,7 +221,13 @@ public class UnitController : MonoBehaviour
             }
 
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
-            ally.transform.rotation = Quaternion.LookRotation(rot);
+            if(!unit.isTurretUnit){
+                ally.transform.rotation = Quaternion.LookRotation(rot);    
+            }
+            else{
+                rot.y = 0;
+                ally.transform.rotation = Quaternion.LookRotation(rot);    
+            }
             yield return null;
         }
         
