@@ -116,7 +116,7 @@ public class ClickManager : MonoBehaviour
         #endregion
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 메인카메라 위치로부터 마우스 위치까지 ray를 생성
-        RaycastHit hit;
+        //RaycastHit hit;
 
         if (drawRay) // drawRay가 true인 경우 scene에 ray를 그림
         {
@@ -143,10 +143,25 @@ public class ClickManager : MonoBehaviour
         // }
 
 
-        if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
+        RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
+
+        /*foreach(RaycastHit hit in hits){    
+            Debug.Log($"name: --{hit.collider.gameObject.name}");
+        
+        }*/
+        int length = hits.Length;
+        for(int i = length - 1; i >= 0 ; i++){
+            RaycastHit hit = hits[i];
+            if (hit.collider.CompareTag("Clickable"))
+            {
+                action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
+                break;
+            }     
+        }
+        /*if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
         {
             action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
-        }
+        }*/
     }
 
     private void MouseHover()   //항상 ray cast
