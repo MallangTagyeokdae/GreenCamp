@@ -206,10 +206,11 @@ public class UIController : MonoBehaviour
             case 2:
             case 3:
                 action(uIButtons.GetRange(0,3), state);
+                action(uIButtons.GetRange(4,1), state);
                 action(uIButtons.GetRange(3,1), !state);
                 break;
             case 4:
-                action(uIButtons.GetRange(0,4), state);
+                action(uIButtons.GetRange(0,5), state);
                 break;
         }
     }

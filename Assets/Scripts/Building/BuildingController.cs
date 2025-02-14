@@ -113,7 +113,7 @@ public class BuildingController : MonoBehaviour
                 newBuilding.progressMesh1 = _newAcademy.progressMesh1;
                 newBuilding.completeMesh = _newAcademy.completeMesh;
 
-                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(6, newBuilding));
+                buildingObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) => GameManager.instance.SetBuildingInfo(9, newBuilding));
                 break;
             default: //일단 초기화를 위해서 더미데이터를 넣음음
                 Defender defautBuilding = buildingObject.AddComponent<Defender>();
@@ -206,15 +206,20 @@ public class BuildingController : MonoBehaviour
 
         building.state = state;
         Enum.TryParse(progressType, out Building.InProgressItem item);
+        Academy academy = building.GetComponent<Academy>();
         switch(item)
         {
             case Building.InProgressItem.LevelUP:
                 building.returnCost = building.levelUpCost;
                 break;
             case Building.InProgressItem.Damage:
+                building.returnCost = academy.damageUpgradeCost;
+                break;
             case Building.InProgressItem.Armor:
-                Academy academy = building.GetComponent<Academy>();
-                building.returnCost = (item == Building.InProgressItem.Damage) ? academy.damageUpgradeCost : academy.armorUpgradeCost;
+                building.returnCost = academy.armorUpgradeCost;
+                break;
+            case Building.InProgressItem.Health:
+                building.returnCost = academy.healthUpgradeCost;
                 break;
             case Building.InProgressItem.Soldier:
             case Building.InProgressItem.Archer:
@@ -251,6 +256,15 @@ public class BuildingController : MonoBehaviour
                     case Building.InProgressItem.LevelUP:
                         building.GetComponent<PhotonView>().RPC("ActiveLevelUpEffect", RpcTarget.All, false);
                         break;
+                    case Building.InProgressItem.Damage:
+                        GameStatus.instance.isDamageUpgrade = false;
+                        break;
+                    case Building.InProgressItem.Armor:
+                        GameStatus.instance.isArmorUpgrade = false;
+                        break;
+                    case Building.InProgressItem.Health:
+                        GameStatus.instance.isHealthUpgrade = false;
+                        break;
                     case Building.InProgressItem.Soldier:
                     case Building.InProgressItem.Archer:
                     case Building.InProgressItem.Tanker:
@@ -264,7 +278,7 @@ public class BuildingController : MonoBehaviour
                 GameManager.instance.ReloadBuildingUI(building);
                 break;
         }
-        GameStatus.instance.currentResourceCount += Mathf.FloorToInt(building.returnCost * 0.7f); // 취소하면 비용의 70프로만 돌려줌 소숫점아래 버림
+        GameStatus.instance.currentResourceCount += building.returnCost * 0.7f; // 취소하면 비용의 70프로만 돌려줌
     }
 
     public void LastCheckBuildingHealth(Building building)

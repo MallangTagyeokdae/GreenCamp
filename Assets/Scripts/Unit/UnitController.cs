@@ -242,4 +242,41 @@ public class UnitController : MonoBehaviour
             unit.ChangeState("Idle");
         }
     }
+
+    public void UpgradeUnit(string type, int level)
+    {
+        switch(type)
+        {
+            case "Damage":
+                ApplyUnitUpgrade(type,5);
+                break;
+            case "Armor":
+                ApplyUnitUpgrade(type,5);
+                break;
+            case "Health":
+                ApplyUnitUpgrade(type,20);
+                break;
+        }
+    }
+
+    public void ApplyUnitUpgrade(string type, int degree)
+    {
+        foreach(KeyValuePair<int, Unit> valuePair in unitDictionary)
+        {
+            switch(type)
+            {
+                case "Damage":
+                    valuePair.Value.unitPower += degree;
+                    break;
+                case "Armor":
+                    valuePair.Value.armor += degree;
+                    break;
+                case "Health":
+                    float healthPercent = (float)(valuePair.Value.currentHealth / valuePair.Value.maxHealth);
+                    valuePair.Value.maxHealth += degree;
+                    valuePair.Value.currentHealth = Mathf.FloorToInt(valuePair.Value.maxHealth * healthPercent);  
+                    break;
+            }
+        }
+    }
 }
