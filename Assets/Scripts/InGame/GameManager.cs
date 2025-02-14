@@ -794,29 +794,34 @@ public class GameManager : MonoBehaviour
 
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-        if (await OrderCreate(building, 10 + upgradeLevel * 10f, cts.Token))
+        // 업그레이드 시간설정 부분
+        if (await OrderCreate(building, 10 + upgradeLevel * 1f, cts.Token))
             {
             tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
-            unitController.UpgradeUnit(type, upgradeLevel);
-
             // 유닛 업그레이드 종효후 상태 맞춰주기
+            // 체력, 공격력, 체력 수치 올리는 로직 여기있음
             switch(type)
             {
                 case "Damage":
+                    GameStatus.instance.damageIncrease += 3;
+                    unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isDamageUpgrade = false;
                     building.GetComponent<Academy>().damageUpgradeCost *= 2;
                     break;
                 case "Armor":
+                    GameStatus.instance.damageIncrease += 3;
+                    unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isArmorUpgrade = false;
                     building.GetComponent<Academy>().armorUpgradeCost *= 2;
                     break;
                 case "Health":
+                    GameStatus.instance.damageIncrease += 10;
+                    unitController.ApplyUnitUpgrade(type, 10);
                     GameStatus.instance.isHealthUpgrade = false;
                     building.GetComponent<Academy>().healthUpgradeCost *= 2;
                     break;
             }
-
             buildingController.SetBuildingState(building, Building.State.Built, "None");
         }
 

@@ -243,22 +243,6 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    public void UpgradeUnit(string type, int level)
-    {
-        switch(type)
-        {
-            case "Damage":
-                ApplyUnitUpgrade(type,5);
-                break;
-            case "Armor":
-                ApplyUnitUpgrade(type,5);
-                break;
-            case "Health":
-                ApplyUnitUpgrade(type,20);
-                break;
-        }
-    }
-
     public void ApplyUnitUpgrade(string type, int degree)
     {
         foreach(KeyValuePair<int, Unit> valuePair in unitDictionary)
@@ -272,9 +256,11 @@ public class UnitController : MonoBehaviour
                     valuePair.Value.armor += degree;
                     break;
                 case "Health":
-                    float healthPercent = (float)(valuePair.Value.currentHealth / valuePair.Value.maxHealth);
+                    valuePair.Value.currentHealth += degree;
                     valuePair.Value.maxHealth += degree;
-                    valuePair.Value.currentHealth = Mathf.FloorToInt(valuePair.Value.maxHealth * healthPercent);  
+                    // float healthPercent = (float)(valuePair.Value.currentHealth / valuePair.Value.maxHealth);
+                    // valuePair.Value.maxHealth += degree;
+                    // valuePair.Value.currentHealth = Mathf.FloorToInt(valuePair.Value.maxHealth * healthPercent);  
                     break;
             }
         }
