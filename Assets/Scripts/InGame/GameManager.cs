@@ -735,6 +735,7 @@ public class GameManager : MonoBehaviour
 
     public async void UpgradeUnit(string type)
     {
+        Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
         if (clickedObject[0].TryGetComponent(out Building building))
         {
             Academy academy = building.GetComponent<Academy>();
@@ -745,20 +746,26 @@ public class GameManager : MonoBehaviour
                 case "Damage":
                     _upgradeLevel = academy.damageLevel;
                     _isUpgrade = GameStatus.instance.isDamageUpgrade;
-                    GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+                    Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                     CallUpgrade(building, _upgradeLevel, !_isUpgrade, type);
+                    GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+                    Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                     break;
                 case "Armor":
                     _upgradeLevel = academy.armorLevel;
                     _isUpgrade = GameStatus.instance.isArmorUpgrade;
+                    Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                     CallUpgrade(building, _upgradeLevel, !_isUpgrade, type);
                     GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+                    Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                     break;
                 case "Health":
                     _upgradeLevel = academy.healthLevel;
                     _isUpgrade = GameStatus.instance.isHealthUpgrade;
+                    Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                     CallUpgrade(building, _upgradeLevel, !_isUpgrade, type);
                     GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+                    Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                     break;       
             }
 
@@ -782,6 +789,19 @@ public class GameManager : MonoBehaviour
                 tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
                 unitController.UpgradeUnit(type, upgradeLevel);
+                switch(type)
+                {
+                    case "Damage":
+                        GameStatus.instance.isDamageUpgrade = false;
+                        break;
+                    case "Armor":
+                        GameStatus.instance.isArmorUpgrade = false;
+                        break;
+                    case "Health":
+                        GameStatus.instance.isHealthUpgrade = false;
+                        break;
+                }
+                Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
 
                 buildingController.SetBuildingState(building, Building.State.Built, "None");
             }

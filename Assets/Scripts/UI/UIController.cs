@@ -46,6 +46,7 @@ public class UIController : MonoBehaviour
         }
         return CheckUpdateUI(selectedUI, currentUI);
     }
+
     public UIContainer SetUnitUI(int UIindex, Unit unit)
     {
         UIContainer selectedUI = UILists[UIindex];
@@ -145,14 +146,17 @@ public class UIController : MonoBehaviour
                 break;
             case "PopulationBuilding":
             case "Soldier":
+            case "Damage":
                 selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[1];
                 break;
             case "ResourceBuilding":
             case "Archer":
+            case "Armor":
                 selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[2];
                 break;
             case "DefenderBuilding":
             case "Tanker":
+            case "Health":
                 selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[3];
                 break;
             case "Healer":
@@ -186,6 +190,25 @@ public class UIController : MonoBehaviour
                 case 4:
                     action(uIButtons.GetRange(1,4), state);
                     break;
+            }
+        }
+        else if(building.TryGetComponent(out Academy academy))
+        {
+            if(state.Equals(true)) // 버튼 클릭 활성/비활성화 하는 부분
+            {
+                Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
+                action(uIButtons.GetRange(0,1), state);
+                action(uIButtons.GetRange(1,1), !GameStatus.instance.isDamageUpgrade);
+                action(uIButtons.GetRange(2,1), !GameStatus.instance.isArmorUpgrade);
+                action(uIButtons.GetRange(3,1), !GameStatus.instance.isHealthUpgrade);
+            }
+            else
+            {
+                Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
+                action(uIButtons.GetRange(0,1), state);
+                action(uIButtons.GetRange(1,1), GameStatus.instance.isDamageUpgrade);
+                action(uIButtons.GetRange(2,1), GameStatus.instance.isArmorUpgrade);
+                action(uIButtons.GetRange(3,1), GameStatus.instance.isHealthUpgrade);
             }
         }
         // 레벨에 상관없이 레벨업 버튼은 Interactable -> true, Lock 버튼 Active -> false로 해야함
