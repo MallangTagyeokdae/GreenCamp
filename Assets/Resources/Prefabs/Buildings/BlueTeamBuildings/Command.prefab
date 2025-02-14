@@ -1502,6 +1502,10 @@ PrefabInstance:
       propertyPath: teamID
       value: Blue
       objectReference: {fileID: 0}
+    - target: {fileID: 4999582157451738355, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+      propertyPath: m_SynchronizeLayers.Array.data[0].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
