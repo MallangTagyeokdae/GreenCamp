@@ -34,6 +34,8 @@ public class GameStatus : MonoBehaviour
     public int maxBuildingCount { get; set; }
     public int currentBuildingCount { get; set; }
     public bool isWin { get; set; }
+    public bool isDamageUpgrade { get; set; }
+    public bool isArmorUpgrade { get; set; }
     public void InitGameStatus()
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
@@ -45,6 +47,8 @@ public class GameStatus : MonoBehaviour
         maxBuildingCount = 1;
         currentBuildingCount = 0;
         isWin = true;
+        isDamageUpgrade = false;
+        isArmorUpgrade = false;
     }
 
     public void IncreaseMaxResourceCount(int count)

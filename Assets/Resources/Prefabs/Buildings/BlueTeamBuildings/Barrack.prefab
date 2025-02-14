@@ -443,6 +443,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelUpEffectBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 6745609750901710074, guid: 41e9966754af245cd81fcf1915e0cc9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6745609750902138608, guid: 41e9966754af245cd81fcf1915e0cc9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -506,6 +510,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1856497004635291874}
     m_Modifications:
+    - target: {fileID: 687959629051544009, guid: 1bc54452eb505409abaf1c48b6eb533a, type: 3}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 687959629051544009, guid: 1bc54452eb505409abaf1c48b6eb533a, type: 3}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 687959629051544009, guid: 1bc54452eb505409abaf1c48b6eb533a, type: 3}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2671138965944203037, guid: 1bc54452eb505409abaf1c48b6eb533a, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
