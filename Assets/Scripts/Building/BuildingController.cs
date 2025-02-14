@@ -160,7 +160,7 @@ public class BuildingController : MonoBehaviour
         switch(building)
         {
             case Command:
-                GameStatus.instance.IncreaseMaxBuildingCount(4 * building.level);
+                GameStatus.instance.IncreaseMaxBuildingCount(2 * building.level);
                 building.GetComponent<Command>().attackPower += 5;
                 GameManager.instance.commandLevel ++;
                 break;
