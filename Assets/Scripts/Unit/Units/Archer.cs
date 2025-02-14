@@ -9,9 +9,9 @@ public class Archer : Unit
 {
     void Start()
     {
-        this.maxHealth = 50;
-        this.currentHealth = 50;
-        this.unitPower = 35;
+        this.maxHealth = 50 + GameStatus.instance.healthIncrease;
+        this.currentHealth = 50 + GameStatus.instance.healthIncrease;
+        this.unitPower = 35 + GameStatus.instance.damageIncrease;
     }
     public GameObject arrow;
     // teamID, unitID, unitLocation은 생성자 호출 시 전달된 값으로 초기화됨 (생성자 매개변수로 전달되어 부모 클래스에서 초기화됨)
@@ -46,7 +46,7 @@ public class Archer : Unit
         this.populationCost = 1;
         this.population = 1;
         this.fow = 30;
-        this.armor = 1;
+        this.armor = 1 + GameStatus.instance.armorIncrease;
     }
 
     public void Shoot(){

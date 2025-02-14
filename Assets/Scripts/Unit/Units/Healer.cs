@@ -6,8 +6,8 @@ public class Healer : Unit
 {
     void Start()
     {
-        this.maxHealth = 85;
-        this.currentHealth = 85;
+        this.maxHealth = 85 + GameStatus.instance.healthIncrease;
+        this.currentHealth = 85 + GameStatus.instance.healthIncrease;
         this.unitPower = 0;
     }
     public GameObject HealingEffect;
@@ -37,6 +37,6 @@ public class Healer : Unit
         this.populationCost = 1;
         this.population = 2;
         this.fow = 30;
-        this.armor = 5;
+        this.armor = 5 + GameStatus.instance.armorIncrease;
     }
 }
