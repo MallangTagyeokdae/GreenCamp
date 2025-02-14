@@ -674,6 +674,16 @@ MonoBehaviour:
   completeEffect: {fileID: 204140812180801214}
   levelUpEffect: {fileID: 1905594583455389379}
   clickEventHandler: {fileID: 0}
+  turretArchers:
+  - {fileID: 2354180407342611113}
+  - {fileID: 1390100073459603933}
+  - {fileID: 7843159775733329879}
+  - {fileID: 5956349401202708052}
+  turretMagician:
+  - {fileID: 3128491776199329898}
+  - {fileID: 5079189512880581559}
+  - {fileID: 1927247819563816153}
+  - {fileID: 7953226000881168894}
 --- !u!54 &8356647322011439709
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1159,7 +1169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_Name
-      value: TurretArcher (3)
+      value: TurretArcher4
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_IsActive
@@ -1173,6 +1183,11 @@ PrefabInstance:
 --- !u!4 &345672479314437288 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 772342665488120648, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
+  m_PrefabInstance: {fileID: 1043703467906326496}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5956349401202708052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
   m_PrefabInstance: {fileID: 1043703467906326496}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1167882429118359666
@@ -1335,6 +1350,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
   m_PrefabInstance: {fileID: 1927247819563711875}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1927247819563816153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+  m_PrefabInstance: {fileID: 1927247819563711875}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2421820314024753212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1484,6 +1504,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
   m_PrefabInstance: {fileID: 3128491776199188784}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3128491776199329898 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+  m_PrefabInstance: {fileID: 3128491776199188784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3461665832992357987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1582,7 +1607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_Name
-      value: TurretArcher (2)
+      value: TurretArcher3
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_IsActive
@@ -1596,6 +1621,11 @@ PrefabInstance:
 --- !u!4 &4232723066306790699 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 772342665488120648, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
+  m_PrefabInstance: {fileID: 3461665832992357987}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7843159775733329879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
   m_PrefabInstance: {fileID: 3461665832992357987}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4105208535420279802
@@ -1758,6 +1788,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+--- !u!1 &5079189512880581559 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+  m_PrefabInstance: {fileID: 5079189512880390893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5079189512880856179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
@@ -1928,7 +1963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_Name
-      value: TurretArcher (1)
+      value: TurretArcher2
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_IsActive
@@ -1939,6 +1974,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
+--- !u!1 &1390100073459603933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
+  m_PrefabInstance: {fileID: 5735455449816746089}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4985352673938895649 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 772342665488120648, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
@@ -2024,6 +2064,11 @@ PrefabInstance:
 --- !u!4 &7953226000881010234 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+  m_PrefabInstance: {fileID: 7953226000881342628}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7953226000881168894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
   m_PrefabInstance: {fileID: 7953226000881342628}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8969328111560502045
@@ -2128,7 +2173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_Name
-      value: TurretArcher
+      value: TurretArcher1
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_IsActive
@@ -2139,6 +2184,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
+--- !u!1 &2354180407342611113 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
+  m_PrefabInstance: {fileID: 8969328111560502045}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8560953573082468437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 772342665488120648, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}

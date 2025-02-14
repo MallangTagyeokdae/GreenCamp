@@ -14,6 +14,9 @@ public class Command : Building
 
     public int attackPower { get; set; }
     public int attackRange { get; set; }
+
+    public List<GameObject> turretArchers;
+    public List<GameObject> turretMagician;
     
     public Command(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
