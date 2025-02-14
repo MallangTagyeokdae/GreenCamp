@@ -19,9 +19,9 @@ TagManager:
   - Grid
   - Water
   - UI
+  - CameraBox
   - Obstacle
   - Fog
-  - 
   - 
   - 
   - 
@@ -48,4 +48,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: CameraBox
+    uniqueID: 2957693879
+    locked: 0
+  - name: Fog
+    uniqueID: 4231485571
     locked: 0
