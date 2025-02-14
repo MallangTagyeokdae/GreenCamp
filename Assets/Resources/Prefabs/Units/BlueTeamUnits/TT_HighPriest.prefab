@@ -14182,7 +14182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &474350
 Transform:
   m_ObjectHideFlags: 0
@@ -16004,6 +16004,7 @@ MonoBehaviour:
   clickEventHandler: {fileID: 0}
   order: 0
   fireBall_prefab: {fileID: 1445293207601016, guid: c738b817eb80b3a4a86f2b393617ec7a, type: 3}
+  fireBallPosition: {fileID: 2317675946130960729}
 --- !u!1 &191200
 GameObject:
   m_ObjectHideFlags: 0
@@ -16982,7 +16983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &429146
 Transform:
   m_ObjectHideFlags: 0
@@ -16995,7 +16996,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.9999997, y: 1.0000001, z: 0.99999994}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2317675946130960729}
   m_Father: {fileID: 435050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3367930
@@ -18860,6 +18862,37 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.09134555, y: -0.04128635, z: 0.00000014901161}
     m_Extent: {x: 0.54071784, y: 0.3487065, z: 0.7707151}
   m_DirtyAABB: 0
+--- !u!1 &5658945041775678490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2317675946130960729}
+  m_Layer: 0
+  m_Name: initPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2317675946130960729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5658945041775678490}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.149, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 429146}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5713175676241066599
 GameObject:
   m_ObjectHideFlags: 0
