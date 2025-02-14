@@ -47,7 +47,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         //같은 버전의 유저끼리 접속을 허용
         PhotonNetwork.GameVersion = version;
         //포톤 서버와 통신횟수 설정. 초당 30회
-        Debug.Log(PhotonNetwork.SendRate);
+        //Debug.Log(PhotonNetwork.SendRate);
     }
 
     public void ConnectGame(string nickName)
@@ -166,7 +166,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         {
             teamUIController.OnTeamSelect(player);
         }
-        Debug.Log($"Red?:{PhotonNetwork.CurrentRoom.CustomProperties["Red"]}");
+        //Debug.Log($"Red?:{PhotonNetwork.CurrentRoom.CustomProperties["Red"]}");
         if((bool)PhotonNetwork.CurrentRoom.CustomProperties["Red"] == false){
             SetTeam("Red");
         }

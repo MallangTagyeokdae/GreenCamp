@@ -22,31 +22,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.44
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.58
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -54,11 +54,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 419058409232757245, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2465882708168158435, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3992073438016927383, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -76,17 +80,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4099498115814379899, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6031986855511284481, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_Name
-      value: Archer1 Variant
+      value: TurretArcher
       objectReference: {fileID: 0}
     - target: {fileID: 6031986855511284481, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6031986855511284481, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511356759311515488, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511356759311515488, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ccbd915f489f5cb4083d902c77c2a70e, type: 2}
     m_RemovedComponents:
     - {fileID: 6309980027969008881, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
     - {fileID: 1538693576857479876, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
+    - {fileID: -2953485049445277104, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1952465889417981387, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
     - {fileID: 4737799399744465820, guid: a0f9abf059d1e448c9d5f273cf1feb24, type: 3}
