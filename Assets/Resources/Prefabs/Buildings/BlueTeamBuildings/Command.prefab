@@ -1173,7 +1173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1282,7 +1282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
       propertyPath: m_LocalScale.x
@@ -1343,7 +1343,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7634085640981448491}
   m_SourcePrefab: {fileID: 100100000, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
 --- !u!4 &1927247819563508509 stripped
 Transform:
@@ -1355,6 +1358,41 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
   m_PrefabInstance: {fileID: 1927247819563711875}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7634085640981448491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927247819563816153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ad6267ef7ddf344aeb5216e411fbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  attTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  teamID: 
+  healthBar: {fileID: 0}
+  clickedEffect: {fileID: 0}
+  enemyClickedEffect: {fileID: 0}
+  isTurretUnit: 1
+  state: 0
+  target: {fileID: 0}
+  animator: {fileID: 0}
+  clickEventHandler: {fileID: 0}
+  order: 0
+  fireBall_prefab: {fileID: 1445293207601016, guid: c738b817eb80b3a4a86f2b393617ec7a, type: 3}
 --- !u!1001 &2421820314024753212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1436,7 +1474,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
       propertyPath: m_LocalScale.x
@@ -1611,7 +1649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1725,7 +1763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
       propertyPath: m_LocalScale.x
@@ -1786,13 +1824,51 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1173999589454085910}
   m_SourcePrefab: {fileID: 100100000, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
 --- !u!1 &5079189512880581559 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
   m_PrefabInstance: {fileID: 5079189512880390893}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1173999589454085910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5079189512880581559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ad6267ef7ddf344aeb5216e411fbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  attTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  teamID: 
+  healthBar: {fileID: 0}
+  clickedEffect: {fileID: 0}
+  enemyClickedEffect: {fileID: 0}
+  isTurretUnit: 1
+  state: 0
+  target: {fileID: 0}
+  animator: {fileID: 0}
+  clickEventHandler: {fileID: 0}
+  order: 0
+  fireBall_prefab: {fileID: 1445293207601016, guid: c738b817eb80b3a4a86f2b393617ec7a, type: 3}
 --- !u!4 &5079189512880856179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
@@ -1967,7 +2043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1998,7 +2074,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
       propertyPath: m_LocalScale.x
@@ -2059,7 +2135,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4036055476268633803}
   m_SourcePrefab: {fileID: 100100000, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
 --- !u!4 &7953226000881010234 stripped
 Transform:
@@ -2071,6 +2150,41 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
   m_PrefabInstance: {fileID: 7953226000881342628}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4036055476268633803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7953226000881168894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ad6267ef7ddf344aeb5216e411fbc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  attTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  teamID: 
+  healthBar: {fileID: 0}
+  clickedEffect: {fileID: 0}
+  enemyClickedEffect: {fileID: 0}
+  isTurretUnit: 1
+  state: 0
+  target: {fileID: 0}
+  animator: {fileID: 0}
+  clickEventHandler: {fileID: 0}
+  order: 0
+  fireBall_prefab: {fileID: 1445293207601016, guid: c738b817eb80b3a4a86f2b393617ec7a, type: 3}
 --- !u!1001 &8969328111560502045
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2177,7 +2291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
