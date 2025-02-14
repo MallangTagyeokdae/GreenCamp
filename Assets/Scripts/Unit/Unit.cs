@@ -54,6 +54,8 @@ public abstract class Unit : Entity
     public Coroutine unitBehaviour;
     public ClickEventHandler clickEventHandler;
 
+    public GameObject prefab;
+    public Transform prefabPosition;
 
     public Order order = Order.Idle;
 
@@ -312,6 +314,17 @@ public abstract class Unit : Entity
     [PunRPC]
     public void SetTarget(int viewID){
         target = PhotonView.Find(viewID).gameObject;
+    }
+
+    public void Launch(){
+        if(target != null){
+            GameObject pjtObject = Instantiate(prefab, prefabPosition.position, Quaternion.identity);
+            pjtObject.AddComponent<Projectile>();
+            pjtObject.TryGetComponent(out Projectile projectile);
+            projectile.SetArrowTarget(target);
+            projectile.SetUnit(this);
+            projectile.LaunchProjectile();
+        }
     }
 
 }

@@ -24,9 +24,6 @@ public class TurretMagician : Unit
         // 추가 초기화 작업 수행 가능
     }
 
-    public GameObject fireBall_prefab;
-    public Transform fireBallPosition;
-
     void Start()
     {
         this.maxHealth = 1000000;
@@ -50,16 +47,5 @@ public class TurretMagician : Unit
         this.populationCost = 1;
         this.population = 1;
         this.fow = 30;
-    }
-
-    public void Launch(){
-        if(target != null){
-            GameObject fireball = Instantiate(fireBall_prefab, fireBallPosition.position, Quaternion.identity);
-            fireball.AddComponent<Projectile>();
-            fireball.TryGetComponent(out Projectile projectile);
-            projectile.SetArrowTarget(target);
-            projectile.SetUnit(this);
-            projectile.LaunchProjectile();
-        }
     }
 }
