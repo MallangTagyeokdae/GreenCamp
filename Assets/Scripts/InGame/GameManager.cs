@@ -777,7 +777,7 @@ public class GameManager : MonoBehaviour
     
     public async void CallUpgrade(Building building, int upgradeLevel, bool isUpgrade, string type, int cost)
     {
-        if(GameStatus.instance.CanUpgradeUnit(building, building.level, building.GetComponent<Academy>().damageUpgradeCost, isUpgrade))
+        if(GameStatus.instance.CanUpgradeUnit(building, upgradeLevel, building.GetComponent<Academy>().damageUpgradeCost, isUpgrade))
         {
             GameStatus.instance.currentResourceCount -= cost;
             building.GetComponent<Academy>().returnCost = cost;
@@ -795,7 +795,7 @@ public class GameManager : MonoBehaviour
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
         // 업그레이드 시간설정 부분
-        if (await OrderCreate(building, 10 + upgradeLevel * 1f, cts.Token))
+        if (await OrderCreate(building, upgradeLevel * 1f, cts.Token))
             {
             tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
@@ -810,13 +810,13 @@ public class GameManager : MonoBehaviour
                     building.GetComponent<Academy>().damageUpgradeCost *= 2;
                     break;
                 case "Armor":
-                    GameStatus.instance.damageIncrease += 3;
+                    GameStatus.instance.armorIncrease += 3;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isArmorUpgrade = false;
                     building.GetComponent<Academy>().armorUpgradeCost *= 2;
                     break;
                 case "Health":
-                    GameStatus.instance.damageIncrease += 10;
+                    GameStatus.instance.healthIncrease += 10;
                     unitController.ApplyUnitUpgrade(type, 10);
                     GameStatus.instance.isHealthUpgrade = false;
                     building.GetComponent<Academy>().healthUpgradeCost *= 2;
