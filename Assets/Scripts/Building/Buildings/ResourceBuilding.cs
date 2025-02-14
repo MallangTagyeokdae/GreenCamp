@@ -45,6 +45,7 @@ public class ResourceBuilding : Building
         this.population = 1;
         this.increasePersent = 1f;
         this.fow = 40;
+        this.armor = 10;
     }
 
     [PunRPC]

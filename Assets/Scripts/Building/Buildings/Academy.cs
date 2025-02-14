@@ -9,14 +9,16 @@ public class Academy : Building
 {
     private void Awake()
     {
-        this.maxHealth = 25;
+        this.maxHealth = 150;
         this.currentHealth = 0;
     }
     public int increasePersent { get; set; }
     public int damageUpgradeCost { get; set; }
     public int armorUpgradeCost { get; set; }
+    public int healthUpgradeCost { get; set; }
     public int damageLevel { get; set; }
     public int armorLevel { get; set; }
+    public int healthLevel { get; set; }
     
     public Academy(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
@@ -24,7 +26,7 @@ public class Academy : Building
         buildingID,
         type : "Academy",
         buildingLocation,
-        maxHealth : 200,
+        maxHealth : 150,
         cost : 0,
         level : 1
         )
@@ -50,8 +52,11 @@ public class Academy : Building
         this.fow = 40;
         this.damageLevel = 1;
         this.armorLevel = 1;
+        this.healthLevel = 1;
         this.damageUpgradeCost = 30;
         this.armorUpgradeCost = 30;
+        this.healthUpgradeCost = 30;
+        this.armor = 10;
     }
 
     [PunRPC]

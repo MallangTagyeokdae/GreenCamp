@@ -37,5 +37,6 @@ public class Healer : Unit
         this.populationCost = 1;
         this.population = 2;
         this.fow = 30;
+        this.armor = 5;
     }
 }

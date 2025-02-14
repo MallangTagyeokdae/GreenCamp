@@ -37,6 +37,7 @@ public class Soldier : Unit
         this.populationCost = 1;
         this.population = 1;
         this.fow = 30;
+        this.armor = 10;
     }
 }
 

@@ -43,6 +43,7 @@ public class PopulationBuilding : Building
         this.population = 1;
         this.increasePersent = 10;
         this.fow = 40;
+        this.armor = 10;
     }
 
     [PunRPC]
