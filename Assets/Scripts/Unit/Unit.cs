@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading;
 using FischlWorks_FogWar;
 using Photon.Pun;
+using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public abstract class Unit : Entity
@@ -40,6 +42,9 @@ public abstract class Unit : Entity
     public int unitPowerRange { get; set; }
     public int unitMoveSpeed { get; set; }
     public int populationCost { get; set; }
+
+    public bool isTurretUnit = false;
+    private Quaternion _initRotation;
     public State state = State.Idle;
     public GameObject target;
 
@@ -73,18 +78,22 @@ public abstract class Unit : Entity
         attackList = new HashSet<GameObject>();
         aggList = new HashSet<GameObject>();
         animator = GetComponent<Animator>();
-        healthBar = gameObject.transform.Find("HealthBar/UnitCurrentHealth").GetComponent<Slider>();
-        healthBar.gameObject.SetActive(false);
-        rigidbody = gameObject.GetComponent<Rigidbody>();
-        rigidbody.isKinematic = true;
-        clickedEffect = transform.Find("ClickedEffect").gameObject;
-        enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
-        clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
-        clickEventHandler.rightClickDownEvent.AddListener((Vector3 pos) =>
-        {
-            GameManager.instance.SetTargetObject(gameObject);
+        _initRotation = gameObject.transform.rotation;
+        if(!isTurretUnit){
+            healthBar = gameObject.transform.Find("HealthBar/UnitCurrentHealth").GetComponent<Slider>();
+            healthBar.gameObject.SetActive(false);
+            rigidbody = gameObject.GetComponent<Rigidbody>();
+            rigidbody.isKinematic = true;
+            clickedEffect = transform.Find("ClickedEffect").gameObject;
+            enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
+            clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
+            clickEventHandler.rightClickDownEvent.AddListener((Vector3 pos) =>
+                {
+                    GameManager.instance.SetTargetObject(gameObject);
+                }
+            );    
         }
-        );
+        
     }
 
     private void Start()
@@ -199,7 +208,12 @@ public abstract class Unit : Entity
             case "Idle":
                 destination = Vector3.zero;
                 state = State.Idle;
-                rigidbody.isKinematic = true;
+                if(!isTurretUnit){
+                    rigidbody.isKinematic = true;
+                }
+                else{
+                    transform.rotation = _initRotation;
+                }
                 OnIdleEnter();
                 break;
 
@@ -213,7 +227,9 @@ public abstract class Unit : Entity
 
             case "Attack":
                 state = State.Attack;
-                rigidbody.isKinematic = true;
+                if(!isTurretUnit){
+                    rigidbody.isKinematic = true;
+                }
                 if(gameObject.GetComponent<PhotonView>().IsMine){
                     animator.SetBool("isAttacking", true);
                 }

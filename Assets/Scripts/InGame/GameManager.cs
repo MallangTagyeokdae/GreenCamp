@@ -370,6 +370,9 @@ public class GameManager : MonoBehaviour
                 case "Defender":
                     SetBuildingInfo(6, building);
                     break;
+                case "Academy":
+                    SetBuildingInfo(9, building);
+                    break;
             }
         }
     }
@@ -735,27 +738,55 @@ public class GameManager : MonoBehaviour
         if (clickedObject[0].TryGetComponent(out Building building))
         {
             Academy academy = building.GetComponent<Academy>();
-            int upgradeLevel = (type == "Damage") ? academy.damageLevel : academy.armorLevel;
-            bool isUpgrade = (type == "Damage") ? GameStatus.instance.isDamageUpgrade : GameStatus.instance.isDamageUpgrade;
-            if (upgradeLevel < building.level && isUpgrade)
+            int _upgradeLevel = 0;
+            bool _isUpgrade = false;
+            switch(type)
             {
-                var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
-
-                buildingController.SetBuildingState(building, Building.State.InProgress, type);
-
-                ReloadBuildingUI(building);
-
-                tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
-
-                if (await OrderCreate(building, 10 + upgradeLevel * 10f, cts.Token))
-                {
-                    tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
-
-                    buildingController.SetBuildingState(building, Building.State.Built, "None");
-                }
-
-                ReloadBuildingUI(building);
+                case "Damage":
+                    _upgradeLevel = academy.damageLevel;
+                    _isUpgrade = GameStatus.instance.isDamageUpgrade;
+                    GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+                    CallUpgrade(building, _upgradeLevel, !_isUpgrade, type);
+                    break;
+                case "Armor":
+                    _upgradeLevel = academy.armorLevel;
+                    _isUpgrade = GameStatus.instance.isArmorUpgrade;
+                    CallUpgrade(building, _upgradeLevel, !_isUpgrade, type);
+                    GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+                    break;
+                case "Health":
+                    _upgradeLevel = academy.healthLevel;
+                    _isUpgrade = GameStatus.instance.isHealthUpgrade;
+                    CallUpgrade(building, _upgradeLevel, !_isUpgrade, type);
+                    GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+                    break;       
             }
+
+        }
+    }
+    
+    public async void CallUpgrade(Building building, int upgradeLevel, bool isUpgrade, string type)
+    {
+        if (upgradeLevel <= building.level && isUpgrade)
+        {
+            var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
+
+            buildingController.SetBuildingState(building, Building.State.InProgress, type);
+
+            ReloadBuildingUI(building);
+
+            tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
+
+            if (await OrderCreate(building, 10 + upgradeLevel * 10f, cts.Token))
+            {
+                tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
+
+                unitController.UpgradeUnit(type, upgradeLevel);
+
+                buildingController.SetBuildingState(building, Building.State.Built, "None");
+            }
+
+            ReloadBuildingUI(building);
         }
     }
 

@@ -221,7 +221,13 @@ public class UnitController : MonoBehaviour
             }
 
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
-            ally.transform.rotation = Quaternion.LookRotation(rot);
+            if(!unit.isTurretUnit){
+                ally.transform.rotation = Quaternion.LookRotation(rot);    
+            }
+            else{
+                rot.y = 0;
+                ally.transform.rotation = Quaternion.LookRotation(rot);    
+            }
             yield return null;
         }
         
@@ -234,6 +240,43 @@ public class UnitController : MonoBehaviour
         {
             unit.SetOrder(0);
             unit.ChangeState("Idle");
+        }
+    }
+
+    public void UpgradeUnit(string type, int level)
+    {
+        switch(type)
+        {
+            case "Damage":
+                ApplyUnitUpgrade(type,5);
+                break;
+            case "Armor":
+                ApplyUnitUpgrade(type,5);
+                break;
+            case "Health":
+                ApplyUnitUpgrade(type,20);
+                break;
+        }
+    }
+
+    public void ApplyUnitUpgrade(string type, int degree)
+    {
+        foreach(KeyValuePair<int, Unit> valuePair in unitDictionary)
+        {
+            switch(type)
+            {
+                case "Damage":
+                    valuePair.Value.unitPower += degree;
+                    break;
+                case "Armor":
+                    valuePair.Value.armor += degree;
+                    break;
+                case "Health":
+                    float healthPercent = (float)(valuePair.Value.currentHealth / valuePair.Value.maxHealth);
+                    valuePair.Value.maxHealth += degree;
+                    valuePair.Value.currentHealth = Mathf.FloorToInt(valuePair.Value.maxHealth * healthPercent);  
+                    break;
+            }
         }
     }
 }

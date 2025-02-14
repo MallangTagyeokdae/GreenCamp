@@ -46,6 +46,7 @@ public class Archer : Unit
         this.populationCost = 1;
         this.population = 1;
         this.fow = 30;
+        this.armor = 1;
     }
 
     public void Shoot(){

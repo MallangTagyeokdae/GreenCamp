@@ -23,6 +23,7 @@ public class Entity : MonoBehaviour
     public HashSet<GameObject> attackList;
     public HashSet<GameObject> aggList;
     public string teamID;
+    public int armor { get; set; }
     public float maxHealth { get; set; }
     public float currentHealth { get; set; }
     public int population { get; set; }

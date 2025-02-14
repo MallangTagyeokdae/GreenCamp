@@ -588,8 +588,8 @@ GameObject:
   - component: {fileID: -24312675276253883}
   - component: {fileID: -9068439956788623499}
   - component: {fileID: -1223268231721252536}
-  - component: {fileID: -8416080156142566213}
   - component: {fileID: 8105564658677382957}
+  - component: {fileID: 5255621582703213989}
   m_Layer: 0
   m_Name: PopulationBuilding
   m_TagString: Clickable
@@ -761,44 +761,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &-8416080156142566213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850242999582102491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 564a028900423421fb4407dfad2f2063, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  attTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
-  aggTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  aggTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
-  teamID: 
-  healthBar: {fileID: 87844144323508321}
-  clickedEffect: {fileID: 0}
-  enemyClickedEffect: {fileID: 0}
-  progressBar: {fileID: 4600271945962562612}
-  state: 0
-  inProgressItem: 0
-  progressMesh1: {fileID: 4300000, guid: c4bb27f050a2ef4439fb736e16b2bded, type: 3}
-  progressMesh2: {fileID: 4300000, guid: b1ff534b3931e674e8e475faa59eb659, type: 3}
-  completeMesh: {fileID: 4300000, guid: 05035b78d90b21f43854dfe010ccd289, type: 3}
-  destroyEffect: {fileID: 8404358526681454788}
-  completeEffect: {fileID: 8870212785798236297}
-  levelUpEffect: {fileID: 3624708252143344220}
-  clickEventHandler: {fileID: 0}
 --- !u!54 &8105564658677382957
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -826,6 +788,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &5255621582703213989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850242999582102491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2502fd98ef0b4e268dbb5483dc87d78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  attTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  aggTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
+  teamID: 
+  healthBar: {fileID: 87844144323508321}
+  clickedEffect: {fileID: 0}
+  enemyClickedEffect: {fileID: 0}
+  progressBar: {fileID: 4600271945962562612}
+  state: 0
+  inProgressItem: 0
+  progressMesh1: {fileID: 4300000, guid: 0dd4551c6cd2445b7bfc192b3201fb49, type: 3}
+  progressMesh2: {fileID: 4300000, guid: 1412272a2e46b4f20bca1afc2230e60d, type: 3}
+  completeMesh: {fileID: 4300000, guid: 05035b78d90b21f43854dfe010ccd289, type: 3}
+  destroyEffect: {fileID: 8404358526681454788}
+  completeEffect: {fileID: 8870212785798236297}
+  levelUpEffect: {fileID: 3624708252143344220}
+  clickEventHandler: {fileID: 0}
 --- !u!1 &4345788544914150259
 GameObject:
   m_ObjectHideFlags: 0

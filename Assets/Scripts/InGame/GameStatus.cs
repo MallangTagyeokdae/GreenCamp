@@ -36,11 +36,12 @@ public class GameStatus : MonoBehaviour
     public bool isWin { get; set; }
     public bool isDamageUpgrade { get; set; }
     public bool isArmorUpgrade { get; set; }
+    public bool isHealthUpgrade { get; set; }
     public void InitGameStatus()
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
         maxResourceCount = 10000;
-        currentResourceCount = 10000;
+        currentResourceCount = 40;
         resourcePerSecond = 1;
         maxUnitCount = 10;
         currentUnitCount = 0;
@@ -49,6 +50,7 @@ public class GameStatus : MonoBehaviour
         isWin = true;
         isDamageUpgrade = false;
         isArmorUpgrade = false;
+        isHealthUpgrade = false;
     }
 
     public void IncreaseMaxResourceCount(int count)

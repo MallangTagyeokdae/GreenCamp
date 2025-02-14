@@ -47,6 +47,7 @@ public class Command : Building
         this.underGrid = colliders;
         this.population = 0;
         this.fow = 75;
+        this.armor = 20;
     }
 
 
