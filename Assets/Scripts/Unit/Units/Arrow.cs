@@ -18,7 +18,10 @@ public class Arrow : MonoBehaviour
     }
 
     private void OnDisable() {
-        transform.position = transform.parent.TransformPoint(initPos);
+        //수정해야함
+        if(_unit.unitType == "Archer"){
+            transform.position = transform.parent.TransformPoint(initPos);
+        }
     }
 
     private void OnTriggerEnter(Collider other) {

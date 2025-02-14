@@ -25,6 +25,7 @@ public class TurretMagician : Unit
     }
 
     public GameObject fireBall_prefab;
+    public Transform fireBallPosition;
 
     void Start()
     {
@@ -53,7 +54,7 @@ public class TurretMagician : Unit
 
     public void CastFireball(){
         if(target != null){
-            GameObject fireball = Instantiate(fireBall_prefab);
+            GameObject fireball = Instantiate(fireBall_prefab, fireBallPosition.position, Quaternion.identity);
             fireball.AddComponent<Arrow>();
             fireball.TryGetComponent(out Arrow arr);
             arr.SetArrowTarget(target);
