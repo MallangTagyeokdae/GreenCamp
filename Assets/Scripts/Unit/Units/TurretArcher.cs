@@ -24,10 +24,6 @@ public class TurretArcher : Unit
         // 추가 초기화 작업 수행 가능
     }
 
-    public GameObject arrow;
-    public GameObject arrow_prefab;
-    public Transform arrowPosition;
-
     void Start()
     {
         this.maxHealth = 1000000;
@@ -51,16 +47,5 @@ public class TurretArcher : Unit
         this.populationCost = 1;
         this.population = 1;
         this.fow = 30;
-    }
-
-    public void Shoot(){
-        //PhotonView targetView = PhotonView.Find(viewID);
-        if(target != null){
-            arrow.SetActive(true);
-            arrow.TryGetComponent(out Arrow arr);
-            arr.SetArrowTarget(target);
-            arr.SetUnit(this);
-            arr.LaunchArrow();
-        }
     }
 }
