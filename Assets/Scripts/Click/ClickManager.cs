@@ -116,51 +116,22 @@ public class ClickManager : MonoBehaviour
         #endregion
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 메인카메라 위치로부터 마우스 위치까지 ray를 생성
-        RaycastHit hit;
+        RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
+        //RaycastHit hit;
 
         if (drawRay) // drawRay가 true인 경우 scene에 ray를 그림
         {
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
         }
-
-        // if (Physics.Raycast(ray, out hit, Mathf.Infinity, 7)) 
-        // {
-        //     Vector2 uv = hit.textureCoord;
-
-        //     int x = Mathf.FloorToInt(uv.x * fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.width);
-        //     int y = Mathf.FloorToInt(uv.y * fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.height);
-
-        //     // 픽셀 색상 가져오기
-        //     Color fogColor = fow.GetComponent<csFogWar>().fogPlaneTextureLerpBuffer.GetPixel(x, y);
-
-        //     Debug.Log(x + " / " + y + " => " + fogColor.a);
-        //     // 안개 지역 확인
-        //     if (fogColor.a >= 1f)
-        //     {
-        //         Debug.Log("안개 지역 클릭됨! 클릭 무시.");
-        //         return;
-        //     }
-        // }
-
-
-        //RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
-
-        /*foreach(RaycastHit hit in hits){    
-            Debug.Log($"name: --{hit.collider.gameObject.name}");
         
-        }*/
-        /*int length = hits.Length;
-        for(int i = length - 1; i >= 0 ; i++){
+        int length = hits.Length;
+        for(int i = length - 1; i >= 0 ; i--){
             RaycastHit hit = hits[i];
             if (hit.collider.CompareTag("Clickable"))
             {
                 action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
                 break;
             }     
-        }*/
-        if (Physics.Raycast(ray, out hit, _distance) && hit.collider.CompareTag("Clickable"))
-        {
-            action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
         }
     }
 
