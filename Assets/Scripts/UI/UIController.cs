@@ -33,9 +33,9 @@ public class UIController : MonoBehaviour
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
-        switch(GameManager.instance.gameState)
+        switch (GameManager.instance.gameState)
         {
-            case  GameStates.InGame:
+            case GameStates.InGame:
                 SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiElements, commandLevel, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
                 SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiLockElements, commandLevel, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
                 break;
@@ -59,10 +59,11 @@ public class UIController : MonoBehaviour
         TMP_Text maxHealth = uIElement.maxHealth;
         Image image = uIElement.image;
         Slider currentHealthBar = uIElement.progressBar;
-        TMP_Text power = selectedUI.transform.Find("Center/Damage/Damage").GetComponent<TMP_Text>();
-        TMP_Text moveSpeed = selectedUI.transform.Find("Center/MoveSpeed/Speed").GetComponent<TMP_Text>();
+        TMP_Text power = selectedUI.transform.Find("Center/Information/DamageArea/Damage").GetComponent<TMP_Text>();
+        TMP_Text moveSpeed = selectedUI.transform.Find("Center/Information/MoveSpeedArea/Speed").GetComponent<TMP_Text>();
+        
 
-        switch(unit.unitType)
+        switch (unit.unitType)
         {
             case "Soldier":
                 image.sprite = uIElement.uiImages[0];
@@ -94,31 +95,31 @@ public class UIController : MonoBehaviour
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
 
-        switch(clickedBuilding.state)
+        switch (clickedBuilding.state)
         {
             case Building.State.InCreating:
                 selectedUI = UILists[1];
                 SetBuildingUIImage(selectedUI, clickedBuilding.type);
                 break;
             case Building.State.Built:
-                 // 건물의 상태(레벨)에 따라서 버튼의 Interactable을 활성화 시켜준다.
+                // 건물의 상태(레벨)에 따라서 버튼의 Interactable을 활성화 시켜준다.
                 SetBuildingButtonByLevel(selectedUI.GetComponent<UIElement>().uiElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
                 // 건물의 상태(레벨)에 따라서 활성화된 버튼 위의 잠금을 해제해준다.
                 SetBuildingButtonByLevel(selectedUI.GetComponent<UIElement>().uiLockElements, clickedBuilding, (List<UIButton> UIButtons, bool state) => SetActive(UIButtons, state), false);
                 // UI의 이미지를 업데이트한다.
                 SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem.ToString());
                 // UI의 진행바를 업데이트한다.
-                SetProgressBar(selectedUI, clickedBuilding.progress/100, 1);
+                SetProgressBar(selectedUI, clickedBuilding.progress / 100, 1);
                 break;
             case Building.State.InProgress:
-            // UI의 모든 버튼의 Interactable을 false로 바꾼다.
+                // UI의 모든 버튼의 Interactable을 false로 바꾼다.
                 SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, false);
                 // UI의 모든 버튼위에 Lock 표시를 한다.
                 SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
                 // UI의 이미지를 업데이트 해준다.
                 SetBuildingUIImage(selectedUI, clickedBuilding.inProgressItem.ToString());
                 // UI의 진행바를 업데이트한다.
-                SetProgressBar(selectedUI, clickedBuilding.progress/100, 1);
+                SetProgressBar(selectedUI, clickedBuilding.progress / 100, 1);
                 break;
             case Building.State.Destroy:
                 break;
@@ -137,7 +138,7 @@ public class UIController : MonoBehaviour
 
     public void SetBuildingUIImage(UIContainer selectedUI, string progressType) // UI에 이미지 업데이트 하는 함수
     {
-        switch(progressType)
+        switch (progressType)
         {
             case "Barrack":
             case "LevelUP":
@@ -163,72 +164,73 @@ public class UIController : MonoBehaviour
                 break;
         }
     }
-    
-    private void SetBuildingButtonByLevel(List<UIButton> uIButtons, Building building, Action<List<UIButton>,bool> action, bool state)
+
+    private void SetBuildingButtonByLevel(List<UIButton> uIButtons, Building building, Action<List<UIButton>, bool> action, bool state)
     {
-        if(building.TryGetComponent(out Barrack barrack))
+        if (building.TryGetComponent(out Barrack barrack))
         {
             int level = barrack.level;
-            switch(level)
+            switch (level)
             {
                 case 1:
-                    action(uIButtons.GetRange(1,1), state);
-                    action(uIButtons.GetRange(2,3), !state);
+                    action(uIButtons.GetRange(1, 1), state);
+                    action(uIButtons.GetRange(2, 3), !state);
                     break;
                 case 2:
-                    action(uIButtons.GetRange(1,2), state);
-                    action(uIButtons.GetRange(3,2), !state);
+                    action(uIButtons.GetRange(1, 2), state);
+                    action(uIButtons.GetRange(3, 2), !state);
                     break;
                 case 3:
-                    action(uIButtons.GetRange(1,3), state);
-                    action(uIButtons.GetRange(4,1), !state);
+                    action(uIButtons.GetRange(1, 3), state);
+                    action(uIButtons.GetRange(4, 1), !state);
                     break;
                 case 4:
-                    action(uIButtons.GetRange(1,4), state);
+                    action(uIButtons.GetRange(1, 4), state);
                     break;
             }
         }
         // 레벨에 상관없이 레벨업 버튼은 Interactable -> true, Lock 버튼 Active -> false로 해야함
-        if(state)
+        if (state)
         {
             uIButtons[0].interactable = state;
-        } else if(!state)
+        }
+        else if (!state)
         {
             uIButtons[0].gameObject.SetActive(state);
         }
     }
-    
+
     private void SetBuildingListButton(List<UIButton> uIButtons, int level, Action<List<UIButton>, bool> action, bool state)
     {
-        switch(level)
+        switch (level)
         {
             case 1:
             case 2:
             case 3:
-                action(uIButtons.GetRange(0,3), state);
-                action(uIButtons.GetRange(4,1), state);
-                action(uIButtons.GetRange(3,1), !state);
+                action(uIButtons.GetRange(0, 3), state);
+                action(uIButtons.GetRange(4, 1), state);
+                action(uIButtons.GetRange(3, 1), !state);
                 break;
             case 4:
-                action(uIButtons.GetRange(0,5), state);
+                action(uIButtons.GetRange(0, 5), state);
                 break;
         }
     }
 
     private void SetInteractable(List<UIButton> uIButtons, bool state)
     {
-        foreach(UIButton uIButton in uIButtons)
-        {   
-            if(uIButton.interactable != state)
+        foreach (UIButton uIButton in uIButtons)
+        {
+            if (uIButton.interactable != state)
                 uIButton.interactable = state;
         }
     }
 
     private void SetActive(List<UIButton> uIButtons, bool state)
     {
-        foreach(UIButton uIButton in uIButtons)
+        foreach (UIButton uIButton in uIButtons)
         {
-            if(uIButton.gameObject.activeSelf != state)
+            if (uIButton.gameObject.activeSelf != state)
                 uIButton.gameObject.SetActive(state);
         }
     }
@@ -249,7 +251,7 @@ public class UIController : MonoBehaviour
     {
         int currentHealth = (int)Math.Round(clickedObject.GetComponent<Building>().currentHealth);
         int maxHealth = (int)Math.Round(clickedObject.GetComponent<Building>().maxHealth);
-        if(clickedObject.state == (Building.State).0) // 건설중인경우에는 체력바도 업데이트 해줘야함
+        if (clickedObject.state == (Building.State).0) // 건설중인경우에는 체력바도 업데이트 해줘야함
         {
             SetProgressBar(currentUI, currentHealth, maxHealth);
         }
@@ -258,8 +260,8 @@ public class UIController : MonoBehaviour
 
     public void UpdateElementInfo(UIContainer selectedUI, Building clickedBuilding)
     {
-        if(selectedUI.Equals(UILists[1])) return;
-        switch(clickedBuilding)
+        if (selectedUI.Equals(UILists[1])) return;
+        switch (clickedBuilding)
         {
             case Command:
                 selectedUI.GetComponent<UIElement>().elementInfo.text = clickedBuilding.GetComponent<Command>().attackPower.ToString();
@@ -286,7 +288,7 @@ public class UIController : MonoBehaviour
 
     public void SetProgressBar(UIContainer currentUI, float currentvalue, float maxValue)
     {
-        if(currentUI != UILists[8] && currentUI.TryGetComponent(out UIElement uIElement))
+        if (currentUI != UILists[8] && currentUI.TryGetComponent(out UIElement uIElement))
         {
             Slider progresBar = uIElement.progressBar;
             progresBar.value = (float)(currentvalue * 1.0 / maxValue);
@@ -301,19 +303,23 @@ public class UIController : MonoBehaviour
 
     public string ParseBuildingName(Building building)
     {
-        if(building.name.Contains("Command"))
+        if (building.name.Contains("Command"))
         {
             return "본진";
-        } else if(building.name.Contains("Barrack"))
+        }
+        else if (building.name.Contains("Barrack"))
         {
             return "배럭";
-        } else if(building.name.Contains("Population"))
+        }
+        else if (building.name.Contains("Population"))
         {
             return "인구수건물";
-        } else if(building.name.Contains("Resource"))
+        }
+        else if (building.name.Contains("Resource"))
         {
             return "자원건물";
-        } else if(building.name.Contains("Defender"))
+        }
+        else if (building.name.Contains("Defender"))
         {
             return "방어건물";
         }
@@ -324,10 +330,10 @@ public class UIController : MonoBehaviour
     {
         TMP_Text countDown = Options[0].transform.Find("CountDown").GetComponent<TMP_Text>();
 
-        for(int i=3; i>0; i--)
+        for (int i = 3; i > 0; i--)
         {
             countDown.text = i.ToString();
-            if(i == 1)
+            if (i == 1)
             {
                 Options[1].Show();
                 Options[2].Show();
@@ -342,12 +348,12 @@ public class UIController : MonoBehaviour
     {
         UIContainer groupUI = UILists[index];
         int imageIndex = 0;
-        for(int i = startIndex; i<clickedObjs.Count; i++)
+        for (int i = startIndex; i < clickedObjs.Count; i++)
         {
-            if(clickedObjs[i].TryGetComponent(out Unit unit))
+            if (clickedObjs[i].TryGetComponent(out Unit unit))
             {
                 groupUI.GetComponent<UIElement>().groupImages[imageIndex].gameObject.SetActive(true);
-                switch(unit.unitType)
+                switch (unit.unitType)
                 {
                     case "Soldier":
                         groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[0];
@@ -372,7 +378,7 @@ public class UIController : MonoBehaviour
     {
         UIContainer groupUI = UILists[index];
 
-        foreach(Image image in groupUI.GetComponent<UIElement>().groupImages)
+        foreach (Image image in groupUI.GetComponent<UIElement>().groupImages)
         {
             image.gameObject.SetActive(false);
         }
@@ -380,17 +386,18 @@ public class UIController : MonoBehaviour
 
     public bool CheckIsUnitUI(UIContainer currentUI)
     {
-        if(currentUI == UILists[7] || currentUI == UILists[8])
+        if (currentUI == UILists[7] || currentUI == UILists[8])
             return true;
         return false;
     }
 
     public void SetSettingPage(bool state)
     {
-        if(state)
+        if (state)
         {
             Options[3].GetComponent<UIContainer>().Show();
-        } else
+        }
+        else
         {
             Options[3].GetComponent<UIContainer>().Hide();
         }
@@ -402,10 +409,11 @@ public class UIController : MonoBehaviour
         TMP_Text resultText = Options[4].transform.Find("Result").GetComponent<TMP_Text>();
 
         Options[4].Show();
-        if(isWin)
+        if (isWin)
         {
             resultText.text = "승리";
-        } else
+        }
+        else
         {
             resultText.text = "패배";
         }
