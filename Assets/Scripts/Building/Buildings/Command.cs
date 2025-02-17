@@ -65,7 +65,28 @@ public class Command : Building
     public override void DestroyEntity()
     {
         GameStatus.instance.isWin = false;
+        gameObject.GetComponent<PhotonView>().RPC("RemoveCommandUnit", RpcTarget.AllBuffered);
         GameManager.instance.SetState("EndGame");
+    }
+
+    [PunRPC]
+    public void RemoveCommandUnit()
+    {
+        foreach(GameObject unit in turretArchers)
+        {
+            if(unit.activeSelf == true)
+            {
+                unit.SetActive(false);
+            }
+        }
+
+        foreach(GameObject unit in turretMagician)
+        {
+            if(unit.activeSelf == true)
+            {
+                unit.SetActive(false);
+            }
+        }
     }
 
     [PunRPC]
