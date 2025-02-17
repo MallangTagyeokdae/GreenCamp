@@ -117,7 +117,31 @@ public class ClickManager : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 메인카메라 위치로부터 마우스 위치까지 ray를 생성
         RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
-        //RaycastHit hit;
+
+        foreach(RaycastHit gameObject in hits)
+        {
+            if (gameObject.collider.gameObject.layer == 8)
+            {
+                Renderer renderer = gameObject.collider.GetComponent<Renderer>();
+
+                if(renderer != null)
+                {
+                    Texture2D fogTexture = renderer.material.mainTexture as Texture2D;
+                    Vector2 uv = gameObject.textureCoord;
+
+                    int pixelX = Mathf.FloorToInt(uv.x * fogTexture.width);
+                    int pixelY = Mathf.FloorToInt(uv.y * fogTexture.height);
+
+                    Color pixelColor = fogTexture.GetPixel(pixelX, pixelY);
+                    Debug.Log($"안개 픽셀 색상: {pixelColor}, 알파값: {pixelColor.a} 클릭 : {side}");
+
+                    if(side == 0 && pixelColor.a > 0.1) // 좌클릭인데 알파값이 0보다 크면 (암흑시야이면) 함수 종료해서 클릭 막음
+                    {
+                        return;
+                    }
+                }
+            }
+        }
 
         if (drawRay) // drawRay가 true인 경우 scene에 ray를 그림
         {
@@ -130,8 +154,9 @@ public class ClickManager : MonoBehaviour
         }
         
         for(int i = 0; i < length; i++){
+
             RaycastHit hit = hits[i];
-            Debug.Log($"클릭한 객체: {hit.collider.name}");
+
             if (hit.collider.CompareTag("Clickable"))
             {
                 action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
