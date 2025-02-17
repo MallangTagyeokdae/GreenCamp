@@ -1342,7 +1342,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1417993795}
+        m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+        m_MethodName: SoundVolumeControl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &76395356
 GameObject:
   m_ObjectHideFlags: 0
@@ -3694,7 +3706,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
@@ -3995,7 +4019,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
@@ -4661,7 +4697,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
@@ -9929,7 +9977,7 @@ MonoBehaviour:
   NormalState:
     StateType: 0
     StateEvent:
-      EventName: Normal
+      EventName: Normal State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -9937,7 +9985,7 @@ MonoBehaviour:
   HighlightedState:
     StateType: 1
     StateEvent:
-      EventName: Highlighted
+      EventName: Highlighted State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -9945,21 +9993,21 @@ MonoBehaviour:
   PressedState:
     StateType: 2
     StateEvent:
-      EventName: Pressed
+      EventName: Pressed State
       Runners: []
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: OutGameState, Assembly-CSharp
-            m_MethodName: SetLobbyState
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
             m_Mode: 5
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
-              m_StringArgument: Logout
+              m_StringArgument: Button
               m_BoolArgument: 0
             m_CallState: 2
           - m_Target: {fileID: 1808861707}
@@ -9977,7 +10025,7 @@ MonoBehaviour:
   SelectedState:
     StateType: 3
     StateEvent:
-      EventName: Selected
+      EventName: Selected State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -9985,7 +10033,7 @@ MonoBehaviour:
   DisabledState:
     StateType: 4
     StateEvent:
-      EventName: Disabled
+      EventName: Disabled State
       Runners: []
       Event:
         m_PersistentCalls:
@@ -15719,7 +15767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundList: {fileID: 11400000, guid: 00ea9ad37319f4a49a8c83b93fb8ff6b, type: 2}
-  bgmClip: {fileID: 8300000, guid: 487173db45280c241bb52e769cddd80e, type: 3}
+  bgmClip: {fileID: 8300000, guid: 8bd637bc8c801534c858ba98c5eda892, type: 3}
   masterSlider: {fileID: 1274445299}
   bgmSlider: {fileID: 1255134927}
   effectSlider: {fileID: 65375903}
@@ -23834,7 +23882,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
@@ -24952,7 +25012,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
@@ -25158,6 +25230,18 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 1
+            m_CallState: 2
           - m_Target: {fileID: 119623202}
             m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
             m_MethodName: SetState
@@ -28706,7 +28790,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
@@ -30904,7 +31000,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:
@@ -31404,7 +31512,19 @@ MonoBehaviour:
       Runners: []
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1417993795}
+            m_TargetAssemblyTypeName: PlaySoundHandler, Assembly-CSharp
+            m_MethodName: PlaySound
+            m_Mode: 5
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: Button
+              m_BoolArgument: 0
+            m_CallState: 2
   SelectedState:
     StateType: 3
     StateEvent:

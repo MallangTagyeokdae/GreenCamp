@@ -17,6 +17,7 @@ public class PlaySoundHandler : MonoBehaviour
 
 
     public void PlaySound(string soundName){
+        Debug.Log("check");
         SoundManager.instance.PlaySound(soundName);
     }
 
