@@ -66,7 +66,6 @@ public class Command : Building
     {
         GameStatus.instance.isWin = false;
         GameManager.instance.SetState("EndGame");
-        Destroy(gameObject);
     }
 
     [PunRPC]

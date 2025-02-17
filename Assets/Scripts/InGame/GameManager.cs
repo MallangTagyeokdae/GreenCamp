@@ -388,16 +388,44 @@ public class GameManager : MonoBehaviour
 
     public void UpdateEventUI(GameObject eventedObject)
     {
-        if (clickedObject[0] == eventedObject)
+        switch(clickedObject.Count())
         {
-            if (eventedObject.TryGetComponent(out Building building))
-            {
-                ReloadBuildingUI(building);
-            }
-            else if (eventedObject.TryGetComponent(out Unit unit))
-            {
-                SetUnitInfo(7, unit.gameObject);
-            }
+            case 1:
+                if (clickedObject[0] == eventedObject)
+                {
+                    if (eventedObject.TryGetComponent(out Building building))
+                    {
+                        ReloadBuildingUI(building);
+                    }
+                    else if (eventedObject.TryGetComponent(out Unit unit))
+                    {
+                        SetUnitInfo(7, unit.gameObject);
+                    }
+                }
+                break;
+            case 2:
+                if (!clickedObject[0].GetComponent<Unit>())
+                {
+                    if(clickedObject[1] == eventedObject && eventedObject.GetComponent<Unit>())
+                    {
+                        SetUnitInfo(7, eventedObject);
+                    }
+                }
+                else
+                {
+                    SetGroupUnitUI(8,0);
+                }
+                break;
+            default:
+                if (!clickedObject[0].GetComponent<Unit>())
+                {
+                    SetGroupUnitUI(8,0);
+                }
+                else
+                {
+                    SetGroupUnitUI(8,1);
+                }
+                break;
         }
     }
     // =====================================================
