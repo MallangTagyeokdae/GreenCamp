@@ -64,7 +64,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         Debug.Log("Connected to Master!");
         PhotonNetwork.JoinLobby(); // 로비 입장
-        PhotonNetwork.AutomaticallySyncScene = false;
         //base.OnConnectedToMaster();
     }
 
