@@ -14,17 +14,13 @@ public class Projectile : MonoBehaviour
 
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log($"발사체가 맞춘 collider: {other.name}, taget인가? {other.gameObject == _target}");
         if(other.gameObject == _target){
-            Debug.Log("이건 제대로 되나?");
             if(_unit.gameObject.GetComponent<PhotonView>().IsMine == false){  //화살을 쏜 유닛이 자신의 유닛이 아닌 경우 return
-                Debug.Log("check trigger");
                 StopCoroutine(coroutine);
                 Destroy(gameObject);
                 return;
             }
             else{
-                Debug.Log("이건 제대로 되나?2");
                 if(_target != null){
                     _target.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, _unit.unitPower);  //화살을 쏜 유닛이 자신의 유닛인 경우 적에게 맞았을 때 마스터 클라이언트에게 판정을 요구
                 }
@@ -61,7 +57,6 @@ public class Projectile : MonoBehaviour
         }
 
         if(_target != null && _unit.gameObject.transform.parent.gameObject.GetComponent<PhotonView>().IsMine){
-            Debug.Log("check Launch");
             _target.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, _unit.unitPower);
         }
         Destroy(gameObject);
