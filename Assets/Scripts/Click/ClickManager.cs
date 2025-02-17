@@ -117,7 +117,31 @@ public class ClickManager : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 메인카메라 위치로부터 마우스 위치까지 ray를 생성
         RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
-        //RaycastHit hit;
+        
+        foreach(RaycastHit raycastHit in hits)
+        {
+            if(raycastHit.collider.gameObject.layer == 8)
+            {
+                Renderer renderer = raycastHit.collider.GetComponent<Renderer>();
+
+                if (renderer != null)
+                {
+                    Texture2D fogTexture = renderer.material.mainTexture as Texture2D;
+                    Vector2 uv = raycastHit.textureCoord;
+
+                    int pixelX = Mathf.FloorToInt(uv.x * fogTexture.width);
+                    int pixelY = Mathf.FloorToInt(uv.y * fogTexture.height);
+
+                    Color pixelColor = fogTexture.GetPixel(pixelX, pixelY);
+                    
+                    if(pixelColor.a > 0.1 && side == 0)
+                    {
+                        return;
+                    }
+                }
+                break;
+            }
+        }
 
         if (drawRay) // drawRay가 true인 경우 scene에 ray를 그림
         {
