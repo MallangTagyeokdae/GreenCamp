@@ -51,6 +51,7 @@ public abstract class Building : Entity
     public Mesh progressMesh2;
     public Mesh completeMesh;
     public GameObject destroyEffect;
+    public GameObject fireEffect;
     public GameObject completeEffect;
     public GameObject levelUpEffect;
     public ClickEventHandler clickEventHandler;
@@ -172,6 +173,7 @@ public abstract class Building : Entity
     public virtual void ActiveDestroyEffect()
     {
         destroyEffect.SetActive(true);
+        fireEffect.SetActive(true);
     }
 
     [PunRPC]
