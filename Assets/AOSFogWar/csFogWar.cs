@@ -376,9 +376,12 @@ namespace FischlWorks_FogWar
             fogPlane = GameObject.CreatePrimitive(PrimitiveType.Plane);
 
             fogPlane.name = "[RUNTIME] Fog_Plane";
-            fogPlane.layer = 8;
+            fogPlane.layer = 7;
 
-            fogPlane.transform.position = new Vector3(0,fogPlaneHeight,0);
+            fogPlane.transform.position = new Vector3(
+                levelMidPoint.position.x,
+                levelMidPoint.position.y + fogPlaneHeight,
+                levelMidPoint.position.z);
 
             fogPlane.transform.localScale = new Vector3(
                 (levelDimensionX * unitScale) / 10.0f,
@@ -396,7 +399,7 @@ namespace FischlWorks_FogWar
 
             fogPlane.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", fogPlaneTextureLerpBuffer);
 
-            fogPlane.GetComponent<MeshCollider>().enabled = true;
+            fogPlane.GetComponent<MeshCollider>().enabled = false;
         }
 
 
