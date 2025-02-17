@@ -9,6 +9,7 @@ using Photon.Pun;
 using UnityEngine;
 using Unity.VisualScripting;
 using FischlWorks_FogWar;
+using UnityEngine.SceneManagement;
 
 public enum GameStates
 {
@@ -1285,5 +1286,12 @@ public class GameManager : MonoBehaviour
                          .OrderBy(x => random.Next()) // 랜덤으로 섞기
                          .Take(2) // 앞에서 2개 선택
                          .ToArray(); // 배열로 변환
+    }
+
+    //------------------------------------------------------
+
+    public void testleaveroom(){
+        SceneManager.LoadScene(0);
+        //PhotonManager.instance.LeaveRoom();
     }
 }

@@ -27,6 +27,7 @@ public class LogIn : LobbyState
 
     private bool LogInCheck(){
         if(nickName.text != ""){
+            PhotonManager.instance.userInfo.loggedin = true;
             return true;
         }
         else {
@@ -35,6 +36,8 @@ public class LogIn : LobbyState
     }
 
     public bool Continue(){
-        return LogInCheck();
+        bool check = LogInCheck();
+        Debug.Log($"check log in: {check}");
+        return check;
     }
 }

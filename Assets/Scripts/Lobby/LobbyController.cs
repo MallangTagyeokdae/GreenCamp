@@ -12,6 +12,7 @@ using Doozy.Runtime.UIManager.Listeners;
 using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager;
 using Photon.Pun;
+using Doozy.Runtime.UIManager.Containers;
 
 public class LobbyController : MonoBehaviour
 {
@@ -27,7 +28,17 @@ public class LobbyController : MonoBehaviour
     {
         _roomList = new List<string>();
         _roomObjects = new Dictionary<string, GameObject>();
-        SetState("LogIn");
+        if(PhotonManager.instance.userInfo.loggedin){
+            Debug.Log("lobby controller check2");
+            GameObject.Find("LoginPage").GetComponent<UIContainer>().Hide();
+            GameObject.Find("AfterLoginPage").GetComponent<UIContainer>().Show();
+            SetState("Home");
+        }
+        else{
+            Debug.Log("lobby controller check");
+            SetState("LogIn");
+        }
+        
     }
 
     public void SetState(string stateName)

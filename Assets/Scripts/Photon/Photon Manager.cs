@@ -35,6 +35,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         // 이 객체가 씬 전환 시 파괴되지 않도록 설정
         DontDestroyOnLoad(this.gameObject);
+        userInfo.loggedin = false;
         _roomList = new List<RoomInfo>();
 
     }
@@ -63,6 +64,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         Debug.Log("Connected to Master!");
         PhotonNetwork.JoinLobby(); // 로비 입장
+        PhotonNetwork.AutomaticallySyncScene = false;
         //base.OnConnectedToMaster();
     }
 
@@ -105,6 +107,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         roomOptions.EmptyRoomTtl = 1000; //n msec 동안 방 파괴 x
         ///string titlecheck = (string)roomInfo.CustomProperties["Title"];
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable{{ "Red", false }, {"Blue", false}};
+        
 
 
         if (PhotonNetwork.CreateRoom(roomName + "~" + roomTitle, roomOptions))
