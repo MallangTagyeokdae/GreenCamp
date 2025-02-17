@@ -7,6 +7,7 @@ public class UserInfo : ScriptableObject
 {
     public string user;
     public string currentRoom;
+    public bool loggedin = false;
 
     public void InitUserInfo(){
         currentRoom = null;
