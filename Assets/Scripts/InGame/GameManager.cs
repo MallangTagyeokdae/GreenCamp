@@ -271,6 +271,7 @@ public class GameManager : MonoBehaviour
         }
 
         GameObject effect = Instantiate(clickEffect, new Vector3(newLocation.x, .2f, newLocation.z), Quaternion.Euler(new Vector3(90, 0, 0)));
+        effect.GetComponent<Renderer>().material.renderQueue = 3100;
     }
 
     public void GroundLeftClickEvent(Vector3 newLocation)
