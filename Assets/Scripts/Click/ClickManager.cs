@@ -131,7 +131,6 @@ public class ClickManager : MonoBehaviour
         
         for(int i = 0; i < length; i++){
             RaycastHit hit = hits[i];
-            Debug.Log($"클릭한 객체: {hit.collider.name}");
             if (hit.collider.CompareTag("Clickable"))
             {
                 action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
