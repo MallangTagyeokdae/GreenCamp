@@ -13,7 +13,6 @@ public class Archer : Unit
         this.currentHealth = 50 + GameStatus.instance.healthIncrease;
         this.unitPower = 35 + GameStatus.instance.damageIncrease;
     }
-    public GameObject arrow;
     // teamID, unitID, unitLocation은 생성자 호출 시 전달된 값으로 초기화됨 (생성자 매개변수로 전달되어 부모 클래스에서 초기화됨)
 
     public Archer(string teamID, int unitID, Vector3 unitLocation)
@@ -47,16 +46,5 @@ public class Archer : Unit
         this.population = 1;
         this.fow = 30;
         this.armor = 1 + GameStatus.instance.armorIncrease;
-    }
-
-    public void Shoot(){
-        //PhotonView targetView = PhotonView.Find(viewID);
-        if(target != null){
-            arrow.SetActive(true);
-            arrow.TryGetComponent(out Arrow arr);
-            arr.SetArrowTarget(target);
-            arr.SetUnit(this);
-            arr.LaunchArrow();
-        }
     }
 }

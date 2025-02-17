@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
         Debug.Log($"발사체가 맞춘 collider: {other.name}, taget인가? {other.gameObject == _target}");
         if(other.gameObject == _target){
             Debug.Log("이건 제대로 되나?");
-            if(_unit.gameObject.transform.parent.gameObject.GetComponent<PhotonView>().IsMine == false){  //화살을 쏜 유닛이 자신의 유닛이 아닌 경우 return
+            if(_unit.gameObject.GetComponent<PhotonView>().IsMine == false){  //화살을 쏜 유닛이 자신의 유닛이 아닌 경우 return
                 Debug.Log("check trigger");
                 StopCoroutine(coroutine);
                 Destroy(gameObject);
