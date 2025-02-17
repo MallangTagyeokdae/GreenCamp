@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour
     public BuildingController buildingController;
     private TMP_Text _level;
     private TMP_Text _health;
+    private TMP_Text _armor;
     // Ground 눌렀을 때 건물 리스트 UI 나타내는 함수
     public UIContainer CheckUpdateUI(UIContainer selectedUI, UIContainer currentUI)
     { // 현재 선택된 UI랑 GM에 있는 UI랑 같은지 확인해서 화면에 업데이트 하고, 선택된 UI를 리턴해줌
@@ -88,6 +89,8 @@ public class UIController : MonoBehaviour
         maxHealth.text = $"{unit.maxHealth}";
         currentHealthBar.value = (float)(unit.currentHealth * 1.0 / unit.maxHealth);
 
+        UpdateArmor(selectedUI, unit.gameObject);
+
         return CheckUpdateUI(selectedUI, currentUI);
     }
     // Building UI 변경하는 함수
@@ -131,6 +134,8 @@ public class UIController : MonoBehaviour
         UpdateHealth(selectedUI, clickedBuilding);
         // 이름 설정
         UpdateName(selectedUI, clickedBuilding);
+        // 방어력 설정
+        UpdateArmor(selectedUI, clickedBuilding.gameObject);
         // 그 외 정보들 설정
         UpdateElementInfo(selectedUI, clickedBuilding);
 
@@ -270,6 +275,19 @@ public class UIController : MonoBehaviour
         _level.text = currentLevel.ToString();
     }
 
+    public void UpdateArmor(UIContainer currentUI, GameObject clickedObject)
+    {
+        int armor = clickedObject.GetComponent<Entity>().armor;
+        SetArmor(currentUI, armor);
+    }
+
+    public void SetArmor(UIContainer currentUI, int armor)
+    {
+        _armor = currentUI.GetComponent<UIElement>().armor;
+        _armor.text = armor.ToString();
+
+    }
+
     public void UpdateHealth(UIContainer currentUI, Building clickedObject) // 체력 숫자를 표시하는 함수
     {
         int currentHealth = (int)Math.Round(clickedObject.GetComponent<Building>().currentHealth);
@@ -345,6 +363,10 @@ public class UIController : MonoBehaviour
         else if (building.name.Contains("Defender"))
         {
             return "방어건물";
+        }
+        else if (building.name.Contains("Academy"))
+        {
+            return "유닛업그레이드";
         }
         return "";
     }
