@@ -25,7 +25,7 @@ public class Scout : Unit
                 unitLocation,
                 unitMaxHealth: 50,
                 unitCurrentHealth: 50,
-                unitCost: 40,
+                unitCost: 20,
                 unitPower: 0,
                 unitPowerRange: 0,
                 unitMoveSpeed: 4,

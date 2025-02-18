@@ -14,6 +14,7 @@ public class Command : Building
 
     public int attackPower { get; set; }
     public int attackRange { get; set; }
+    public Vector3 _sponPos { get; set; }
 
     public List<GameObject> turretArchers;
     public List<GameObject> turretMagician;
@@ -45,6 +46,7 @@ public class Command : Building
         this.increaseLevelCost = 50;
         this.attackPower = 10;
         this.attackRange = 10;
+        this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 8.0f);
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 10f;
@@ -60,6 +62,10 @@ public class Command : Building
         time = 0f;
         loadingTime = .1f;
         gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
+    }
+    public void SetSponPos(Vector3 setSponPos)
+    {
+        this._sponPos = setSponPos;
     }
 
     [PunRPC]

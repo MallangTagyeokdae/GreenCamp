@@ -211,6 +211,10 @@ public class GameStatus : MonoBehaviour
                 data[0] = 65;
                 data[1] = 2;
                 break;
+            case "Scout":
+                data[0] = 20;
+                data[1] = 1;
+                break;
             case "Barrack":
                 data[0] = 50;
                 data[1] = 1;

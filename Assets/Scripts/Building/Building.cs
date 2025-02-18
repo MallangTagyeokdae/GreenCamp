@@ -26,7 +26,8 @@ public abstract class Building : Entity
         Healer = 5,
         Damage = 6,
         Armor = 7,
-        Health = 8
+        Health = 8,
+        Scout = 9
     }
 
     //public string teamID { get; set; }

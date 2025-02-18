@@ -260,8 +260,10 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case GameStates.InGame:
-                if (clickedObject[0].TryGetComponent(out Barrack barrack) && clickedObject.Count == 1)
-                    buildingController.SetSponPos(newLocation, barrack);
+                if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1)
+                {
+                    buildingController.SetSponPos(newLocation, building);
+                }
                 MoveUnit(newLocation, 1);
                 break;
             case GameStates.ConstructionMode:
@@ -470,21 +472,34 @@ public class GameManager : MonoBehaviour
                 UpdateUnitPopulationUI();
                 ReloadBuildingUI(barrack);
             }
+        } else if (targetOBJ.TryGetComponent(out Command command))
+        {
+            if (command.state == Building.State.Built && GameStatus.instance.CanCreate(unitType, "Unit"))
+            {
+                OrderUnitCreation(command, targetOBJ);
+
+                GameStatus.instance.SetResources(unitType, "Unit");
+
+                UpdateResourceUI();
+                UpdateUnitPopulationUI();
+                ReloadBuildingUI(command);
+            }
         }
     }
 
-    private async Task OrderUnitCreation(Barrack barrack, GameObject targetOBJ)
+    private async Task OrderUnitCreation(Building building, GameObject targetOBJ)
     {
+        Vector3 destination = Vector3.zero;
         var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
-        buildingController.SetBuildingState(barrack, Building.State.InProgress, unitType);
-        ReloadBuildingUI(barrack);
+        buildingController.SetBuildingState(building, Building.State.InProgress, unitType);
+        ReloadBuildingUI(building);
 
-        Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
+        Vector3 buildingPos = building.transform.position; // 건물 위치 받음
         buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5.5f); // 유닛이 생성되는 기본값
 
         tasks[targetOBJ] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
-        Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos, cts.Token); // 유닛 생성
+        Unit createdUnit = await DelayUnitCreation(building, unitType, buildingPos, cts.Token); // 유닛 생성
 
         if (createdUnit == null) return;
 
@@ -494,15 +509,22 @@ public class GameManager : MonoBehaviour
 
         tasks.Remove(targetOBJ); // 유닛 생성이 완료되면 딕셔너리에서 제거해줌
 
-        Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
+        if(building.TryGetComponent(out Barrack barrack))
+        {
+            destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
+        } 
+        else if(building.TryGetComponent(out Command command))
+        {
+            destination = command._sponPos;
+        }
 
         // 유닛을 destination으로 이동명령 내리기
         GameObject unitObject = createdUnit.gameObject;
 
-        buildingController.SetBuildingState(barrack, Building.State.Built, "None");
+        buildingController.SetBuildingState(building, Building.State.Built, "None");
         createdUnit.unitBehaviour = StartCoroutine(unitController.Move(unitObject, destination, 1));
 
-        ReloadBuildingUI(barrack);
+        ReloadBuildingUI(building);
     }
     // =====================================================
 
@@ -739,23 +761,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos, CancellationToken token)
+    public async Task<Unit> DelayUnitCreation(Building building, string unitType, Vector3 buildingPos, CancellationToken token)
     {
         bool progressState = true;
         switch (unitType)
         {
             case "Soldier":
-                progressState = await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(building, 2f, token);
                 break;
             case "Archer":
-                progressState = await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(building, 2f, token);
                 break;
             case "Tanker":
-                progressState = await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(building, 2f, token);
                 break;
             case "Healer":
-                progressState = await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(building, 2f, token);
                 break;
+            case "Scout":
+                progressState = await OrderCreate(building, 2f, token);
+                break;
+
         }
         return progressState == true ? unitController.CreateUnit(buildingPos, unitType) : null;
     }
