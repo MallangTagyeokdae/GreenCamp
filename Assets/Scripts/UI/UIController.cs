@@ -382,6 +382,7 @@ public class UIController : MonoBehaviour
             {
                 Options[1].Show();
                 Options[2].Show();
+                GameManager.instance.miniMap.GetComponent<UIContainer>().Show();
             }
             await Task.Delay(1000);
         }
