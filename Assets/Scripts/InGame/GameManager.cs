@@ -1332,6 +1332,6 @@ public class GameManager : MonoBehaviour
     public void testleaveroom(){
         SceneManager.LoadScene(0);
         PhotonNetwork.AutomaticallySyncScene = true;
-        //PhotonManager.instance.LeaveRoom();
+        PhotonManager.instance.LeaveRoom();
     }
 }

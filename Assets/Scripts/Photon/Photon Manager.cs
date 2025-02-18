@@ -31,11 +31,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public LobbyController lobbyController;
     public TeamUIController teamUIController;
     public UserInfo userInfo;
+    public bool loggedin = false;
     void Awake()
     {
         // 이 객체가 씬 전환 시 파괴되지 않도록 설정
         DontDestroyOnLoad(this.gameObject);
-        userInfo.loggedin = false;
+        //userInfo.loggedin = false;
         _roomList = new List<RoomInfo>();
 
     }

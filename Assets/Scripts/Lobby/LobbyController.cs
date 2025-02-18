@@ -23,22 +23,14 @@ public class LobbyController : MonoBehaviour
     private List<string> _roomList;
     private Dictionary<string, GameObject> _roomObjects;
     // Start is called before the first frame update
+    public List<GameObject> pages;
+    public GameObject nickName;
     private LobbyState state;
     void Start()
     {
         _roomList = new List<string>();
         _roomObjects = new Dictionary<string, GameObject>();
-        if(PhotonManager.instance.userInfo.loggedin){
-            Debug.Log("lobby controller check2");
-            GameObject.Find("LoginPage").GetComponent<UIContainer>().Hide();
-            GameObject.Find("AfterLoginPage").GetComponent<UIContainer>().Show();
-            SetState("Home");
-        }
-        else{
-            Debug.Log("lobby controller check");
-            SetState("LogIn");
-        }
-        
+        //SetState("LogIn");
     }
 
     public void SetState(string stateName)
@@ -61,11 +53,10 @@ public class LobbyController : MonoBehaviour
                 case "Multi": state = new Multi(); break;
                 case "Setting": state = new Setting(); break;
                 case "TeamSelect": state = new TeamSelect(); break;
-                case "LogIn": state = new LogIn(); break;
+                case "LogIn": state = new LogIn(pages[0], pages[1], nickName); break;
             }
             this.state.InitPage();
         }
-
     }
 
     public void CreateRoom()
