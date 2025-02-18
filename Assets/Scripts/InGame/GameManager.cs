@@ -19,7 +19,6 @@ public enum GameStates
     SetTargetMode = 3,
     SetMoveRot = 4,
     EndGame = 5
-
 }
 public class GameManager : MonoBehaviour
 {
@@ -141,9 +140,11 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.SetMoveRot:
                 gameState = state;
+                uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.SetTargetMode:
                 gameState = state;
+                uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.EndGame:
                 gameObject.GetComponent<PhotonView>().RPC("ShowGameResult", RpcTarget.All);
@@ -273,6 +274,7 @@ public class GameManager : MonoBehaviour
             case GameStates.SetMoveRot:
             case GameStates.SetTargetMode:
                 SetState("InGame");
+                uIController.SetUnitOrderButton(currentUI);
                 break;
         }
 
@@ -292,6 +294,7 @@ public class GameManager : MonoBehaviour
             case GameStates.SetMoveRot:
                 MoveUnit(newLocation, 1);
                 SetState("InGame");
+                uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.SetTargetMode:
                 foreach(GameObject gameObject in clickedObject)
@@ -299,6 +302,7 @@ public class GameManager : MonoBehaviour
                     Attang(newLocation, 2, gameObject);
                 }
                 SetState("InGame");
+                uIController.SetUnitOrderButton(currentUI);
                 break;
         }
     }

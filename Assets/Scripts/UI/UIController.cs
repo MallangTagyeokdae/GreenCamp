@@ -247,6 +247,22 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void SetUnitOrderButton(UIContainer selectedUI)
+    {
+        switch (GameManager.instance.gameState)
+        {
+            case GameStates.InGame:
+                SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, true);
+                SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, false);
+                break;
+            case GameStates.SetMoveRot:
+            case GameStates.SetTargetMode:
+                SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, false);
+                SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
+                break;
+        }
+    }
+
     private void SetInteractable(List<UIButton> uIButtons, bool state)
     {
         foreach (UIButton uIButton in uIButtons)
@@ -431,6 +447,10 @@ public class UIController : MonoBehaviour
                     case "Healer":
                         groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[3];
                         break;
+                    case "Scout":
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[4];
+                        break;
+
                 }
                 imageIndex++;
             }
