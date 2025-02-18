@@ -1209,6 +1209,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PressedO()
+    {
+        /*
+            게임 State확인
+            InGame
+                clickedObject[0] 확인
+                    1.  Barrack이면
+                        힐러생성
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch (gameState)
+        {
+            case GameStates.InGame:
+
+                if (clickedObj.TryGetComponent(out Command command))
+                {
+                    if (command.state == Building.State.Built) // 권한 확인
+                    {
+                        // 힐러 생성
+                        SetUnitType("Scout");
+                        CreateUnit();
+                    }
+                }
+                break;
+        }
+    }
+
     public void PressedR()
     {
         /*
