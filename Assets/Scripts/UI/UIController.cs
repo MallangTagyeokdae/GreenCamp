@@ -93,6 +93,7 @@ public class UIController : MonoBehaviour
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
+
     // Building UI 변경하는 함수
     public UIContainer SetBuildingUI(int UIindex, Building clickedBuilding)
     {
@@ -204,7 +205,6 @@ public class UIController : MonoBehaviour
         {
             if(state.Equals(true)) // 버튼 클릭 활성/비활성화 하는 부분
             {
-                Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                 action(uIButtons.GetRange(0,1), state);
                 action(uIButtons.GetRange(1,1), !GameStatus.instance.isDamageUpgrade);
                 action(uIButtons.GetRange(2,1), !GameStatus.instance.isArmorUpgrade);
@@ -212,7 +212,6 @@ public class UIController : MonoBehaviour
             }
             else
             {
-                Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                 action(uIButtons.GetRange(0,1), state);
                 action(uIButtons.GetRange(1,1), GameStatus.instance.isDamageUpgrade);
                 action(uIButtons.GetRange(2,1), GameStatus.instance.isArmorUpgrade);
