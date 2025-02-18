@@ -93,6 +93,7 @@ public class UIController : MonoBehaviour
 
         return CheckUpdateUI(selectedUI, currentUI);
     }
+
     // Building UI 변경하는 함수
     public UIContainer SetBuildingUI(int UIindex, Building clickedBuilding)
     {
@@ -136,6 +137,8 @@ public class UIController : MonoBehaviour
         UpdateName(selectedUI, clickedBuilding);
         // 방어력 설정
         UpdateArmor(selectedUI, clickedBuilding.gameObject);
+        // 업그레이드 비용 설정
+        UpdateLevelUpCost(selectedUI, clickedBuilding);
         // 그 외 정보들 설정
         UpdateElementInfo(selectedUI, clickedBuilding);
 
@@ -202,7 +205,6 @@ public class UIController : MonoBehaviour
         {
             if(state.Equals(true)) // 버튼 클릭 활성/비활성화 하는 부분
             {
-                Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                 action(uIButtons.GetRange(0,1), state);
                 action(uIButtons.GetRange(1,1), !GameStatus.instance.isDamageUpgrade);
                 action(uIButtons.GetRange(2,1), !GameStatus.instance.isArmorUpgrade);
@@ -210,7 +212,6 @@ public class UIController : MonoBehaviour
             }
             else
             {
-                Debug.Log("isDamge : " + GameStatus.instance.isDamageUpgrade + " isArmor : " + GameStatus.instance.isArmorUpgrade + " isHealth : " + GameStatus.instance.isHealthUpgrade);
                 action(uIButtons.GetRange(0,1), state);
                 action(uIButtons.GetRange(1,1), GameStatus.instance.isDamageUpgrade);
                 action(uIButtons.GetRange(2,1), GameStatus.instance.isArmorUpgrade);
@@ -286,6 +287,17 @@ public class UIController : MonoBehaviour
         _armor = currentUI.GetComponent<UIElement>().armor;
         _armor.text = armor.ToString();
 
+    }
+
+    public void UpdateLevelUpCost(UIContainer currentUI, Building building)
+    {
+        if(currentUI.GetComponent<UIElement>().levelUpCost != null)
+        {
+            if(currentUI.GetComponent<UIElement>().levelUpCost.TryGetComponent(out TMP_Text cost))
+            {
+                cost.text = building.levelUpCost.ToString();
+            }
+        }
     }
 
     public void UpdateHealth(UIContainer currentUI, Building clickedObject) // 체력 숫자를 표시하는 함수
@@ -382,6 +394,7 @@ public class UIController : MonoBehaviour
             {
                 Options[1].Show();
                 Options[2].Show();
+                GameManager.instance.miniMap.GetComponent<UIContainer>().Show();
             }
             await Task.Delay(1000);
         }

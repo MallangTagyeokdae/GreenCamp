@@ -156,6 +156,7 @@ public class BuildingController : MonoBehaviour
         building.maxHealth += building.level * 50;
         building.currentHealth = Mathf.FloorToInt(building.maxHealth * healthPercent);
         building.level++;
+        building.levelUpCost += building.increaseLevelCost;
 
         switch(building)
         {
@@ -165,8 +166,8 @@ public class BuildingController : MonoBehaviour
                 GameManager.instance.commandLevel ++;
                 break;
             case ResourceBuilding:
-                GameStatus.instance.resourcePerSecond += .5f;
-                building.GetComponent<ResourceBuilding>().increasePersent += .5f;
+                GameStatus.instance.resourcePerSecond += .25f;
+                building.GetComponent<ResourceBuilding>().increasePersent += .25f;
                 break;
             case PopulationBuilding:
                 GameStatus.instance.maxUnitCount += 5;

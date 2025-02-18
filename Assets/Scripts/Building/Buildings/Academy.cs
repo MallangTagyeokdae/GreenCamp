@@ -16,9 +16,6 @@ public class Academy : Building
     public int damageUpgradeCost { get; set; }
     public int armorUpgradeCost { get; set; }
     public int healthUpgradeCost { get; set; }
-    public int damageLevel { get; set; }
-    public int armorLevel { get; set; }
-    public int healthLevel { get; set; }
     
     public Academy(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
@@ -43,6 +40,7 @@ public class Academy : Building
         this.level = 1;
         this.cost = 40;
         this.levelUpCost = 100;
+        this.increaseLevelCost = 30;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 15f;
@@ -50,9 +48,6 @@ public class Academy : Building
         this.population = 2;
         this.increasePersent = 10;
         this.fow = 40;
-        this.damageLevel = 1;
-        this.armorLevel = 1;
-        this.healthLevel = 1;
         this.damageUpgradeCost = 30;
         this.armorUpgradeCost = 30;
         this.healthUpgradeCost = 30;

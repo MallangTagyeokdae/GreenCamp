@@ -41,7 +41,8 @@ public class Command : Building
         this.location = buildingLocation;
         this.level = 1;
         this.cost = 0;
-        this.levelUpCost = 100;
+        this.levelUpCost = 70;
+        this.increaseLevelCost = 50;
         this.attackPower = 10;
         this.attackRange = 10;
         this.healthBar = buildingHealthBar;

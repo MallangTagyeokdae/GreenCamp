@@ -40,6 +40,10 @@ public class GameStatus : MonoBehaviour
     public int damageIncrease { get; set; }
     public int armorIncrease { get; set; }
     public int healthIncrease { get; set; }
+    public int damageLevel { get; set; }
+    public int armorLevel { get; set; }
+    public int healthLevel { get; set; }
+
     public void InitGameStatus()
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
@@ -54,6 +58,9 @@ public class GameStatus : MonoBehaviour
         isDamageUpgrade = false;
         isArmorUpgrade = false;
         isHealthUpgrade = false;
+        this.damageLevel = 1;
+        this.armorLevel = 1;
+        this.healthLevel = 1;
         armorIncrease = 0;
         damageIncrease = 0;
         healthIncrease = 0;
@@ -155,13 +162,14 @@ public class GameStatus : MonoBehaviour
     {   
         if(!isProgressing && (building.level >= level))
         {
-            Debug.Log("업그레이드 레벨 <= 건물 레벨이 되어야함");
             if(currentResourceCount >= cost)
             {
                 return true;
             }
             Debug.Log("자원 부족");
+            return false;
         }
+        Debug.Log("업그레이드 레벨 <= 건물 레벨이 되어야함");
         return false;
     }
 

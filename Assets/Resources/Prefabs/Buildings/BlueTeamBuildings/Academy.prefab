@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3725515931757487330}
   - component: {fileID: 7518432592606936009}
   - component: {fileID: 862441256321302582}
+  - component: {fileID: 4218631717154947538}
   m_Layer: 0
   m_Name: Academy
   m_TagString: Clickable
@@ -193,6 +194,39 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 7.0135922, y: 6.6981583, z: 4.9600945}
   m_Center: {x: 0.13334917, y: -0.058940418, z: 1.7469172}
+--- !u!114 &4218631717154947538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508856115931766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25285cb8ec0fab4b9927c834f52d504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  leftClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  rightClickUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  mouseHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  deMouseHoverEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  draggedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1750414034627205872
 PrefabInstance:
   m_ObjectHideFlags: 0

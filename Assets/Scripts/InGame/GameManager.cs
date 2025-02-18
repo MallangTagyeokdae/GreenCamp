@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     public GridHandler gridHandler;
     public GameObject target;
     public GameObject fogWar;
+    public GameObject miniMap;
     public GameStates gameState = GameStates.Loading;
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
@@ -784,43 +785,50 @@ public class GameManager : MonoBehaviour
             switch(type)
             {
                 case "Damage":
-                    _upgradeLevel = academy.damageLevel;
+                    _upgradeLevel = GameStatus.instance.damageLevel;
                     _isUpgrade = GameStatus.instance.isDamageUpgrade;
-                    CallUpgrade(building, _upgradeLevel, _isUpgrade, type, academy.damageUpgradeCost);
-                    GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.damageUpgradeCost * _upgradeLevel, _isUpgrade))
+                    {
+                        GameStatus.instance.isDamageUpgrade = !_isUpgrade;
+                        CallUpgrade(building, _upgradeLevel, type, academy.damageUpgradeCost * _upgradeLevel);
+                    }
                     break;
                 case "Armor":
-                    _upgradeLevel = academy.armorLevel;
+                    _upgradeLevel = GameStatus.instance.armorLevel;
                     _isUpgrade = GameStatus.instance.isArmorUpgrade;
-                    CallUpgrade(building, _upgradeLevel, _isUpgrade, type, academy.armorUpgradeCost);
-                    GameStatus.instance.isArmorUpgrade = !_isUpgrade;
+
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.armorUpgradeCost * _upgradeLevel, _isUpgrade))
+                    {
+                        GameStatus.instance.isArmorUpgrade = !_isUpgrade;
+                        CallUpgrade(building, _upgradeLevel, type, academy.armorUpgradeCost * _upgradeLevel);
+                    }
                     break;
                 case "Health":
-                    _upgradeLevel = academy.healthLevel;
+                    _upgradeLevel = GameStatus.instance.healthLevel;
                     _isUpgrade = GameStatus.instance.isHealthUpgrade;
-                    CallUpgrade(building, _upgradeLevel, _isUpgrade, type, academy.healthUpgradeCost);
-                    GameStatus.instance.isHealthUpgrade = !_isUpgrade;
+
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.healthUpgradeCost * _upgradeLevel, _isUpgrade))
+                    {
+                        GameStatus.instance.isHealthUpgrade = !_isUpgrade;
+                        CallUpgrade(building, _upgradeLevel, type, academy.healthUpgradeCost * _upgradeLevel);
+                    }
                     break;       
             }
 
         }
     }
     
-    public async void CallUpgrade(Building building, int upgradeLevel, bool isUpgrade, string type, int cost)
+    public async void CallUpgrade(Building building, int upgradeLevel, string type, int cost)
     {
-        if(GameStatus.instance.CanUpgradeUnit(building, upgradeLevel, building.GetComponent<Academy>().damageUpgradeCost, isUpgrade))
-        {
-            GameStatus.instance.currentResourceCount -= cost;
-            building.GetComponent<Academy>().returnCost = cost;
-        }
-        else
-        {
-            return;
-        }
+        GameStatus.instance.currentResourceCount -= cost;
+        building.GetComponent<Academy>().returnCost = cost;
+
         var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
         buildingController.SetBuildingState(building, Building.State.InProgress, type);
 
+        UpdateResourceUI();
         ReloadBuildingUI(building);
 
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
@@ -836,18 +844,21 @@ public class GameManager : MonoBehaviour
             {
                 case "Damage":
                     GameStatus.instance.damageIncrease += 3;
+                    GameStatus.instance.damageLevel ++;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isDamageUpgrade = false;
                     building.GetComponent<Academy>().damageUpgradeCost *= 2;
                     break;
                 case "Armor":
                     GameStatus.instance.armorIncrease += 3;
+                    GameStatus.instance.armorLevel ++;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isArmorUpgrade = false;
                     building.GetComponent<Academy>().armorUpgradeCost *= 2;
                     break;
                 case "Health":
                     GameStatus.instance.healthIncrease += 10;
+                    GameStatus.instance.healthLevel ++;
                     unitController.ApplyUnitUpgrade(type, 10);
                     GameStatus.instance.isHealthUpgrade = false;
                     building.GetComponent<Academy>().healthUpgradeCost *= 2;
