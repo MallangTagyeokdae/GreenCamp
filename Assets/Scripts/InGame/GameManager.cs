@@ -1108,6 +1108,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PressedC()
+    {
+        /*
+           게임 State 확인
+           InGame
+               clickedObject[0] 확인
+                   1.  ground 이면 ConstructionMode로 변경 => 아카데미 건설 세팅해줌
+                       GridHandler에서 SetBuildingRange 값을 1.25 로 변경
+                       BuildingType을 Academy로 변경
+       */
+
+        GameObject clickedObj = clickedObject[0];
+        switch (gameState)
+        {
+            case GameStates.InGame:
+                if (clickedObj == ground)
+                {
+                    SetState("ConstructionMode");
+                    gridHandler.SetBuildingRange(1.25f);
+                    SetBuildingType("Academy");
+                }
+                break;
+        }
+    }
+
     public void PressedD()
     {
         /*
@@ -1157,30 +1182,6 @@ public class GameManager : MonoBehaviour
                         // 힐러 생성
                         SetUnitType("Healer");
                         CreateUnit();
-                    }
-                }
-                break;
-        }
-    }
-
-    public void PressedL()
-    {
-        /*
-            게임 State 확인
-            InGame
-                clickedObject[0] 확인
-                    1.  Building 이면
-                        레벨업 실행
-        */
-        GameObject clickedObj = clickedObject[0];
-        switch (gameState)
-        {
-            case GameStates.InGame:
-                if (clickedObj.TryGetComponent(out Building building))
-                {
-                    if (building.state == Building.State.Built)
-                    {
-                        LevelUpBuilding();
                     }
                 }
                 break;
@@ -1303,6 +1304,30 @@ public class GameManager : MonoBehaviour
                         // 탱커 생성
                         SetUnitType("Tanker");
                         CreateUnit();
+                    }
+                }
+                break;
+        }
+    }
+
+    public void PressedU()
+    {
+        /*
+            게임 State 확인
+            InGame
+                clickedObject[0] 확인
+                    1.  Building 이면
+                        레벨업 실행
+        */
+        GameObject clickedObj = clickedObject[0];
+        switch (gameState)
+        {
+            case GameStates.InGame:
+                if (clickedObj.TryGetComponent(out Building building))
+                {
+                    if (building.state == Building.State.Built)
+                    {
+                        LevelUpBuilding();
                     }
                 }
                 break;
