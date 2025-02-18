@@ -10,24 +10,32 @@ public class LogIn : LobbyState
     [SerializeField]
     private readonly GameObject page;
     public TMP_InputField nickName;
-    private GameObject loginPage;
-    private GameObject homePage;
-    public bool conitinueNext = false;
+    private GameObject _loginPage;
+    private GameObject _afterLoginPage;
+
+    public LogIn(GameObject loginPage, GameObject afterLoginPage, GameObject nickName){
+        _loginPage = loginPage;
+        _afterLoginPage = afterLoginPage;
+        this.nickName = nickName.GetComponent<TMP_InputField>();
+    }
     public void InitPage(){
-        loginPage = GameObject.Find("LoginPage");
-        homePage = GameObject.Find("AfterLoginPage");
-        nickName = GameObject.Find("UserInfo").GetComponent<TMP_InputField>();
-        //Debug.Log($"check {nickName.name}");
+        if(PhotonManager.instance.loggedin){
+            _loginPage.SetActive(false);
+            _afterLoginPage.GetComponent<UIContainer>().Show();
+        }
+        else{
+            _loginPage.GetComponent<UIContainer>().Show();
+        }
     }
     public void OutPage(string next){
         PhotonManager.instance.ConnectGame(nickName.text);
-        loginPage.GetComponent<UIContainer>().Hide();
-        homePage.GetComponent<UIContainer>().Show();
+        _loginPage.GetComponent<UIContainer>().Hide();
+        _afterLoginPage.GetComponent<UIContainer>().Show();
     }
 
     private bool LogInCheck(){
         if(nickName.text != ""){
-            PhotonManager.instance.userInfo.loggedin = true;
+            PhotonManager.instance.loggedin = true;
             return true;
         }
         else {
@@ -36,8 +44,7 @@ public class LogIn : LobbyState
     }
 
     public bool Continue(){
-        bool check = LogInCheck();
-        Debug.Log($"check log in: {check}");
-        return check;
+        LogInCheck();
+        return PhotonManager.instance.loggedin;
     }
 }
