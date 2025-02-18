@@ -18,6 +18,9 @@ public class UIElement : MonoBehaviour
     public TMP_Text elementInfo;
     public TMP_Text armor;
     public TMP_Text levelUpCost;
+    public TMP_Text spare1;
+    public TMP_Text spare2;
+    public TMP_Text spare3;
     public Slider progressBar;
     public Image image;
 }

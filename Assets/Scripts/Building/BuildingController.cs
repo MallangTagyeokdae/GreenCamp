@@ -214,18 +214,19 @@ public class BuildingController : MonoBehaviour
                 building.returnCost = building.levelUpCost;
                 break;
             case Building.InProgressItem.Damage:
-                building.returnCost = academy.damageUpgradeCost;
+                building.returnCost = GameStatus.instance.damageUpgradeCost;
                 break;
             case Building.InProgressItem.Armor:
-                building.returnCost = academy.armorUpgradeCost;
+                building.returnCost = GameStatus.instance.armorUpgradeCost;
                 break;
             case Building.InProgressItem.Health:
-                building.returnCost = academy.healthUpgradeCost;
+                building.returnCost = GameStatus.instance.healthUpgradeCost;
                 break;
             case Building.InProgressItem.Soldier:
             case Building.InProgressItem.Archer:
             case Building.InProgressItem.Tanker:
             case Building.InProgressItem.Healer:
+            case Building.InProgressItem.Scout:
                 int[] data = GameStatus.instance.CheckObjName(progressType);
                 building.returnCost = data[0];
                 building.returnPopulation = data[1];
@@ -234,9 +235,16 @@ public class BuildingController : MonoBehaviour
         building.inProgressItem = item;
     }
 
-    public void SetSponPos(Vector3 newLocation, Barrack barrack)
+    public void SetSponPos(Vector3 newLocation, Building building)
     {
-        barrack.SetSponPos(newLocation);
+        if(building.TryGetComponent(out Barrack barrack))
+        {
+            barrack.SetSponPos(newLocation);
+        }
+        else if(building.TryGetComponent(out Command command))
+        {
+            command.SetSponPos(newLocation);
+        }
     }
     
     public void CancelProgress(Building building)
@@ -270,16 +278,17 @@ public class BuildingController : MonoBehaviour
                     case Building.InProgressItem.Archer:
                     case Building.InProgressItem.Tanker:
                     case Building.InProgressItem.Healer:
+                    case Building.InProgressItem.Scout:
                         GameStatus.instance.currentUnitCount -= building.returnPopulation;
                         break;
                     default:
                         break;
                 }
-                SetBuildingState(building, Building.State.Built, "None");
-                GameManager.instance.ReloadBuildingUI(building);
                 break;
         }
         GameStatus.instance.currentResourceCount += building.returnCost * 0.7f; // 취소하면 비용의 70프로만 돌려줌
+        SetBuildingState(building, Building.State.Built, "None");
+        GameManager.instance.ReloadBuildingUI(building);
     }
 
     public void LastCheckBuildingHealth(Building building)

@@ -43,6 +43,9 @@ public class GameStatus : MonoBehaviour
     public int damageLevel { get; set; }
     public int armorLevel { get; set; }
     public int healthLevel { get; set; }
+    public int damageUpgradeCost { get; set; }
+    public int armorUpgradeCost { get; set; }
+    public int healthUpgradeCost { get; set; }
 
     public void InitGameStatus()
     {
@@ -64,6 +67,9 @@ public class GameStatus : MonoBehaviour
         armorIncrease = 0;
         damageIncrease = 0;
         healthIncrease = 0;
+        damageUpgradeCost = 30;
+        armorUpgradeCost = 30;
+        healthUpgradeCost = 30;
     }
 
     public void IncreaseMaxResourceCount(int count)
@@ -210,6 +216,10 @@ public class GameStatus : MonoBehaviour
             case "Healer":
                 data[0] = 65;
                 data[1] = 2;
+                break;
+            case "Scout":
+                data[0] = 20;
+                data[1] = 1;
                 break;
             case "Barrack":
                 data[0] = 50;

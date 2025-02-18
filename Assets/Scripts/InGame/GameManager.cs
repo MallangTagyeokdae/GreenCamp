@@ -19,7 +19,6 @@ public enum GameStates
     SetTargetMode = 3,
     SetMoveRot = 4,
     EndGame = 5
-
 }
 public class GameManager : MonoBehaviour
 {
@@ -141,9 +140,11 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.SetMoveRot:
                 gameState = state;
+                uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.SetTargetMode:
                 gameState = state;
+                uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.EndGame:
                 gameObject.GetComponent<PhotonView>().RPC("ShowGameResult", RpcTarget.All);
@@ -260,14 +261,20 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case GameStates.InGame:
-                if (clickedObject[0].TryGetComponent(out Barrack barrack) && clickedObject.Count == 1)
-                    buildingController.SetSponPos(newLocation, barrack);
+                if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1)
+                {
+                    buildingController.SetSponPos(newLocation, building);
+                }
                 MoveUnit(newLocation, 1);
                 break;
             case GameStates.ConstructionMode:
+                SetState("InGame");
+                grid.SetActive(false);
+                break;
             case GameStates.SetMoveRot:
             case GameStates.SetTargetMode:
                 SetState("InGame");
+                uIController.SetUnitOrderButton(currentUI);
                 break;
         }
 
@@ -287,6 +294,7 @@ public class GameManager : MonoBehaviour
             case GameStates.SetMoveRot:
                 MoveUnit(newLocation, 1);
                 SetState("InGame");
+                uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.SetTargetMode:
                 foreach(GameObject gameObject in clickedObject)
@@ -294,6 +302,7 @@ public class GameManager : MonoBehaviour
                     Attang(newLocation, 2, gameObject);
                 }
                 SetState("InGame");
+                uIController.SetUnitOrderButton(currentUI);
                 break;
         }
     }
@@ -470,21 +479,34 @@ public class GameManager : MonoBehaviour
                 UpdateUnitPopulationUI();
                 ReloadBuildingUI(barrack);
             }
+        } else if (targetOBJ.TryGetComponent(out Command command))
+        {
+            if (command.state == Building.State.Built && GameStatus.instance.CanCreate(unitType, "Unit"))
+            {
+                OrderUnitCreation(command, targetOBJ);
+
+                GameStatus.instance.SetResources(unitType, "Unit");
+
+                UpdateResourceUI();
+                UpdateUnitPopulationUI();
+                ReloadBuildingUI(command);
+            }
         }
     }
 
-    private async Task OrderUnitCreation(Barrack barrack, GameObject targetOBJ)
+    private async Task OrderUnitCreation(Building building, GameObject targetOBJ)
     {
+        Vector3 destination = Vector3.zero;
         var cts = new CancellationTokenSource(); // 비동기 작업 취소를 위한 토큰 생성
 
-        buildingController.SetBuildingState(barrack, Building.State.InProgress, unitType);
-        ReloadBuildingUI(barrack);
+        buildingController.SetBuildingState(building, Building.State.InProgress, unitType);
+        ReloadBuildingUI(building);
 
-        Vector3 buildingPos = barrack.transform.position; // 건물 위치 받음
+        Vector3 buildingPos = building.transform.position; // 건물 위치 받음
         buildingPos = new Vector3(buildingPos.x, buildingPos.y, buildingPos.z - 5.5f); // 유닛이 생성되는 기본값
 
         tasks[targetOBJ] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
-        Unit createdUnit = await DelayUnitCreation(barrack, unitType, buildingPos, cts.Token); // 유닛 생성
+        Unit createdUnit = await DelayUnitCreation(building, unitType, buildingPos, cts.Token); // 유닛 생성
 
         if (createdUnit == null) return;
 
@@ -494,15 +516,22 @@ public class GameManager : MonoBehaviour
 
         tasks.Remove(targetOBJ); // 유닛 생성이 완료되면 딕셔너리에서 제거해줌
 
-        Vector3 destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
+        if(building.TryGetComponent(out Barrack barrack))
+        {
+            destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
+        } 
+        else if(building.TryGetComponent(out Command command))
+        {
+            destination = command._sponPos;
+        }
 
         // 유닛을 destination으로 이동명령 내리기
         GameObject unitObject = createdUnit.gameObject;
 
-        buildingController.SetBuildingState(barrack, Building.State.Built, "None");
+        buildingController.SetBuildingState(building, Building.State.Built, "None");
         createdUnit.unitBehaviour = StartCoroutine(unitController.Move(unitObject, destination, 1));
 
-        ReloadBuildingUI(barrack);
+        ReloadBuildingUI(building);
     }
     // =====================================================
 
@@ -739,23 +768,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public async Task<Unit> DelayUnitCreation(Barrack barrack, string unitType, Vector3 buildingPos, CancellationToken token)
+    public async Task<Unit> DelayUnitCreation(Building building, string unitType, Vector3 buildingPos, CancellationToken token)
     {
         bool progressState = true;
         switch (unitType)
         {
             case "Soldier":
-                progressState = await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(building, 2f, token);
                 break;
             case "Archer":
-                progressState = await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(building, 2f, token);
                 break;
             case "Tanker":
-                progressState = await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(building, 2f, token);
                 break;
             case "Healer":
-                progressState = await OrderCreate(barrack, 2f, token);
+                progressState = await OrderCreate(building, 2f, token);
                 break;
+            case "Scout":
+                progressState = await OrderCreate(building, 2f, token);
+                break;
+
         }
         return progressState == true ? unitController.CreateUnit(buildingPos, unitType) : null;
     }
@@ -788,30 +821,30 @@ public class GameManager : MonoBehaviour
                     _upgradeLevel = GameStatus.instance.damageLevel;
                     _isUpgrade = GameStatus.instance.isDamageUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.damageUpgradeCost * _upgradeLevel, _isUpgrade))
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.damageUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isDamageUpgrade = !_isUpgrade;
-                        CallUpgrade(building, _upgradeLevel, type, academy.damageUpgradeCost * _upgradeLevel);
+                        CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.damageUpgradeCost);
                     }
                     break;
                 case "Armor":
                     _upgradeLevel = GameStatus.instance.armorLevel;
                     _isUpgrade = GameStatus.instance.isArmorUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.armorUpgradeCost * _upgradeLevel, _isUpgrade))
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.armorUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isArmorUpgrade = !_isUpgrade;
-                        CallUpgrade(building, _upgradeLevel, type, academy.armorUpgradeCost * _upgradeLevel);
+                        CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.armorUpgradeCost);
                     }
                     break;
                 case "Health":
                     _upgradeLevel = GameStatus.instance.healthLevel;
                     _isUpgrade = GameStatus.instance.isHealthUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.healthUpgradeCost * _upgradeLevel, _isUpgrade))
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.healthUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isHealthUpgrade = !_isUpgrade;
-                        CallUpgrade(building, _upgradeLevel, type, academy.healthUpgradeCost * _upgradeLevel);
+                        CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.healthUpgradeCost);
                     }
                     break;       
             }
@@ -847,21 +880,21 @@ public class GameManager : MonoBehaviour
                     GameStatus.instance.damageLevel ++;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isDamageUpgrade = false;
-                    building.GetComponent<Academy>().damageUpgradeCost *= 2;
+                    GameStatus.instance.damageUpgradeCost *= 2;
                     break;
                 case "Armor":
                     GameStatus.instance.armorIncrease += 3;
                     GameStatus.instance.armorLevel ++;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isArmorUpgrade = false;
-                    building.GetComponent<Academy>().armorUpgradeCost *= 2;
+                    GameStatus.instance.armorUpgradeCost *= 2;
                     break;
                 case "Health":
                     GameStatus.instance.healthIncrease += 10;
                     GameStatus.instance.healthLevel ++;
                     unitController.ApplyUnitUpgrade(type, 10);
                     GameStatus.instance.isHealthUpgrade = false;
-                    building.GetComponent<Academy>().healthUpgradeCost *= 2;
+                    GameStatus.instance.healthUpgradeCost *= 2;
                     break;
             }
             buildingController.SetBuildingState(building, Building.State.Built, "None");
@@ -1082,6 +1115,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PressedC()
+    {
+        /*
+           게임 State 확인
+           InGame
+               clickedObject[0] 확인
+                   1.  ground 이면 ConstructionMode로 변경 => 아카데미 건설 세팅해줌
+                       GridHandler에서 SetBuildingRange 값을 1.25 로 변경
+                       BuildingType을 Academy로 변경
+       */
+
+        GameObject clickedObj = clickedObject[0];
+        switch (gameState)
+        {
+            case GameStates.InGame:
+                if (clickedObj == ground)
+                {
+                    SetState("ConstructionMode");
+                    gridHandler.SetBuildingRange(1.25f);
+                    SetBuildingType("Academy");
+                }
+                break;
+        }
+    }
+
     public void PressedD()
     {
         /*
@@ -1137,30 +1195,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PressedL()
-    {
-        /*
-            게임 State 확인
-            InGame
-                clickedObject[0] 확인
-                    1.  Building 이면
-                        레벨업 실행
-        */
-        GameObject clickedObj = clickedObject[0];
-        switch (gameState)
-        {
-            case GameStates.InGame:
-                if (clickedObj.TryGetComponent(out Building building))
-                {
-                    if (building.state == Building.State.Built)
-                    {
-                        LevelUpBuilding();
-                    }
-                }
-                break;
-        }
-    }
-
     public void PressedM()
     {
         /*
@@ -1177,6 +1211,34 @@ public class GameManager : MonoBehaviour
                 if (uIController.CheckIsUnitUI(currentUI))
                 {
                     SetState("SetMoveRot");
+                }
+                break;
+        }
+    }
+
+    public void PressedO()
+    {
+        /*
+            게임 State확인
+            InGame
+                clickedObject[0] 확인
+                    1.  Barrack이면
+                        힐러생성
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch (gameState)
+        {
+            case GameStates.InGame:
+
+                if (clickedObj.TryGetComponent(out Command command))
+                {
+                    if (command.state == Building.State.Built) // 권한 확인
+                    {
+                        // 힐러 생성
+                        SetUnitType("Scout");
+                        CreateUnit();
+                    }
                 }
                 break;
         }
@@ -1277,6 +1339,30 @@ public class GameManager : MonoBehaviour
                         // 탱커 생성
                         SetUnitType("Tanker");
                         CreateUnit();
+                    }
+                }
+                break;
+        }
+    }
+
+    public void PressedU()
+    {
+        /*
+            게임 State 확인
+            InGame
+                clickedObject[0] 확인
+                    1.  Building 이면
+                        레벨업 실행
+        */
+        GameObject clickedObj = clickedObject[0];
+        switch (gameState)
+        {
+            case GameStates.InGame:
+                if (clickedObj.TryGetComponent(out Building building))
+                {
+                    if (building.state == Building.State.Built)
+                    {
+                        LevelUpBuilding();
                     }
                 }
                 break;

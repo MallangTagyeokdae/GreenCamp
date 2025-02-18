@@ -39,6 +39,12 @@ public class GridEvent : MonoBehaviour
             GameManager.instance.CreateBuilding();
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
         });
+        _clickEventHandler.rightClickDownEvent.AddListener((Vector3 pos) => {
+            GameManager.instance.SetState("InGame");
+            GameManager.instance.SetClickedObject(GameManager.instance.ground);
+            GameManager.instance.SetBuildingListUI();
+            GameManager.instance.grid.SetActive(false);
+        });
     }
     private void OnDisable()
     {

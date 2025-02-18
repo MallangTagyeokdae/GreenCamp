@@ -169,6 +169,7 @@ public class UIController : MonoBehaviour
                 selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[3];
                 break;
             case "Healer":
+            case "Academy":
                 selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[4];
                 break;
             default:
@@ -242,6 +243,22 @@ public class UIController : MonoBehaviour
                 break;
             case 4:
                 action(uIButtons.GetRange(0, 5), state);
+                break;
+        }
+    }
+
+    public void SetUnitOrderButton(UIContainer selectedUI)
+    {
+        switch (GameManager.instance.gameState)
+        {
+            case GameStates.InGame:
+                SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, true);
+                SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, false);
+                break;
+            case GameStates.SetMoveRot:
+            case GameStates.SetTargetMode:
+                SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, false);
+                SetActive(selectedUI.GetComponent<UIElement>().uiLockElements, true);
                 break;
         }
     }
@@ -327,6 +344,11 @@ public class UIController : MonoBehaviour
                 break;
             case PopulationBuilding:
                 selectedUI.GetComponent<UIElement>().elementInfo.text = clickedBuilding.GetComponent<PopulationBuilding>().increasePersent.ToString();
+                break;
+            case Academy:
+                selectedUI.GetComponent<UIElement>().spare1.text = GameStatus.instance.damageUpgradeCost.ToString();
+                selectedUI.GetComponent<UIElement>().spare2.text = GameStatus.instance.armorUpgradeCost.ToString();
+                selectedUI.GetComponent<UIElement>().spare3.text = GameStatus.instance.healthUpgradeCost.ToString();
                 break;
         }
     }
@@ -425,6 +447,10 @@ public class UIController : MonoBehaviour
                     case "Healer":
                         groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[3];
                         break;
+                    case "Scout":
+                        groupUI.GetComponent<UIElement>().groupImages[imageIndex].sprite = groupUI.GetComponent<UIElement>().uiImages[4];
+                        break;
+
                 }
                 imageIndex++;
             }
