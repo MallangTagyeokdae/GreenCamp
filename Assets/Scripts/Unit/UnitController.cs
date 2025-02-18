@@ -77,6 +77,12 @@ public class UnitController : MonoBehaviour
                 unitDictionary.Add(_unitID, newHealer);
                 _createdUnit = newHealer;
                 break;
+            case "Scout":
+                Scout newScout = unitObject.GetComponent<Scout>();
+                newScout.Init(_teamID, _unitID, unitLocation);
+                unitDictionary.Add(_unitID, newScout);
+                _createdUnit = newScout;
+                break;
             default:
                 Debug.Log("unitType을 찾을 수 없습니다");
                 _unitID--;
@@ -106,8 +112,8 @@ public class UnitController : MonoBehaviour
             unitObj.transform.SetParent(enemyUnits.transform);
         }*/
         _unitID++;
-        
-        if(_createdUnit.GetComponent<csFogVisibilityAgent>() != null)
+
+        if (_createdUnit.GetComponent<csFogVisibilityAgent>() != null)
         {
             Destroy(_createdUnit.GetComponent<csFogVisibilityAgent>());
         }
@@ -137,9 +143,9 @@ public class UnitController : MonoBehaviour
     public void DestroyUnit(Unit unit)
     {
         // if (unitDictionary.ContainsKey(unitID)) unitDictionary.Remove(unitID); // 유닛 딕셔너리에서 유닛 삭제
-        
+
         GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(unit.gameObject);
-        
+
         unit.DestroyEntity();
         // GameStatus.instance.currentUnitCount -= unit.populationCost;
     }
@@ -221,16 +227,18 @@ public class UnitController : MonoBehaviour
             }
 
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
-            if(!unit.isTurretUnit){
-                ally.transform.rotation = Quaternion.LookRotation(rot);    
+            if (!unit.isTurretUnit)
+            {
+                ally.transform.rotation = Quaternion.LookRotation(rot);
             }
-            else{
+            else
+            {
                 rot.y = 0;
-                ally.transform.rotation = Quaternion.LookRotation(rot);    
+                ally.transform.rotation = Quaternion.LookRotation(rot);
             }
             yield return null;
         }
-        
+
         if (unit.order.Equals(Unit.Order.Offensive))
         {
             unit.ChangeState("Move");
@@ -245,9 +253,9 @@ public class UnitController : MonoBehaviour
 
     public void ApplyUnitUpgrade(string type, int degree)
     {
-        foreach(KeyValuePair<int, Unit> valuePair in unitDictionary)
+        foreach (KeyValuePair<int, Unit> valuePair in unitDictionary)
         {
-            switch(type)
+            switch (type)
             {
                 case "Damage":
                     valuePair.Value.unitPower += degree;
