@@ -36,6 +36,7 @@ public abstract class Building : Entity
     public float progress { get; set; }
     public int cost { get; set; }
     public int levelUpCost { get; set; }
+    public int increaseLevelCost { get; set; }
     public int level { get; set; }
     public int returnCost { get; set; }
     public int returnPopulation { get; set; }

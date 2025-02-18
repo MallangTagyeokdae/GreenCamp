@@ -136,6 +136,8 @@ public class UIController : MonoBehaviour
         UpdateName(selectedUI, clickedBuilding);
         // 방어력 설정
         UpdateArmor(selectedUI, clickedBuilding.gameObject);
+        // 업그레이드 비용 설정
+        UpdateLevelUpCost(selectedUI, clickedBuilding);
         // 그 외 정보들 설정
         UpdateElementInfo(selectedUI, clickedBuilding);
 
@@ -286,6 +288,17 @@ public class UIController : MonoBehaviour
         _armor = currentUI.GetComponent<UIElement>().armor;
         _armor.text = armor.ToString();
 
+    }
+
+    public void UpdateLevelUpCost(UIContainer currentUI, Building building)
+    {
+        if(currentUI.GetComponent<UIElement>().levelUpCost != null)
+        {
+            if(currentUI.GetComponent<UIElement>().levelUpCost.TryGetComponent(out TMP_Text cost))
+            {
+                cost.text = building.levelUpCost.ToString();
+            }
+        }
     }
 
     public void UpdateHealth(UIContainer currentUI, Building clickedObject) // 체력 숫자를 표시하는 함수

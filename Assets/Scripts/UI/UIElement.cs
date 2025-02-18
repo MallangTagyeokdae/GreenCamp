@@ -17,6 +17,7 @@ public class UIElement : MonoBehaviour
     public TMP_Text maxHealth; 
     public TMP_Text elementInfo;
     public TMP_Text armor;
+    public TMP_Text levelUpCost;
     public Slider progressBar;
     public Image image;
 }

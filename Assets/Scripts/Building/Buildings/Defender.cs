@@ -39,7 +39,8 @@ public class Defender : Building
         this.progress = 0;
         this.level = 1;
         this.cost = 25;
-        this.levelUpCost = 100;
+        this.levelUpCost = 50;
+        this.increaseLevelCost = 50;
         this.attackPower = 20;
         this.attackRange = 10;
         this.healthBar = buildingHealthBar;
