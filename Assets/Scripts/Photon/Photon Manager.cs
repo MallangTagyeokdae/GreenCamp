@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using TMPro;
 using ExitGames.Client.Photon;
 using Doozy.Runtime.UIManager.Components;
+using UnityEngine.SceneManagement;
 //using ExitGames.Client.Photon;
 //using Photon.Pun.Demo.Cockpit;
 
@@ -32,12 +33,23 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     public TeamUIController teamUIController;
     public UserInfo userInfo;
     public bool loggedin = false;
+    public bool session = false;
+    private bool _gaming = false;
     void Awake()
     {
         // 이 객체가 씬 전환 시 파괴되지 않도록 설정
-        DontDestroyOnLoad(this.gameObject);
+        if (_instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);  // 기존 객체가 있으면 새로 생성된 객체 제거
+        }
+        //DontDestroyOnLoad(this.gameObject);
         //userInfo.loggedin = false;
         _roomList = new List<RoomInfo>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
 
     }
 
@@ -50,6 +62,44 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         PhotonNetwork.GameVersion = version;
         //포톤 서버와 통신횟수 설정. 초당 30회
         //Debug.Log(PhotonNetwork.SendRate);
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode){
+        lobbyController = FindObjectOfType<LobbyController>();
+        teamUIController = FindObjectOfType<TeamUIController>();
+    }
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this); // 이벤트 리스너 등록
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this); // 이벤트 리스너 해제
+    }
+
+    public void OnEvent(EventData photonEvent)
+    {
+        Player player;
+        switch (photonEvent.Code)
+        {
+            case 1: // 팀 선택 이벤트
+                player = (Player)photonEvent.CustomData;
+                teamUIController.OnTeamSelect(player);
+                break;
+            
+            case 2:
+                player = (Player)photonEvent.CustomData;
+                teamUIController.DeselectTeam(player);
+                break;
+            case 3: //팀 변경 이벤트
+                SetTeam(GetTeam(PhotonNetwork.LocalPlayer) == "Red" ? "Blue" : "Red");
+                break;
+            default:
+                //Debug.Log("Unknown event received: " + photonEvent.Code);
+                break;
+        }
     }
 
     public void ConnectGame(string nickName)
@@ -93,7 +143,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
             }
         }
 
-        lobbyController.updateRoomList(_roomList);
+        if(lobbyController!=null){
+            lobbyController.updateRoomList(_roomList);
+        }
         //base.OnRoomListUpdate(roomList);
     }
 
@@ -139,14 +191,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
 
 
 
-    /*public override void OnLeftRoom()
+    public override void OnLeftRoom()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 0)
-        {
-            Debug.Log("No player left");
-            PhotonNetwork.LeaveRoom();
+        if(_gaming){
+            _gaming = false;
+            SceneManager.LoadScene(0);
+            PhotonNetwork.AutomaticallySyncScene = true;
         }
-    }*/
+        else{
+            PhotonNetwork.JoinLobby();
+        }
+    }
 
     public List<RoomInfo> GetRoomInfos()
     {
@@ -194,13 +249,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         //lobbyController.SetState("TeamSelect");
         //방을 나가면서 방의 property에 선택한 팀이 refresh되도록
         //deselect 하라는 통신 이후에 team을 null로 바꿈
-        teamUIController.SendMessage(2);
-        if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
-            PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
+        if(!_gaming){
+            teamUIController.SendMessage(2);
+            if(GetTeam(PhotonNetwork.LocalPlayer) != "Null"){
+                PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable{{GetTeam(PhotonNetwork.LocalPlayer), false}});
+            }
         }
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "team", "Null" } });
         PhotonNetwork.LeaveRoom();
-        PhotonNetwork.JoinLobby();
+        //PhotonNetwork.JoinLobby();
     }
     //---------------------------------------------------------------------------------------------------------------------
     public void SetTeam(string teamName)
@@ -260,6 +317,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         if (PhotonNetwork.InRoom)
         {
+            _gaming = true;
             PhotonNetwork.LoadLevel("GameScene");
         }
         /*if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
@@ -268,37 +326,5 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
         }*/
     }
 
-    //----------------------------------------------------------------------------------------------------------------------
-    private void OnEnable()
-    {
-        PhotonNetwork.AddCallbackTarget(this); // 이벤트 리스너 등록
-    }
-
-    private void OnDisable()
-    {
-        PhotonNetwork.RemoveCallbackTarget(this); // 이벤트 리스너 해제
-    }
-
-    public void OnEvent(EventData photonEvent)
-    {
-        Player player;
-        switch (photonEvent.Code)
-        {
-            case 1: // 팀 선택 이벤트
-                player = (Player)photonEvent.CustomData;
-                teamUIController.OnTeamSelect(player);
-                break;
-            
-            case 2:
-                player = (Player)photonEvent.CustomData;
-                teamUIController.DeselectTeam(player);
-                break;
-            case 3: //팀 변경 이벤트
-                SetTeam(GetTeam(PhotonNetwork.LocalPlayer) == "Red" ? "Blue" : "Red");
-                break;
-            default:
-                //Debug.Log("Unknown event received: " + photonEvent.Code);
-                break;
-        }
-    }
+    
 }

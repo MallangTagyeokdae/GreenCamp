@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Containers;
 using Photon.Pun;
 using TMPro;
+using UnityEditor.TestTools.CodeCoverage;
 using UnityEngine;
 
 public class LogIn : LobbyState
@@ -12,6 +13,7 @@ public class LogIn : LobbyState
     public TMP_InputField nickName;
     private GameObject _loginPage;
     private GameObject _afterLoginPage;
+    
 
     public LogIn(GameObject loginPage, GameObject afterLoginPage, GameObject nickName){
         _loginPage = loginPage;
@@ -28,7 +30,10 @@ public class LogIn : LobbyState
         }
     }
     public void OutPage(string next){
-        PhotonManager.instance.ConnectGame(nickName.text);
+        if(!PhotonManager.instance.session){
+            PhotonManager.instance.session = true;
+            PhotonManager.instance.ConnectGame(nickName.text);
+        }
         _loginPage.GetComponent<UIContainer>().Hide();
         _afterLoginPage.GetComponent<UIContainer>().Show();
     }
