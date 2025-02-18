@@ -1843,6 +1843,10 @@ MonoBehaviour:
   scrollRect: {fileID: 639581303}
   prefab: {fileID: 120699913777897003, guid: 81204b62ae1c544ceb6ac8d8e9586118, type: 3}
   parent: {fileID: 1297619853}
+  pages:
+  - {fileID: 687304986}
+  - {fileID: 2044611990}
+  nickName: {fileID: 1011910124}
 --- !u!4 &119623203
 Transform:
   m_ObjectHideFlags: 0
@@ -8858,12 +8862,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: -1920, y: 0, z: 0}
-      ToValue: {x: 0, y: 0, z: 0}
-      CurrentValue: {x: 0, y: 0, z: 0}
+      FromValue: {x: -1920, y: 1742, z: 0}
+      ToValue: {x: -6033, y: 1742, z: 0}
+      CurrentValue: {x: -6033, y: 1742, z: 0}
       Enabled: 1
       AnimationType: 0
-      StartPosition: {x: 0, y: 0, z: 0}
+      StartPosition: {x: -6033, y: 1742, z: 0}
       FromReferenceValue: 0
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
@@ -9128,12 +9132,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: 0, y: 0, z: 0}
-      ToValue: {x: 1920, y: 0, z: 0}
-      CurrentValue: {x: 1920, y: 0, z: 0}
+      FromValue: {x: -6033, y: 1742, z: 0}
+      ToValue: {x: 1920, y: 1742, z: 0}
+      CurrentValue: {x: 1920, y: 1742, z: 0}
       Enabled: 1
       AnimationType: 1
-      StartPosition: {x: 0, y: 0, z: 0}
+      StartPosition: {x: -6033, y: 1742, z: 0}
       FromReferenceValue: 0
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
@@ -9359,7 +9363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MultiplayerInfo: {fileID: 0}
-  OnStartBehaviour: 2
+  OnStartBehaviour: 1
   OnShowCallback:
     EventName: OnShowCallback
     Runners: []
@@ -9383,20 +9387,7 @@ MonoBehaviour:
     Runners: []
     Event:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2044611992}
-          m_TargetAssemblyTypeName: Doozy.Runtime.UIManager.Containers.UIContainer,
-            Assembly-CSharp
-          m_MethodName: Show
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   OnVisibilityChangedCallback:
     m_PersistentCalls:
       m_Calls: []
@@ -11000,6 +10991,7 @@ MonoBehaviour:
   lobbyController: {fileID: 119623202}
   teamUIController: {fileID: 292106737}
   userInfo: {fileID: 11400000, guid: cf1c2eec7b2ce254a8482ff0e0078806, type: 2}
+  loggedin: 0
 --- !u!4 &910434097
 Transform:
   m_ObjectHideFlags: 0
@@ -31668,7 +31660,19 @@ MonoBehaviour:
     Runners: []
     Event:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 119623202}
+          m_TargetAssemblyTypeName: LobbyController, Assembly-CSharp
+          m_MethodName: SetState
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: LogIn
+            m_BoolArgument: 0
+          m_CallState: 2
   OnVisibilityChangedCallback:
     m_PersistentCalls:
       m_Calls: []
@@ -31786,12 +31790,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: -1920, y: -500, z: 0}
-      ToValue: {x: 1920, y: -500, z: 0}
-      CurrentValue: {x: 1920, y: -500, z: 0}
+      FromValue: {x: -1920, y: 0, z: 0}
+      ToValue: {x: 0, y: 0, z: 0}
+      CurrentValue: {x: 0, y: 0, z: 0}
       Enabled: 1
       AnimationType: 0
-      StartPosition: {x: 1920, y: -500, z: 0}
+      StartPosition: {x: 0, y: 0, z: 0}
       FromReferenceValue: 0
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
@@ -32056,12 +32060,12 @@ MonoBehaviour:
         Vibration: 8
         Elasticity: 1
         FadeOutShake: 0
-      FromValue: {x: 1920, y: -500, z: 0}
-      ToValue: {x: 1920, y: -500, z: 0}
-      CurrentValue: {x: 1920, y: -500, z: 0}
+      FromValue: {x: 0, y: 0, z: 0}
+      ToValue: {x: 1920, y: 0, z: 0}
+      CurrentValue: {x: 1920, y: 0, z: 0}
       Enabled: 1
       AnimationType: 1
-      StartPosition: {x: 1920, y: -500, z: 0}
+      StartPosition: {x: 0, y: 0, z: 0}
       FromReferenceValue: 0
       ToReferenceValue: 0
       FromCustomValue: {x: 0, y: 0, z: 0}
