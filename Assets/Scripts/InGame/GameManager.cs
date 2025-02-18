@@ -267,6 +267,9 @@ public class GameManager : MonoBehaviour
                 MoveUnit(newLocation, 1);
                 break;
             case GameStates.ConstructionMode:
+                SetState("InGame");
+                grid.SetActive(false);
+                break;
             case GameStates.SetMoveRot:
             case GameStates.SetTargetMode:
                 SetState("InGame");
