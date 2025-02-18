@@ -12,10 +12,6 @@ public class Academy : Building
         this.maxHealth = 150;
         this.currentHealth = 0;
     }
-    public int increasePersent { get; set; }
-    public int damageUpgradeCost { get; set; }
-    public int armorUpgradeCost { get; set; }
-    public int healthUpgradeCost { get; set; }
     
     public Academy(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
@@ -46,11 +42,7 @@ public class Academy : Building
         this.loadingTime = 15f;
         this.underGrid = colliders;
         this.population = 2;
-        this.increasePersent = 10;
         this.fow = 40;
-        this.damageUpgradeCost = 30;
-        this.armorUpgradeCost = 30;
-        this.healthUpgradeCost = 30;
         this.armor = 10;
     }
 
@@ -58,7 +50,6 @@ public class Academy : Building
     public override void DestroyEntity()
     {
         Destroy(gameObject);
-        GameStatus.instance.maxUnitCount -= increasePersent;
     }
 
     [PunRPC]

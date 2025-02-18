@@ -814,30 +814,30 @@ public class GameManager : MonoBehaviour
                     _upgradeLevel = GameStatus.instance.damageLevel;
                     _isUpgrade = GameStatus.instance.isDamageUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.damageUpgradeCost * _upgradeLevel, _isUpgrade))
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.damageUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isDamageUpgrade = !_isUpgrade;
-                        CallUpgrade(building, _upgradeLevel, type, academy.damageUpgradeCost * _upgradeLevel);
+                        CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.damageUpgradeCost);
                     }
                     break;
                 case "Armor":
                     _upgradeLevel = GameStatus.instance.armorLevel;
                     _isUpgrade = GameStatus.instance.isArmorUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.armorUpgradeCost * _upgradeLevel, _isUpgrade))
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.armorUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isArmorUpgrade = !_isUpgrade;
-                        CallUpgrade(building, _upgradeLevel, type, academy.armorUpgradeCost * _upgradeLevel);
+                        CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.armorUpgradeCost);
                     }
                     break;
                 case "Health":
                     _upgradeLevel = GameStatus.instance.healthLevel;
                     _isUpgrade = GameStatus.instance.isHealthUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, academy.healthUpgradeCost * _upgradeLevel, _isUpgrade))
+                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.healthUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isHealthUpgrade = !_isUpgrade;
-                        CallUpgrade(building, _upgradeLevel, type, academy.healthUpgradeCost * _upgradeLevel);
+                        CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.healthUpgradeCost);
                     }
                     break;       
             }
@@ -873,21 +873,21 @@ public class GameManager : MonoBehaviour
                     GameStatus.instance.damageLevel ++;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isDamageUpgrade = false;
-                    building.GetComponent<Academy>().damageUpgradeCost *= 2;
+                    GameStatus.instance.damageUpgradeCost *= 2;
                     break;
                 case "Armor":
                     GameStatus.instance.armorIncrease += 3;
                     GameStatus.instance.armorLevel ++;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isArmorUpgrade = false;
-                    building.GetComponent<Academy>().armorUpgradeCost *= 2;
+                    GameStatus.instance.armorUpgradeCost *= 2;
                     break;
                 case "Health":
                     GameStatus.instance.healthIncrease += 10;
                     GameStatus.instance.healthLevel ++;
                     unitController.ApplyUnitUpgrade(type, 10);
                     GameStatus.instance.isHealthUpgrade = false;
-                    building.GetComponent<Academy>().healthUpgradeCost *= 2;
+                    GameStatus.instance.healthUpgradeCost *= 2;
                     break;
             }
             buildingController.SetBuildingState(building, Building.State.Built, "None");

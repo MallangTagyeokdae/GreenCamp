@@ -214,13 +214,13 @@ public class BuildingController : MonoBehaviour
                 building.returnCost = building.levelUpCost;
                 break;
             case Building.InProgressItem.Damage:
-                building.returnCost = academy.damageUpgradeCost;
+                building.returnCost = GameStatus.instance.damageUpgradeCost;
                 break;
             case Building.InProgressItem.Armor:
-                building.returnCost = academy.armorUpgradeCost;
+                building.returnCost = GameStatus.instance.armorUpgradeCost;
                 break;
             case Building.InProgressItem.Health:
-                building.returnCost = academy.healthUpgradeCost;
+                building.returnCost = GameStatus.instance.healthUpgradeCost;
                 break;
             case Building.InProgressItem.Soldier:
             case Building.InProgressItem.Archer:

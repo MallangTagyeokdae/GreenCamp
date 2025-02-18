@@ -33,8 +33,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.45, y: 1.45, z: 1.45}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6152200490133319201}
   - {fileID: 1750414034627626920}
@@ -52,7 +52,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4409508856115931766}
-  m_Mesh: {fileID: 4300006, guid: a43f0d6131f84de40b182eb70bb23b87, type: 3}
+  m_Mesh: {fileID: 4300002, guid: aec20226064bbcc4d850e8da90e49a4b, type: 3}
 --- !u!23 &5925685928226325287
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -165,9 +165,9 @@ MonoBehaviour:
   progressBar: {fileID: 7783155889680450107}
   state: 0
   inProgressItem: 0
-  progressMesh1: {fileID: 4300000, guid: 431a6279c58b94cf3a4eaa8d48eaccec, type: 3}
-  progressMesh2: {fileID: 4300000, guid: ad6318cc0c4484c088e34999a9af79df, type: 3}
-  completeMesh: {fileID: 4300006, guid: a43f0d6131f84de40b182eb70bb23b87, type: 3}
+  progressMesh1: {fileID: 4300000, guid: b18013bceef29894d95932ffbdf069c0, type: 3}
+  progressMesh2: {fileID: 4300000, guid: 25ef05172876b8742b290e10ba4393cf, type: 3}
+  completeMesh: {fileID: 4300002, guid: aec20226064bbcc4d850e8da90e49a4b, type: 3}
   destroyEffect: {fileID: 6152200490133523363}
   fireEffect: {fileID: 1750414034627340192}
   completeEffect: {fileID: 8026510811200156130}
@@ -192,8 +192,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.0135922, y: 6.6981583, z: 4.9600945}
-  m_Center: {x: 0.13334917, y: -0.058940418, z: 1.7469172}
+  m_Size: {x: 5, y: 5.5, z: 5.5}
+  m_Center: {x: -0.08364158, y: 0.012595233, z: 2.0978389}
 --- !u!114 &4218631717154947538
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -169,6 +169,7 @@ public class UIController : MonoBehaviour
                 selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[3];
                 break;
             case "Healer":
+            case "Academy":
                 selectedUI.GetComponent<UIElement>().image.sprite = selectedUI.GetComponent<UIElement>().uiImages[4];
                 break;
             default:
@@ -327,6 +328,11 @@ public class UIController : MonoBehaviour
                 break;
             case PopulationBuilding:
                 selectedUI.GetComponent<UIElement>().elementInfo.text = clickedBuilding.GetComponent<PopulationBuilding>().increasePersent.ToString();
+                break;
+            case Academy:
+                selectedUI.GetComponent<UIElement>().spare1.text = GameStatus.instance.damageUpgradeCost.ToString();
+                selectedUI.GetComponent<UIElement>().spare2.text = GameStatus.instance.armorUpgradeCost.ToString();
+                selectedUI.GetComponent<UIElement>().spare3.text = GameStatus.instance.healthUpgradeCost.ToString();
                 break;
         }
     }

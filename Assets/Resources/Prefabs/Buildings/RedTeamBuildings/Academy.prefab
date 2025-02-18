@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 1443922602587959661}
   - component: {fileID: -704713187023679897}
   - component: {fileID: -1068215315940403755}
-  - component: {fileID: -959294527347952490}
   - component: {fileID: 2355228596179933277}
+  - component: {fileID: 3684433933919551532}
   m_Layer: 0
   m_Name: Academy
   m_TagString: Clickable
@@ -34,8 +34,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.45, y: 1.45, z: 1.45}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4673076146360416903}
   - {fileID: 1303388505296804535}
@@ -53,7 +53,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604745847561763250}
-  m_Mesh: {fileID: 4300006, guid: a43f0d6131f84de40b182eb70bb23b87, type: 3}
+  m_Mesh: {fileID: 4300002, guid: aec20226064bbcc4d850e8da90e49a4b, type: 3}
 --- !u!23 &5520884823466898252
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -199,35 +199,14 @@ MonoBehaviour:
   progressBar: {fileID: 6311823490508484004}
   state: 0
   inProgressItem: 0
-  progressMesh1: {fileID: 4300000, guid: 16c16ea3927925b4a85067b12080333d, type: 3}
-  progressMesh2: {fileID: 4300000, guid: 75cb71cd68996f147af86badbf154a13, type: 3}
-  completeMesh: {fileID: 4300006, guid: a43f0d6131f84de40b182eb70bb23b87, type: 3}
+  progressMesh1: {fileID: 4300000, guid: b18013bceef29894d95932ffbdf069c0, type: 3}
+  progressMesh2: {fileID: 4300000, guid: 25ef05172876b8742b290e10ba4393cf, type: 3}
+  completeMesh: {fileID: 4300002, guid: aec20226064bbcc4d850e8da90e49a4b, type: 3}
   destroyEffect: {fileID: 4673076146360557317}
   fireEffect: {fileID: 1303388505297107647}
   completeEffect: {fileID: 5847055615741123649}
   levelUpEffect: {fileID: 6385282613935013380}
   clickEventHandler: {fileID: 0}
---- !u!65 &-959294527347952490
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604745847561763250}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7.0135922, y: 6.6981583, z: 4.9600945}
-  m_Center: {x: 0.13334917, y: -0.058940418, z: 1.7469172}
 --- !u!54 &2355228596179933277
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -255,6 +234,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!65 &3684433933919551532
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604745847561763250}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 5.5000005, z: 5.500001}
+  m_Center: {x: -0.00580984, y: -0.16384293, z: 2.0978384}
 --- !u!1001 &360337314162582270
 PrefabInstance:
   m_ObjectHideFlags: 0
