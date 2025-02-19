@@ -154,7 +154,7 @@ public class BuildingController : MonoBehaviour
     {
         float healthPercent = (float)(building.currentHealth / building.maxHealth);
 
-        building.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.All, building.level * 50, healthPercent);
+        building.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.All, building.level * 50.0f, healthPercent);
         building.level++;
         building.levelUpCost += building.increaseLevelCost;
 
