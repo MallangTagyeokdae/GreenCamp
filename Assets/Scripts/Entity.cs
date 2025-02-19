@@ -113,7 +113,7 @@ public class Entity : MonoBehaviour
     }
 
     [PunRPC]
-    public void SyncHealth(float healthIncrease)
+    public void SyncUnitHealth(float healthIncrease)
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -121,6 +121,18 @@ public class Entity : MonoBehaviour
             maxHealth += healthIncrease;
             // MasterClient에서 체력을 계산
             
+            this.GetComponent<PhotonView>().RPC("SyncMaxHealth", RpcTarget.All, maxHealth); // 계산한 체력을 넘겨줘서 동기화시킴
+            this.GetComponent<PhotonView>().RPC("SyncCurrentHealth", RpcTarget.All, currentHealth); // 계산한 체력을 넘겨줘서 동기화시킴
+        }
+    }
+
+    [PunRPC]
+    public void SyncBuildingHealth(float maxHealthIncrease, float currentHealthIncrease)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            maxHealth += maxHealthIncrease;
+            currentHealth = maxHealth * currentHealthIncrease;
             this.GetComponent<PhotonView>().RPC("SyncMaxHealth", RpcTarget.All, maxHealth); // 계산한 체력을 넘겨줘서 동기화시킴
             this.GetComponent<PhotonView>().RPC("SyncCurrentHealth", RpcTarget.All, currentHealth); // 계산한 체력을 넘겨줘서 동기화시킴
         }
