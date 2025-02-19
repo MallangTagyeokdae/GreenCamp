@@ -301,7 +301,7 @@ public class UnitController : MonoBehaviour
                     valuePair.Value.armor += degree;
                     break;
                 case "Health":
-                    valuePair.Value.GetComponent<PhotonView>().RPC("SyncHealth", RpcTarget.All, degree*1.0f);
+                    valuePair.Value.GetComponent<PhotonView>().RPC("SyncUnitHealth", RpcTarget.All, degree*1.0f);
 
                     // float healthPercent = (float)(valuePair.Value.currentHealth / valuePair.Value.maxHealth);
                     // valuePair.Value.maxHealth += degree;
