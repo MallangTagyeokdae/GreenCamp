@@ -61,6 +61,10 @@ MonoBehaviour:
   - ChangeState
   - RemoveCommandUnit
   - HealRequest
+  - SyncBuildingHealth
+  - SyncCurrentHealth
+  - SyncMaxHealth
+  - SyncUnitHealth
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
