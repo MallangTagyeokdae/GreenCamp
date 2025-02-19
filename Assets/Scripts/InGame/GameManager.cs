@@ -287,7 +287,7 @@ public class GameManager : MonoBehaviour
                 uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.SetTargetMode:
-                foreach(GameObject gameObject in clickedObject)
+                foreach (GameObject gameObject in clickedObject)
                 {
                     Attang(newLocation, 2, gameObject);
                 }
@@ -355,9 +355,9 @@ public class GameManager : MonoBehaviour
     public void ReloadBuildingUI(Building building)
     { // 건물이 생성완료 됐을 때 건물을 클릭하고 있으면 건물 UI로 바꿔준다.
 
-        if(building.GetComponent<Academy>()) // 다른 건물에서 업그래드이가 완료됐을 때 아카데미를 클릭하고 있으면 UI를 업데이트 해야줘야기 때문에 필터링해줌
+        if (building.GetComponent<Academy>()) // 다른 건물에서 업그래드이가 완료됐을 때 아카데미를 클릭하고 있으면 UI를 업데이트 해야줘야기 때문에 필터링해줌
         {
-            if(clickedObject[0].GetComponent<Academy>())
+            if (clickedObject[0].GetComponent<Academy>())
             {
                 SetBuildingInfo(9, building);
             }
@@ -391,7 +391,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateEventUI(GameObject eventedObject)
     {
-        switch(clickedObject.Count())
+        switch (clickedObject.Count())
         {
             case 1:
                 if (clickedObject[0] == eventedObject)
@@ -409,24 +409,24 @@ public class GameManager : MonoBehaviour
             case 2:
                 if (!clickedObject[0].GetComponent<Unit>())
                 {
-                    if(clickedObject[1] == eventedObject && eventedObject.GetComponent<Unit>())
+                    if (clickedObject[1] == eventedObject && eventedObject.GetComponent<Unit>())
                     {
                         SetUnitInfo(7, eventedObject);
                     }
                 }
                 else
                 {
-                    SetGroupUnitUI(8,0);
+                    SetGroupUnitUI(8, 0);
                 }
                 break;
             default:
                 if (!clickedObject[0].GetComponent<Unit>())
                 {
-                    SetGroupUnitUI(8,0);
+                    SetGroupUnitUI(8, 0);
                 }
                 else
                 {
-                    SetGroupUnitUI(8,1);
+                    SetGroupUnitUI(8, 1);
                 }
                 break;
         }
@@ -469,7 +469,8 @@ public class GameManager : MonoBehaviour
                 UpdateUnitPopulationUI();
                 ReloadBuildingUI(barrack);
             }
-        } else if (targetOBJ.TryGetComponent(out Command command))
+        }
+        else if (targetOBJ.TryGetComponent(out Command command))
         {
             if (command.state == Building.State.Built && GameStatus.instance.CanCreate(unitType, "Unit"))
             {
@@ -506,11 +507,11 @@ public class GameManager : MonoBehaviour
 
         tasks.Remove(targetOBJ); // 유닛 생성이 완료되면 딕셔너리에서 제거해줌
 
-        if(building.TryGetComponent(out Barrack barrack))
+        if (building.TryGetComponent(out Barrack barrack))
         {
             destination = barrack._sponPos; // 유닛이 생성되고 이동할 포지션 받음
-        } 
-        else if(building.TryGetComponent(out Command command))
+        }
+        else if (building.TryGetComponent(out Command command))
         {
             destination = command._sponPos;
         }
@@ -574,7 +575,7 @@ public class GameManager : MonoBehaviour
 
         //AddComponent로 넣으면 inspector창에서 초기화한 값이 안들어가고 가장 초기의 값이 들어감. inspector 창으로 초기화를 하고 싶으면 script상 초기화 보다는 prefab을 건드리는게 나을듯
         Building building = buildingController.CreateBuilding(buildingPos, buildingType, new Vector3(-90, 90, 90), gridHandler.constructionGrids);
-        
+
         // 안개 시야 설정
         csFogWar.FogRevealer fogRevealer = new csFogWar.FogRevealer(building.transform, building.fow, false);
         building.fowIndex = fogWar.GetComponent<csFogWar>().AddFogRevealer(fogRevealer);
@@ -630,11 +631,13 @@ public class GameManager : MonoBehaviour
         this.unitType = unitType;
     }
 
-    public void Attang(Vector3 newLocation, int order, GameObject orderedObjs){
+    public void Attang(Vector3 newLocation, int order, GameObject orderedObjs)
+    {
 
-        if(orderedObjs.TryGetComponent(out Unit selectedUnit))
+        if (orderedObjs.TryGetComponent(out Unit selectedUnit))
         {
-            if(selectedUnit.state == Unit.State.Die){
+            if (selectedUnit.state == Unit.State.Die)
+            {
                 return;
             }
 
@@ -645,21 +648,26 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(selectedUnit.unitBehaviour);
             }
 
-            if(selectedUnit.aggList.Count == 0){
+            if (selectedUnit.aggList.Count == 0)
+            {
                 selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, selectedUnit.destination, order));
             }
-            else if (selectedUnit.attackList.Count == 0){
-                foreach(GameObject enemy in selectedUnit.aggList){
+            else if (selectedUnit.attackList.Count == 0)
+            {
+                foreach (GameObject enemy in selectedUnit.aggList)
+                {
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, 3)); // aggro
                     break;
                 }
             }
-            else{
-                foreach(GameObject enemy in selectedUnit.attackList){
+            else
+            {
+                foreach (GameObject enemy in selectedUnit.attackList)
+                {
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
                     break;
                 }
-                
+
             }
         }
     }
@@ -670,7 +678,8 @@ public class GameManager : MonoBehaviour
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
-            if(selectedUnit != null && selectedUnit.state == Unit.State.Die){
+            if (selectedUnit != null && selectedUnit.state == Unit.State.Die)
+            {
                 return;
             }
             if (selectedUnit == null)
@@ -710,7 +719,8 @@ public class GameManager : MonoBehaviour
             {
                 StopCoroutine(unit.unitBehaviour);
             }
-            if(enemy != null){
+            if (enemy != null)
+            {
                 //Debug.Log($"---------------------------------------name: {enemy.name}");
                 ally.GetComponent<PhotonView>().RPC("SetTarget", RpcTarget.All, enemy.GetComponent<PhotonView>().ViewID);
             }
@@ -745,7 +755,7 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }*/
-            
+
             if (unit.state == Unit.State.Idle || (unit.order == Unit.Order.Offensive && unit.state == Unit.State.Move))
             {
                 if (unit.unitBehaviour != null)
@@ -755,6 +765,33 @@ public class GameManager : MonoBehaviour
                 order = (unit.order == Unit.Order.Offensive) ? 2 : 3; // 유닛의 Order가 Offensive면 유지, 아니면 Attack으로 변경
                 unit.unitBehaviour = StartCoroutine(unitController.Move(ally, enemy, order));
             }
+        }
+    }
+    public void Heal(GameObject me, GameObject ally)
+    {
+        Unit unit = me.GetComponent<Unit>();
+        ally.TryGetComponent(out Entity allyEntity);
+        if (allyEntity == null || unit.teamID != allyEntity.teamID || ally.GetComponent<Unit>() == null || unit.state == Unit.State.Die)
+        {
+            return;
+        }
+        else
+        {
+            if (!unit.attackList.Contains(ally))
+            {
+                // Debug.Log(ally.name + " 가 어택 리스트에 추가됨");
+                unit.attackList.Add(ally);
+            }
+            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
+            {
+                return;
+            }
+
+            if (unit.unitBehaviour != null)
+            {
+                StopCoroutine(unit.unitBehaviour);
+            }
+            unit.unitBehaviour = StartCoroutine(unitController.Heal(me));
         }
     }
 
@@ -805,13 +842,13 @@ public class GameManager : MonoBehaviour
             Academy academy = building.GetComponent<Academy>();
             int _upgradeLevel = 0;
             bool _isUpgrade = false;
-            switch(type)
+            switch (type)
             {
                 case "Damage":
                     _upgradeLevel = GameStatus.instance.damageLevel;
                     _isUpgrade = GameStatus.instance.isDamageUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.damageUpgradeCost, _isUpgrade))
+                    if (GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.damageUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isDamageUpgrade = !_isUpgrade;
                         CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.damageUpgradeCost);
@@ -821,7 +858,7 @@ public class GameManager : MonoBehaviour
                     _upgradeLevel = GameStatus.instance.armorLevel;
                     _isUpgrade = GameStatus.instance.isArmorUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.armorUpgradeCost, _isUpgrade))
+                    if (GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.armorUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isArmorUpgrade = !_isUpgrade;
                         CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.armorUpgradeCost);
@@ -831,17 +868,17 @@ public class GameManager : MonoBehaviour
                     _upgradeLevel = GameStatus.instance.healthLevel;
                     _isUpgrade = GameStatus.instance.isHealthUpgrade;
 
-                    if(GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.healthUpgradeCost, _isUpgrade))
+                    if (GameStatus.instance.CanUpgradeUnit(building, _upgradeLevel, GameStatus.instance.healthUpgradeCost, _isUpgrade))
                     {
                         GameStatus.instance.isHealthUpgrade = !_isUpgrade;
                         CallUpgrade(building, _upgradeLevel, type, GameStatus.instance.healthUpgradeCost);
                     }
-                    break;       
+                    break;
             }
 
         }
     }
-    
+
     public async void CallUpgrade(Building building, int upgradeLevel, string type, int cost)
     {
         GameStatus.instance.currentResourceCount -= cost;
@@ -858,30 +895,30 @@ public class GameManager : MonoBehaviour
 
         // 업그레이드 시간설정 부분
         if (await OrderCreate(building, upgradeLevel * 1f, cts.Token))
-            {
+        {
             tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
             // 유닛 업그레이드 종효후 상태 맞춰주기
             // 체력, 공격력, 체력 수치 올리는 로직 여기있음
-            switch(type)
+            switch (type)
             {
                 case "Damage":
                     GameStatus.instance.damageIncrease += 3;
-                    GameStatus.instance.damageLevel ++;
+                    GameStatus.instance.damageLevel++;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isDamageUpgrade = false;
                     GameStatus.instance.damageUpgradeCost *= 2;
                     break;
                 case "Armor":
                     GameStatus.instance.armorIncrease += 3;
-                    GameStatus.instance.armorLevel ++;
+                    GameStatus.instance.armorLevel++;
                     unitController.ApplyUnitUpgrade(type, 3);
                     GameStatus.instance.isArmorUpgrade = false;
                     GameStatus.instance.armorUpgradeCost *= 2;
                     break;
                 case "Health":
                     GameStatus.instance.healthIncrease += 10;
-                    GameStatus.instance.healthLevel ++;
+                    GameStatus.instance.healthLevel++;
                     unitController.ApplyUnitUpgrade(type, 10);
                     GameStatus.instance.isHealthUpgrade = false;
                     GameStatus.instance.healthUpgradeCost *= 2;
@@ -919,7 +956,7 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
-            if(clickedObject[0] == entity && clickedObject.Count() == 1)
+            if (clickedObject[0] == entity && clickedObject.Count() == 1)
             // 건물이 선택되어있고, 크기가 1인경우 (드래그 했을 때 건물이 첫번째 인덱스에 들어간 상황은 유닛 UI가 뜬 상태이기 떄문에)
             {
                 SetClickedObject(ground);
@@ -940,15 +977,15 @@ public class GameManager : MonoBehaviour
                     SetClickedObject(ground);
                     SetBuildingListUI();
                 }
-                else if(clickedObject[0].GetComponent<Unit>())
+                else if (clickedObject[0].GetComponent<Unit>())
                 {
                     clickedObject.Remove(entity);
-                    SetGroupUnitUI(8,0);
+                    SetGroupUnitUI(8, 0);
                 }
                 else
                 {
                     clickedObject.Remove(entity);
-                    SetGroupUnitUI(8,1);   
+                    SetGroupUnitUI(8, 1);
                 }
             }
             unitController.DestroyUnit(unit);
@@ -1423,7 +1460,8 @@ public class GameManager : MonoBehaviour
 
     //------------------------------------------------------
 
-    public void testleaveroom(){
+    public void testleaveroom()
+    {
         PhotonManager.instance.LeaveRoom();
     }
 }

@@ -100,7 +100,16 @@ public class UnitController : MonoBehaviour
         );
         unitObj.GetComponent<ClickEventHandler>().draggedEvent.AddListener(() => GameManager.instance.AddClickedObject(unitObj));
 
-        unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy); });
+        // 힐러만 콜백함수로 힐하는 함수 넣음
+        if (unit.GetComponent<Healer>())
+        {
+            unit.SetAttEnter((GameObject ally) => { GameManager.instance.Heal(unit.gameObject, ally); });
+        }
+        else
+        {
+            unit.SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(unit.gameObject, enemy); });
+
+        }
         unit.SetAttExit((GameObject enemy) => { unit.attackList.Remove(enemy); });
         unit.SetAggEnter((GameObject enemy) => { GameManager.instance.Aggregated(unit.gameObject, enemy); });
         unit.SetAggExit((GameObject enemy) => { unit.aggList.Remove(enemy); });
@@ -249,6 +258,34 @@ public class UnitController : MonoBehaviour
             unit.SetOrder(0);
             unit.ChangeState("Idle");
         }
+    }
+    public IEnumerator Heal(GameObject me)
+    {
+        me.TryGetComponent(out Unit unit);
+        me.TryGetComponent(out Healer healer);
+        unit.ChangeState("Attack");
+        healer.HealingEffect.Stop();
+        Debug.Log("힐링 이펙트 켜기");
+
+        while (unit.attackList != null)
+        {
+            foreach (GameObject ally in unit.attackList)
+            {
+                ally.TryGetComponent(out Entity allyEntity);
+                if (ally == null || allyEntity == null || allyEntity.currentHealth <= 0 || allyEntity.currentHealth > allyEntity.maxHealth)
+                {
+                    unit.attackList.Remove(ally);
+                    break;
+                }
+            }
+            yield return null;
+        }
+
+        unit.SetOrder(0);
+        unit.ChangeState("Idle");
+        healer.HealingEffect.Stop();
+        Debug.Log("힐링 이펙트 끄기기");
+
     }
 
     public void ApplyUnitUpgrade(string type, int degree)
