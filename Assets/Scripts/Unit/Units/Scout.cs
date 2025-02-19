@@ -28,7 +28,7 @@ public class Scout : Unit
                 unitCost: 20,
                 unitPower: 0,
                 unitPowerRange: 0,
-                unitMoveSpeed: 4,
+                unitMoveSpeed: 20,
                 populationCost: 1)
     {
         // 추가 초기화 작업 수행 가능
@@ -41,10 +41,10 @@ public class Scout : Unit
         this.unitLocation = unitLocation;
         this.unitCost = 40;
         this.unitPowerRange = 0;
-        this.unitMoveSpeed = 5;
+        this.unitMoveSpeed = 20;
         this.populationCost = 1;
         this.population = 1;
-        this.fow = 30;
+        this.fow = 50;
         this.armor = 1 + GameStatus.instance.armorIncrease;
     }
 }
