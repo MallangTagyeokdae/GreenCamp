@@ -180,44 +180,48 @@ public class UIController : MonoBehaviour
 
     private void SetBuildingButtonByLevel(List<UIButton> uIButtons, Building building, Action<List<UIButton>, bool> action, bool state)
     {
-        if (building.TryGetComponent(out Barrack barrack))
+        switch(building)
         {
-            int level = barrack.level;
-            switch (level)
-            {
-                case 1:
-                    action(uIButtons.GetRange(1, 1), state);
-                    action(uIButtons.GetRange(2, 3), !state);
-                    break;
-                case 2:
-                    action(uIButtons.GetRange(1, 2), state);
-                    action(uIButtons.GetRange(3, 2), !state);
-                    break;
-                case 3:
-                    action(uIButtons.GetRange(1, 3), state);
-                    action(uIButtons.GetRange(4, 1), !state);
-                    break;
-                case 4:
-                    action(uIButtons.GetRange(1, 4), state);
-                    break;
-            }
-        }
-        else if(building.TryGetComponent(out Academy academy))
-        {
-            if(state.Equals(true)) // 버튼 클릭 활성/비활성화 하는 부분
-            {
-                action(uIButtons.GetRange(0,1), state);
-                action(uIButtons.GetRange(1,1), !GameStatus.instance.isDamageUpgrade);
-                action(uIButtons.GetRange(2,1), !GameStatus.instance.isArmorUpgrade);
-                action(uIButtons.GetRange(3,1), !GameStatus.instance.isHealthUpgrade);
-            }
-            else
-            {
-                action(uIButtons.GetRange(0,1), state);
-                action(uIButtons.GetRange(1,1), GameStatus.instance.isDamageUpgrade);
-                action(uIButtons.GetRange(2,1), GameStatus.instance.isArmorUpgrade);
-                action(uIButtons.GetRange(3,1), GameStatus.instance.isHealthUpgrade);
-            }
+            case Barrack:
+                int level = building.level;
+                switch (level)
+                {
+                    case 1:
+                        action(uIButtons.GetRange(1, 1), state);
+                        action(uIButtons.GetRange(2, 3), !state);
+                        break;
+                    case 2:
+                        action(uIButtons.GetRange(1, 2), state);
+                        action(uIButtons.GetRange(3, 2), !state);
+                        break;
+                    case 3:
+                        action(uIButtons.GetRange(1, 3), state);
+                        action(uIButtons.GetRange(4, 1), !state);
+                        break;
+                    case 4:
+                        action(uIButtons.GetRange(1, 4), state);
+                        break;
+                }
+                break;
+            case Academy:
+                if(state.Equals(true)) // 버튼 클릭 활성/비활성화 하는 부분
+                {
+                    action(uIButtons.GetRange(0,1), state);
+                    action(uIButtons.GetRange(1,1), !GameStatus.instance.isDamageUpgrade);
+                    action(uIButtons.GetRange(2,1), !GameStatus.instance.isArmorUpgrade);
+                    action(uIButtons.GetRange(3,1), !GameStatus.instance.isHealthUpgrade);
+                }
+                else
+                {
+                    action(uIButtons.GetRange(0,1), state);
+                    action(uIButtons.GetRange(1,1), GameStatus.instance.isDamageUpgrade);
+                    action(uIButtons.GetRange(2,1), GameStatus.instance.isArmorUpgrade);
+                    action(uIButtons.GetRange(3,1), GameStatus.instance.isHealthUpgrade);
+                }
+                break;
+            case Command:
+                action(uIButtons.GetRange(1,1), state);
+                break;
         }
         // 레벨에 상관없이 레벨업 버튼은 Interactable -> true, Lock 버튼 Active -> false로 해야함
         if (state)

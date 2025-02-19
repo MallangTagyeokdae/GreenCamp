@@ -1095,11 +1095,16 @@ public class GameManager : MonoBehaviour
         switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
-                if (clickedObj == ground)
+                if (clickedObj == ground && clickedObject.Count == 1)
                 {
                     SetState("ConstructionMode");
                     gridHandler.SetBuildingRange(1.25f);
                     SetBuildingType("Barrack");
+                }
+                else
+                {
+                    SetClickedObject(ground);
+                    SetBuildingListUI();
                 }
                 break;
         }
@@ -1108,23 +1113,26 @@ public class GameManager : MonoBehaviour
     public void PressedC()
     {
         /*
-           게임 State 확인
-           InGame
-               clickedObject[0] 확인
-                   1.  ground 이면 ConstructionMode로 변경 => 아카데미 건설 세팅해줌
-                       GridHandler에서 SetBuildingRange 값을 1.25 로 변경
-                       BuildingType을 Academy로 변경
-       */
+            게임 State확인
+            InGame
+                clickedObject[0] 확인
+                    1.  Barrack이면
+                        힐러생성
+        */
 
         GameObject clickedObj = clickedObject[0];
         switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
-                if (clickedObj == ground)
+
+                if (clickedObj.TryGetComponent(out Command command))
                 {
-                    SetState("ConstructionMode");
-                    gridHandler.SetBuildingRange(1.25f);
-                    SetBuildingType("Academy");
+                    if (command.state == Building.State.Built) // 권한 확인
+                    {
+                        // 힐러 생성
+                        SetUnitType("Scout");
+                        CreateUnit();
+                    }
                 }
                 break;
         }
@@ -1145,7 +1153,7 @@ public class GameManager : MonoBehaviour
         switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
-                if (clickedObj == ground)
+                if (clickedObj == ground && commandLevel >= 4 && clickedObject.Count == 1)
                 {
                     SetState("ConstructionMode");
                     gridHandler.SetBuildingRange(0.001f);
@@ -1181,6 +1189,13 @@ public class GameManager : MonoBehaviour
                         CreateUnit();
                     }
                 }
+                else if (clickedObj.TryGetComponent(out Academy academy))
+                {
+                    if(academy.state == Building.State.Built)
+                    {
+                        UpgradeUnit("Health");
+                    }
+                }
                 break;
         }
     }
@@ -1206,34 +1221,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PressedO()
-    {
-        /*
-            게임 State확인
-            InGame
-                clickedObject[0] 확인
-                    1.  Barrack이면
-                        힐러생성
-        */
-
-        GameObject clickedObj = clickedObject[0];
-        switch (GameStatus.instance.gameState)
-        {
-            case GameStates.InGame:
-
-                if (clickedObj.TryGetComponent(out Command command))
-                {
-                    if (command.state == Building.State.Built) // 권한 확인
-                    {
-                        // 힐러 생성
-                        SetUnitType("Scout");
-                        CreateUnit();
-                    }
-                }
-                break;
-        }
-    }
-
     public void PressedR()
     {
         /*
@@ -1248,7 +1235,7 @@ public class GameManager : MonoBehaviour
         switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
-                if (clickedObj == ground)
+                if (clickedObj == ground && clickedObject.Count == 1)
                 {
                     SetState("ConstructionMode");
                     gridHandler.SetBuildingRange(1.25f);
@@ -1299,7 +1286,14 @@ public class GameManager : MonoBehaviour
                         CreateUnit();
                     }
                 }
-                else if (clickedObj == ground)
+                else if (clickedObj.TryGetComponent(out Academy academy))
+                {
+                    if (academy.state == Building.State.Built)
+                    {
+                        UpgradeUnit("Armor");
+                    }
+                }
+                else if (clickedObj == ground && clickedObject.Count == 1)
                 {
                     SetState("ConstructionMode");
                     gridHandler.SetBuildingRange(0.0001f);
@@ -1335,6 +1329,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PressedW()
+    {
+        /*
+            게임 State 확인
+            InGame
+                clickedObject[0] 확인
+                    1.  Academy 이고, state가 Built이면
+                        공격력 업그레이드 실행
+        */
+
+        GameObject clickedObj = clickedObject[0];
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+                if (clickedObj.TryGetComponent(out Academy academy))
+                {
+                    if (academy.state == Building.State.Built)
+                    {
+                        UpgradeUnit("Damage");
+                    }
+                }
+                break;
+        }
+    }
+
     public void PressedU()
     {
         /*
@@ -1354,6 +1373,31 @@ public class GameManager : MonoBehaviour
                     {
                         LevelUpBuilding();
                     }
+                }
+                break;
+        }
+    }
+
+    public void PressedY()
+    {
+        /*
+           게임 State 확인
+           InGame
+               clickedObject[0] 확인
+                   1.  ground 이면 ConstructionMode로 변경 => 아카데미 건설 세팅해줌
+                       GridHandler에서 SetBuildingRange 값을 1.25 로 변경
+                       BuildingType을 Academy로 변경
+       */
+
+        GameObject clickedObj = clickedObject[0];
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+                if (clickedObj == ground && clickedObject.Count == 1)
+                {
+                    SetState("ConstructionMode");
+                    gridHandler.SetBuildingRange(1.25f);
+                    SetBuildingType("Academy");
                 }
                 break;
         }
