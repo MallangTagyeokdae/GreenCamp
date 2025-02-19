@@ -240,6 +240,10 @@ public abstract class Unit : Entity
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
                     animator.SetBool("isAttacking", true);
+                    if (gameObject.GetComponent<Healer>())
+                    {
+                        gameObject.GetComponent<Healer>().HealingEffect.SetActive(true);
+                    }
                 }
                 break;
             case "Die":
@@ -285,6 +289,10 @@ public abstract class Unit : Entity
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
                     animator.SetBool("isAttacking", false);
+                    if (gameObject.GetComponent<Healer>())
+                    {
+                        gameObject.GetComponent<Healer>().HealingEffect.SetActive(false);
+                    }
                 }
                 SetState(newState);
                 break;

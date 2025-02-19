@@ -6129,12 +6129,12 @@ Transform:
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 5369767705351567545}
   - {fileID: 7734174381063566040}
   - {fileID: 3350673157581375249}
   - {fileID: 7449230183334207858}
   - {fileID: 5520085944370449222}
   - {fileID: 187712010363306582}
-  - {fileID: 5369767705351567545}
   - {fileID: 7617460484015091342}
   - {fileID: 1877071543535127527}
   - {fileID: 6508965489860724304}
@@ -6410,7 +6410,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   prefabPosition: {fileID: 0}
   order: 0
-  HealingEffect: {fileID: 5369767705336364537}
+  HealingEffect: {fileID: 5369767705352053913}
 --- !u!114 &2302028604011185352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19979,13 +19979,33 @@ PrefabInstance:
       propertyPath: looping
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217187139097276932, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217187139097276934, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2217187139112315744, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: m_Name
       value: HealingEffect
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139112315744, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139112482624, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: m_LocalScale.x
@@ -20005,7 +20025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139112482624, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139112482624, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20043,19 +20063,23 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2217187139112482628, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
---- !u!198 &5369767705336364537 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
-  m_PrefabInstance: {fileID: 6070914641973022713}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5369767705351567545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2217187139112482624, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+  m_PrefabInstance: {fileID: 6070914641973022713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5369767705352053913 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2217187139112315744, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
   m_PrefabInstance: {fileID: 6070914641973022713}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7449230183334584566
@@ -20069,6 +20093,10 @@ PrefabInstance:
     - target: {fileID: 145256, guid: 2e32e2e0f5c5be546b6505e19d796364, type: 3}
       propertyPath: m_Name
       value: MagicBuffBlue
+      objectReference: {fileID: 0}
+    - target: {fileID: 145256, guid: 2e32e2e0f5c5be546b6505e19d796364, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 409988, guid: 2e32e2e0f5c5be546b6505e19d796364, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20134,7 +20162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3960099710613061450, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5329887860975645673, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
       propertyPath: m_LocalPosition.x
