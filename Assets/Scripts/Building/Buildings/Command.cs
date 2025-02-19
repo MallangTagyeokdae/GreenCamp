@@ -67,6 +67,15 @@ public class Command : Building
     {
         this._sponPos = setSponPos;
     }
+    
+    public void SetMagician()
+    {
+        for(int i=0; i<turretArchers.Count; i++)
+        {
+            turretArchers[i].SetActive(false);
+            turretMagician[i].SetActive(true);
+        }
+    }
 
     [PunRPC]
     public override void DestroyEntity()

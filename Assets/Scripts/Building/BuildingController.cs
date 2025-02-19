@@ -164,6 +164,7 @@ public class BuildingController : MonoBehaviour
                 GameStatus.instance.IncreaseMaxBuildingCount(2 * building.level);
                 building.GetComponent<Command>().attackPower += 5;
                 GameManager.instance.commandLevel ++;
+                if(building.level >= 4) building.GetComponent<Command>().SetMagician();
                 break;
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += .25f;
@@ -175,6 +176,7 @@ public class BuildingController : MonoBehaviour
                 break;
             case Defender:
                 building.GetComponent<Defender>().attackPower += 5;
+                if(building.level >= 4) building.GetComponent<Defender>().SetMagician();
                 break;
         }
     }

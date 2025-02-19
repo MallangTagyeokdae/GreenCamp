@@ -44,7 +44,7 @@ public class ResourceBuilding : Building
         this.loadingTime = 20f;
         this.underGrid = colliders;
         this.population = 1;
-        this.increasePersent = 1f;
+        this.increasePersent = .5f;
         this.fow = 40;
         this.armor = 10;
     }

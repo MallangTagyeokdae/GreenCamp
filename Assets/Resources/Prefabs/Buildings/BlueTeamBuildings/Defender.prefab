@@ -209,6 +209,10 @@ MonoBehaviour:
   completeEffect: {fileID: 5980002219928934471}
   levelUpEffect: {fileID: 5574544061641680636}
   clickEventHandler: {fileID: 0}
+  turretArchers:
+  - {fileID: 5053068103727881541}
+  turretMagician:
+  - {fileID: 8889873923695917107}
 --- !u!54 &-5216412369222245416
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1379,6 +1383,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 772342665488120648, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
   m_PrefabInstance: {fileID: 1941847854564019441}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5053068103727881541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6688635990668087732, guid: 43edaa3a0e4c44e44bd28ed96b1df5cc, type: 3}
+  m_PrefabInstance: {fileID: 1941847854564019441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3547753571235788332
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1735,5 +1744,10 @@ PrefabInstance:
 --- !u!4 &8889873923695628279 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 466590, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
+  m_PrefabInstance: {fileID: 8889873923695825257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8889873923695917107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 190810, guid: 145d89dddb5f147adabd8e674812ff97, type: 3}
   m_PrefabInstance: {fileID: 8889873923695825257}
   m_PrefabAsset: {fileID: 0}
