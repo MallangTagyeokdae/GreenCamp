@@ -134,7 +134,7 @@ public class ClickManager : MonoBehaviour
 
                     Color pixelColor = fogTexture.GetPixel(pixelX, pixelY);
                     
-                    if(pixelColor.a > 0.1 && side == 0)
+                    if(pixelColor.a > 0.1 && side == 0 && GameStatus.instance.gameState == GameStates.ConstructionMode)
                     {
                         return;
                     }
@@ -176,17 +176,26 @@ public class ClickManager : MonoBehaviour
         }
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
+        //RaycastHit hit;
 
         if (drawRay)
         {
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.green);
         }
 
-        if (Physics.Raycast(ray, out hit, _distance))
-        {
-            // GridHandler에서 Grid바꾸는 함수 실행해야함
-            if(hit.collider.CompareTag("Clickable"))
+        foreach(RaycastHit hit in hits){
+
+        }
+
+        int length = hits.Length;
+        if(length > 1){
+            Array.Sort<RaycastHit>(hits, (a, b) => a.distance.CompareTo(b.distance));
+        }
+        
+        for(int i = 0; i < length; i++){
+            RaycastHit hit = hits[i];
+            if (hit.collider.CompareTag("Clickable"))
             {
                 if (hoverObj != hit.collider.gameObject)
                 {

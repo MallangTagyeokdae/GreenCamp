@@ -2924,8 +2924,8 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 910434096}
-            m_TargetAssemblyTypeName: PhotonManager, Assembly-CSharp
+          - m_Target: {fileID: 292106737}
+            m_TargetAssemblyTypeName: TeamUIController, Assembly-CSharp
             m_MethodName: StartGame
             m_Mode: 1
             m_Arguments:
@@ -10992,6 +10992,7 @@ MonoBehaviour:
   teamUIController: {fileID: 292106737}
   userInfo: {fileID: 11400000, guid: cf1c2eec7b2ce254a8482ff0e0078806, type: 2}
   loggedin: 0
+  session: 0
 --- !u!4 &910434097
 Transform:
   m_ObjectHideFlags: 0

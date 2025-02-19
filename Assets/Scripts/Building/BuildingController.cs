@@ -153,8 +153,8 @@ public class BuildingController : MonoBehaviour
     public void UpgradeBuilding(Building building)
     {
         float healthPercent = (float)(building.currentHealth / building.maxHealth);
-        building.maxHealth += building.level * 50;
-        building.currentHealth = Mathf.FloorToInt(building.maxHealth * healthPercent);
+
+        building.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.All, building.level * 50, healthPercent);
         building.level++;
         building.levelUpCost += building.increaseLevelCost;
 
@@ -164,6 +164,7 @@ public class BuildingController : MonoBehaviour
                 GameStatus.instance.IncreaseMaxBuildingCount(2 * building.level);
                 building.GetComponent<Command>().attackPower += 5;
                 GameManager.instance.commandLevel ++;
+                if(building.level >= 4) building.GetComponent<Command>().SetMagician();
                 break;
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += .25f;
@@ -175,6 +176,7 @@ public class BuildingController : MonoBehaviour
                 break;
             case Defender:
                 building.GetComponent<Defender>().attackPower += 5;
+                if(building.level >= 4) building.GetComponent<Defender>().SetMagician();
                 break;
         }
     }

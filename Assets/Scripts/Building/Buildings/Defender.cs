@@ -14,6 +14,9 @@ public class Defender : Building
     }
     public int attackPower { get; set; }
     public int attackRange { get; set; }
+
+    public List<GameObject> turretArchers;
+    public List<GameObject> turretMagician;
     
     public Defender(string teamID, int buildingID, Vector3 buildingLocation)
      : base(
@@ -49,6 +52,14 @@ public class Defender : Building
         this.underGrid = colliders;
         this.population = 1;
         this.fow = 40;
+    }
+    public void SetMagician()
+    {
+        for(int i=0; i<turretArchers.Count; i++)
+        {
+            turretArchers[i].SetActive(false);
+            turretMagician[i].SetActive(true);
+        }
     }
 
     [PunRPC]
