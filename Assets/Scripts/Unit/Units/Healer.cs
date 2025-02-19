@@ -11,7 +11,7 @@ public class Healer : Unit
         this.currentHealth = 85 + GameStatus.instance.healthIncrease;
         this.unitPower = 10 + GameStatus.instance.damageIncrease;
     }
-    public ParticleSystem HealingEffect;
+    public GameObject HealingEffect;
     public Healer(string teamID, int unitID, Vector3 unitLocation)
                 : base(
                 teamID,

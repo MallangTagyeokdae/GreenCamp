@@ -84,9 +84,13 @@ PrefabInstance:
       propertyPath: looping
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5369767705336364537, guid: e2256dc076a134fc8a267263e3928058, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 5369767705352053913, guid: e2256dc076a134fc8a267263e3928058, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6205649045696081274, guid: e2256dc076a134fc8a267263e3928058, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -111,28 +115,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3135998574298575499, guid: e2256dc076a134fc8a267263e3928058, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -3844008412826727535}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2256dc076a134fc8a267263e3928058, type: 3}
---- !u!1 &1741208666304031454 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3135998574298575499, guid: e2256dc076a134fc8a267263e3928058, type: 3}
-  m_PrefabInstance: {fileID: 3724276884063688789}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &-3844008412826727535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741208666304031454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fogWar: {fileID: 0}
-  visibility: 0
-  additionalRadius: 0

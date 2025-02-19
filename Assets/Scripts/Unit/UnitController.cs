@@ -262,17 +262,14 @@ public class UnitController : MonoBehaviour
     public IEnumerator Heal(GameObject me)
     {
         me.TryGetComponent(out Unit unit);
-        me.TryGetComponent(out Healer healer);
         unit.ChangeState("Attack");
-        healer.HealingEffect.Stop();
-        Debug.Log("힐링 이펙트 켜기");
 
         while (unit.attackList != null)
         {
             foreach (GameObject ally in unit.attackList)
             {
                 ally.TryGetComponent(out Entity allyEntity);
-                if (ally == null || allyEntity == null || allyEntity.currentHealth <= 0 || allyEntity.currentHealth > allyEntity.maxHealth)
+                if (ally == null || allyEntity == null || allyEntity.currentHealth <= 0 || allyEntity.currentHealth >= allyEntity.maxHealth)
                 {
                     unit.attackList.Remove(ally);
                     break;
@@ -283,8 +280,6 @@ public class UnitController : MonoBehaviour
 
         unit.SetOrder(0);
         unit.ChangeState("Idle");
-        healer.HealingEffect.Stop();
-        Debug.Log("힐링 이펙트 끄기기");
 
     }
 
