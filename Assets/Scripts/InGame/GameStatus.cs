@@ -6,6 +6,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+public enum GameStates
+{
+    Loading = 0,
+    InGame = 1,
+    ConstructionMode = 2,
+    SetTargetMode = 3,
+    SetMoveRot = 4,
+    EndGame = 5
+}
+
 public class GameStatus : MonoBehaviour
 {
     private void Awake()
@@ -46,6 +56,7 @@ public class GameStatus : MonoBehaviour
     public int damageUpgradeCost { get; set; }
     public int armorUpgradeCost { get; set; }
     public int healthUpgradeCost { get; set; }
+    public GameStates gameState = GameStates.Loading;
 
     public void InitGameStatus()
     {

@@ -11,15 +11,6 @@ using Unity.VisualScripting;
 using FischlWorks_FogWar;
 using UnityEngine.SceneManagement;
 
-public enum GameStates
-{
-    Loading = 0,
-    InGame = 1,
-    ConstructionMode = 2,
-    SetTargetMode = 3,
-    SetMoveRot = 4,
-    EndGame = 5
-}
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
@@ -58,7 +49,6 @@ public class GameManager : MonoBehaviour
     public GameObject target;
     public GameObject fogWar;
     public GameObject miniMap;
-    public GameStates gameState = GameStates.Loading;
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
     //-----------------------------
@@ -127,29 +117,29 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case GameStates.Loading:
-                gameState = state;
+                GameStatus.instance.gameState = state;
                 break;
             case GameStates.InGame:
-                gameState = state;
+                GameStatus.instance.gameState = state;
                 PhotonNetwork.AutomaticallySyncScene = false;
                 break;
             case GameStates.ConstructionMode:
-                gameState = state;
+                GameStatus.instance.gameState = state;
                 grid.SetActive(true);
                 SetBuildingListUI();
                 break;
             case GameStates.SetMoveRot:
-                gameState = state;
+                GameStatus.instance.gameState = state;
                 uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.SetTargetMode:
-                gameState = state;
+                GameStatus.instance.gameState = state;
                 uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.EndGame:
                 gameObject.GetComponent<PhotonView>().RPC("ShowGameResult", RpcTarget.All);
                 target.SetActive(false);
-                gameState = state;
+                GameStatus.instance.gameState = state;
                 break;
         }
     }
@@ -158,7 +148,7 @@ public class GameManager : MonoBehaviour
     {
         if (Enum.TryParse(checkState, out GameStates state))
         {
-            return gameState == state ? true : false;
+            return GameStatus.instance.gameState == state ? true : false;
         }
         Debug.Log("CheckState함수에서 State 잘못 입력함");
         return false;
@@ -258,7 +248,7 @@ public class GameManager : MonoBehaviour
     }
     public void GroundRightClickEvent(Vector3 newLocation)
     {
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1)
@@ -284,7 +274,7 @@ public class GameManager : MonoBehaviour
 
     public void GroundLeftClickEvent(Vector3 newLocation)
     {
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 SetClickedObject(ground);
@@ -323,12 +313,12 @@ public class GameManager : MonoBehaviour
     }
     public void SetUnitInfo(int UIindex, GameObject unit)
     { // unitDictionary에서 unitID에 해당하는 유닛을 가져옴
-        if (gameState == GameStates.InGame && unit.TryGetComponent(out Unit clickedUnit))
+        if (GameStatus.instance.gameState == GameStates.InGame && unit.TryGetComponent(out Unit clickedUnit))
             currentUI = uIController.SetUnitUI(UIindex, clickedUnit);
     }
     public void SetGroupUnitUI(int UIindex, int startIndex)
     {
-        if (gameState == GameStates.InGame && clickedObject.Count >= 3)
+        if (GameStatus.instance.gameState == GameStates.InGame && clickedObject.Count >= 3)
         {
             currentUI = uIController.SetGroupUI(UIindex, startIndex, currentUI, clickedObject);
         }
@@ -1027,7 +1017,7 @@ public class GameManager : MonoBehaviour
         // ESC를 눌렀을 때 현재 선택된 오브젝트에 따라서 관리를 한다.
         GameObject targetObj = clickedObject[0];
 
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (targetObj.TryGetComponent(out Building building))
@@ -1070,7 +1060,7 @@ public class GameManager : MonoBehaviour
         */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (uIController.CheckIsUnitUI(currentUI))
@@ -1102,7 +1092,7 @@ public class GameManager : MonoBehaviour
        */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (clickedObj == ground)
@@ -1127,7 +1117,7 @@ public class GameManager : MonoBehaviour
        */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (clickedObj == ground)
@@ -1152,7 +1142,7 @@ public class GameManager : MonoBehaviour
         */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (clickedObj == ground)
@@ -1178,7 +1168,7 @@ public class GameManager : MonoBehaviour
         */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
 
@@ -1205,7 +1195,7 @@ public class GameManager : MonoBehaviour
                         SetMoveRot 모드로 변경
         */
 
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (uIController.CheckIsUnitUI(currentUI))
@@ -1227,7 +1217,7 @@ public class GameManager : MonoBehaviour
         */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
 
@@ -1255,7 +1245,7 @@ public class GameManager : MonoBehaviour
         */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (clickedObj == ground)
@@ -1284,7 +1274,7 @@ public class GameManager : MonoBehaviour
         */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (uIController.CheckIsUnitUI(currentUI))
@@ -1328,7 +1318,7 @@ public class GameManager : MonoBehaviour
         */
 
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
 
@@ -1355,7 +1345,7 @@ public class GameManager : MonoBehaviour
                         레벨업 실행
         */
         GameObject clickedObj = clickedObject[0];
-        switch (gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 if (clickedObj.TryGetComponent(out Building building))
