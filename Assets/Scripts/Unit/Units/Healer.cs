@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Healer : Unit
@@ -8,9 +9,9 @@ public class Healer : Unit
     {
         this.maxHealth = 85 + GameStatus.instance.healthIncrease;
         this.currentHealth = 85 + GameStatus.instance.healthIncrease;
-        this.unitPower = 0;
+        this.unitPower = 10 + GameStatus.instance.damageIncrease;
     }
-    public GameObject HealingEffect;
+    public ParticleSystem HealingEffect;
     public Healer(string teamID, int unitID, Vector3 unitLocation)
                 : base(
                 teamID,
@@ -20,7 +21,7 @@ public class Healer : Unit
                 unitMaxHealth: 85,
                 unitCurrentHealth: 85,
                 unitCost: 65,
-                unitPower: 0,
+                unitPower: 10,
                 unitPowerRange: 4,
                 unitMoveSpeed: 1,
                 populationCost: 1)
@@ -38,5 +39,26 @@ public class Healer : Unit
         this.population = 2;
         this.fow = 30;
         this.armor = 5 + GameStatus.instance.armorIncrease;
+    }
+    public override void OnIdleEnter()
+    {
+        // base.OnIdleEnter();
+        foreach (GameObject ally in attackList.ToList())
+        {
+            if (ally == null || ally.CompareTag("Untagged"))
+            {
+                attackList.Remove(ally);
+            }
+
+        }
+        if (attackList.Count != 0)
+        {
+            //콜백함수 실행 후 리턴
+            foreach (GameObject ally in attackList.ToList())
+            {
+                GameManager.instance.Heal(this.gameObject, ally);
+                return;
+            }
+        }
     }
 }

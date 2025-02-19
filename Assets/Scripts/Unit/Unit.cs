@@ -81,7 +81,8 @@ public abstract class Unit : Entity
         aggList = new HashSet<GameObject>();
         animator = GetComponent<Animator>();
         _initRotation = gameObject.transform.rotation;
-        if(!isTurretUnit){
+        if (!isTurretUnit)
+        {
             healthBar = gameObject.transform.Find("HealthBar/UnitCurrentHealth").GetComponent<Slider>();
             healthBar.gameObject.SetActive(false);
             rigidbody = gameObject.GetComponent<Rigidbody>();
@@ -93,9 +94,9 @@ public abstract class Unit : Entity
                 {
                     GameManager.instance.SetTargetObject(gameObject);
                 }
-            );    
+            );
         }
-        
+
     }
 
     private void Start()
@@ -145,7 +146,7 @@ public abstract class Unit : Entity
         aggTriggerExit.AddListener((GameObject go) => action(go));
     }
 
-    private void OnIdleEnter()
+    public virtual void OnIdleEnter()
     { //attackList와 aggList 내의 null 값들을 전부 제거해준 후 attack또는 aggro 함수를 실행해준다.
 
         foreach (GameObject enemy in attackList.ToList())
@@ -202,7 +203,7 @@ public abstract class Unit : Entity
         }
     }
 
-    
+
     public void SetState(string newState)
     {
         switch (newState)
@@ -210,10 +211,12 @@ public abstract class Unit : Entity
             case "Idle":
                 destination = Vector3.zero;
                 state = State.Idle;
-                if(!isTurretUnit){
+                if (!isTurretUnit)
+                {
                     rigidbody.isKinematic = true;
                 }
-                else{
+                else
+                {
                     transform.rotation = _initRotation;
                 }
                 OnIdleEnter();
@@ -222,23 +225,26 @@ public abstract class Unit : Entity
             case "Move":
                 state = State.Move;
                 rigidbody.isKinematic = false;
-                if(gameObject.GetComponent<PhotonView>().IsMine){
+                if (gameObject.GetComponent<PhotonView>().IsMine)
+                {
                     animator.SetBool("isWalking", true);
                 }
                 break;
 
             case "Attack":
                 state = State.Attack;
-                if(!isTurretUnit){
+                if (!isTurretUnit)
+                {
                     rigidbody.isKinematic = true;
                 }
-                if(gameObject.GetComponent<PhotonView>().IsMine){
+                if (gameObject.GetComponent<PhotonView>().IsMine)
+                {
                     animator.SetBool("isAttacking", true);
                 }
                 break;
             case "Die":
                 state = State.Die;
-                foreach(Collider collider in GetComponents<Collider>())
+                foreach (Collider collider in GetComponents<Collider>())
                 {
                     collider.enabled = false;
                 }
@@ -264,7 +270,8 @@ public abstract class Unit : Entity
                 {
                     break;
                 }
-                if(gameObject.GetComponent<PhotonView>().IsMine){
+                if (gameObject.GetComponent<PhotonView>().IsMine)
+                {
                     animator.SetBool("isWalking", false);
                 }
                 SetState(newState);
@@ -275,12 +282,13 @@ public abstract class Unit : Entity
                 {
                     break;
                 }
-                if(gameObject.GetComponent<PhotonView>().IsMine){
+                if (gameObject.GetComponent<PhotonView>().IsMine)
+                {
                     animator.SetBool("isAttacking", false);
                 }
                 SetState(newState);
                 break;
-            
+
             case State.Die:
                 break;
         }
@@ -304,20 +312,37 @@ public abstract class Unit : Entity
         gameObject.tag = tag;
     }
 
-    public void AttackReq(){
+    public void AttackReq()
+    {
         if (gameObject.GetComponent<PhotonView>().IsMine)
         {
             target.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unitPower);
         }
     }
 
+    public void HealReq()
+    {
+        if (gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            foreach (GameObject ally in attackList)
+            {
+                Debug.Log("HealReq 테스트: " + ally.name);
+                ally.GetComponent<PhotonView>().RPC("HealRequest", RpcTarget.MasterClient, unitPower);
+            }
+
+        }
+    }
+
     [PunRPC]
-    public void SetTarget(int viewID){
+    public void SetTarget(int viewID)
+    {
         target = PhotonView.Find(viewID).gameObject;
     }
 
-    public void Launch(){
-        if(target != null){
+    public void Launch()
+    {
+        if (target != null)
+        {
             GameObject pjtObject = Instantiate(prefab, prefabPosition.position, Quaternion.identity);
             pjtObject.AddComponent<Projectile>();
             pjtObject.TryGetComponent(out Projectile projectile);
