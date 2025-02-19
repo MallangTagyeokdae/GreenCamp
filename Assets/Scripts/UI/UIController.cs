@@ -34,7 +34,7 @@ public class UIController : MonoBehaviour
     {
         UIContainer selectedUI = UILists[UIindex];
         UIContainer currentUI = GameManager.instance.currentUI;
-        switch (GameManager.instance.gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 SetBuildingListButton(selectedUI.GetComponent<UIElement>().uiElements, commandLevel, (List<UIButton> UIButtons, bool state) => SetInteractable(UIButtons, state), true);
@@ -249,7 +249,7 @@ public class UIController : MonoBehaviour
 
     public void SetUnitOrderButton(UIContainer selectedUI)
     {
-        switch (GameManager.instance.gameState)
+        switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
                 SetInteractable(selectedUI.GetComponent<UIElement>().uiElements, true);

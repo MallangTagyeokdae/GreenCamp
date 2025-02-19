@@ -134,7 +134,7 @@ public class ClickManager : MonoBehaviour
 
                     Color pixelColor = fogTexture.GetPixel(pixelX, pixelY);
                     
-                    if(pixelColor.a > 0.1 && side == 0)
+                    if(pixelColor.a > 0.1 && side == 0 && GameStatus.instance.gameState == GameStates.ConstructionMode)
                     {
                         return;
                     }
