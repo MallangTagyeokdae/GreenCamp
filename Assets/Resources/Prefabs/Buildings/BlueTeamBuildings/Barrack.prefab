@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -910109380999945870}
   - component: {fileID: -149204877932076838}
   - component: {fileID: 4672296437103403884}
+  - component: {fileID: 638031291535888600}
   m_Layer: 0
   m_Name: Barrack
   m_TagString: Clickable
@@ -255,6 +256,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &638031291535888600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856497004635135170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogWar: {fileID: 0}
+  visibility: 0
+  additionalRadius: 0
 --- !u!1001 &154444014179615686
 PrefabInstance:
   m_ObjectHideFlags: 0
