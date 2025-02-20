@@ -338,7 +338,7 @@ public abstract class Unit : Entity
     }
     public void HealEffect()
     {
-        gameObject.GetComponent<PhotonView>().RPC("SetHealingEffect", RpcTarget.All);
+        gameObject.GetComponent<PhotonView>().RPC("PlayHealingEffect", RpcTarget.All);
     }
 
     [PunRPC]
@@ -352,7 +352,7 @@ public abstract class Unit : Entity
     {
         if (gameObject.GetComponent<Healer>())
         {
-            if(gameObject.GetComponent<Healer>().HealingEffect.isPlaying)
+            if (gameObject.GetComponent<Healer>().HealingEffect.isPlaying)
             {
                 gameObject.GetComponent<Healer>().HealingEffect.Stop();
             }
