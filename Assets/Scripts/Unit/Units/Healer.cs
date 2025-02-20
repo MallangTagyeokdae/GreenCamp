@@ -45,6 +45,7 @@ public class Healer : Unit
     public override void OnIdleEnter()
     {
         // base.OnIdleEnter();
+        Debug.Log("OnIdleEnter 실행");
         foreach (GameObject ally in attackList.ToList())
         {
             if (ally == null || ally.CompareTag("Untagged"))
@@ -74,6 +75,7 @@ public class Healer : Unit
         isCool = false;
         if (state == State.Attack)
         {
+            SetOrder(0);
             ChangeState("Idle");
         }
     }
