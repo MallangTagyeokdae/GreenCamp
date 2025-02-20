@@ -6410,7 +6410,7 @@ MonoBehaviour:
   prefab: {fileID: 0}
   prefabPosition: {fileID: 0}
   order: 0
-  HealingEffect: {fileID: 5369767705352053913}
+  HealingEffect: {fileID: 5369767705336364537}
 --- !u!114 &2302028604011185352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19985,7 +19985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: moveWithTransform
@@ -20001,7 +20001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276932, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276934, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: looping
@@ -20013,7 +20013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276934, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276934, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
@@ -20108,14 +20108,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+--- !u!198 &5369767705336364537 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+  m_PrefabInstance: {fileID: 6070914641973022713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5369767705351567545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2217187139112482624, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
-  m_PrefabInstance: {fileID: 6070914641973022713}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5369767705352053913 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2217187139112315744, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
   m_PrefabInstance: {fileID: 6070914641973022713}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7449230183334584566
