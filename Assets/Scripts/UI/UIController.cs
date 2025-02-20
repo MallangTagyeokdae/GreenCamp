@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Doozy.Runtime.UIManager;
 using Doozy.Runtime.UIManager.Components;
@@ -16,6 +17,8 @@ public class UIController : MonoBehaviour
     public List<UIContainer> Options; // 로딩, 자원, 배경과 관련된 UI들
     public List<TMP_Text> infoText; // Header에 있는 텍스트들 ( 0: 자원, 1: 현재유닛인구, 2: 최대인구, 3: 현재건물인구, 4: 최대건물인구)
     public BuildingController buildingController;
+    public TMP_Text infomation;
+    public TMP_Text inGameInfomation;
     private TMP_Text _level;
     private TMP_Text _health;
     private TMP_Text _armor;
@@ -505,5 +508,33 @@ public class UIController : MonoBehaviour
         {
             resultText.text = "패배";
         }
+    }
+
+    public void SetInfomation(string text)
+    {
+        infomation.text = text;
+    }
+
+    public void ResetInfomation()
+    {
+        if(infomation.text != "")
+        {
+            infomation.text = "";
+        }
+    }
+    public void SetInGameInfomation(string text)
+    {
+        inGameInfomation.gameObject.SetActive(true);
+        Debug.Log("ui 내용 : " + text);
+        inGameInfomation.text = text;
+    }
+
+    public void ResetInGameInfomation()
+    {
+        if(inGameInfomation.text != "")
+        {
+            infomation.text = "";
+        }
+        inGameInfomation.gameObject.SetActive(false);
     }
 }
