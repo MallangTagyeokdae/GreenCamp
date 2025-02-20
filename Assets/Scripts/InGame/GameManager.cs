@@ -234,18 +234,21 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void SetTargetObject(GameObject target)
+    public void SetTargetObject(GameObject target, int click)
     {
-        if (CheckState("InGame"))
+        if ((CheckState("InGame") && click == 1)|| (CheckState("SetTargetMode") && click == 0))
         {
-            Debug.Log("실행!!");
             if (target.GetComponent<Entity>() != null)
             {
                 if(targetObject != null){
                     targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
                 }
-                targetObject = target;
-                target.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
+
+                if(clickedObject.Count != 1 || clickedObject[0].GetComponent<Unit>()){
+                    targetObject = target;
+                    target.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
+                }
+                
                 foreach (GameObject go in clickedObject)    //지정한 타겟에게 이동, 해당 타겟이 아니면 move 이외의 조건이 안먹히게 해야함, 
                 {
                     go.TryGetComponent(out Unit selectedUnit);
@@ -263,11 +266,18 @@ public class GameManager : MonoBehaviour
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, targetObject, 3));
                 }
             }
+
+            SetState("InGame");
         }
     }
 
     public void GroundRightClickEvent(Vector3 newLocation)
     {
+        if(targetObject != null){
+            targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
+            targetObject = null;
+        }
+
         switch (GameStatus.instance.gameState)
         {
             case GameStates.InGame:
