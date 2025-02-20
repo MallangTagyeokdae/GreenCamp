@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -1068215315940403755}
   - component: {fileID: 2355228596179933277}
   - component: {fileID: 3684433933919551532}
+  - component: {fileID: 5854774403818956143}
   m_Layer: 0
   m_Name: Academy
   m_TagString: Clickable
@@ -255,6 +256,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 5.5000005, z: 5.500001}
   m_Center: {x: -0.00580984, y: -0.16384293, z: 2.0978384}
+--- !u!114 &5854774403818956143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604745847561763250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985add12ee4836e40b7241671b1d892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fogWar: {fileID: 0}
+  visibility: 0
+  additionalRadius: 0
 --- !u!1001 &360337314162582270
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -36,7 +36,6 @@ public class GameStatus : MonoBehaviour
         }
     }
     public string teamID { get; set; }
-    public int maxResourceCount { get; set; }
     public float currentResourceCount { get; set; }
     public float resourcePerSecond { get; set; }
     public int maxUnitCount { get; set; }
@@ -61,7 +60,6 @@ public class GameStatus : MonoBehaviour
     public void InitGameStatus()
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
-        maxResourceCount = 10000;
         currentResourceCount = 10000;
         resourcePerSecond = 1;
         maxUnitCount = 10;
@@ -81,11 +79,6 @@ public class GameStatus : MonoBehaviour
         damageUpgradeCost = 30;
         armorUpgradeCost = 30;
         healthUpgradeCost = 30;
-    }
-
-    public void IncreaseMaxResourceCount(int count)
-    {
-        maxResourceCount += count;
     }
 
     public void IncreaseResourcePerSecond(int count)
@@ -128,7 +121,7 @@ public class GameStatus : MonoBehaviour
         int[] data = CheckObjName(objectName);
         if (currentResourceCount < data[0])
         {
-            Debug.Log("자원부족");
+            GameManager.instance.SetInGameInfo("자원이 부족합니다");
             return false;
         }
         switch (objectType)
@@ -136,14 +129,14 @@ public class GameStatus : MonoBehaviour
             case "Unit":
                 if (maxUnitCount < currentUnitCount + data[1])
                 {
-                    Debug.Log("인구수 부족");
+                    GameManager.instance.SetInGameInfo("인구수가 부족합니다");
                     return false;
                 }
                 break;
             case "Building":
                 if (maxBuildingCount < currentBuildingCount + data[1])
                 {
-                    Debug.Log("건물 인구수 부족");
+                    GameManager.instance.SetInGameInfo("건물 인구수가 부족합니다");
                     return false;
                 }
                 break;
@@ -155,12 +148,12 @@ public class GameStatus : MonoBehaviour
     {
         if (building.level > 5)
         {
-            Debug.Log("최대레벨");
+            GameManager.instance.SetInGameInfo("건물의 최대 레벨에 도달하였습니다");
             return false;
         }
         else if (currentResourceCount < building.levelUpCost)
         {
-            Debug.Log("자원 부족");
+            GameManager.instance.SetInGameInfo("자원이 부족합니다");
             return false;
         }
         else if (building.GetComponent<Command>())
@@ -171,7 +164,7 @@ public class GameStatus : MonoBehaviour
         {
             return true;
         }
-        Debug.Log("건물레벨 <= 커멘드 레벨이 되어야함");
+        GameManager.instance.SetInGameInfo("건물레벨은 커멘드 레벨보다 더 높을 수 없습니다");
         return false;
     }
 
@@ -183,10 +176,10 @@ public class GameStatus : MonoBehaviour
             {
                 return true;
             }
-            Debug.Log("자원 부족");
+            GameManager.instance.SetInGameInfo("자원이 부족합니다");
             return false;
         }
-        Debug.Log("업그레이드 레벨 <= 건물 레벨이 되어야함");
+        GameManager.instance.SetInGameInfo("강화레벨은 건물 레벨보다 더 높을 수 없습니다");
         return false;
     }
 

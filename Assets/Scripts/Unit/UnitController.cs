@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ExitGames.Client.Photon.StructWrapping;
 using FischlWorks_FogWar;
 using Photon.Pun;
@@ -264,20 +265,21 @@ public class UnitController : MonoBehaviour
         me.TryGetComponent(out Unit unit);
         unit.ChangeState("Attack");
 
-        while (unit.attackList != null)
+        while (unit.attackList.Count != 0)
         {
-            foreach (GameObject ally in unit.attackList)
+            foreach (GameObject ally in unit.attackList.ToList())
             {
                 ally.TryGetComponent(out Entity allyEntity);
                 if (ally == null || allyEntity == null || allyEntity.currentHealth <= 0 || allyEntity.currentHealth >= allyEntity.maxHealth)
                 {
+                    Debug.Log("힐 끝: " + ally.name);
                     unit.attackList.Remove(ally);
-                    break;
                 }
             }
             yield return null;
         }
 
+        Debug.Log("힐 코루틴 끝남");
         unit.SetOrder(0);
         unit.ChangeState("Idle");
     }
@@ -295,7 +297,7 @@ public class UnitController : MonoBehaviour
                     valuePair.Value.armor += degree;
                     break;
                 case "Health":
-                    valuePair.Value.GetComponent<PhotonView>().RPC("SyncUnitHealth", RpcTarget.All, degree*1.0f);
+                    valuePair.Value.GetComponent<PhotonView>().RPC("SyncUnitHealth", RpcTarget.All, degree * 1.0f);
 
                     // float healthPercent = (float)(valuePair.Value.currentHealth / valuePair.Value.maxHealth);
                     // valuePair.Value.maxHealth += degree;
