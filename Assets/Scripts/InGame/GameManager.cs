@@ -163,9 +163,10 @@ public class GameManager : MonoBehaviour
     {
         if (CheckState("InGame"))
         {
-            if(targetObject != null){
-                    targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
-                    targetObject = null;
+            if (targetObject != null)
+            {
+                targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
+                targetObject = null;
             }
 
             unitController.SetActiveHealthBar(clickedObject);
@@ -242,7 +243,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("실행!!");
             if (target.GetComponent<Entity>() != null)
             {
-                if(targetObject != null){
+                if (targetObject != null)
+                {
                     targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
                 }
                 targetObject = target;
@@ -472,7 +474,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(info);
             await Task.Delay(3000, inGameInfoToken.Token);
-        } catch (TaskCanceledException)
+        }
+        catch (TaskCanceledException)
         {
             Debug.Log("작업 취소");
         }
@@ -1075,6 +1078,8 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
+    
+
     // =====================================================
 
     // =================== 키관련 함수 ======================== 

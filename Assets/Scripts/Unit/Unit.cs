@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using FischlWorks_FogWar;
 using Photon.Pun;
 using Unity.IO.LowLevel.Unsafe;
@@ -86,8 +87,9 @@ public abstract class Unit : Entity
             rigidbody.isKinematic = true;
             clickedEffect = transform.Find("ClickedEffect").gameObject;
             enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
-            if(!gameObject.GetComponent<PhotonView>().IsMine){
-                
+            if (!gameObject.GetComponent<PhotonView>().IsMine)
+            {
+
                 gameObject.GetComponent<ClickEventHandler>().rightClickDownEvent.AddListener((Vector3 pos) =>
                     {
                         GameManager.instance.SetTargetObject(gameObject);
@@ -202,7 +204,7 @@ public abstract class Unit : Entity
     }
 
 
-    public void SetState(string newState)
+    public async Task SetState(string newState)
     {
         switch (newState)
         {
@@ -237,9 +239,8 @@ public abstract class Unit : Entity
                 }
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
+
                     animator.SetBool("isAttacking", true);
-
-
 
                 }
                 break;
@@ -254,7 +255,7 @@ public abstract class Unit : Entity
     }
 
     [PunRPC]
-    public void ChangeState(string newState)
+    public async Task ChangeState(string newState)
     {
         switch (state)
         {
@@ -286,6 +287,12 @@ public abstract class Unit : Entity
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
                     animator.SetBool("isAttacking", false);
+                    if (gameObject.TryGetComponent(out Healer healer))
+                    {
+                        Debug.Log("5초 카운트 시작 ----------------------------");
+                        await healer.CoolTime(5f);
+                        Debug.Log("힐 가능 -----------------------------------");
+                    }
 
                 }
                 SetState(newState);
@@ -338,6 +345,7 @@ public abstract class Unit : Entity
     {
         gameObject.GetComponent<PhotonView>().RPC("PlayHealingEffect", RpcTarget.All);
     }
+
 
     [PunRPC]
     public void SetTarget(int viewID)

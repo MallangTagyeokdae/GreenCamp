@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Healer : Unit
@@ -59,6 +60,15 @@ public class Healer : Unit
                 GameManager.instance.Heal(this.gameObject, ally);
                 return;
             }
+        }
+    }
+    public async Task CoolTime(float coolTime)
+    {
+        float realTime = 0f;
+        while (realTime < coolTime)
+        {
+            await Task.Yield();  // 다음 프레임까지 대기
+            realTime += Time.deltaTime;
         }
     }
 }
