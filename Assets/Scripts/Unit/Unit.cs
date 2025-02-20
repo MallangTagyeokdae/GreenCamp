@@ -244,7 +244,7 @@ public abstract class Unit : Entity
                         if (healer.isCool == false)
                         {
                             animator.SetBool("isAttacking", true);
-                            healer.isCool = true;
+
                             healer.CoolTime(5f);
                         }
                     }
@@ -341,23 +341,10 @@ public abstract class Unit : Entity
                 // Debug.Log("HealReq 테스트: " + ally.name);
                 ally.GetComponent<PhotonView>().RPC("HealRequest", RpcTarget.MasterClient, unitPower);
             }
-
+            gameObject.GetComponent<Healer>().isCool = true;
         }
     }
     public void HealEffect()
-    {
-        gameObject.GetComponent<PhotonView>().RPC("PlayHealingEffect", RpcTarget.All);
-    }
-
-
-    [PunRPC]
-    public void SetTarget(int viewID)
-    {
-        target = PhotonView.Find(viewID).gameObject;
-    }
-
-    [PunRPC]
-    public void PlayHealingEffect()
     {
         if (gameObject.GetComponent<Healer>())
         {
@@ -367,6 +354,13 @@ public abstract class Unit : Entity
             }
             gameObject.GetComponent<Healer>().HealingEffect.Play();
         }
+    }
+
+
+    [PunRPC]
+    public void SetTarget(int viewID)
+    {
+        target = PhotonView.Find(viewID).gameObject;
     }
 
     public void Launch()
