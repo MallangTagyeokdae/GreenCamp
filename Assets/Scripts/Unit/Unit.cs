@@ -334,7 +334,7 @@ public abstract class Unit : Entity
         {
             foreach (GameObject ally in attackList)
             {
-                Debug.Log("HealReq 테스트: " + ally.name);
+                // Debug.Log("HealReq 테스트: " + ally.name);
                 ally.GetComponent<PhotonView>().RPC("HealRequest", RpcTarget.MasterClient, unitPower);
             }
 
