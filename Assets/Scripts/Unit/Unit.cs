@@ -250,7 +250,7 @@ public abstract class Unit : Entity
                     }
                     else
                     {
-
+                        animator.SetBool("isAttacking", true);
                     }
                 }
                 break;
