@@ -245,7 +245,7 @@ public abstract class Unit : Entity
                         {
                             animator.SetBool("isAttacking", true);
 
-                            healer.CoolTime(5f);
+
                         }
                     }
                     else
@@ -341,7 +341,9 @@ public abstract class Unit : Entity
                 // Debug.Log("HealReq 테스트: " + ally.name);
                 ally.GetComponent<PhotonView>().RPC("HealRequest", RpcTarget.MasterClient, unitPower);
             }
+            gameObject.GetComponent<Healer>().CoolTime(5f);
             gameObject.GetComponent<Healer>().isCool = true;
+
         }
     }
     public void HealEffect()

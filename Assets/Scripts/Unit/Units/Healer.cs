@@ -72,5 +72,9 @@ public class Healer : Unit
             realTime += Time.deltaTime;
         }
         isCool = false;
+        if (state == State.Attack)
+        {
+            ChangeState("Idle");
+        }
     }
 }
