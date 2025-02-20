@@ -90,7 +90,12 @@ public abstract class Unit : Entity
                 
                 gameObject.GetComponent<ClickEventHandler>().rightClickDownEvent.AddListener((Vector3 pos) =>
                     {
-                        GameManager.instance.SetTargetObject(gameObject);
+                        GameManager.instance.SetTargetObject(gameObject, 1);
+                    }
+                );
+                gameObject.GetComponent<ClickEventHandler>().leftClickDownEvent.AddListener((Vector3 pos) =>
+                    {
+                        GameManager.instance.SetTargetObject(gameObject, 0);
                     }
                 );
             }
