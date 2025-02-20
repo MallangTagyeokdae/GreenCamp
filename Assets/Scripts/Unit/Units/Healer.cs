@@ -60,8 +60,8 @@ public class Healer : Unit
             foreach (GameObject ally in attackList.ToList())
             {
                 GameManager.instance.Heal(this.gameObject, ally);
-                return;
             }
+            return;
         }
     }
     public async Task CoolTime(float coolTime)
@@ -75,8 +75,7 @@ public class Healer : Unit
         isCool = false;
         if (state == State.Attack)
         {
-            SetOrder(0);
-            ChangeState("Idle");
+            await ChangeState("Idle");
         }
     }
 }
