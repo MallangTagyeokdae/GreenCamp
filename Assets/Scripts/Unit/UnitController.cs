@@ -265,7 +265,7 @@ public class UnitController : MonoBehaviour
         me.TryGetComponent(out Unit unit);
         unit.ChangeState("Attack");
 
-        while (unit.attackList != null)
+        while (unit.attackList.Count != 0)
         {
             foreach (GameObject ally in unit.attackList.ToList())
             {
@@ -279,6 +279,7 @@ public class UnitController : MonoBehaviour
             yield return null;
         }
 
+        Debug.Log("힐 코루틴 끝남");
         unit.SetOrder(0);
         unit.ChangeState("Idle");
 

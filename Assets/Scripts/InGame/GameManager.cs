@@ -779,10 +779,14 @@ public class GameManager : MonoBehaviour
         {
             if (!unit.attackList.Contains(ally))
             {
-                // Debug.Log(ally.name + " 가 어택 리스트에 추가됨");
+                // Debug.Log(ally.name + " 가 힐 리스트에 추가됨");
                 unit.attackList.Add(ally);
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
+            {
+                return;
+            }
+            if (allyEntity.currentHealth >= allyEntity.maxHealth || allyEntity.currentHealth <= 0)
             {
                 return;
             }
@@ -1228,7 +1232,7 @@ public class GameManager : MonoBehaviour
                 }
                 else if (clickedObj.TryGetComponent(out Academy academy))
                 {
-                    if(academy.state == Building.State.Built)
+                    if (academy.state == Building.State.Built)
                     {
                         UpgradeUnit("Health");
                     }
