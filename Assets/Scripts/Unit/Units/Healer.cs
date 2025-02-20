@@ -59,6 +59,7 @@ public class Healer : Unit
             //콜백함수 실행 후 리턴
             foreach (GameObject ally in attackList.ToList())
             {
+                Debug.Log("콜백함수 실행: " + ally.name);
                 GameManager.instance.Heal(this.gameObject, ally);
             }
             return;
@@ -75,7 +76,7 @@ public class Healer : Unit
         isCool = false;
         if (state == State.Attack)
         {
-            await ChangeState("Idle");
+            ChangeState("Idle");
         }
     }
 }

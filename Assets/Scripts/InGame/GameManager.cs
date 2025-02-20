@@ -828,6 +828,7 @@ public class GameManager : MonoBehaviour
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
             {
+                Debug.Log("오더가 무브이거나 스테이트가 어택이거나 다이");
                 return;
             }
             if (allyEntity.currentHealth >= allyEntity.maxHealth || allyEntity.currentHealth <= 0)

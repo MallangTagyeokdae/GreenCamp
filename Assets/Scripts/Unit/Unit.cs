@@ -244,8 +244,6 @@ public abstract class Unit : Entity
                         if (healer.isCool == false)
                         {
                             animator.SetBool("isAttacking", true);
-
-
                         }
                     }
                     else
@@ -333,7 +331,7 @@ public abstract class Unit : Entity
         }
     }
 
-    public void HealReq()
+    public async Task HealReq()
     {
         if (gameObject.GetComponent<PhotonView>().IsMine)
         {
@@ -343,7 +341,7 @@ public abstract class Unit : Entity
                 ally.GetComponent<PhotonView>().RPC("HealRequest", RpcTarget.MasterClient, unitPower);
             }
             gameObject.GetComponent<Healer>().isCool = true;
-            gameObject.GetComponent<Healer>().CoolTime(5f);
+            await gameObject.GetComponent<Healer>().CoolTime(5f);
         }
     }
     public void HealEffect()
