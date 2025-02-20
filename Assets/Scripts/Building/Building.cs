@@ -74,21 +74,23 @@ public abstract class Building : Entity
 
     private void Awake()
     {
-        clickedEffect = transform.Find("ClickedEffect").gameObject;
-        tempSaveHealth = 0;
-
-        enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
-        clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
-        clickEventHandler.rightClickDownEvent.AddListener((Vector3 pos) =>
-        {
-            GameManager.instance.SetTargetObject(gameObject);
-        }
-        );
-
+        tempSaveHealth = 0;   
         Debug.Log($"{gameObject.name} - Owner: {gameObject.GetComponent<PhotonView>().Owner}, IsMine: {gameObject.GetComponent<PhotonView>().IsMine}");
         //end = new CancellationTokenSource();
     }
 
+    void Start()
+    {
+        clickedEffect = transform.Find("ClickedEffect").gameObject;
+        enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
+        if(!gameObject.GetComponent<PhotonView>().IsMine){        
+                gameObject.GetComponent<ClickEventHandler>().rightClickDownEvent.AddListener((Vector3 pos) =>
+                    {
+                        GameManager.instance.SetTargetObject(gameObject);
+                    }
+                );
+        }
+    }
     public virtual void InitTime()
     {
         time = 0f;

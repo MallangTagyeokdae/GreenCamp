@@ -34,6 +34,12 @@ public class Entity : MonoBehaviour
     public GameObject enemyClickedEffect;
     //private CancellationTokenSource end = new CancellationTokenSource();
     Coroutine end;
+    //public ClickEventHandler clickEventHandler;
+
+    private void Awake()
+    {
+        
+    }
 
     public void OnChildTriggerEnter(GameObject go, CollisionRange coll)
     {

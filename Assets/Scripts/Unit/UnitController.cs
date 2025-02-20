@@ -280,7 +280,6 @@ public class UnitController : MonoBehaviour
 
         unit.SetOrder(0);
         unit.ChangeState("Idle");
-
     }
 
     public void ApplyUnitUpgrade(string type, int degree)

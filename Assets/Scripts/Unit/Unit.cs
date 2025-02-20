@@ -50,10 +50,7 @@ public abstract class Unit : Entity
 
     [HideInInspector] public Animator animator;
     private new Rigidbody rigidbody;
-
     public Coroutine unitBehaviour;
-    public ClickEventHandler clickEventHandler;
-
     public GameObject prefab;
     public Transform prefabPosition;
 
@@ -89,14 +86,15 @@ public abstract class Unit : Entity
             rigidbody.isKinematic = true;
             clickedEffect = transform.Find("ClickedEffect").gameObject;
             enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
-            clickEventHandler = gameObject.GetComponent<ClickEventHandler>();
-            clickEventHandler.rightClickDownEvent.AddListener((Vector3 pos) =>
-                {
-                    GameManager.instance.SetTargetObject(gameObject);
-                }
-            );
+            if(!gameObject.GetComponent<PhotonView>().IsMine){
+                
+                gameObject.GetComponent<ClickEventHandler>().rightClickDownEvent.AddListener((Vector3 pos) =>
+                    {
+                        GameManager.instance.SetTargetObject(gameObject);
+                    }
+                );
+            }
         }
-
     }
 
     private void Start()

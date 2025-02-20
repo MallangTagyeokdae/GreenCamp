@@ -162,6 +162,11 @@ public class GameManager : MonoBehaviour
     {
         if (CheckState("InGame"))
         {
+            if(targetObject != null){
+                    targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
+                    targetObject = null;
+            }
+
             unitController.SetActiveHealthBar(clickedObject);
             foreach (GameObject obj in clickedObject)
             {
@@ -229,23 +234,38 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void SetTargetObject(GameObject gameObject)
+    public void SetTargetObject(GameObject target)
     {
         if (CheckState("InGame"))
         {
-            if (gameObject.GetComponent<Entity>() == null)
+            Debug.Log("실행!!");
+            if (target.GetComponent<Entity>() != null)
             {
-                if (targetObject != null) targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
-                targetObject = null;
-            }
-            if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().teamID != GameStatus.instance.teamID)
-            {
-                if (targetObject != null) targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
-                targetObject = gameObject;
-                gameObject.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
+                if(targetObject != null){
+                    targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
+                }
+                targetObject = target;
+                target.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
+                foreach (GameObject go in clickedObject)    //지정한 타겟에게 이동, 해당 타겟이 아니면 move 이외의 조건이 안먹히게 해야함, 
+                {
+                    go.TryGetComponent(out Unit selectedUnit);
+                    if (selectedUnit == null || (selectedUnit != null && selectedUnit.state == Unit.State.Die))
+                    {
+                        continue;
+                    }
+
+                    if (selectedUnit.unitBehaviour != null)
+                    {
+                        StopCoroutine(selectedUnit.unitBehaviour);
+                    }
+
+                    selectedUnit.target = targetObject;
+                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, targetObject, 3));
+                }
             }
         }
     }
+
     public void GroundRightClickEvent(Vector3 newLocation)
     {
         switch (GameStatus.instance.gameState)
@@ -278,7 +298,6 @@ public class GameManager : MonoBehaviour
         {
             case GameStates.InGame:
                 SetClickedObject(ground);
-                SetTargetObject(ground);
                 SetBuildingListUI();
                 break;
             case GameStates.SetMoveRot:
@@ -642,7 +661,7 @@ public class GameManager : MonoBehaviour
             }
 
             selectedUnit.destination = newLocation;
-
+            selectedUnit.target = null;
             if (selectedUnit.unitBehaviour != null)
             {
                 StopCoroutine(selectedUnit.unitBehaviour);
@@ -678,14 +697,12 @@ public class GameManager : MonoBehaviour
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
-            if (selectedUnit != null && selectedUnit.state == Unit.State.Die)
-            {
-                return;
-            }
-            if (selectedUnit == null)
+            if (selectedUnit == null || (selectedUnit != null && selectedUnit.state == Unit.State.Die))
             {
                 continue;
             }
+
+            selectedUnit.target = null;
 
             if (selectedUnit.unitBehaviour != null)
             {
@@ -710,7 +727,7 @@ public class GameManager : MonoBehaviour
                 // Debug.Log(enemy.name + " 가 어택 리스트에 추가됨");
                 unit.attackList.Add(enemy);
             }
-            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
+            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die || (unit.target != null && unit.target != enemy))
             {
                 return;
             }
@@ -721,7 +738,7 @@ public class GameManager : MonoBehaviour
             }
             if (enemy != null)
             {
-                //Debug.Log($"---------------------------------------name: {enemy.name}");
+
                 ally.GetComponent<PhotonView>().RPC("SetTarget", RpcTarget.All, enemy.GetComponent<PhotonView>().ViewID);
             }
             unit.unitBehaviour = StartCoroutine(unitController.Attack(ally, enemy));
@@ -730,13 +747,7 @@ public class GameManager : MonoBehaviour
 
     public void Aggregated(GameObject ally, GameObject enemy)
     {
-        /*
-            1. 어그로가 끌렸을 경우 offensive명령으로 해당 유닛을 향해 move
-            2. 알아서 공격범위에 들어오면 attackunit이 실행됨.
-            3. 근데 만약 어그로가 끌린 대상이 있는데 해당 대상이 아닌 다른 유닛이 공격범위에 들어오면?
-
-        */
-        int order; //이거 이제 3번이 맞겠다
+        int order;
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
         if (enemyEntity == null || unit.teamID == enemyEntity.teamID || unit.state == Unit.State.Die)
@@ -745,16 +756,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // Debug.Log("어그로 범위에 뭔가 감지됐다.");
             if (!unit.aggList.Contains(enemy))
             {
-                // Debug.Log(enemy.name + " 가 어그로 리스트에 추가됨");
                 unit.aggList.Add(enemy);
             }
-            /*if (unit.order == Unit.Order.Move || unit.order == Unit.Order.Offensive || unit.state == Unit.State.Attack)
-            {
-                return;
-            }*/
 
             if (unit.state == Unit.State.Idle || (unit.order == Unit.Order.Offensive && unit.state == Unit.State.Move))
             {
