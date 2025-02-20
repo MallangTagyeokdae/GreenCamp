@@ -192,6 +192,10 @@ public class GameManager : MonoBehaviour
     // 리팩토링때 조져야함
     public void AddClickedObject(GameObject gameObject)
     {
+        // if(!clickedObject[0].GetComponent<Unit>())
+        // {
+        //     clickedObject.Remove(clickedObject[0]);
+        // }
         if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
         {
             if (gameObject.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
@@ -865,7 +869,7 @@ public class GameManager : MonoBehaviour
     private void UpdateBuildingProgress(Building building, float time)
     {
         building.UpdateOrderTime(time);
-        if (clickedObject[0].GetComponent<Building>() == building)
+        if (clickedObject[0].GetComponent<Building>() == building && clickedObject.Count == 1)
         {
             uIController.SetProgressBar(currentUI, building.progress / 100, 1);
         }
