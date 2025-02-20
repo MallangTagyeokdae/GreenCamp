@@ -107,7 +107,7 @@ PrefabInstance:
     - target: {fileID: 8260119982744828647, guid: e2256dc076a134fc8a267263e3928058, type: 3}
       propertyPath: HealingEffect
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2595910401437095617}
     - target: {fileID: 9169303230473134441, guid: e2256dc076a134fc8a267263e3928058, type: 3}
       propertyPath: m_Size.x
       value: 0.82790756
@@ -279,6 +279,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+--- !u!198 &2595910401437095617 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+  m_PrefabInstance: {fileID: 4234370139561354433}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2595910401452299137 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2217187139112482624, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
