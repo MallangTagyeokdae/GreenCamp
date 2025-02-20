@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     public GameObject target;
     public GameObject fogWar;
     public GameObject miniMap;
+    public CancellationTokenSource inGameInfoToken = null;
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
     //-----------------------------
@@ -429,6 +430,37 @@ public class GameManager : MonoBehaviour
                     SetGroupUnitUI(8, 1);
                 }
                 break;
+        }
+    }
+
+    public void ResetInfoToken()
+    {
+        Debug.Log("ResetInfoToken Info 실행");
+        inGameInfoToken?.Cancel();
+        inGameInfoToken?.Dispose();
+        uIController.ResetInGameInfomation();
+
+        inGameInfoToken = new CancellationTokenSource();
+    }
+
+    public async Task SetInGameInfo(string info)
+    {
+        Debug.Log("SetInGame Info 실행");
+        ResetInfoToken();
+        uIController.SetInGameInfomation(info);
+
+        try
+        {
+            Debug.Log(info);
+            await Task.Delay(3000, inGameInfoToken.Token);
+        } catch (TaskCanceledException)
+        {
+            Debug.Log("작업 취소");
+        }
+        finally
+        {
+            Debug.Log("설명란 리셋");
+            uIController.ResetInGameInfomation();
         }
     }
     // =====================================================
