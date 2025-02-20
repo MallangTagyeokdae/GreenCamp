@@ -241,7 +241,7 @@ public abstract class Unit : Entity
                 {
                     animator.SetBool("isAttacking", true);
 
-                    gameObject.GetComponent<PhotonView>().RPC("SetHealingEffect", RpcTarget.All, true);
+                    
 
                 }
                 break;
@@ -288,7 +288,6 @@ public abstract class Unit : Entity
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
                     animator.SetBool("isAttacking", false);
-                    gameObject.GetComponent<PhotonView>().RPC("SetHealingEffect", RpcTarget.All, false);
 
                 }
                 SetState(newState);
@@ -336,6 +335,11 @@ public abstract class Unit : Entity
             }
 
         }
+    }
+    public void HealEffect(int state)
+    {
+        bool active = (state == 1);
+        gameObject.GetComponent<PhotonView>().RPC("SetHealingEffect", RpcTarget.All, active);
     }
 
     [PunRPC]
