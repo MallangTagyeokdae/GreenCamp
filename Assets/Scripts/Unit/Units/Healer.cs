@@ -13,6 +13,7 @@ public class Healer : Unit
         this.unitPower = 10 + GameStatus.instance.damageIncrease;
     }
     public ParticleSystem HealingEffect;
+    public bool isCool = false;
     public Healer(string teamID, int unitID, Vector3 unitLocation)
                 : base(
                 teamID,
@@ -70,5 +71,6 @@ public class Healer : Unit
             await Task.Yield();  // 다음 프레임까지 대기
             realTime += Time.deltaTime;
         }
+        isCool = false;
     }
 }

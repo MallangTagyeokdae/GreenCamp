@@ -239,9 +239,19 @@ public abstract class Unit : Entity
                 }
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
+                    if (gameObject.TryGetComponent(out Healer healer))
+                    {
+                        if (healer.isCool == false)
+                        {
+                            animator.SetBool("isAttacking", true);
+                            healer.isCool = true;
+                            healer.CoolTime(5f);
+                        }
+                    }
+                    else
+                    {
 
-                    animator.SetBool("isAttacking", true);
-
+                    }
                 }
                 break;
             case "Die":
@@ -287,13 +297,6 @@ public abstract class Unit : Entity
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
                     animator.SetBool("isAttacking", false);
-                    if (gameObject.TryGetComponent(out Healer healer))
-                    {
-                        Debug.Log("5초 카운트 시작 ----------------------------");
-                        await healer.CoolTime(5f);
-                        Debug.Log("힐 가능 -----------------------------------");
-                    }
-
                 }
                 SetState(newState);
                 break;
