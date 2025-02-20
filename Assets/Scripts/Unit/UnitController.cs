@@ -282,7 +282,6 @@ public class UnitController : MonoBehaviour
         Debug.Log("힐 코루틴 끝남");
         unit.SetOrder(0);
         unit.ChangeState("Idle");
-
     }
 
     public void ApplyUnitUpgrade(string type, int degree)

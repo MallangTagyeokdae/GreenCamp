@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Doozy.Runtime.UIManager.Containers;
 using Photon.Pun;
 using TMPro;
-using UnityEditor.TestTools.CodeCoverage;
+//using UnityEditor.TestTools.CodeCoverage;
 using UnityEngine;
 
 public class LogIn : LobbyState
