@@ -82,6 +82,9 @@ public class UIController : MonoBehaviour
             case "Healer":
                 image.sprite = uIElement.uiImages[3];
                 break;
+            case "Scout":
+                image.sprite = uIElement.uiImages[4];
+                break;
         }
 
         type.text = unit.unitType;
