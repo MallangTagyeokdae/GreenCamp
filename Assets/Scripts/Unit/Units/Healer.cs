@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Healer : Unit
@@ -12,6 +13,8 @@ public class Healer : Unit
         this.unitPower = 10 + GameStatus.instance.damageIncrease;
     }
     public ParticleSystem HealingEffect;
+    public bool isCool = false;
+    public float coolTime = 5f;
     public Healer(string teamID, int unitID, Vector3 unitLocation)
                 : base(
                 teamID,
@@ -39,9 +42,11 @@ public class Healer : Unit
         this.population = 2;
         this.fow = 30;
         this.armor = 5 + GameStatus.instance.armorIncrease;
+        coolTime = 5f;
     }
     public override void OnIdleEnter()
     {
+        // Debug.Log("이거 왜 안되지? IdleEnter Check");
         // base.OnIdleEnter();
         foreach (GameObject ally in attackList.ToList())
         {
@@ -51,14 +56,27 @@ public class Healer : Unit
             }
 
         }
-        if (attackList.Count != 0)
+
+    }
+    public async Task CoolTime()
+    {
+        AnimationClip clip = animator.runtimeAnimatorController.animationClips.FirstOrDefault(c => c.name == "staff_07_cast_B");
+
+        // Loop Time 끄기
+        clip.wrapMode = WrapMode.Once;  // 한 번만 실행
+
+
+        while (coolTime > 0)
         {
-            //콜백함수 실행 후 리턴
-            foreach (GameObject ally in attackList.ToList())
-            {
-                GameManager.instance.Heal(this.gameObject, ally);
-                return;
-            }
+            await Task.Yield();  // 다음 프레임까지 대기
+            coolTime -= Time.deltaTime;
         }
+        isCool = false;
+        coolTime = 5f;
+        // Loop Time 켜기
+        clip.wrapMode = WrapMode.Loop;  // 반복 실행
+
     }
 }
+
+//애니메이션 트랜잭션 시간보다 더 빠르게 코드가 전환이 되어서 animaition이 idle 상태로 갔다가 heal을 해야하는데 heal에 계속 머물러 있음.

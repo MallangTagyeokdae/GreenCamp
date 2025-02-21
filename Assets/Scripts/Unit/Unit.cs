@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using FischlWorks_FogWar;
 using Photon.Pun;
 using Unity.IO.LowLevel.Unsafe;
@@ -86,8 +87,9 @@ public abstract class Unit : Entity
             rigidbody.isKinematic = true;
             clickedEffect = transform.Find("ClickedEffect").gameObject;
             enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
-            if(!gameObject.GetComponent<PhotonView>().IsMine){
-                
+            if (!gameObject.GetComponent<PhotonView>().IsMine)
+            {
+
                 gameObject.GetComponent<ClickEventHandler>().rightClickDownEvent.AddListener((Vector3 pos) =>
                     {
                         GameManager.instance.SetTargetObject(gameObject, 1);
@@ -242,10 +244,27 @@ public abstract class Unit : Entity
                 }
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
-                    animator.SetBool("isAttacking", true);
+                    if (gameObject.TryGetComponent(out Healer healer))
+                    {
+                        Debug.Log("이게 실행이 안될리가 없는데?");
+                        if (healer.isCool == false)
+                        {
+                            Debug.Log("이게 실행이 안될리가 없는데?2");
 
+                            // AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                            // if ( !animator.IsInTransition(0) && stateInfo.normalizedTime < 0.1f)
+                            // {
+                            // Debug.Log("애니메이션 실행 안 하는 중");
 
-
+                            animator.SetBool("isAttacking", true);
+                            // animator.Play("staff_07_cast_B", 0, 0f);
+                            // } 
+                        }
+                    }
+                    else
+                    {
+                        animator.SetBool("isAttacking", true);
+                    }
                 }
                 break;
             case "Die":
@@ -291,7 +310,7 @@ public abstract class Unit : Entity
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
                     animator.SetBool("isAttacking", false);
-
+                    Debug.Log("애니메이션 끔");
                 }
                 SetState(newState);
                 break;
@@ -336,22 +355,11 @@ public abstract class Unit : Entity
                 // Debug.Log("HealReq 테스트: " + ally.name);
                 ally.GetComponent<PhotonView>().RPC("HealRequest", RpcTarget.MasterClient, unitPower);
             }
-
+            gameObject.GetComponent<Healer>().isCool = true;
+            gameObject.GetComponent<Healer>().CoolTime();
         }
     }
     public void HealEffect()
-    {
-        gameObject.GetComponent<PhotonView>().RPC("PlayHealingEffect", RpcTarget.All);
-    }
-
-    [PunRPC]
-    public void SetTarget(int viewID)
-    {
-        target = PhotonView.Find(viewID).gameObject;
-    }
-
-    [PunRPC]
-    public void PlayHealingEffect()
     {
         if (gameObject.GetComponent<Healer>())
         {
@@ -361,6 +369,13 @@ public abstract class Unit : Entity
             }
             gameObject.GetComponent<Healer>().HealingEffect.Play();
         }
+    }
+
+
+    [PunRPC]
+    public void SetTarget(int viewID)
+    {
+        target = PhotonView.Find(viewID).gameObject;
     }
 
     public void Launch()

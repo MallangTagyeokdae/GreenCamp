@@ -104,7 +104,14 @@ public class UnitController : MonoBehaviour
         // 힐러만 콜백함수로 힐하는 함수 넣음
         if (unit.GetComponent<Healer>())
         {
-            unit.SetAttEnter((GameObject ally) => { GameManager.instance.Heal(unit.gameObject, ally); });
+            unit.SetAttEnter((GameObject ally) =>
+            {
+                if (ally.TryGetComponent(out Unit allyUnit) && allyUnit.teamID == unit.teamID)
+                {
+                    unit.GetComponent<Healer>().attackList.Add(ally);
+                }
+            });
+            // unit.SetAttEnter((GameObject ally) => { GameManager.instance.Heal(unit.gameObject); });
         }
         else
         {
@@ -260,28 +267,24 @@ public class UnitController : MonoBehaviour
             unit.ChangeState("Idle");
         }
     }
-    public IEnumerator Heal(GameObject me)
+    public void Heal(GameObject me)
     {
         me.TryGetComponent(out Unit unit);
-        unit.ChangeState("Attack");
-
-        while (unit.attackList.Count != 0)
+        Debug.Log("힐 하냐?");
+        foreach (GameObject ally in unit.attackList.ToList())
         {
-            foreach (GameObject ally in unit.attackList.ToList())
+            ally.TryGetComponent(out Entity allyEntity);
+            if (ally == null || allyEntity == null)
             {
-                ally.TryGetComponent(out Entity allyEntity);
-                if (ally == null || allyEntity == null || allyEntity.currentHealth <= 0 || allyEntity.currentHealth >= allyEntity.maxHealth)
-                {
-                    Debug.Log("힐 끝: " + ally.name);
-                    unit.attackList.Remove(ally);
-                }
+                unit.attackList.Remove(ally);
             }
-            yield return null;
+            if (allyEntity.currentHealth <= 0 || allyEntity.currentHealth >= allyEntity.maxHealth)
+            {
+                continue;
+            }
+            unit.ChangeState("Attack");
+            break;
         }
-
-        Debug.Log("힐 코루틴 끝남");
-        unit.SetOrder(0);
-        unit.ChangeState("Idle");
     }
 
     public void ApplyUnitUpgrade(string type, int degree)
