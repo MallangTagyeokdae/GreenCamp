@@ -69,7 +69,7 @@ public abstract class Building : Entity
         this.cost = cost;
         this.level = level;
         this.time = 0f;
-        this.loadingTime = 10f;
+        this.loadingTime = 0f;
     }
 
     private void Awake()
@@ -99,7 +99,7 @@ public abstract class Building : Entity
     public virtual void InitTime()
     {
         time = 0f;
-        loadingTime = 30 / 10f;
+        loadingTime = 20f;
         //gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
         gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
     }

@@ -38,7 +38,7 @@ public class Healer : Unit
         this.unitLocation = unitLocation;
         this.unitCost = 90;
         this.unitPowerRange = 4;
-        this.unitMoveSpeed = 3;
+        this.unitMoveSpeed = 6;
         this.populationCost = 1;
         this.population = 2;
         this.fow = 30;

@@ -51,7 +51,6 @@ public class PopulationBuilding : Building
     public override void DestroyEntity()
     {
         Destroy(gameObject);
-        GameStatus.instance.maxUnitCount -= increasePersent;
     }
 
     [PunRPC]

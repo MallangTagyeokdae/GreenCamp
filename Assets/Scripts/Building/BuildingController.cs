@@ -139,10 +139,17 @@ public class BuildingController : MonoBehaviour
         GameStatus.instance.currentBuildingCount -= building.population;
         building.GetComponent<PhotonView>().RPC("SyncSetDestroy",RpcTarget.AllBuffered);
 
-        if(building.type == "Command")
+        switch(building.type)
         {
-            building.DestroyEntity();
-            return;
+            case "Command":
+                building.DestroyEntity();
+                break;
+            case "ResourceBuilding":
+                GameStatus.instance.resourcePerSecond -= building.GetComponent<ResourceBuilding>().increasePersent;;
+                break;
+            case "PopulationBuilding":
+                GameStatus.instance.maxUnitCount -= building.GetComponent<PopulationBuilding>().increasePersent;
+                break;
         }
 
         await StartTimer(5f);
@@ -167,8 +174,8 @@ public class BuildingController : MonoBehaviour
                 if(building.level >= 4) building.GetComponent<Command>().SetMagician();
                 break;
             case ResourceBuilding:
-                GameStatus.instance.resourcePerSecond += .25f;
-                building.GetComponent<ResourceBuilding>().increasePersent += .25f;
+                GameStatus.instance.resourcePerSecond += .5f;
+                building.GetComponent<ResourceBuilding>().increasePersent += .5f;
                 break;
             case PopulationBuilding:
                 GameStatus.instance.maxUnitCount += 5;

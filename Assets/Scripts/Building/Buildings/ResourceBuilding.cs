@@ -53,7 +53,6 @@ public class ResourceBuilding : Building
     public override void DestroyEntity()
     {
         Destroy(gameObject);
-        GameStatus.instance.resourcePerSecond -= increasePersent;
     }
 
     [PunRPC]
