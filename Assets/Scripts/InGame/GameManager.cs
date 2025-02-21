@@ -607,7 +607,7 @@ public class GameManager : MonoBehaviour
 
                 tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-                if (await OrderCreate(building, building.level * 10f, cts.Token))
+                if (await OrderCreate(building, building.level, cts.Token))
                 {
                     tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
@@ -817,6 +817,7 @@ public class GameManager : MonoBehaviour
         ally.TryGetComponent(out Entity allyEntity);
         if (allyEntity == null || unit.teamID != allyEntity.teamID || ally.GetComponent<Unit>() == null || unit.state == Unit.State.Die)
         {
+            Debug.Log("1");
             return;
         }
         else
@@ -825,7 +826,9 @@ public class GameManager : MonoBehaviour
             {
                 // Debug.Log(ally.name + " 가 힐 리스트에 추가됨");
                 unit.attackList.Add(ally);
+                Debug.Log("2");
             }
+            Debug.Log("3");
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
             {
                 Debug.Log("오더가 무브이거나 스테이트가 어택이거나 다이");
@@ -833,14 +836,18 @@ public class GameManager : MonoBehaviour
             }
             if (allyEntity.currentHealth >= allyEntity.maxHealth || allyEntity.currentHealth <= 0)
             {
+                Debug.Log("4");
                 return;
             }
 
-            if (unit.unitBehaviour != null)
+            /*if (unit.unitBehaviour != null)
             {
+                Debug.Log("5");
                 StopCoroutine(unit.unitBehaviour);
-            }
-            unit.unitBehaviour = StartCoroutine(unitController.Heal(me));
+            }*/
+            Debug.Log("6  ");
+            //unit.unitBehaviour = StartCoroutine(unitController.Heal(me));
+            unitController.Heal(me);
         }
     }
 
@@ -1083,7 +1090,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
-    
+
 
     // =====================================================
 

@@ -260,28 +260,27 @@ public class UnitController : MonoBehaviour
             unit.ChangeState("Idle");
         }
     }
-    public IEnumerator Heal(GameObject me)
+    public void Heal(GameObject me)
     {
         me.TryGetComponent(out Unit unit);
         unit.ChangeState("Attack");
-
-        while (unit.attackList.Count != 0)
+        
+        foreach (GameObject ally in unit.attackList.ToList())
         {
-            foreach (GameObject ally in unit.attackList.ToList())
+            ally.TryGetComponent(out Entity allyEntity);
+            if (ally == null || allyEntity == null)
             {
-                ally.TryGetComponent(out Entity allyEntity);
-                if (ally == null || allyEntity == null || allyEntity.currentHealth <= 0 || allyEntity.currentHealth >= allyEntity.maxHealth)
-                {
-                    Debug.Log("힐 끝: " + ally.name);
-                    unit.attackList.Remove(ally);
-                }
+                Debug.Log("힐 끝: " + ally.name);
+                unit.attackList.Remove(ally);
             }
-            yield return null;
+            if (allyEntity.currentHealth <= 0 || allyEntity.currentHealth >= allyEntity.maxHealth)
+            {
+                continue;
+            }
         }
 
         Debug.Log("힐 코루틴 끝남");
         unit.SetOrder(0);
-        unit.ChangeState("Idle");
     }
 
     public void ApplyUnitUpgrade(string type, int degree)

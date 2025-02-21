@@ -61,8 +61,8 @@ public class Healer : Unit
             {
                 Debug.Log("콜백함수 실행: " + ally.name);
                 GameManager.instance.Heal(this.gameObject, ally);
+                break;
             }
-            return;
         }
     }
     public async Task CoolTime(float coolTime)
