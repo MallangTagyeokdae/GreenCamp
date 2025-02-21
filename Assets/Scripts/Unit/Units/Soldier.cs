@@ -9,6 +9,7 @@ public class Soldier : Unit
         this.maxHealth = 100  + GameStatus.instance.healthIncrease;
         this.currentHealth = 50  + GameStatus.instance.healthIncrease;
         this.unitPower = 30 + GameStatus.instance.damageIncrease;
+        this.armor = 10 + GameStatus.instance.armorIncrease;
     }
 
     public Soldier(string teamID, int unitID, Vector3 unitLocation)
@@ -31,13 +32,12 @@ public class Soldier : Unit
         this.unitID = unitID;
         this.unitType = "Soldier";
         this.unitLocation = unitLocation;
-        this.unitCost = 30;
+        this.unitCost = 50;
         this.unitPowerRange = 3;
-        this.unitMoveSpeed = 4;
+        this.unitMoveSpeed = 5;
         this.populationCost = 1;
         this.population = 1;
         this.fow = 30;
-        this.armor = 10 + GameStatus.instance.armorIncrease;
     }
 }
 

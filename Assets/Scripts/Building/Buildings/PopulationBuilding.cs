@@ -9,8 +9,9 @@ public class PopulationBuilding : Building
 {
     private void Awake()
     {
-        this.maxHealth = 200;
+        this.maxHealth = 750;
         this.currentHealth = 0;
+        this.armor = 10;
     }
     public int increasePersent { get; set; }
     public PopulationBuilding(string teamID, int buildingID, Vector3 buildingLocation)
@@ -34,17 +35,16 @@ public class PopulationBuilding : Building
         this.location = buildingLocation;
         this.progress = 0;
         this.level = 1;
-        this.cost = 25;
-        this.levelUpCost = 30;
-        this.increaseLevelCost = 20;
+        this.cost = 100;
+        this.levelUpCost = 50;
+        this.increaseLevelCost = 50;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 15f;
         this.underGrid = colliders;
         this.population = 1;
-        this.increasePersent = 10;
+        this.increasePersent = 5;
         this.fow = 40;
-        this.armor = 10;
     }
 
     [PunRPC]

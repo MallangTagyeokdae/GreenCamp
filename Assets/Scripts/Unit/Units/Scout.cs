@@ -11,6 +11,7 @@ public class Scout : Unit
     {
         this.maxHealth = 50 + GameStatus.instance.healthIncrease;
         this.currentHealth = 50 + GameStatus.instance.healthIncrease;
+        this.armor = 1 + GameStatus.instance.armorIncrease;
         // this.unitPower = 0 + GameStatus.instance.damageIncrease;
     }
     // teamID, unitID, unitLocation은 생성자 호출 시 전달된 값으로 초기화됨 (생성자 매개변수로 전달되어 부모 클래스에서 초기화됨)
@@ -41,10 +42,9 @@ public class Scout : Unit
         this.unitLocation = unitLocation;
         this.unitCost = 40;
         this.unitPowerRange = 0;
-        this.unitMoveSpeed = 20;
+        this.unitMoveSpeed = 7;
         this.populationCost = 1;
         this.population = 1;
-        this.fow = 50;
-        this.armor = 1 + GameStatus.instance.armorIncrease;
+        this.fow = 40;
     }
 }

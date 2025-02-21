@@ -8,8 +8,9 @@ public class Command : Building
 {
     void Awake()
     {
-        this.maxHealth = 500;
-        this.currentHealth = 500;
+        this.maxHealth = 2000;
+        this.currentHealth = 2000;
+        this.armor = 10;
     }
 
     public int attackPower { get; set; }
@@ -42,8 +43,8 @@ public class Command : Building
         this.location = buildingLocation;
         this.level = 1;
         this.cost = 0;
-        this.levelUpCost = 70;
-        this.increaseLevelCost = 50;
+        this.levelUpCost = 50;
+        this.increaseLevelCost = 200;
         this.attackPower = 10;
         this.attackRange = 10;
         this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 8.0f);
@@ -53,7 +54,6 @@ public class Command : Building
         this.underGrid = colliders;
         this.population = 0;
         this.fow = 75;
-        this.armor = 20;
     }
 
 

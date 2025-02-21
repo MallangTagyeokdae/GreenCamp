@@ -9,8 +9,9 @@ public class Defender : Building
 {
     private void Awake()
     {
-        this.maxHealth = 200;
+        this.maxHealth = 400;
         this.currentHealth = 0;
+        this.armor = 20;
     }
     public int attackPower { get; set; }
     public int attackRange { get; set; }
@@ -41,8 +42,8 @@ public class Defender : Building
         this.location = buildingLocation;
         this.progress = 0;
         this.level = 1;
-        this.cost = 25;
-        this.levelUpCost = 50;
+        this.cost = 200;
+        this.levelUpCost = 75;
         this.increaseLevelCost = 50;
         this.attackPower = 20;
         this.attackRange = 10;
