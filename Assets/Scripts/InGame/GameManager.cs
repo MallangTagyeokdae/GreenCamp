@@ -820,6 +820,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("오더가 무브이거나 스테이트가 어택이거나 다이");
             return;
         }
+        if (unit.unitBehaviour != null)
+        {
+            StopCoroutine(unit.unitBehaviour);
+        }
         unitController.Heal(me);
     }
 
@@ -1261,6 +1265,22 @@ public class GameManager : MonoBehaviour
                     if (academy.state == Building.State.Built)
                     {
                         UpgradeUnit("Health");
+                    }
+                }
+                else if (clickedObj.TryGetComponent(out Healer healer))
+                {
+                    if (healer.attackList.Count != 0 && healer.isCool == false)
+                    {
+                        if (healer.state == Unit.State.Idle)
+                        {
+                            healer.SetState("Idle");
+                        }
+                        else
+                        {
+                            healer.SetOrder(0);
+                            healer.ChangeState("Idle");
+                        }
+                        Heal(healer.gameObject);
                     }
                 }
                 break;

@@ -14,6 +14,7 @@ public class Healer : Unit
     }
     public ParticleSystem HealingEffect;
     public bool isCool = false;
+    public float coolTime = 5f;
     public Healer(string teamID, int unitID, Vector3 unitLocation)
                 : base(
                 teamID,
@@ -41,10 +42,11 @@ public class Healer : Unit
         this.population = 2;
         this.fow = 30;
         this.armor = 5 + GameStatus.instance.armorIncrease;
+        coolTime = 5f;
     }
     public override void OnIdleEnter()
     {
-        Debug.Log("이거 왜 안되지? IdleEnter Check");
+        // Debug.Log("이거 왜 안되지? IdleEnter Check");
         // base.OnIdleEnter();
         foreach (GameObject ally in attackList.ToList())
         {
@@ -54,32 +56,26 @@ public class Healer : Unit
             }
 
         }
-        if (attackList.Count != 0)
-        {
-            //콜백함수 실행 후 리턴
-            /*foreach (GameObject ally in attackList.ToList())
-            {
-                Debug.Log("콜백함수 실행: " + ally.name);
-                
-                break;
-            }*/
-            Debug.Log("IdleEnter Check");
-            GameManager.instance.Heal(gameObject);
-        }
+
     }
-    public async Task CoolTime(float coolTime)
+    public async Task CoolTime()
     {
-        float realTime = 0f;
-        while (realTime < coolTime)
+        AnimationClip clip = animator.runtimeAnimatorController.animationClips.FirstOrDefault(c => c.name == "staff_07_cast_B");
+
+        // Loop Time 끄기
+        clip.wrapMode = WrapMode.Once;  // 한 번만 실행
+
+
+        while (coolTime > 0)
         {
             await Task.Yield();  // 다음 프레임까지 대기
-            realTime += Time.deltaTime;
+            coolTime -= Time.deltaTime;
         }
         isCool = false;
-        if (state == State.Attack)
-        {
-            ChangeState("Idle");
-        }
+        coolTime = 5f;
+        // Loop Time 켜기
+        clip.wrapMode = WrapMode.Loop;  // 반복 실행
+
     }
 }
 

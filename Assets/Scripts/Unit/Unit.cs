@@ -245,8 +245,15 @@ public abstract class Unit : Entity
                         if (healer.isCool == false)
                         {
                             Debug.Log("이게 실행이 안될리가 없는데?2");
-                            animator.SetBool("isAttacking", true);
 
+                            // AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                            // if ( !animator.IsInTransition(0) && stateInfo.normalizedTime < 0.1f)
+                            // {
+                            // Debug.Log("애니메이션 실행 안 하는 중");
+
+                            animator.SetBool("isAttacking", true);
+                            // animator.Play("staff_07_cast_B", 0, 0f);
+                            // } 
                         }
                     }
                     else
@@ -344,7 +351,7 @@ public abstract class Unit : Entity
                 ally.GetComponent<PhotonView>().RPC("HealRequest", RpcTarget.MasterClient, unitPower);
             }
             gameObject.GetComponent<Healer>().isCool = true;
-            gameObject.GetComponent<Healer>().CoolTime(5f);
+            gameObject.GetComponent<Healer>().CoolTime();
         }
     }
     public void HealEffect()
