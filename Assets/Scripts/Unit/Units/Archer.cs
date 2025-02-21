@@ -42,7 +42,7 @@ public class Archer : Unit
         this.unitLocation = unitLocation;
         this.unitCost = 60;
         this.unitPowerRange = 14;
-        this.unitMoveSpeed = 6;
+        this.unitMoveSpeed = 8;
         this.populationCost = 1;
         this.population = 1;
         this.fow = 30;

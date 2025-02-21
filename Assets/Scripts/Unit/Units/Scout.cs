@@ -42,7 +42,7 @@ public class Scout : Unit
         this.unitLocation = unitLocation;
         this.unitCost = 40;
         this.unitPowerRange = 0;
-        this.unitMoveSpeed = 7;
+        this.unitMoveSpeed = 9;
         this.populationCost = 1;
         this.population = 1;
         this.fow = 40;
