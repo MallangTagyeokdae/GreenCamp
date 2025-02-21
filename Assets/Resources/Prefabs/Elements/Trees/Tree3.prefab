@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3239807460980284922}
   - component: {fileID: 4848419467748561780}
   - component: {fileID: 9046094687272481142}
-  - component: {fileID: 2049199167206191424}
   m_Layer: 7
   m_Name: EM_Tree2a_LOD2
   m_TagString: Untagged
@@ -84,28 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2049199167206191424
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123520656764884554}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6484627198172713911, guid: 50578a73428c8cb478ef3d1596d57722, type: 3}
 --- !u!1 &597521630074560027
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +291,6 @@ GameObject:
   - component: {fileID: 2668004836540829044}
   - component: {fileID: 1406895787811902764}
   - component: {fileID: 4922851448187780956}
-  - component: {fileID: 7672522070284993210}
   m_Layer: 7
   m_Name: EM_Tree2a_LOD0
   m_TagString: Untagged
@@ -387,25 +363,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7672522070284993210
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7747520524874944400}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4544065189221927786, guid: 50578a73428c8cb478ef3d1596d57722, type: 3}

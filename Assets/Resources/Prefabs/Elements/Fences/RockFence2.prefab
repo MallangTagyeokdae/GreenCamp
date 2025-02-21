@@ -123,7 +123,6 @@ GameObject:
   - component: {fileID: 1087691901987758413}
   - component: {fileID: 9042535035917096859}
   - component: {fileID: 7032828692377727960}
-  - component: {fileID: 3961037570117343205}
   m_Layer: 7
   m_Name: EM_rock_fence5_LOD2
   m_TagString: Untagged
@@ -196,28 +195,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3961037570117343205
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6987276595937225121}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 595910572905073100, guid: 34d07a9bf2aa0dd4a971e02e7153a24e, type: 3}
 --- !u!1 &7640792824864300813
 GameObject:
   m_ObjectHideFlags: 0
