@@ -289,7 +289,6 @@ GameObject:
   - component: {fileID: 3366448816272106400}
   - component: {fileID: 271997728244787978}
   - component: {fileID: 5571527536727200559}
-  - component: {fileID: 3727364932594600430}
   m_Layer: 7
   m_Name: EM_Rock01b_LOD0
   m_TagString: Untagged
@@ -362,25 +361,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3727364932594600430
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9117734671476801387}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4294199368057440257, guid: 600bb904dd2219341b249ad10e1a9681, type: 3}
