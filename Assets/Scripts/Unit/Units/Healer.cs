@@ -10,6 +10,7 @@ public class Healer : Unit
         this.maxHealth = 85 + GameStatus.instance.healthIncrease;
         this.currentHealth = 85 + GameStatus.instance.healthIncrease;
         this.unitPower = 10 + GameStatus.instance.damageIncrease;
+        this.armor = 5 + GameStatus.instance.armorIncrease;
     }
     public ParticleSystem HealingEffect;
     public Healer(string teamID, int unitID, Vector3 unitLocation)
@@ -32,13 +33,12 @@ public class Healer : Unit
         this.unitID = unitID;
         this.unitType = "Healer";
         this.unitLocation = unitLocation;
-        this.unitCost = 65;
+        this.unitCost = 90;
         this.unitPowerRange = 4;
         this.unitMoveSpeed = 3;
         this.populationCost = 1;
         this.population = 2;
         this.fow = 30;
-        this.armor = 5 + GameStatus.instance.armorIncrease;
     }
     public override void OnIdleEnter()
     {

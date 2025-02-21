@@ -6,9 +6,10 @@ public class Tanker : Unit
 {
     void Start()
     {
-        this.maxHealth = 150  + GameStatus.instance.healthIncrease;
-        this.currentHealth = 150  + GameStatus.instance.healthIncrease;
+        this.maxHealth = 200  + GameStatus.instance.healthIncrease;
+        this.currentHealth = 200  + GameStatus.instance.healthIncrease;
         this.unitPower = 15 + GameStatus.instance.damageIncrease;
+        this.armor = 15 + GameStatus.instance.armorIncrease;
     }
     public Tanker(string teamID, int unitID, Vector3 unitLocation)
                 : base(
@@ -30,12 +31,11 @@ public class Tanker : Unit
         this.unitID = unitID;
         this.unitType = "Tanker";
         this.unitLocation = unitLocation;
-        this.unitCost = 50;
+        this.unitCost = 85;
         this.unitPowerRange = 3;
-        this.unitMoveSpeed = 4;
+        this.unitMoveSpeed = 5;
         this.populationCost = 1;
         this.population = 2;
         this.fow = 30;
-        this.armor = 20 + GameStatus.instance.armorIncrease;
     }
 }

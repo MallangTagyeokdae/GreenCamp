@@ -10,7 +10,7 @@ public class Barrack : Building
 {
     private void Awake()
     {
-        this.maxHealth = 500;
+        this.maxHealth = 1000;
         this.currentHealth = 0;
     }
     public Vector3 _sponPos { get; set; }
@@ -34,8 +34,8 @@ public class Barrack : Building
         this.location = buildingLocation;
         this.progress = 0;
         this.level = 1;
-        this.cost = 50;
-        this.levelUpCost = 60;
+        this.cost = 150;
+        this.levelUpCost = 100;
         this.increaseLevelCost = 50;
         this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 5.5f);
         this.healthBar = buildingHealthBar;

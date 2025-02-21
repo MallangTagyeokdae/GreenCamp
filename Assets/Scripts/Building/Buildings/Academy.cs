@@ -9,8 +9,9 @@ public class Academy : Building
 {
     private void Awake()
     {
-        this.maxHealth = 150;
+        this.maxHealth = 450;
         this.currentHealth = 0;
+        this.armor = 10;
     }
     
     public Academy(string teamID, int buildingID, Vector3 buildingLocation)
@@ -34,16 +35,15 @@ public class Academy : Building
         this.location = buildingLocation;
         this.progress = 0;
         this.level = 1;
-        this.cost = 40;
+        this.cost = 100;
         this.levelUpCost = 100;
-        this.increaseLevelCost = 30;
+        this.increaseLevelCost = 100;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 15f;
         this.underGrid = colliders;
         this.population = 2;
         this.fow = 40;
-        this.armor = 10;
     }
 
     [PunRPC]
