@@ -256,8 +256,8 @@ public class GameManager : MonoBehaviour
                     target.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
                 }
                 
-                foreach (GameObject go in clickedObject)    //지정한 타겟에게 이동, 해당 타겟이 아니면 move 이외의 조건이 안먹히게 해야함, 
-                {
+                foreach (GameObject go in clickedObject)    //지정한 타겟에게 이동, 해당 타겟이 아니면 move 이외의 조건이 안먹히게 해야함,
+                {                                           //지정한 타겟이 att범위에 있으면 move가 아니라 공격으로 명령
                     go.TryGetComponent(out Unit selectedUnit);
                     if (selectedUnit == null || (selectedUnit != null && selectedUnit.state == Unit.State.Die))
                     {
@@ -270,7 +270,12 @@ public class GameManager : MonoBehaviour
                     }
 
                     selectedUnit.target = targetObject;
-                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, targetObject, 3));
+                    if(selectedUnit.attackList.Contains(targetObject)){
+                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, targetObject));    
+                    }
+                    else{
+                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, targetObject, 3));
+                    }
                 }
             }
 
