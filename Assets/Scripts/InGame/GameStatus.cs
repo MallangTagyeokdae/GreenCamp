@@ -60,9 +60,9 @@ public class GameStatus : MonoBehaviour
     public void InitGameStatus()
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
-        currentResourceCount = 10000;
+        currentResourceCount = 40;
         resourcePerSecond = 1;
-        maxUnitCount = 10;
+        maxUnitCount = 1;
         currentUnitCount = 0;
         maxBuildingCount = 1;
         currentBuildingCount = 0;
