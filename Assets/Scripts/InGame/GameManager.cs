@@ -420,7 +420,12 @@ public class GameManager : MonoBehaviour
             case 1:
                 if (clickedObject[0] == eventedObject)
                 {
-                    if (eventedObject.TryGetComponent(out Building building))
+                    if(eventedObject.GetComponent<Entity>().currentHealth <= 0)
+                    {
+                        SetClickedObject(ground);
+                        SetBuildingListUI();
+                    }
+                    else if (eventedObject.TryGetComponent(out Building building))
                     {
                         ReloadBuildingUI(building);
                     }
@@ -431,9 +436,14 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case 2:
-                if (!clickedObject[0].GetComponent<Unit>())
+                if (!clickedObject[0].GetComponent<Unit>() && clickedObject[1] == eventedObject)
                 {
-                    if (clickedObject[1] == eventedObject && eventedObject.GetComponent<Unit>())
+                    if( eventedObject.GetComponent<Entity>().currentHealth <= 0)
+                    {
+                        SetClickedObject(ground);
+                        SetBuildingListUI();
+                    }
+                    else if (eventedObject.GetComponent<Unit>())
                     {
                         SetUnitInfo(7, eventedObject);
                     }
