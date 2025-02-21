@@ -204,7 +204,7 @@ public abstract class Unit : Entity
     }
 
 
-    public async Task SetState(string newState)
+    public void SetState(string newState)
     {
         switch (newState)
         {
@@ -244,6 +244,7 @@ public abstract class Unit : Entity
                         if (healer.isCool == false)
                         {
                             animator.SetBool("isAttacking", true);
+
                         }
                     }
                     else
@@ -263,7 +264,7 @@ public abstract class Unit : Entity
     }
 
     [PunRPC]
-    public async Task ChangeState(string newState)
+    public void ChangeState(string newState)
     {
         switch (state)
         {
@@ -331,7 +332,7 @@ public abstract class Unit : Entity
         }
     }
 
-    public async Task HealReq()
+    public void HealReq()
     {
         if (gameObject.GetComponent<PhotonView>().IsMine)
         {
@@ -341,7 +342,7 @@ public abstract class Unit : Entity
                 ally.GetComponent<PhotonView>().RPC("HealRequest", RpcTarget.MasterClient, unitPower);
             }
             gameObject.GetComponent<Healer>().isCool = true;
-            await gameObject.GetComponent<Healer>().CoolTime(5f);
+            gameObject.GetComponent<Healer>().CoolTime(5f);
         }
     }
     public void HealEffect()
