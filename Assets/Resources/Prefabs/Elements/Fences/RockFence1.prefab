@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3797271239883243854}
   - component: {fileID: 2490424978748102926}
   - component: {fileID: 8222922045156078265}
-  m_Layer: 0
+  - component: {fileID: -706907761258975039}
+  m_Layer: 7
   m_Name: RockFence1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,6 +85,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.6790886, y: 0.97446203, z: 0.6416321}
   m_Center: {x: 0.086416245, y: 0.65250707, z: -0.0073165894}
+--- !u!54 &-706907761258975039
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3931564331369910517}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4450774493331024327
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +124,7 @@ GameObject:
   - component: {fileID: 8668015074943214678}
   - component: {fileID: 8608102045620423632}
   - component: {fileID: 4949425034921338127}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence4_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +229,7 @@ GameObject:
   - component: {fileID: 3536683448204935134}
   - component: {fileID: 279988644346871811}
   - component: {fileID: 5793247861297490209}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence4_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +312,7 @@ GameObject:
   - component: {fileID: 5293922354497996539}
   - component: {fileID: 8593006396309730222}
   - component: {fileID: 6584598071921793286}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence4_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

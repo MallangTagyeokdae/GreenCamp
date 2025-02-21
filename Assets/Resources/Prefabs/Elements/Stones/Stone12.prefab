@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1711142223224597939}
   - component: {fileID: 2373258844687275088}
   - component: {fileID: 3739338268132256621}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Stone1_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,8 @@ GameObject:
   - component: {fileID: 4170370779278215911}
   - component: {fileID: 4368270601613452884}
   - component: {fileID: 7960278532475840155}
-  m_Layer: 0
+  - component: {fileID: 5900711594137707769}
+  m_Layer: 7
   m_Name: Stone12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +168,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.861393, y: 5.2368746, z: 8.025291}
   m_Center: {x: -0.4529934, y: 2.1184373, z: 0.19460678}
+--- !u!54 &5900711594137707769
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7219580097418900516}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &7455341010538105101
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +206,7 @@ GameObject:
   - component: {fileID: 7716567069199494371}
   - component: {fileID: 6282946885014497261}
   - component: {fileID: 1919263403042085798}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Stone1_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +290,7 @@ GameObject:
   - component: {fileID: 7514418762881322965}
   - component: {fileID: 4640183985682093890}
   - component: {fileID: 2543832653477190921}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Stone1_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

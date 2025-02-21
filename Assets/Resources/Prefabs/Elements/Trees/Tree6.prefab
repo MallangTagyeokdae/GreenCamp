@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5653116575042853346}
   - component: {fileID: 3748018415347237611}
   - component: {fileID: 4898570877840583574}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Tree9a_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,8 @@ GameObject:
   - component: {fileID: 2575466838769526764}
   - component: {fileID: 153758137070290213}
   - component: {fileID: 3263272996036681422}
-  m_Layer: 0
+  - component: {fileID: -6916877199818499773}
+  m_Layer: 7
   m_Name: Tree6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +168,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.887533, y: 3.0012393, z: 6.189171}
   m_Center: {x: 0.03487861, y: 1.0006196, z: -0.12983322}
+--- !u!54 &-6916877199818499773
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363153984287738947}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5277232042614749401
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +207,7 @@ GameObject:
   - component: {fileID: 4207283246887303415}
   - component: {fileID: 3778938776582551173}
   - component: {fileID: 1066081278405924520}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Tree9a_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +313,7 @@ GameObject:
   - component: {fileID: 3758076403363515537}
   - component: {fileID: 3919956723456871353}
   - component: {fileID: 779156259818909106}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Tree9a_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

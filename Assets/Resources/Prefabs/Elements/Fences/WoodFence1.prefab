@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5546611928288664241}
   - component: {fileID: 5010854734442751296}
   - component: {fileID: 1424089480933254029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_wood_fence3b_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7394588220595437660}
   - component: {fileID: 1535295819200235440}
-  m_Layer: 0
+  - component: {fileID: 3961950632382866518}
+  m_Layer: 7
   m_Name: WoodFence1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +146,33 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1688526856049042519}
   m_Enabled: 1
+--- !u!54 &3961950632382866518
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6302461186136472339}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &6362034616216679539
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,7 +185,7 @@ GameObject:
   - component: {fileID: 1518532262577828145}
   - component: {fileID: 7894584823600010106}
   - component: {fileID: 6414985710945799148}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_wood_fence3b_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +289,7 @@ GameObject:
   - component: {fileID: 2547191321844176687}
   - component: {fileID: 3981310120747824547}
   - component: {fileID: 1688526856049042519}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_wood_fence3b_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
