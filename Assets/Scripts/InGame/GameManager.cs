@@ -163,9 +163,10 @@ public class GameManager : MonoBehaviour
     {
         if (CheckState("InGame"))
         {
-            if(targetObject != null){
-                    targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
-                    targetObject = null;
+            if (targetObject != null)
+            {
+                targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
+                targetObject = null;
             }
 
             unitController.SetActiveHealthBar(clickedObject);
@@ -245,7 +246,8 @@ public class GameManager : MonoBehaviour
         {
             if (target.GetComponent<Entity>() != null)
             {
-                if(targetObject != null){
+                if (targetObject != null)
+                {
                     targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
                 }
 
@@ -496,7 +498,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(info);
             await Task.Delay(3000, inGameInfoToken.Token);
-        } catch (TaskCanceledException)
+        }
+        catch (TaskCanceledException)
         {
             Debug.Log("작업 취소");
         }
@@ -625,6 +628,7 @@ public class GameManager : MonoBehaviour
                 tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
                 if (await OrderCreate(building, building.level * 30f, cts.Token))
+
                 {
                     tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
@@ -828,36 +832,20 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void Heal(GameObject me, GameObject ally)
+    public void Heal(GameObject me)
     {
         Unit unit = me.GetComponent<Unit>();
-        ally.TryGetComponent(out Entity allyEntity);
-        if (allyEntity == null || unit.teamID != allyEntity.teamID || ally.GetComponent<Unit>() == null || unit.state == Unit.State.Die)
+
+        if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
         {
+            Debug.Log("오더가 무브이거나 스테이트가 어택이거나 다이");
             return;
         }
-        else
+        if (unit.unitBehaviour != null)
         {
-            if (!unit.attackList.Contains(ally))
-            {
-                // Debug.Log(ally.name + " 가 힐 리스트에 추가됨");
-                unit.attackList.Add(ally);
-            }
-            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
-            {
-                return;
-            }
-            if (allyEntity.currentHealth >= allyEntity.maxHealth || allyEntity.currentHealth <= 0)
-            {
-                return;
-            }
-
-            if (unit.unitBehaviour != null)
-            {
-                StopCoroutine(unit.unitBehaviour);
-            }
-            unit.unitBehaviour = StartCoroutine(unitController.Heal(me));
+            StopCoroutine(unit.unitBehaviour);
         }
+        unitController.Heal(me);
     }
 
     public async Task<Unit> DelayUnitCreation(Building building, string unitType, Vector3 buildingPos, CancellationToken token)
@@ -1099,6 +1087,8 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
     }
+
+
     // =====================================================
 
     // =================== 키관련 함수 ======================== 
@@ -1296,6 +1286,22 @@ public class GameManager : MonoBehaviour
                     if (academy.state == Building.State.Built)
                     {
                         UpgradeUnit("Health");
+                    }
+                }
+                else if (clickedObj.TryGetComponent(out Healer healer))
+                {
+                    if (healer.attackList.Count != 0 && healer.isCool == false)
+                    {
+                        if (healer.state == Unit.State.Idle)
+                        {
+                            healer.SetState("Idle");
+                        }
+                        else
+                        {
+                            healer.SetOrder(0);
+                            healer.ChangeState("Idle");
+                        }
+                        Heal(healer.gameObject);
                     }
                 }
                 break;

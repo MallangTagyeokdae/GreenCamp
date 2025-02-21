@@ -6406,11 +6406,12 @@ MonoBehaviour:
   state: 0
   target: {fileID: 0}
   animator: {fileID: 0}
-  clickEventHandler: {fileID: 0}
   prefab: {fileID: 0}
   prefabPosition: {fileID: 0}
   order: 0
   HealingEffect: {fileID: 5369767705336364537}
+  isCool: 0
+  coolTime: 0
 --- !u!114 &2302028604011185352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19981,7 +19982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: lengthInSec
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: playOnAwake
@@ -19997,11 +19998,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276928, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217187139097276932, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+      propertyPath: lengthInSec
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276932, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2217187139097276932, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276934, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: looping
@@ -20009,7 +20018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276934, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: lengthInSec
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276934, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: playOnAwake
@@ -20017,7 +20026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139097276934, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2217187139112315744, guid: 0089eb398bbea4c8e93eee215b951a90, type: 3}
       propertyPath: m_Name
