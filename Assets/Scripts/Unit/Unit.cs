@@ -241,8 +241,10 @@ public abstract class Unit : Entity
                 {
                     if (gameObject.TryGetComponent(out Healer healer))
                     {
+                        Debug.Log("이게 실행이 안될리가 없는데?");
                         if (healer.isCool == false)
                         {
+                            Debug.Log("이게 실행이 안될리가 없는데?2");
                             animator.SetBool("isAttacking", true);
 
                         }

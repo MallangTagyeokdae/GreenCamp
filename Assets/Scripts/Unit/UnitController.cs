@@ -104,7 +104,10 @@ public class UnitController : MonoBehaviour
         // 힐러만 콜백함수로 힐하는 함수 넣음
         if (unit.GetComponent<Healer>())
         {
-            unit.SetAttEnter((GameObject ally) => { GameManager.instance.Heal(unit.gameObject, ally); });
+            unit.SetAttEnter((GameObject ally) => { if(ally.TryGetComponent(out Unit allyUnit) && allyUnit.teamID == unit.teamID){
+                unit.GetComponent<Healer>().attackList.Add(ally); 
+            }});
+            unit.SetAttEnter((GameObject ally) => { GameManager.instance.Heal(unit.gameObject); });
         }
         else
         {
@@ -263,10 +266,10 @@ public class UnitController : MonoBehaviour
     public void Heal(GameObject me)
     {
         me.TryGetComponent(out Unit unit);
-        unit.ChangeState("Attack");
-        
+        Debug.Log("힐 하냐?");
         foreach (GameObject ally in unit.attackList.ToList())
         {
+            Debug.Log($"힐 받는 유닛: {ally.name}");
             ally.TryGetComponent(out Entity allyEntity);
             if (ally == null || allyEntity == null)
             {
@@ -277,9 +280,12 @@ public class UnitController : MonoBehaviour
             {
                 continue;
             }
+            Debug.Log($"유닛의 상태: {unit.state}");
+            unit.ChangeState("Attack");
+            break;
         }
 
-        Debug.Log("힐 코루틴 끝남");
+        //Debug.Log("힐 코루틴 끝남");
         unit.SetOrder(0);
     }
 

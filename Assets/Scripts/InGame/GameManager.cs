@@ -811,44 +811,16 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void Heal(GameObject me, GameObject ally)
+    public void Heal(GameObject me)
     {
         Unit unit = me.GetComponent<Unit>();
-        ally.TryGetComponent(out Entity allyEntity);
-        if (allyEntity == null || unit.teamID != allyEntity.teamID || ally.GetComponent<Unit>() == null || unit.state == Unit.State.Die)
+
+        if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
         {
-            Debug.Log("1");
+            Debug.Log("오더가 무브이거나 스테이트가 어택이거나 다이");
             return;
         }
-        else
-        {
-            if (!unit.attackList.Contains(ally))
-            {
-                // Debug.Log(ally.name + " 가 힐 리스트에 추가됨");
-                unit.attackList.Add(ally);
-                Debug.Log("2");
-            }
-            Debug.Log("3");
-            if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die)
-            {
-                Debug.Log("오더가 무브이거나 스테이트가 어택이거나 다이");
-                return;
-            }
-            if (allyEntity.currentHealth >= allyEntity.maxHealth || allyEntity.currentHealth <= 0)
-            {
-                Debug.Log("4");
-                return;
-            }
-
-            /*if (unit.unitBehaviour != null)
-            {
-                Debug.Log("5");
-                StopCoroutine(unit.unitBehaviour);
-            }*/
-            Debug.Log("6  ");
-            //unit.unitBehaviour = StartCoroutine(unitController.Heal(me));
-            unitController.Heal(me);
-        }
+        unitController.Heal(me);
     }
 
     public async Task<Unit> DelayUnitCreation(Building building, string unitType, Vector3 buildingPos, CancellationToken token)

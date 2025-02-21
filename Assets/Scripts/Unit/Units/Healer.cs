@@ -44,8 +44,8 @@ public class Healer : Unit
     }
     public override void OnIdleEnter()
     {
+        Debug.Log("이거 왜 안되지? IdleEnter Check");
         // base.OnIdleEnter();
-        Debug.Log("OnIdleEnter 실행");
         foreach (GameObject ally in attackList.ToList())
         {
             if (ally == null || ally.CompareTag("Untagged"))
@@ -57,12 +57,14 @@ public class Healer : Unit
         if (attackList.Count != 0)
         {
             //콜백함수 실행 후 리턴
-            foreach (GameObject ally in attackList.ToList())
+            /*foreach (GameObject ally in attackList.ToList())
             {
                 Debug.Log("콜백함수 실행: " + ally.name);
-                GameManager.instance.Heal(this.gameObject, ally);
+                
                 break;
-            }
+            }*/
+            Debug.Log("IdleEnter Check");
+            GameManager.instance.Heal(gameObject);
         }
     }
     public async Task CoolTime(float coolTime)
@@ -80,3 +82,5 @@ public class Healer : Unit
         }
     }
 }
+
+//애니메이션 트랜잭션 시간보다 더 빠르게 코드가 전환이 되어서 animaition이 idle 상태로 갔다가 heal을 해야하는데 heal에 계속 머물러 있음.

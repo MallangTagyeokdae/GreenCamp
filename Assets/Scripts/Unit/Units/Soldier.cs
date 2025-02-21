@@ -7,7 +7,7 @@ public class Soldier : Unit
     void Start()
     {
         this.maxHealth = 100  + GameStatus.instance.healthIncrease;
-        this.currentHealth = 100  + GameStatus.instance.healthIncrease;
+        this.currentHealth = 50  + GameStatus.instance.healthIncrease;
         this.unitPower = 30 + GameStatus.instance.damageIncrease;
     }
 
