@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8802988279426493383}
   - component: {fileID: 786050112540794072}
   - component: {fileID: 926752753125856375}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Tree3a_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,8 @@ GameObject:
   - component: {fileID: 7331747966920442568}
   - component: {fileID: 4007197427392596002}
   - component: {fileID: 4796030002384017971}
-  m_Layer: 0
+  - component: {fileID: 9029890683222400910}
+  m_Layer: 7
   m_Name: Tree4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,6 +170,33 @@ CapsuleCollider:
   m_Height: 7.0777416
   m_Direction: 1
   m_Center: {x: 0, y: 1.328435, z: 0}
+--- !u!54 &9029890683222400910
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5127867159172203968}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5398491453439385158
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +208,7 @@ GameObject:
   - component: {fileID: 3668745831111403491}
   - component: {fileID: 5923972239115503603}
   - component: {fileID: 670630929397258675}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Tree3a_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +292,7 @@ GameObject:
   - component: {fileID: 25148634340320239}
   - component: {fileID: 2694267549638152761}
   - component: {fileID: 638648909711542947}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_Tree3a_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

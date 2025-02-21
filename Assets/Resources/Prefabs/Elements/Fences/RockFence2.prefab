@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2554375885369349733}
   - component: {fileID: 5811771857576464467}
   - component: {fileID: 7809352676788796447}
-  m_Layer: 0
+  - component: {fileID: -6417879249526651576}
+  m_Layer: 7
   m_Name: RockFence2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,6 +85,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.2111969, y: 0.7234193, z: 0.80623627}
   m_Center: {x: -0.10559845, y: 0.26871032, z: -0.09688187}
+--- !u!54 &-6417879249526651576
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3129926562495174952}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &6987276595937225121
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +124,7 @@ GameObject:
   - component: {fileID: 9042535035917096859}
   - component: {fileID: 7032828692377727960}
   - component: {fileID: 3961037570117343205}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence5_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +229,7 @@ GameObject:
   - component: {fileID: 2041595766586497241}
   - component: {fileID: 5521145071202351385}
   - component: {fileID: 1706486749937842196}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence5_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -284,7 +312,7 @@ GameObject:
   - component: {fileID: 8819894788228164820}
   - component: {fileID: 2090226472499559624}
   - component: {fileID: 3972199461944017505}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence5_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

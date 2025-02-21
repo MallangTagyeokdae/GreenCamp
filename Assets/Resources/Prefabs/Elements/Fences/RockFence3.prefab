@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 997941138275184750}
   - component: {fileID: 9178042769999328706}
   - component: {fileID: 6451406489646234650}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence6_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6178174549441410802}
   - component: {fileID: 4235812915792458111}
   - component: {fileID: 3141471332463492079}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence6_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,8 @@ GameObject:
   - component: {fileID: 6579848794216834193}
   - component: {fileID: 6940878124920548034}
   - component: {fileID: 8379212736034050723}
-  m_Layer: 0
+  - component: {fileID: -784499453556634701}
+  m_Layer: 7
   m_Name: RockFence3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,6 +274,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.9670181, y: 0.72278565, z: 0.6598358}
   m_Center: {x: 0.028324127, y: 0.39692405, z: -0.08320618}
+--- !u!54 &-784499453556634701
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8389771933233542588}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &9079075578977401274
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +312,7 @@ GameObject:
   - component: {fileID: 5534505217661584643}
   - component: {fileID: 2729933588481721293}
   - component: {fileID: 3545289729042073281}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fence6_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

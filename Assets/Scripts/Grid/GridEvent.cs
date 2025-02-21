@@ -132,7 +132,7 @@ public class GridEvent : MonoBehaviour
 
     private void OnTriggerEnter(Collider obj)
     {
-        if(obj.CompareTag("Clickable") && !GetIsBuilted())
+        if((obj.CompareTag("Clickable") && !GetIsBuilted()) || (obj.gameObject.layer == 7 && !GetIsBuilted()))
         {
             if(!detectedColliders.Contains(obj))
                 detectedColliders.Add(obj);

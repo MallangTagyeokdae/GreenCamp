@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6303261608539340028}
   - component: {fileID: 2084292105144520305}
   - component: {fileID: 4406561456571233010}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fenceBrick_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,8 @@ GameObject:
   - component: {fileID: 7530660896806872030}
   - component: {fileID: 3433985455917398111}
   - component: {fileID: 8918270347453061433}
-  m_Layer: 0
+  - component: {fileID: 9148762728451426460}
+  m_Layer: 7
   m_Name: RockFence4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,6 +190,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.007260363, y: 0.0047946107, z: 0.0035119615}
   m_Center: {x: 0, y: 1.1641534e-10, z: 0.0017559803}
+--- !u!54 &9148762728451426460
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5929126219748185477}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &7229010237940864109
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +228,7 @@ GameObject:
   - component: {fileID: 4674773530442941378}
   - component: {fileID: 8576348082997571157}
   - component: {fileID: 2018731948816717586}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fenceBrick_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +311,7 @@ GameObject:
   - component: {fileID: 2950701977350051193}
   - component: {fileID: 7889286907835597535}
   - component: {fileID: 548636948779351602}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EM_rock_fenceBrick_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
