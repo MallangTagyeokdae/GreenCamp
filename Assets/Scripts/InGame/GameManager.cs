@@ -1179,6 +1179,13 @@ public class GameManager : MonoBehaviour
                         CreateUnit();
                     }
                 }
+                else if (clickedObj.TryGetComponent(out Academy academy))
+                {
+                    if (academy.state == Building.State.Built)
+                    {
+                        UpgradeUnit("Armor");
+                    }
+                }
                 break;
         }
     }
@@ -1403,13 +1410,6 @@ public class GameManager : MonoBehaviour
                         // 솔저 생성
                         SetUnitType("Soldier");
                         CreateUnit();
-                    }
-                }
-                else if (clickedObj.TryGetComponent(out Academy academy))
-                {
-                    if (academy.state == Building.State.Built)
-                    {
-                        UpgradeUnit("Armor");
                     }
                 }
                 else if (clickedObj == ground && clickedObject.Count == 1)
