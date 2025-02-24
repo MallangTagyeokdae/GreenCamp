@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
                 uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.EndGame:
+                unitController.RemoveCoroutine();
                 gameObject.GetComponent<PhotonView>().RPC("ShowGameResult", RpcTarget.All);
                 target.SetActive(false);
                 GameStatus.instance.gameState = state;
