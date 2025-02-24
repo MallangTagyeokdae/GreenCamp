@@ -118,6 +118,7 @@ public class TeamUIController : MonoBehaviour
     }
 
     public void StartGame(){
-        PhotonManager.instance.StartGame();
+        //PhotonManager.instance.StartGame();
+        SendMessage(4);
     }
 }
