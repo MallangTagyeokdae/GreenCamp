@@ -443,51 +443,69 @@ public class GameManager : MonoBehaviour
 
     public void UpdateEventUI(GameObject eventedObject)
     {
+        // 체력이 0이하일때 
+        if(eventedObject.GetComponent<Entity>().currentHealth <= 0 && clickedObject.Contains(eventedObject))
+        {
+            clickedObject.Remove(eventedObject);
+        }
+
         switch (clickedObject.Count())
         {
+            case 0:
+                // 클릭리스트 크기가 0
+                SetClickedObject(ground);
+                SetBuildingListUI();
+                break;
             case 1:
-                if (clickedObject[0] == eventedObject)
+                if(clickedObject[0].TryGetComponent(out Building building))
                 {
-                    if (eventedObject.GetComponent<Entity>().currentHealth <= 0)
+                    // 클릭리스트 크기가 1인데 0번째가 빌딩
+                    if(uIController.CheckIsUnitUI(currentUI))
                     {
                         SetClickedObject(ground);
                         SetBuildingListUI();
                     }
-                    else if (eventedObject.TryGetComponent(out Building building))
+                    else
                     {
                         ReloadBuildingUI(building);
                     }
-                    else if (eventedObject.TryGetComponent(out Unit unit))
-                    {
-                        SetUnitInfo(7, unit.gameObject);
-                    }
+                }
+                else if(clickedObject[0].TryGetComponent(out Unit unit))
+                {
+                    // 클릭리스트 크기가 1인데 0번째가 유닛
+                    SetUnitInfo(7, unit.gameObject);
+                }
+                else
+                {
+                    // 클릭리스트 크기가 1인데 0번째가 그라운드
+                    SetClickedObject(ground);
+                    SetBuildingListUI();
                 }
                 break;
             case 2:
-                if (!clickedObject[0].GetComponent<Unit>() && clickedObject[1] == eventedObject)
+                if(clickedObject[0].GetComponent<Unit>())
                 {
-                    if (eventedObject.GetComponent<Entity>().currentHealth <= 0)
-                    {
-                        SetClickedObject(ground);
-                        SetBuildingListUI();
-                    }
-                    else if (eventedObject.GetComponent<Unit>())
-                    {
-                        SetUnitInfo(7, eventedObject);
-                    }
+                    // 클릭리스트 크기가 2인데 0번째가 유닛
+                    uIController.ActiveFalseUI(8);
+                    SetGroupUnitUI(8, 0);
                 }
                 else
                 {
-                    SetGroupUnitUI(8, 0);
+                    // 클릭리스트 크기가 2인데 0번째가 유닛이 아님
+                    SetUnitInfo(7,clickedObject[1]);
                 }
                 break;
             default:
-                if (!clickedObject[0].GetComponent<Unit>())
+                if (clickedObject[0].GetComponent<Unit>())
                 {
+                    // 클릭리스트 크기가 2보다 큰데 0번째가 유닛
+                    uIController.ActiveFalseUI(8);
                     SetGroupUnitUI(8, 0);
                 }
                 else
                 {
+                    // 클릭리스트 크기가 2보다 큰데 0번째가 유닛이 아님
+                    uIController.ActiveFalseUI(8);
                     SetGroupUnitUI(8, 1);
                 }
                 break;
@@ -643,7 +661,7 @@ public class GameManager : MonoBehaviour
 
                 tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-                if (await OrderCreate(building, building.level * 25f, cts.Token))
+                if (await OrderCreate(building, building.level /** 25f*/, cts.Token))
 
                 {
                     tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌

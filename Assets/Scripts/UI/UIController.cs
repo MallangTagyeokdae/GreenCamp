@@ -532,7 +532,6 @@ public class UIController : MonoBehaviour
     public void SetInGameInfomation(string text)
     {
         inGameInfomation.gameObject.SetActive(true);
-        Debug.Log("ui 내용 : " + text);
         inGameInfomation.text = text;
     }
 
