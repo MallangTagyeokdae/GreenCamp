@@ -159,7 +159,7 @@ public class GameManager : MonoBehaviour
     // ================== 클릭 관련 함수 ======================
     //clickedObject에서 제가하는 함수 따로 설정해야할듯
     //스스로가 click에 대한 boolean 변수를 따로 가지고 있는건?
-    public void SetClickedObject(GameObject gameObject)
+    public void SetClickedObject(GameObject clickedObj)
     {
         if (CheckState("InGame"))
         {
@@ -169,39 +169,45 @@ public class GameManager : MonoBehaviour
                 targetObject = null;
             }
 
-            unitController.SetActiveHealthBar(clickedObject);
-            foreach (GameObject obj in clickedObject)
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
-                if (obj.GetComponent<Entity>() != null && obj.GetComponent<Entity>().clickedEffect != null)
+                clickedObject.Remove(clickedObj);
+                clickedObj.GetComponent<Entity>().clickedEffect.SetActive(false);
+                unitController.SetActiveHealthBar(clickedObj);
+            }
+
+            else
+            {
+                unitController.SetActiveHealthBar(clickedObject);
+                foreach (GameObject obj in clickedObject)
                 {
-                    if (obj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+                    if (obj.GetComponent<Entity>() != null && obj.GetComponent<Entity>().clickedEffect != null)
                     {
-                        obj.GetComponent<Entity>().clickedEffect.SetActive(false);
+                        if (obj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+                        {
+                            obj.GetComponent<Entity>().clickedEffect.SetActive(false);
+                        }
+                    }
+
+                }
+                clickedObject.Clear();
+
+                if (clickedObj.GetComponent<Entity>() != null && clickedObj.GetComponent<Entity>().clickedEffect != null)
+                {
+                    if (clickedObj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+                    {
+                        clickedObj.GetComponent<Entity>().clickedEffect.SetActive(true);
                     }
                 }
-
+                clickedObject.Add(clickedObj);
+                unitController.SetActiveHealthBar(clickedObj, true);
             }
-            clickedObject.Clear();
-
-            if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
-            {
-                if (gameObject.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
-                {
-                    gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
-                }
-            }
-            clickedObject.Add(gameObject);
-            unitController.SetActiveHealthBar(gameObject, true);
         }
     }
 
     // 리팩토링때 조져야함
     public void AddClickedObject(GameObject gameObject)
     {
-        // if(!clickedObject[0].GetComponent<Unit>())
-        // {
-        //     clickedObject.Remove(clickedObject[0]);
-        // }
         if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
         {
             if (gameObject.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
@@ -210,39 +216,31 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 15)
-        {
-            if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
-            {
-                clickedObject.Add(gameObject);
-                unitController.SetActiveHealthBar(gameObject, true);
-                if (clickedObject.Count == 1) SetUnitInfo(7, clickedObject[0]);
-                else if (clickedObject.Count >= 3)
-                {
-                    uIController.ActiveFalseUI(8);
-                    SetGroupUnitUI(8, 0);
-                }
-            }
-        }
-        else if (!clickedObject[0].GetComponent<Unit>() && clickedObject.Count <= 16)
-        {
-            if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
-            {
-                clickedObject.Add(gameObject);
+        int startIndex = 0;
 
+        if(!clickedObject[0].GetComponent<Unit>()){
+            startIndex = 1;
+        }
+
+        if(clickedObject.Count <= 15 + startIndex){
+            if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
+            {
+                clickedObject.Add(gameObject);
                 unitController.SetActiveHealthBar(gameObject, true);
-                if (clickedObject.Count == 2) SetUnitInfo(7, clickedObject[1]);
-                else if (clickedObject.Count >= 3)
+                if (clickedObject.Count == startIndex + 1) SetUnitInfo(7, clickedObject[startIndex]);
+                else if (clickedObject.Count >= startIndex + 2)
                 {
+                    Debug.Log("check check check check");
                     uIController.ActiveFalseUI(8);
-                    SetGroupUnitUI(8, 1);
+                    SetGroupUnitUI(8, startIndex);
                 }
             }
         }
     }
+
     public void SetTargetObject(GameObject target, int click)
     {
-        if ((CheckState("InGame") && click == 1)|| (CheckState("SetTargetMode") && click == 0))
+        if ((CheckState("InGame") && click == 1) || (CheckState("SetTargetMode") && click == 0))
         {
             if (target.GetComponent<Entity>() != null)
             {
@@ -251,11 +249,12 @@ public class GameManager : MonoBehaviour
                     targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
                 }
 
-                if(clickedObject.Count != 1 || clickedObject[0].GetComponent<Unit>()){
+                if (clickedObject.Count != 1 || clickedObject[0].GetComponent<Unit>())
+                {
                     targetObject = target;
                     target.GetComponent<Entity>().enemyClickedEffect.SetActive(true);
                 }
-                
+
                 foreach (GameObject go in clickedObject)    //지정한 타겟에게 이동, 해당 타겟이 아니면 move 이외의 조건이 안먹히게 해야함,
                 {                                           //지정한 타겟이 att범위에 있으면 move가 아니라 공격으로 명령
                     go.TryGetComponent(out Unit selectedUnit);
@@ -270,10 +269,12 @@ public class GameManager : MonoBehaviour
                     }
 
                     selectedUnit.target = targetObject;
-                    if(selectedUnit.attackList.Contains(targetObject)){
-                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, targetObject));    
+                    if (selectedUnit.attackList.Contains(targetObject))
+                    {
+                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, targetObject));
                     }
-                    else{
+                    else
+                    {
                         selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, targetObject, 3));
                     }
                 }
@@ -285,7 +286,8 @@ public class GameManager : MonoBehaviour
 
     public void GroundRightClickEvent(Vector3 newLocation)
     {
-        if(targetObject != null){
+        if (targetObject != null)
+        {
             targetObject.GetComponent<Entity>().enemyClickedEffect.SetActive(false);
             targetObject = null;
         }
@@ -437,7 +439,7 @@ public class GameManager : MonoBehaviour
             case 1:
                 if (clickedObject[0] == eventedObject)
                 {
-                    if(eventedObject.GetComponent<Entity>().currentHealth <= 0)
+                    if (eventedObject.GetComponent<Entity>().currentHealth <= 0)
                     {
                         SetClickedObject(ground);
                         SetBuildingListUI();
@@ -455,7 +457,7 @@ public class GameManager : MonoBehaviour
             case 2:
                 if (!clickedObject[0].GetComponent<Unit>() && clickedObject[1] == eventedObject)
                 {
-                    if( eventedObject.GetComponent<Entity>().currentHealth <= 0)
+                    if (eventedObject.GetComponent<Entity>().currentHealth <= 0)
                     {
                         SetClickedObject(ground);
                         SetBuildingListUI();
