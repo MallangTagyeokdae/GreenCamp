@@ -10,7 +10,7 @@ public class Archer : Unit
     void Start()
     {
         this.maxHealth = 60 + GameStatus.instance.healthIncrease;
-        this.currentHealth = 50 + GameStatus.instance.healthIncrease;
+        this.currentHealth = 60 + GameStatus.instance.healthIncrease;
         this.unitPower = 25 + GameStatus.instance.damageIncrease;
         this.armor = 5 + GameStatus.instance.armorIncrease;
     }

@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
     public GameObject target;
     public GameObject fogWar;
     public GameObject miniMap;
+    public Texture2D defaultCursor;
+    public Texture2D attackCursor;
+    public Texture2D moveCursor;
     public CancellationTokenSource inGameInfoToken = null;
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
@@ -64,9 +67,9 @@ public class GameManager : MonoBehaviour
     // ================== 상태 관련 함수 ======================
     public async Task InitialGame()
     {
-
         SetState("Loading"); // 상태변경
 
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
         grid.SetActive(true); // Grid를 켜서 본진이 건설될 위치의 Grid 상태를 바꿀준비
 
         if (PhotonNetwork.IsMasterClient)
@@ -121,6 +124,7 @@ public class GameManager : MonoBehaviour
                 GameStatus.instance.gameState = state;
                 break;
             case GameStates.InGame:
+                Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
                 GameStatus.instance.gameState = state;
                 PhotonNetwork.AutomaticallySyncScene = false;
                 break;
@@ -131,10 +135,12 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.SetMoveRot:
                 GameStatus.instance.gameState = state;
+                Cursor.SetCursor(moveCursor, new Vector2(-5.0f,5.0f), CursorMode.Auto);
                 uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.SetTargetMode:
                 GameStatus.instance.gameState = state;
+                Cursor.SetCursor(attackCursor, new Vector2(-5.0f,5.0f), CursorMode.Auto);
                 uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.EndGame:
