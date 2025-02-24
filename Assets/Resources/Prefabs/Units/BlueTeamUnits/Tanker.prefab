@@ -13659,7 +13659,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &8271976870040986676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13718,10 +13718,12 @@ MonoBehaviour:
   healthBar: {fileID: 1300174168617867986}
   clickedEffect: {fileID: 0}
   enemyClickedEffect: {fileID: 0}
+  isTurretUnit: 0
   state: 0
   target: {fileID: 0}
   animator: {fileID: 0}
-  clickEventHandler: {fileID: 0}
+  prefab: {fileID: 0}
+  prefabPosition: {fileID: 0}
   order: 0
 --- !u!114 &5797503842643246157
 MonoBehaviour:
