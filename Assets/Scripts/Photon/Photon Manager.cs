@@ -96,6 +96,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
             case 3: //팀 변경 이벤트
                 SetTeam(GetTeam(PhotonNetwork.LocalPlayer) == "Red" ? "Blue" : "Red");
                 break;
+            case 4:
+                _gaming = true;
+                if(PhotonNetwork.IsMasterClient){
+                    StartGame();
+                }
+                break;
             default:
                 //Debug.Log("Unknown event received: " + photonEvent.Code);
                 break;
@@ -317,7 +323,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks, IOnEventCallback // 상�
     {
         if (PhotonNetwork.InRoom)
         {
-            _gaming = true;
+            //_gaming = true;
             PhotonNetwork.LoadLevel("GameScene");
         }
         /*if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
