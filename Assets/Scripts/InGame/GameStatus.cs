@@ -60,7 +60,7 @@ public class GameStatus : MonoBehaviour
     public void InitGameStatus()
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
-        currentResourceCount = 40;
+        currentResourceCount = 10000;
         resourcePerSecond = 1;
         maxUnitCount = 1;
         currentUnitCount = 0;
@@ -169,10 +169,10 @@ public class GameStatus : MonoBehaviour
     }
 
     public bool CanUpgradeUnit(Building building, int level, int cost, bool isProgressing)
-    {   
-        if(!isProgressing && (building.level >= level))
+    {
+        if (!isProgressing && (building.level >= level))
         {
-            if(currentResourceCount >= cost)
+            if (currentResourceCount >= cost)
             {
                 return true;
             }
