@@ -310,4 +310,15 @@ public class UnitController : MonoBehaviour
             }
         }
     }
+
+    public void RemoveCoroutine()
+    {
+        foreach(KeyValuePair<int, Unit> valuePair in unitDictionary)
+        {
+            if(valuePair.Value.unitBehaviour != null)
+            {
+                StopCoroutine(valuePair.Value.unitBehaviour);
+            }
+        }
+    }
 }

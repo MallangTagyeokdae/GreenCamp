@@ -19,7 +19,5 @@ public class KeyManager : MonoBehaviour
                 keyEvent.onKeyPressed?.Invoke();
             }
         }
-        
-        
     }
 }
