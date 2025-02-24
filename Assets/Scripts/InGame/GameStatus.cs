@@ -169,10 +169,10 @@ public class GameStatus : MonoBehaviour
     }
 
     public bool CanUpgradeUnit(Building building, int level, int cost, bool isProgressing)
-    {   
-        if(!isProgressing && (building.level >= level))
+    {
+        if (!isProgressing && (building.level >= level))
         {
-            if(currentResourceCount >= cost)
+            if (currentResourceCount >= cost)
             {
                 return true;
             }
