@@ -226,6 +226,9 @@ public class GameManager : MonoBehaviour
         int startIndex = 0;
 
         if(!clickedObject[0].GetComponent<Unit>()){
+            if(clickedObject[0].TryGetComponent(out Entity entity)){
+                entity.clickedEffect.SetActive(false);
+            }
             startIndex = 1;
         }
 
@@ -237,7 +240,6 @@ public class GameManager : MonoBehaviour
                 if (clickedObject.Count == startIndex + 1) SetUnitInfo(7, clickedObject[startIndex]);
                 else if (clickedObject.Count >= startIndex + 2)
                 {
-                    Debug.Log("check check check check");
                     uIController.ActiveFalseUI(8);
                     SetGroupUnitUI(8, startIndex);
                 }
@@ -368,7 +370,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetGroupUnitUI(int UIindex, int startIndex)
     {
-        if (GameStatus.instance.gameState == GameStates.InGame && clickedObject.Count >= 3)
+        if (GameStatus.instance.gameState == GameStates.InGame /*&& clickedObject.Count >= 3*/)
         {
             currentUI = uIController.SetGroupUI(UIindex, startIndex, currentUI, clickedObject);
         }
