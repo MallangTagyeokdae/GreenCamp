@@ -178,6 +178,9 @@ public class GameManager : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             {
+                if(!clickedObj.GetComponent<Entity>()){
+                    return;
+                }
                 clickedObject.Remove(clickedObj);
                 clickedObj.GetComponent<Entity>().clickedEffect.SetActive(false);
                 unitController.SetActiveHealthBar(clickedObj);
@@ -213,30 +216,60 @@ public class GameManager : MonoBehaviour
     }
 
     // 리팩토링때 조져야함
-    public void AddClickedObject(GameObject gameObject)
+    public void AddClickedObject(GameObject clickedObj)
     {
-        if (gameObject.GetComponent<Entity>() != null && gameObject.GetComponent<Entity>().clickedEffect != null)
-        {
-            if (gameObject.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
-            {
-                gameObject.GetComponent<Entity>().clickedEffect.SetActive(true);
-            }
-        }
 
         int startIndex = 0;
 
         if(!clickedObject[0].GetComponent<Unit>()){
-            if(clickedObject[0].TryGetComponent(out Entity entity)){
+            if(clickedObject[0].TryGetComponent(out Entity entity) && entity.clickedEffect.activeSelf){
                 entity.clickedEffect.SetActive(false);
             }
             startIndex = 1;
         }
 
         if(clickedObject.Count <= 15 + startIndex){
-            if (!clickedObject.Contains(gameObject) && CheckState("InGame"))
+            if (CheckState("InGame"))
             {
-                clickedObject.Add(gameObject);
-                unitController.SetActiveHealthBar(gameObject, true);
+                bool isActive = true;
+                if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)){
+                    if(!clickedObject.Contains(clickedObj)){
+                        clickedObject.Add(clickedObj);
+                        if (clickedObj.GetComponent<Entity>() != null && clickedObj.GetComponent<Entity>().clickedEffect != null)
+                        {
+                            if (clickedObj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+                            {
+                                clickedObj.GetComponent<Entity>().clickedEffect.SetActive(true);
+                            }
+                        }
+                    }
+                    else{
+                        clickedObject.Remove(clickedObj);
+                        if (clickedObj.GetComponent<Entity>() != null && clickedObj.GetComponent<Entity>().clickedEffect != null)
+                        {
+                            if (clickedObj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+                            {
+                                clickedObj.GetComponent<Entity>().clickedEffect.SetActive(false);
+                            }
+                        }
+                        isActive = false;
+                    }
+                }
+                else{
+                   if(!clickedObject.Contains(clickedObj)){
+                        clickedObject.Add(clickedObj);
+                        if (clickedObj.GetComponent<Entity>() != null && clickedObj.GetComponent<Entity>().clickedEffect != null)
+                        {
+                            if (clickedObj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
+                            {
+                                clickedObj.GetComponent<Entity>().clickedEffect.SetActive(true);
+                            }
+                        }
+                    }
+                }
+                
+                unitController.SetActiveHealthBar(clickedObj, isActive);
+
                 if (clickedObject.Count == startIndex + 1) SetUnitInfo(7, clickedObject[startIndex]);
                 else if (clickedObject.Count >= startIndex + 2)
                 {
@@ -358,9 +391,15 @@ public class GameManager : MonoBehaviour
     }
     public void SetBuildingInfo(int UIindex, Building building)
     {
-        if (clickedObject[0] == building.gameObject && CheckState("InGame"))
+        if (clickedObject.Count > 0 && clickedObject[0] == building.gameObject && CheckState("InGame"))
         {
             currentUI = uIController.SetBuildingUI(UIindex, building);
+        }
+        else{
+            if(clickedObject.Count == 0){   //임시
+                clickedObject.Add(ground);
+            }
+            SetBuildingListUI();
         }
     }
     public void SetUnitInfo(int UIindex, GameObject unit)
