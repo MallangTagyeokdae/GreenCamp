@@ -72,22 +72,26 @@ public class UIController : MonoBehaviour
         {
             case "Soldier":
                 image.sprite = uIElement.uiImages[0];
+                type.text = "전사";
                 break;
             case "Archer":
                 image.sprite = uIElement.uiImages[1];
+                type.text = "아처";
                 break;
             case "Tanker":
                 image.sprite = uIElement.uiImages[2];
+                type.text = "탱커";
                 break;
             case "Healer":
                 image.sprite = uIElement.uiImages[3];
+                type.text = "힐러";
                 break;
             case "Scout":
                 image.sprite = uIElement.uiImages[4];
+                type.text = "정찰병";
                 break;
         }
 
-        type.text = unit.unitType;
         power.text = $"{unit.unitPower}";
         range.text = $"{unit.unitPowerRange}";
         moveSpeed.text = $"{unit.unitMoveSpeed}";
@@ -390,11 +394,11 @@ public class UIController : MonoBehaviour
     {
         if (building.name.Contains("Command"))
         {
-            return "본진";
+            return "성";
         }
         else if (building.name.Contains("Barrack"))
         {
-            return "배럭";
+            return "병영";
         }
         else if (building.name.Contains("Population"))
         {
@@ -402,15 +406,15 @@ public class UIController : MonoBehaviour
         }
         else if (building.name.Contains("Resource"))
         {
-            return "자원건물";
+            return "농장";
         }
         else if (building.name.Contains("Defender"))
         {
-            return "방어건물";
+            return "포탑";
         }
         else if (building.name.Contains("Academy"))
         {
-            return "유닛업그레이드";
+            return "연구소";
         }
         return "";
     }
