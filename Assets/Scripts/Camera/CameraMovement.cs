@@ -16,9 +16,9 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         Vector3 pos = transform.position; // 물체 위치를 지정할 변수
-
         // 마우스 위치 가져오기
         Vector3 mousePosition = Input.mousePosition;
+
 
         // 화면 가장자리 체크
         // 마우스가 화면 왼쪽
@@ -36,6 +36,24 @@ public class CameraMovement : MonoBehaviour
         // 마우스가 화면 위쪽
         else if (mousePosition.y > Screen.height - edgeSize && pos.z < zBounds.y)
             pos.z += moveSpeed * Time.deltaTime;
+
+        // 키보드로 화면 옮기는 로직
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            pos.z += moveSpeed * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            pos.z -= moveSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            pos.x +=  moveSpeed * Time.deltaTime;
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            pos.x -= moveSpeed * Time.deltaTime;
+        }
 
         // 카메라 위치 업데이트
         transform.position = pos;
