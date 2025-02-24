@@ -859,19 +859,24 @@ public class GameManager : MonoBehaviour
         switch (unitType)
         {
             case "Soldier":
-                progressState = await OrderCreate(building, 10f, token);
+                // progressState = await OrderCreate(building, 10f, token);
+                progressState = await OrderCreate(building, 1f, token);
                 break;
             case "Archer":
-                progressState = await OrderCreate(building, 15f, token);
+                // progressState = await OrderCreate(building, 15f, token);
+                progressState = await OrderCreate(building, 1f, token);
                 break;
             case "Tanker":
-                progressState = await OrderCreate(building, 25f, token);
+                // progressState = await OrderCreate(building, 25f, token);
+                progressState = await OrderCreate(building, 1f, token);
                 break;
             case "Healer":
-                progressState = await OrderCreate(building, 30f, token);
+                // progressState = await OrderCreate(building, 30f, token);
+                progressState = await OrderCreate(building, 1f, token);
                 break;
             case "Scout":
-                progressState = await OrderCreate(building, 7f, token);
+                // progressState = await OrderCreate(building, 7f, token);
+                progressState = await OrderCreate(building, 1f, token);
                 break;
 
         }
