@@ -40,7 +40,8 @@ public class Barrack : Building
         this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 5.5f);
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
-        this.loadingTime = 30f;
+        // this.loadingTime = 30f;
+        this.loadingTime = 1f;
         this.underGrid = colliders;
         this.population = 1;
         this.fow = 40;

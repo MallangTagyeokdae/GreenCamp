@@ -621,7 +621,6 @@ namespace FischlWorks_FogWar
             {
                 if(fogRevealers[i]._RevealerTransform != null && fogRevealers[i]._RevealerTransform.gameObject == target)
                 {
-                    Debug.Log("제거 : " + target.name);
                     fogRevealers.RemoveAt(i);
                     return;
                 }
