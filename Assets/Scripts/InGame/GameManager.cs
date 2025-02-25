@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     {
         SetState("Loading"); // 상태변경
 
-        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         grid.SetActive(true); // Grid를 켜서 본진이 건설될 위치의 Grid 상태를 바꿀준비
 
         if (PhotonNetwork.IsMasterClient)
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
                 GameStatus.instance.gameState = state;
                 break;
             case GameStates.InGame:
-                Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 GameStatus.instance.gameState = state;
                 PhotonNetwork.AutomaticallySyncScene = false;
                 break;
