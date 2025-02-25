@@ -238,6 +238,7 @@ public class UnitController : MonoBehaviour
         {
             if (enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0)
             {
+                unit.target = null;
                 unit.attackList.Remove(enemy);
                 unit.aggList.Remove(enemy);
                 break;

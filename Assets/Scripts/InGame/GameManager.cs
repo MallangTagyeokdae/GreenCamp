@@ -862,6 +862,7 @@ public class GameManager : MonoBehaviour
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die || (unit.target != null && unit.target != enemy))
             {
+                //Debug.Log($"unit.target != null: {unit.target != null} && unit.target != enemy: {unit.target != enemy}");
                 return;
             }
 
@@ -871,7 +872,6 @@ public class GameManager : MonoBehaviour
             }
             if (enemy != null)
             {
-
                 ally.GetComponent<PhotonView>().RPC("SetTarget", RpcTarget.All, enemy.GetComponent<PhotonView>().ViewID);
             }
             unit.unitBehaviour = StartCoroutine(unitController.Attack(ally, enemy));
