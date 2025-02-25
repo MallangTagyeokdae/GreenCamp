@@ -817,26 +817,28 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(selectedUnit.unitBehaviour);
             }
 
-            if (selectedUnit.aggList.Count == 0)
-            {
-                selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, selectedUnit.destination, order));
-            }
-            else if (selectedUnit.attackList.Count == 0)
-            {
-                foreach (GameObject enemy in selectedUnit.aggList)
-                {
-                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, 3)); // aggro
-                    break;
-                }
-            }
-            else
+            if (selectedUnit.attackList.Count != 0)
             {
                 foreach (GameObject enemy in selectedUnit.attackList)
                 {
                     selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
                     break;
                 }
-
+            }
+            else
+            {
+                if (selectedUnit.aggList.Count != 0)
+                {
+                    foreach (GameObject enemy in selectedUnit.aggList)
+                    {
+                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, 3)); // aggro
+                        break;
+                    }
+                }
+                else
+                {
+                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, selectedUnit.destination, order));
+                }
             }
         }
     }
@@ -866,7 +868,7 @@ public class GameManager : MonoBehaviour
     {
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
-        if (enemyEntity == null || unit.teamID == enemyEntity.teamID || unit.state == Unit.State.Die)
+        if (enemyEntity == null || unit.teamID == enemyEntity.teamID || enemy.tag == "Untagged")
         {
             return;
         }
@@ -900,7 +902,7 @@ public class GameManager : MonoBehaviour
         int order;
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
-        if (enemyEntity == null || unit.teamID == enemyEntity.teamID || unit.state == Unit.State.Die)
+        if (enemyEntity == null || unit.teamID == enemyEntity.teamID || enemy.tag == "Untagged")
         {
             return;
         }

@@ -341,7 +341,14 @@ public abstract class Unit : Entity
     {
         if (gameObject.GetComponent<PhotonView>().IsMine)
         {
-            target.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unitPower);
+            if(target != null)
+            {
+                target.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, unitPower);
+            }
+            else
+            {
+                Debug.Log("타겟 널이었음");
+            }
         }
     }
 

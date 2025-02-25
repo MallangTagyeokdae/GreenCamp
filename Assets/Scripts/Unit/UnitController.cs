@@ -206,6 +206,7 @@ public class UnitController : MonoBehaviour
 
         while (enemy != null)
         {
+            Debug.Log($"얘한테 이동중 {enemy.name}");
             Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
 
             if (moveDirection != Vector3.zero)
@@ -236,19 +237,19 @@ public class UnitController : MonoBehaviour
 
         while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
         {
-            if (enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0)
+            if (enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0 || enemy.tag == "Untagged")
             {
                 unit.target = null;
                 unit.attackList.Remove(enemy);
                 unit.aggList.Remove(enemy);
+                Debug.Log($"리스트에서 제거됨 : {enemy.name}");
                 break;
             }
 
-            unit.GetComponent<Rigidbody>().velocity = (enemy.transform.position - ally.transform.position).normalized * unit.unitMoveSpeed;
             Vector3 rot = (enemy.transform.position - ally.transform.position).normalized;
             if (!unit.isTurretUnit)
             {
-                ally.transform.rotation = Quaternion.LookRotation(unit.GetComponent<Rigidbody>().velocity);
+                ally.transform.rotation = Quaternion.LookRotation(rot);
             }
             else
             {
@@ -265,6 +266,7 @@ public class UnitController : MonoBehaviour
         }
         else
         {
+            Debug.Log("이새끼 시ㅣㅣ발");
             unit.SetOrder(0);
             unit.ChangeState("Idle");
         }
