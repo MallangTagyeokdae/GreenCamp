@@ -1338,7 +1338,7 @@ public class GameManager : MonoBehaviour
                 if (clickedObj == ground && commandLevel >= 4 && clickedObject.Count == 1)
                 {
                     SetState("ConstructionMode");
-                    gridHandler.SetBuildingRange(0.001f);
+                    gridHandler.SetBuildingRange(0.00001f);
                     SetBuildingType("Defender");
                 }
                 break;
@@ -1487,7 +1487,7 @@ public class GameManager : MonoBehaviour
                 else if (clickedObj == ground && clickedObject.Count == 1)
                 {
                     SetState("ConstructionMode");
-                    gridHandler.SetBuildingRange(0.0001f);
+                    gridHandler.SetBuildingRange(0.00001f);
                     SetBuildingType("PopulationBuilding");
                 }
                 break;
