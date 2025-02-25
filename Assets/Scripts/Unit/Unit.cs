@@ -89,7 +89,6 @@ public abstract class Unit : Entity
             enemyClickedEffect = transform.Find("EnemyClickedEffect").gameObject;
             if (!gameObject.GetComponent<PhotonView>().IsMine)
             {
-
                 gameObject.GetComponent<ClickEventHandler>().rightClickDownEvent.AddListener((Vector3 pos) =>
                     {
                         GameManager.instance.SetTargetObject(gameObject, 1);
