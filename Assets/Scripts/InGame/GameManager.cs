@@ -56,6 +56,13 @@ public class GameManager : MonoBehaviour
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
     private Vector3 _commandRot;
+    public List<GameObject> groupSet1 = null;
+    public List<GameObject> groupSet2 = null;
+    public List<GameObject> groupSet3 = null;
+    public List<GameObject> groupSet4 = null;
+    public Vector3 screenSet1 = Vector3.zero;
+    public Vector3 screenSet2 = Vector3.zero;
+    public Vector3 screenSet3 = Vector3.zero;
     //-----------------------------
     public int commandLevel = 1;
     private Coroutine masterTimer;
@@ -70,7 +77,7 @@ public class GameManager : MonoBehaviour
     {
         SetState("Loading"); // 상태변경
 
-        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         grid.SetActive(true); // Grid를 켜서 본진이 건설될 위치의 Grid 상태를 바꿀준비
 
         if (PhotonNetwork.IsMasterClient)
@@ -126,7 +133,7 @@ public class GameManager : MonoBehaviour
                 GameStatus.instance.gameState = state;
                 break;
             case GameStates.InGame:
-                Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 GameStatus.instance.gameState = state;
                 PhotonNetwork.AutomaticallySyncScene = false;
                 break;
@@ -596,6 +603,15 @@ public class GameManager : MonoBehaviour
             if (GameStatus.instance.CanCreate(buildingType, "Building"))
             {
                 Vector3 buildingPos = gridHandler.CalculateGridScale();
+
+                if (float.IsNaN(buildingPos.x) || float.IsNaN(buildingPos.y) || float.IsNaN(buildingPos.z) ||
+                    float.IsInfinity(buildingPos.x) || float.IsInfinity(buildingPos.y) || float.IsInfinity(buildingPos.z))
+                {
+                    Debug.LogError($"[ERROR] 잘못된 위치 값 감지: {buildingPos}");
+                    grid.SetActive(false);
+                    SetState("InGame");
+                    SetBuildingListUI();
+                }
                 DelayBuildingCreation(buildingPos);
                 GameStatus.instance.SetResources(buildingType, "Building");
 
@@ -625,7 +641,7 @@ public class GameManager : MonoBehaviour
         }
         else if (targetOBJ.TryGetComponent(out Command command))
         {
-            if (command.state == Building.State.Built && GameStatus.instance.CanCreate(unitType, "Unit"))
+            if (command.state == Building.State.Built && GameStatus.instance.CanCreate(unitType, "Unit") && clickedObject.Count == 1)
             {
                 OrderUnitCreation(command, targetOBJ);
 
@@ -679,7 +695,6 @@ public class GameManager : MonoBehaviour
     }
     // =====================================================
 
-
     // =================== 건물 관리 함수들 ===================
     public void SetBuildingType(string buildingType)
     {
@@ -687,7 +702,7 @@ public class GameManager : MonoBehaviour
     }
     public async void LevelUpBuilding()
     {
-        if (clickedObject[0].TryGetComponent(out Building building))
+        if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1)
         {
             if (GameStatus.instance.CanLevelUp(building, commandLevel))
             {
@@ -970,7 +985,7 @@ public class GameManager : MonoBehaviour
 
     public async void UpgradeUnit(string type)
     {
-        if (clickedObject[0].TryGetComponent(out Building building))
+        if (clickedObject[0].TryGetComponent(out Building building) && clickedObject.Count == 1)
         {
             Academy academy = building.GetComponent<Academy>();
             int _upgradeLevel = 0;
@@ -1131,6 +1146,99 @@ public class GameManager : MonoBehaviour
 
     // ======================================================
 
+    // =================== 부대지정 함수 ======================== 
+
+    public void SetGroup(List<GameObject> entities, int level) // 부대지정함수, 지정할 요소 리스트, 그룹순서를 받음
+    {
+        List<GameObject> tempGroup = new List<GameObject>(entities);
+        switch(level)
+        {
+            case 1:
+                groupSet1 = tempGroup;
+                break;
+            case 2:
+                groupSet2 = tempGroup;
+                break;
+            case 3:
+                groupSet3 = tempGroup;
+                break;
+            case 4:
+                groupSet4 = tempGroup;
+                break;
+        }
+    }
+
+    public void SetClickedOBJToGroup(int level)
+    {
+        List<GameObject> tempGroup = new List<GameObject>();
+        switch(level)
+        {
+            case 1:
+                tempGroup = groupSet1;
+                break;
+            case 2:
+                tempGroup = groupSet2;
+                break;
+            case 3:
+                tempGroup = groupSet3;
+                break;
+            case 4:
+                tempGroup = groupSet4;
+                break;
+        }
+
+        for(int i=0; i<tempGroup.Count; i++)
+        {
+            if(i==0)
+            {
+                tempGroup[i].GetComponent<ClickEventHandler>().leftClickDownEvent.Invoke(tempGroup[i].transform.position);
+            }
+            else
+            {
+                AddClickedObject(tempGroup[i]);
+            }
+            if(tempGroup[i].TryGetComponent(out Entity entity))
+            {
+                entity.clickedEffect.SetActive(true);
+            }
+        }
+    }
+
+    public void SetScreen(int level) // 화면지정함수
+    {
+        Vector3 targetPos = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
+        switch(level)
+        {
+            case 1:
+                screenSet1 = targetPos;
+                break;
+            case 2:
+                screenSet2 = targetPos;
+                break;
+            case 3:
+                screenSet3 = targetPos;
+                break;
+        }
+    }
+
+    public void SetCamera(int level)
+    {
+        switch(level)
+        {
+            case 1:
+                target.transform.position = screenSet1;
+                break;
+            case 2:
+                target.transform.position = screenSet2;
+                break;
+            case 3:
+                target.transform.position = screenSet3;
+                break;
+        }
+    }
+
+    // ======================================================
+
     // =================== 타이머 함수 ======================== 
     private async Task<bool> StartTimer(float time, Action<float> action, CancellationToken token)
     {
@@ -1218,11 +1326,145 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PressedF1()
+    {
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+            case GameStates.SetTargetMode:
+            case GameStates.SetMoveRot:
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    SetScreen(1);
+                }
+                else
+                {
+                    SetCamera(1);
+                }
+                break;
+        }
+    }
+
+    public void PressedF2()
+    {
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+            case GameStates.SetTargetMode:
+            case GameStates.SetMoveRot:
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    SetScreen(2);
+                }
+                else
+                {
+                    SetCamera(2);
+                }
+                break;
+        }
+    }
+
+    public void PressedF3()
+    {
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+            case GameStates.SetTargetMode:
+            case GameStates.SetMoveRot:
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    SetScreen(3);
+                }
+                else
+                {
+                    SetCamera(3);
+                }
+                break;
+        }
+    }
+
     public void PressedF10()
     {
         // 상태 상관없이 그냥 설정창 띄우기
         uIController.SetSettingPage(true);
 
+    }
+
+    public void Pressed1()
+    {
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+            case GameStates.SetTargetMode:
+            case GameStates.SetMoveRot:
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    SetGroup(clickedObject, 1);
+                }
+                else
+                {
+                    SetClickedOBJToGroup(1);
+                }
+                break;
+        }
+    }
+
+    public void Pressed2()
+    {
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+            case GameStates.SetTargetMode:
+            case GameStates.SetMoveRot:
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    SetGroup(clickedObject, 2);
+                }
+                else
+                {
+                    SetClickedOBJToGroup(2);
+                }
+                break;
+        }
+    }
+
+    public void Pressed3()
+    {
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+            case GameStates.SetTargetMode:
+            case GameStates.SetMoveRot:
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    SetGroup(clickedObject, 3);
+                }
+                else
+                {
+                    SetClickedOBJToGroup(3);
+                }
+                break;
+        }
+    }
+
+    public void Pressed4()
+    {
+        switch (GameStatus.instance.gameState)
+        {
+            case GameStates.InGame:
+            case GameStates.SetTargetMode:
+            case GameStates.SetMoveRot:
+                Debug.Log("1눌림");
+                if(Input.GetKey(KeyCode.LeftShift))
+                {
+                    SetGroup(clickedObject, 4);
+                }
+                else
+                {
+                    SetClickedOBJToGroup(4);
+                }
+                break;
+        }
     }
 
     public void PressedA()
