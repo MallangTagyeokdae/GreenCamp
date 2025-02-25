@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     public CancellationTokenSource inGameInfoToken = null;
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
+    private Vector3 _commandRot;
     //-----------------------------
     public int commandLevel = 1;
     private Coroutine masterTimer;
@@ -112,6 +113,7 @@ public class GameManager : MonoBehaviour
 
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
         buildingController.SetBuildingState(building, Building.State.Built, "None");
+        _commandRot = building.transform.position;
 
         building.returnCost = building.levelUpCost; // 작업 취소되면 돌려줄 비용을 레벨업 비용으로 저장
     }
@@ -1174,7 +1176,10 @@ public class GameManager : MonoBehaviour
     {
         if (clickedObject.Count == 1)
         {
-            if (clickedObject[0] == ground) return;
+            if (clickedObject[0] == ground)
+            {
+                target.transform.position = _commandRot;
+            }
             else target.transform.position = clickedObject[0].transform.position;
         }
         else
@@ -1333,7 +1338,7 @@ public class GameManager : MonoBehaviour
                 if (clickedObj == ground && commandLevel >= 4 && clickedObject.Count == 1)
                 {
                     SetState("ConstructionMode");
-                    gridHandler.SetBuildingRange(0.001f);
+                    gridHandler.SetBuildingRange(0.00001f);
                     SetBuildingType("Defender");
                 }
                 break;
@@ -1482,7 +1487,7 @@ public class GameManager : MonoBehaviour
                 else if (clickedObj == ground && clickedObject.Count == 1)
                 {
                     SetState("ConstructionMode");
-                    gridHandler.SetBuildingRange(0.0001f);
+                    gridHandler.SetBuildingRange(0.00001f);
                     SetBuildingType("PopulationBuilding");
                 }
                 break;

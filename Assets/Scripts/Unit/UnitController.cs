@@ -172,11 +172,11 @@ public class UnitController : MonoBehaviour
     {
         Unit unit = unitObject.GetComponent<Unit>();
         unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
-        unit.GetComponent<Rigidbody>().velocity = (newLocation - unit.transform.position).normalized * unit.unitMoveSpeed;
+        Vector3 moveDirection = (newLocation - unit.transform.position).normalized;
 
-        if (unit.GetComponent<Rigidbody>().velocity != Vector3.zero)
+        if (moveDirection != Vector3.zero)
         {
-            unit.transform.rotation = Quaternion.LookRotation(unit.GetComponent<Rigidbody>().velocity);
+            unit.transform.rotation = Quaternion.LookRotation(moveDirection);
         }
 
         unit.ChangeState("Move");
@@ -206,11 +206,11 @@ public class UnitController : MonoBehaviour
 
         while (enemy != null)
         {
-            unit.GetComponent<Rigidbody>().velocity = (enemy.transform.position - unit.transform.position).normalized * unit.unitMoveSpeed;
+            Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
 
-            if (unit.GetComponent<Rigidbody>().velocity != Vector3.zero)
+            if (moveDirection != Vector3.zero)
             {
-                unit.transform.rotation = Quaternion.LookRotation(unit.GetComponent<Rigidbody>().velocity);
+                unit.transform.rotation = Quaternion.LookRotation(moveDirection);
             }
 
             unit.transform.position = Vector3.MoveTowards(
