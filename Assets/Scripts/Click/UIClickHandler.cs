@@ -19,16 +19,16 @@ public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         _uiPointed = true;
         clickManger.SetActive(false);
+        Vector3 origin = minicam.transform.position;
+        Vector3 dest = CalculateAxis(eventData.position.x, eventData.position.y);
+        Vector3 direction = (dest - origin).normalized;
+        float distance = 400f;
+
+        RaycastHit[] hits = Physics.RaycastAll(origin, direction, distance);
+
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             //해당 위치에 그라운드를 클릭하는 판정으로 만들면 될듯? 해당 그라운드의 event를 invoke하는 방식으로
-            Vector3 origin = minicam.transform.position;
-            Vector3 dest = CalculateAxis(eventData.position.x, eventData.position.y);
-            Vector3 direction = (dest - origin).normalized;
-            float distance = 400f;
-
-            RaycastHit[] hits = Physics.RaycastAll(origin, direction, distance);
-
             foreach(RaycastHit hit in hits){
                 if(hit.collider.name == "RealGround"){
                     hit.collider.gameObject.GetComponent<ClickEventHandler>().rightClickDownEvent.Invoke(hit.point);
@@ -37,13 +37,21 @@ public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IDragHandler
             }
         }
         else if(eventData.button == PointerEventData.InputButton.Left){
-            target.transform.position = CalculateAxis(eventData.position.x, eventData.position.y);
+            if(GameStatus.instance.gameState == GameStates.SetTargetMode){
+                foreach(RaycastHit hit in hits){
+                    if(hit.collider.name == "RealGround"){
+                        hit.collider.gameObject.GetComponent<ClickEventHandler>().leftClickDownEvent.Invoke(hit.point);
+                        break;
+                    }
+                }
+            }
+            else{
+                target.transform.position = CalculateAxis(eventData.position.x, eventData.position.y);
+            } 
         }
-        
     }
 
     public void OnPointerUpEvent(){
-        
         if(_uiPointed){
             clickManger.SetActive(true);
             _dragging = false;
@@ -52,7 +60,7 @@ public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left && GameStatus.instance.gameState != GameStates.SetTargetMode)
         {
             _dragging = true;
             target.transform.position = CalculateAxis(eventData.position.x, eventData.position.y);
