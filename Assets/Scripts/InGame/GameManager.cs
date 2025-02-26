@@ -831,7 +831,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (GameObject enemy in selectedUnit.aggList)
                     {
-                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, 3)); // aggro
+                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, order)); // aggro
                         break;
                     }
                 }
@@ -864,20 +864,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // ====================== 디버그용 ======================
+
+    public void PrintList(HashSet<GameObject> gameObjects)
+    {
+        foreach(GameObject obj in gameObjects)
+        {
+            Debug.Log($"== {obj.name} ===");
+        }
+    }
+
+    // ====================================================
+
     public void AttackUnit(GameObject ally, GameObject enemy)
     {
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
-        if (enemyEntity == null || unit.teamID == enemyEntity.teamID || enemy.tag == "Untagged")
+        if (enemy == null || enemyEntity == null || unit.teamID == enemyEntity.teamID || enemy.tag == "Untagged" || enemy.GetComponent<Entity>().currentHealth <= 0)
         {
+            Debug.Log("파괴돼서 추가 안함");
             return;
         }
         else
         {
             if (!unit.attackList.Contains(enemy))
             {
-                // Debug.Log(enemy.name + " 가 어택 리스트에 추가됨");
+                Debug.Log($"{unit.name} - 공격리스트에 추가됨");
                 unit.attackList.Add(enemy);
+                PrintList(unit.attackList);
+                
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die || (unit.target != null && unit.target != enemy))
             {
@@ -915,6 +930,8 @@ public class GameManager : MonoBehaviour
 
             if (unit.state == Unit.State.Idle || (unit.order == Unit.Order.Offensive && unit.state == Unit.State.Move))
             {
+                Debug.Log($"{unit.name} 상태 : {unit.state} / order : {unit.order}");
+                unit.SetState("Aggregated");
                 if (unit.unitBehaviour != null)
                 {
                     StopCoroutine(unit.unitBehaviour);
@@ -947,11 +964,11 @@ public class GameManager : MonoBehaviour
         {
             case "Soldier":
                 // progressState = await OrderCreate(building, 10f, token);
-                progressState = await OrderCreate(building, 10f, token);
+                progressState = await OrderCreate(building, 1.0f, token);
                 break;
             case "Archer":
                 // progressState = await OrderCreate(building, 15f, token);
-                progressState = await OrderCreate(building, 15f, token);
+                progressState = await OrderCreate(building, 1.0f, token);
                 break;
             case "Tanker":
                 // progressState = await OrderCreate(building, 25f, token);
