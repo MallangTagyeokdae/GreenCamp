@@ -193,6 +193,10 @@ public abstract class Unit : Entity
             }
             unitBehaviour = StartCoroutine(GameManager.instance.unitController.Move(gameObject, destination, 3));
         }
+        else
+        {
+            destination = Vector3.zero;
+        }
 
     }
 
@@ -224,7 +228,6 @@ public abstract class Unit : Entity
         switch (newState)
         {
             case "Idle":
-                destination = Vector3.zero;
                 state = State.Idle;
                 if (!isTurretUnit)
                 {
