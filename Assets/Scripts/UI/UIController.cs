@@ -256,6 +256,8 @@ public class UIController : MonoBehaviour
                 action(uIButtons.GetRange(3, 1), !state);
                 break;
             case 4:
+            case 5: 
+            default:
                 action(uIButtons.GetRange(0, 5), state);
                 break;
         }

@@ -146,7 +146,7 @@ public class GameStatus : MonoBehaviour
 
     public bool CanLevelUp(Building building, int commandLevel)
     {
-        if (building.level > 5)
+        if (building.level > 4)
         {
             GameManager.instance.SetInGameInfo("건물의 최대 레벨에 도달하였습니다");
             return false;
