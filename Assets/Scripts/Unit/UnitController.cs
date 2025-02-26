@@ -206,7 +206,15 @@ public class UnitController : MonoBehaviour
 
         while (enemy != null)
         {
-            Debug.Log($"얘한테 이동중 {enemy.name}");
+            if (enemy == null || enemy.GetComponent<Entity>() == null || enemy.GetComponent<Entity>().currentHealth <= 0 || enemy.tag == "Untagged")
+            {
+                unit.target = null;
+                unit.attackList.Remove(enemy);
+                unit.aggList.Remove(enemy);
+                Debug.Log($"리스트에서 제거됨 : {enemy.name}");
+                break;
+            }
+
             Vector3 moveDirection = (enemy.transform.position - unit.transform.position).normalized;
 
             if (moveDirection != Vector3.zero)
