@@ -198,11 +198,11 @@ public class UnitController : MonoBehaviour
         unit.ChangeState("Idle");
     }
 
-    public IEnumerator Move(GameObject unitObject, GameObject enemy, int order = 3)
+    public IEnumerator Move(GameObject unitObject, GameObject enemy, int order)
     {
         Unit unit = unitObject.GetComponent<Unit>();
         unit.SetOrder(order); //유닛에 대한 사용자의 명령이 Move (0: Idle, 1: Move, 2: Offensive, 3: Attack)
-        unit.ChangeState("Move");
+        unit.ChangeState("Aggregated");
 
         while (enemy != null)
         {
@@ -233,6 +233,7 @@ public class UnitController : MonoBehaviour
     {
         ally.TryGetComponent(out Unit unit);
         unit.ChangeState("Attack");
+        Debug.Log($"{unit.name} : State변경 -> {unit.state}");
         unit.target = enemy;
 
         while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?
@@ -261,12 +262,13 @@ public class UnitController : MonoBehaviour
 
         if (unit.order.Equals(Unit.Order.Offensive))
         {
+            Debug.Log($"{unit.name} 얘 State : {unit.order}");
             unit.ChangeState("Move");
             GameManager.instance.Attang(unit.destination, 2, unit.gameObject);
         }
         else
         {
-            Debug.Log("이새끼 시ㅣㅣ발");
+            Debug.Log($"else에서 {unit.name} 얘 State : {unit.order}");
             unit.SetOrder(0);
             unit.ChangeState("Idle");
         }

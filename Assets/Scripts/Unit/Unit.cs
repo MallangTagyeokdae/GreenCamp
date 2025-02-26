@@ -28,6 +28,7 @@ public abstract class Unit : Entity
     {
         Idle,
         Move,
+        Aggregated,
         Attack,
         Die
     }
@@ -234,6 +235,9 @@ public abstract class Unit : Entity
                     animator.SetBool("isWalking", true);
                 }
                 break;
+            case "Aggregated":
+                state = State.Aggregated;
+                break;
 
             case "Attack":
                 state = State.Attack;
@@ -297,6 +301,14 @@ public abstract class Unit : Entity
                 if (gameObject.GetComponent<PhotonView>().IsMine)
                 {
                     animator.SetBool("isWalking", false);
+                }
+                SetState(newState);
+                break;
+            
+            case State.Aggregated:
+                if (newState == "Aggregated")
+                {
+                    break;
                 }
                 SetState(newState);
                 break;
