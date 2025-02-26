@@ -237,6 +237,11 @@ public abstract class Unit : Entity
                 break;
             case "Aggregated":
                 state = State.Aggregated;
+                rigidbody.isKinematic = false;
+                if (gameObject.GetComponent<PhotonView>().IsMine)
+                {
+                    animator.SetBool("isWalking", true);
+                }
                 break;
 
             case "Attack":
@@ -309,6 +314,10 @@ public abstract class Unit : Entity
                 if (newState == "Aggregated")
                 {
                     break;
+                }
+                if (gameObject.GetComponent<PhotonView>().IsMine)
+                {
+                    animator.SetBool("isWalking", false);
                 }
                 SetState(newState);
                 break;
