@@ -821,8 +821,8 @@ public class GameManager : MonoBehaviour
             {
                 foreach (GameObject enemy in selectedUnit.attackList)
                 {
-                    //selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
-                    AttackUnit(orderedObjs, enemy);
+                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
+                    //AttackUnit(orderedObjs, enemy);
                     break;
                 }
             }
@@ -832,8 +832,8 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (GameObject enemy in selectedUnit.aggList)
                     {
-                        //selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, order)); // aggro
-                        Aggregated(orderedObjs, enemy);
+                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, order)); // aggro
+                        //Aggregated(orderedObjs, enemy);
                         break;
                     }
                 }
