@@ -211,7 +211,6 @@ public class UnitController : MonoBehaviour
                 unit.target = null;
                 unit.attackList.Remove(enemy);
                 unit.aggList.Remove(enemy);
-                Debug.Log($"리스트에서 제거됨 : {enemy.name}");
                 break;
             }
 
@@ -251,7 +250,6 @@ public class UnitController : MonoBehaviour
                 unit.target = null;
                 unit.attackList.Remove(enemy);
                 unit.aggList.Remove(enemy);
-                Debug.Log($"리스트에서 제거됨 : {enemy.name}");
                 break;
             }
 
@@ -268,23 +266,21 @@ public class UnitController : MonoBehaviour
             yield return null;
         }
 
-        if (unit.order.Equals(Unit.Order.Offensive))
+        /*if (unit.order.Equals(Unit.Order.Offensive))
         {
             Debug.Log($"{unit.name} 얘 State : {unit.order}");
-            unit.ChangeState("Move");
             GameManager.instance.Attang(unit.destination, 2, unit.gameObject);
         }
         else
-        {
-            Debug.Log($"else에서 {unit.name} 얘 State : {unit.order}");
-            unit.SetOrder(0);
-            unit.ChangeState("Idle");
-        }
+        {*/
+            //Debug.Log($"else에서 {unit.name} 얘 State : {unit.order}");
+        unit.SetOrder(0);
+        unit.ChangeState("Idle");
+        //}
     }
     public void Heal(GameObject me)
     {
         me.TryGetComponent(out Unit unit);
-        Debug.Log("힐 하냐?");
         foreach (GameObject ally in unit.attackList.ToList())
         {
             ally.TryGetComponent(out Entity allyEntity);
