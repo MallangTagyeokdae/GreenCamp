@@ -184,6 +184,16 @@ public abstract class Unit : Entity
             return;
         }
 
+        if(destination != Vector3.zero && Vector3.Distance(destination, gameObject.transform.position) >= 0.1f){
+            target = null;
+
+            if (unitBehaviour != null)
+            {
+                StopCoroutine(unitBehaviour);
+            }
+            unitBehaviour = StartCoroutine(GameManager.instance.unitController.Move(gameObject, destination, 3));
+        }
+
     }
 
     public void SetOrder(int index)
