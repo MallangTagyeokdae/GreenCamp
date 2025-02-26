@@ -821,7 +821,8 @@ public class GameManager : MonoBehaviour
             {
                 foreach (GameObject enemy in selectedUnit.attackList)
                 {
-                    selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
+                    //selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(orderedObjs, enemy));
+                    AttackUnit(orderedObjs, enemy);
                     break;
                 }
             }
@@ -831,7 +832,8 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (GameObject enemy in selectedUnit.aggList)
                     {
-                        selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, order)); // aggro
+                        //selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(orderedObjs, enemy, order)); // aggro
+                        Aggregated(orderedObjs, enemy);
                         break;
                     }
                 }
@@ -864,35 +866,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ====================== 디버그용 ======================
-
-    public void PrintList(HashSet<GameObject> gameObjects)
-    {
-        foreach(GameObject obj in gameObjects)
-        {
-            Debug.Log($"== {obj.name} ===");
-        }
-    }
-
-    // ====================================================
-
     public void AttackUnit(GameObject ally, GameObject enemy)
     {
         Unit unit = ally.GetComponent<Unit>();
         enemy.TryGetComponent(out Entity enemyEntity);
         if (enemy == null || enemyEntity == null || unit.teamID == enemyEntity.teamID || enemy.tag == "Untagged" || enemy.GetComponent<Entity>().currentHealth <= 0)
         {
-            Debug.Log("파괴돼서 추가 안함");
             return;
         }
         else
         {
             if (!unit.attackList.Contains(enemy))
             {
-                Debug.Log($"{unit.name} - 공격리스트에 추가됨");
                 unit.attackList.Add(enemy);
-                PrintList(unit.attackList);
-                
             }
             if (unit.order == Unit.Order.Move || unit.state == Unit.State.Attack || unit.state == Unit.State.Die || (unit.target != null && unit.target != enemy))
             {
@@ -936,7 +922,7 @@ public class GameManager : MonoBehaviour
                 {
                     StopCoroutine(unit.unitBehaviour);
                 }
-                order = (unit.order == Unit.Order.Offensive) ? 2 : 3; // 유닛의 Order가 Offensive면 유지, 아니면 Attack으로 변경
+                order = 3;//(unit.order == Unit.Order.Offensive) ? 2 : 3; // 유닛의 Order가 Offensive면 유지, 아니면 Attack으로 변경
                 unit.unitBehaviour = StartCoroutine(unitController.Move(ally, enemy, order));
             }
         }
