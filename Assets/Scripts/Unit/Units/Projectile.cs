@@ -12,6 +12,12 @@ public class Projectile : MonoBehaviour
     private void Awake(){
     }
 
+    void OnDestroy()
+    {
+        //StopCoroutine(coroutine);
+        StopAllCoroutines();
+    }
+
 
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject == _target){
@@ -56,7 +62,7 @@ public class Projectile : MonoBehaviour
             }
         }
 
-         if(_target != null && _unit.gameObject != null && _unit.gameObject.transform.parent.gameObject.GetComponent<PhotonView>().IsMine){
+        if(_target != null && _unit.gameObject != null && _unit.gameObject.GetComponent<PhotonView>().IsMine){
             _target.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, _unit.unitPower);
         }
         Destroy(gameObject);
