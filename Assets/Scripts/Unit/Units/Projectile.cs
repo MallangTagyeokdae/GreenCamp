@@ -71,9 +71,8 @@ public class Projectile : MonoBehaviour
             _target.GetComponent<PhotonView>().RPC("AttackRequest", RpcTarget.MasterClient, _unit.unitPower);
         }
 
-        yield return null;
-
         Invoke(nameof(DestroySelf), 0f);
+        yield return null;
     }
 
     public void LaunchProjectile(){
