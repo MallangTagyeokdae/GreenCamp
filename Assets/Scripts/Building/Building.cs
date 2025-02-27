@@ -99,8 +99,7 @@ public abstract class Building : Entity
     public virtual void InitTime()
     {
         time = 0f;
-        loadingTime = 2.0f;
-        // loadingTime = 1f; // 디버깅용
+        loadingTime = 20f;
         //gameObject.GetComponent<MeshFilter>().mesh = progressMesh1;
         gameObject.GetComponent<PhotonView>().RPC("SetProgressMesh1", RpcTarget.AllBuffered);
     }
