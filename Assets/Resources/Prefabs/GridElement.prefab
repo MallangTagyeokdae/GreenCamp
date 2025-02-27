@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4504187751965033002}
   - component: {fileID: 2973886920064003261}
   - component: {fileID: 6107257507266313654}
+  - component: {fileID: 3711724765679372337}
   m_Layer: 3
   m_Name: GridElement
   m_TagString: Clickable
@@ -182,3 +183,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 13.1035185, z: 10}
   m_Center: {x: 0, y: 1.8101583, z: 0}
+--- !u!205 &3711724765679372337
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253901454322640110}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.001404215
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4244719927154761822}
+  - screenRelativeHeight: 0.001404215
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.001404215
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
