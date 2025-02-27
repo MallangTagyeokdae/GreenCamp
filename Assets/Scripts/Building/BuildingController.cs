@@ -133,9 +133,7 @@ public class BuildingController : MonoBehaviour
     }
 
     public async Task DestroyBuilding(Building building)
-    {
-        GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(building.gameObject);
-        
+    {   
         GameStatus.instance.currentBuildingCount -= building.population;
         building.GetComponent<PhotonView>().RPC("SyncSetDestroy",RpcTarget.AllBuffered);
 
@@ -152,7 +150,13 @@ public class BuildingController : MonoBehaviour
                 break;
         }
 
-        await StartTimer(5f);
+        await StartTimer(3f);
+
+        if(!building.GetComponent<Command>())
+        {
+            GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(building.gameObject);
+        }
+        
         GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
         building.GetComponent<PhotonView>().RPC("DestroyEntity",RpcTarget.AllBuffered);
     }
