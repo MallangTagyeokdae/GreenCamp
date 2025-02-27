@@ -1897,6 +1897,13 @@ public class GameManager : MonoBehaviour
 
     public void testleaveroom()
     {
+        if(GameStatus.instance.gameState != GameStates.EndGame){
+            DestroyEntity(command.gameObject);    
+        }
         PhotonManager.instance.LeaveRoom();
+    }
+
+    public void Surrender(){
+        DestroyEntity(command.gameObject);
     }
 }
