@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     public CancellationTokenSource inGameInfoToken = null;
     public Dictionary<GameObject, CancellationTokenSource> tasks = new Dictionary<GameObject, CancellationTokenSource>();
     private Vector3[] _randomRot = { new Vector3(200, 0, 200), new Vector3(-200, 0, 200), new Vector3(200, 0, -200), new Vector3(-200, 0, -200) };
-    private Vector3 _commandRot;
+    public Command command;
     public List<GameObject> groupSet1 = null;
     public List<GameObject> groupSet2 = null;
     public List<GameObject> groupSet3 = null;
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
 
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
         buildingController.SetBuildingState(building, Building.State.Built, "None");
-        _commandRot = building.transform.position;
+        command = building.GetComponent<Command>();
 
         building.returnCost = building.levelUpCost; // 작업 취소되면 돌려줄 비용을 레벨업 비용으로 저장
     }
@@ -848,6 +848,8 @@ public class GameManager : MonoBehaviour
 
     public void MoveUnit(Vector3 newLocation, int order)
     {
+        clickedObject.RemoveAll(item => item == null || !item);
+
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
@@ -1194,19 +1196,51 @@ public class GameManager : MonoBehaviour
 
         for(int i=0; i<tempGroup.Count; i++)
         {
-            if(i==0)
+            if(tempGroup[i] == null || !tempGroup[i] || tempGroup[i].CompareTag("Untagged"))
             {
-                tempGroup[i].GetComponent<ClickEventHandler>().leftClickDownEvent.Invoke(tempGroup[i].transform.position);
+                tempGroup.Remove(tempGroup[i]);
+            }
+        }
+
+        if(tempGroup.Count > 0)
+        {
+            if(tempGroup.Count == 1)
+            {
+                tempGroup[0].GetComponent<ClickEventHandler>().leftClickDownEvent.Invoke(tempGroup[0].transform.position);
+                SetClickedObject(tempGroup[0]);
             }
             else
             {
-                AddClickedObject(tempGroup[i]);
+                SetClickedObject(tempGroup[0]);
             }
-            if(tempGroup[i].TryGetComponent(out Entity entity))
+
+            for(int i=1; i<tempGroup.Count; i++)
             {
-                entity.clickedEffect.SetActive(true);
+                AddClickedObject(tempGroup[i]);
+
+                if(tempGroup[i].TryGetComponent(out Entity entity))
+                {
+                    entity.clickedEffect.SetActive(true);
+                }
+            }
+
+            switch(level)
+            {
+                case 1:
+                    groupSet1 = tempGroup;
+                    break;
+                case 2:
+                    groupSet2 = tempGroup;
+                    break;
+                case 3:
+                    groupSet3 = tempGroup;
+                    break;
+                case 4:
+                    groupSet4 = tempGroup;
+                    break;
             }
         }
+
     }
 
     public void SetScreen(int level) // 화면지정함수
@@ -1291,7 +1325,7 @@ public class GameManager : MonoBehaviour
         {
             if (clickedObject[0] == ground)
             {
-                target.transform.position = _commandRot;
+                target.transform.position = command.transform.position;
             }
             else target.transform.position = clickedObject[0].transform.position;
         }
