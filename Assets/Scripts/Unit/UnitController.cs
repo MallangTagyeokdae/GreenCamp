@@ -240,7 +240,6 @@ public class UnitController : MonoBehaviour
     {
         ally.TryGetComponent(out Unit unit);
         unit.ChangeState("Attack");
-        Debug.Log($"{unit.name} : State변경 -> {unit.state}");
         unit.target = enemy;
 
         while (unit.attackList.Contains(enemy)) //적이 죽을 때까지 실행 -> 적이 죽지 않고 공격 범위 밖으로 나가면 triggerexit으로 move로 전환 <-> move와 chase?

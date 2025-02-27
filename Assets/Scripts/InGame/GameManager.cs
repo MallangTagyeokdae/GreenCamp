@@ -918,7 +918,6 @@ public class GameManager : MonoBehaviour
 
             if (unit.state == Unit.State.Idle || (unit.order == Unit.Order.Offensive && unit.state == Unit.State.Move))
             {
-                Debug.Log($"{unit.name} 상태 : {unit.state} / order : {unit.order}");
                 unit.SetState("Aggregated");
                 if (unit.unitBehaviour != null)
                 {
