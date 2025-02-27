@@ -187,11 +187,12 @@ public abstract class Unit : Entity
         if(destination != Vector3.zero && Vector3.Distance(destination, gameObject.transform.position) >= 0.1f){
             target = null;
 
-            if (unitBehaviour != null)
+            /*if (unitBehaviour != null)
             {
                 StopCoroutine(unitBehaviour);
             }
-            unitBehaviour = StartCoroutine(GameManager.instance.unitController.Move(gameObject, destination, 3));
+            unitBehaviour = StartCoroutine(GameManager.instance.unitController.Move(gameObject, destination, 3));*/
+            GameManager.instance.Attang(destination, 3, gameObject);
         }
 
         else
