@@ -8,6 +8,7 @@ using Unity.AI.Navigation;
 using System.Linq;
 using Photon.Chat.Demo;
 using FischlWorks_FogWar;
+using System.Transactions;
 
 public class ClickManager : MonoBehaviour
 {
@@ -117,10 +118,10 @@ public class ClickManager : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // 메인카메라 위치로부터 마우스 위치까지 ray를 생성
         RaycastHit[] hits = Physics.RaycastAll(ray, _distance);
-        
-        foreach(RaycastHit raycastHit in hits)
+
+        foreach (RaycastHit raycastHit in hits)
         {
-            if(raycastHit.collider.gameObject.layer == 8)
+            if (raycastHit.collider.gameObject.layer == 8)
             {
                 Renderer renderer = raycastHit.collider.GetComponent<Renderer>();
 
@@ -133,8 +134,8 @@ public class ClickManager : MonoBehaviour
                     int pixelY = Mathf.FloorToInt(uv.y * fogTexture.height);
 
                     Color pixelColor = fogTexture.GetPixel(pixelX, pixelY);
-                    
-                    if(pixelColor.a > 0.1 && side == 0 && GameStatus.instance.gameState == GameStates.ConstructionMode)
+
+                    if (pixelColor.a > 0.1 && side == 0 && GameStatus.instance.gameState == GameStates.ConstructionMode)
                     {
                         return;
                     }
@@ -147,33 +148,27 @@ public class ClickManager : MonoBehaviour
         {
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.red, 1f);
         }
-        
+
         int length = hits.Length;
-        if(length > 1){
+        if (length > 1)
+        {
             Array.Sort<RaycastHit>(hits, (a, b) => a.distance.CompareTo(b.distance));
         }
-        
-        for(int i = 0; i < length; i++){
+
+        for (int i = 0; i < length; i++)
+        {
             RaycastHit hit = hits[i];
-            if (hit.collider.CompareTag("Clickable"))
-            {
-                if(hit.collider.gameObject.layer == 3 && GameStatus.instance.gameState != GameStates.ConstructionMode)
-                {
-                    continue;
-                }
-                else if (hit.collider.gameObject.layer == 3 && GameStatus.instance.gameState != GameStates.ConstructionMode)
-                {
-                    action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
-                    break;
-                }
-                else
-                {
-                    action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
-                    break;
-                }
+            GameObject hitObject = hit.collider.gameObject;
+             bool isTarget = GameStatus.instance.gameState == GameStates.ConstructionMode
+                        ? hitObject.layer == LayerMask.NameToLayer("Grid")
+                        : hitObject.CompareTag("Clickable");
+            
+            if(isTarget){
+                action?.Invoke(hit.collider.gameObject, hit.point);
+                break;
             }
         }
-        
+
     }
 
     private void MouseHover()   //항상 ray cast
@@ -196,31 +191,46 @@ public class ClickManager : MonoBehaviour
             Debug.DrawRay(ray.origin, ray.direction * _distance, Color.green);
         }
 
-        foreach(RaycastHit hit in hits){
+        foreach (RaycastHit hit in hits)
+        {
 
         }
 
         int length = hits.Length;
-        if(length > 1){
+        if (length > 1)
+        {
             Array.Sort<RaycastHit>(hits, (a, b) => a.distance.CompareTo(b.distance));
         }
-        
-        for(int i = 0; i < length; i++){
+
+
+        for (int i = 0; i < length; i++)
+        {
             RaycastHit hit = hits[i];
-            if (hit.collider.CompareTag("Clickable"))
+            GameObject hitObject = hit.collider.gameObject;
+
+            bool isTarget = GameStatus.instance.gameState == GameStates.ConstructionMode
+                        ? hitObject.layer == LayerMask.NameToLayer("Grid")
+                        : hitObject.CompareTag("Clickable");
+
+            if (isTarget)
             {
-                if (hoverObj != hit.collider.gameObject)
-                {
-                    if (hoverObj != null)
-                    {
-                        hoverObj.GetComponent<ClickEventHandler>().DeMouseHover(hit.point);
-                    }
-                    hoverObj = hit.collider.gameObject;
-                }
-                hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
+                HoverAction(hit);
                 break;
             }
         }
+    }
+
+    private void HoverAction(RaycastHit hit)
+    {
+        if (hoverObj != hit.collider.gameObject)
+        {
+            if (hoverObj != null)
+            {
+                hoverObj.GetComponent<ClickEventHandler>()?.DeMouseHover(hit.point);
+            }
+            hoverObj = hit.collider.gameObject;
+        }
+        hit.collider.GetComponent<ClickEventHandler>()?.OnMouseHover(hit.point);
     }
 
 
@@ -258,24 +268,29 @@ public class ClickManager : MonoBehaviour
                 if (hit.collider.name == "RealGround" && hit.collider.gameObject.CompareTag("Clickable"))
                 {
                     DestroyDragBox();
-                    if(!_isDragging){
+                    if (!_isDragging)
+                    {
                         return;
                     }
-                    else{
+                    else
+                    {
                         _isDragging = false;
                     }
-                     
+
                     endPos = hit.point;
                     Collider[] colliders = startPos != endPos ? SelectObjectInBox() : null;
-                    if(colliders != null){
-                        foreach(Collider collider in colliders){
-                            if(collider.gameObject.CompareTag("Clickable")){
+                    if (colliders != null)
+                    {
+                        foreach (Collider collider in colliders)
+                        {
+                            if (collider.gameObject.CompareTag("Clickable"))
+                            {
                                 collider.gameObject.GetComponent<ClickEventHandler>().Dragged();
-                            }                            
+                            }
                             //Debug.Log($"{collider.gameObject.name}");
                         }
                     }
-                    
+
                 }
             }
 
