@@ -157,8 +157,20 @@ public class ClickManager : MonoBehaviour
             RaycastHit hit = hits[i];
             if (hit.collider.CompareTag("Clickable"))
             {
-                action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
-                break;
+                if(hit.collider.gameObject.layer == 3 && GameStatus.instance.gameState != GameStates.ConstructionMode)
+                {
+                    continue;
+                }
+                else if (hit.collider.gameObject.layer == 3 && GameStatus.instance.gameState != GameStates.ConstructionMode)
+                {
+                    action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
+                    break;
+                }
+                else
+                {
+                    action?.Invoke(hit.collider.gameObject, hit.point); //action에 raycast가 맞은 오브젝트와 맞은 vector3를 반환
+                    break;
+                }
             }
         }
         
