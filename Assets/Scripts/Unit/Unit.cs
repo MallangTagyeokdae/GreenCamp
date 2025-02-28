@@ -49,6 +49,7 @@ public abstract class Unit : Entity
     private Quaternion _initRotation;
     public State state = State.Idle;
     public GameObject target;
+    public GameObject projectileTarget;
 
     [HideInInspector] public Animator animator;
     private new Rigidbody rigidbody;
@@ -416,7 +417,7 @@ public abstract class Unit : Entity
     [PunRPC]
     public void SetTarget(int viewID)
     {
-        target = PhotonView.Find(viewID).gameObject;
+        projectileTarget = PhotonView.Find(viewID).gameObject;
     }
 
     public void Launch()
@@ -426,7 +427,7 @@ public abstract class Unit : Entity
             GameObject pjtObject = Instantiate(prefab, prefabPosition.position, Quaternion.identity);
             pjtObject.AddComponent<Projectile>();
             pjtObject.TryGetComponent(out Projectile projectile);
-            projectile.SetArrowTarget(target);
+            projectile.SetArrowTarget(projectileTarget);
             projectile.SetUnit(this);
             projectile.LaunchProjectile();
         }
