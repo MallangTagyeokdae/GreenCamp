@@ -78,7 +78,6 @@ public class GameManager : MonoBehaviour
         SetState("Loading"); // 상태변경
 
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        grid.SetActive(true); // Grid를 켜서 본진이 건설될 위치의 Grid 상태를 바꿀준비
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -110,8 +109,8 @@ public class GameManager : MonoBehaviour
 
         // 본진이 지어질 위치 Grid의 평균값으로 계산
         startingPoint = gridHandler.CalculateGridScale(startGrids);
-        grid.SetActive(false);
-
+        gridHandler.ChangeGridNormal();
+        
         // 본진 생성
         Building building = buildingController.CreateBuilding(startingPoint, buildingType, new Vector3(-90, 90, 0), gridHandler.constructionGrids);
 
@@ -139,7 +138,6 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.ConstructionMode:
                 GameStatus.instance.gameState = state;
-                grid.SetActive(true);
                 SetBuildingListUI();
                 break;
             case GameStates.SetMoveRot:
@@ -354,7 +352,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.ConstructionMode:
                 SetState("InGame");
-                grid.SetActive(false);
+                gridHandler.ChangeGridNormal();
                 break;
             case GameStates.SetMoveRot:
             case GameStates.SetTargetMode:
@@ -591,6 +589,7 @@ public class GameManager : MonoBehaviour
             uIController.ResetInGameInfomation();
         }
     }
+
     // =====================================================
 
 
@@ -608,7 +607,6 @@ public class GameManager : MonoBehaviour
                     float.IsInfinity(buildingPos.x) || float.IsInfinity(buildingPos.y) || float.IsInfinity(buildingPos.z))
                 {
                     Debug.LogError($"[ERROR] 잘못된 위치 값 감지: {buildingPos}");
-                    grid.SetActive(false);
                     SetState("InGame");
                     SetBuildingListUI();
                 }
@@ -618,7 +616,6 @@ public class GameManager : MonoBehaviour
                 UpdateResourceUI();
                 UpdateBuildingPopulationUI();
             }
-            grid.SetActive(false);
             SetState("InGame");
             SetBuildingListUI();
         }
@@ -1352,7 +1349,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.ConstructionMode:
                 SetState("InGame");
-                grid.SetActive(false);
+                gridHandler.ChangeGridNormal();
                 SetClickedObject(ground);
                 SetBuildingListUI();
                 break;

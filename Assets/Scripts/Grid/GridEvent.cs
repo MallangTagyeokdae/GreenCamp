@@ -24,68 +24,100 @@ public class GridEvent : MonoBehaviour
     public State gridState = State.Default;
     private ClickEventHandler _clickEventHandler;
     private MeshRenderer _meshRenderer;
+    private MeshCollider _meshCollider;
     public List<Collider> detectedColliders = new List<Collider>();
 
     void Awake()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
+        _meshCollider = GetComponent<MeshCollider>();
     }
+
+    // 처음에 시작하면 MeshCollider, MeshRenderer, clickEventHandler다 비활성화 시킴
+    // OverlapSphere에 들어오면 위에 세개를 다 켬
+    // OverlapSphere에 나가면 다시 다 끔
     void Start()
     {
-        UnSetRender();
         _clickEventHandler = GetComponent<ClickEventHandler>();
         _clickEventHandler.mouseHoverEvent.AddListener((Vector3 pos) => GameManager.instance.gridHandler.HoveredGrid(pos));
         _clickEventHandler.leftClickDownEvent.AddListener((Vector3 pos) => {
             GameManager.instance.CreateBuilding();
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
+            GameManager.instance.gridHandler.ChangeGridNormal();
         });
         _clickEventHandler.rightClickDownEvent.AddListener((Vector3 pos) => {
             GameManager.instance.SetState("InGame");
             GameManager.instance.SetClickedObject(GameManager.instance.ground);
             GameManager.instance.SetBuildingListUI();
-            GameManager.instance.grid.SetActive(false);
+            GameManager.instance.gridHandler.ChangeGridNormal();
+            
         });
+        WhenHoveredOut();
     }
     private void OnDisable()
     {
-        UnSetRender();
+        ChangeStateRenderer(false);
         detectedColliders.Clear();
     }
     public void OnBuiltIn()
     {
-        SetBuilted();
+        SetGridState(State.Builted);
         ChangeMesh();
     }
 
-    public void UnSetRender()
+    public void WhenHoveredOut()
     {
-        gameObject.GetComponent<Renderer>().enabled = false;
+        ChangeStateRenderer(false);
+        // ChangeStateClickEventHandler(false);
+        // ChangeStateMeshCollider(false);
     }
-    public void SetRander()
+
+    public void WhenHoveredIn()
     {
-        gameObject.GetComponent<Renderer>().enabled = true;
+        ChangeStateRenderer(true);
+        // ChangeStateClickEventHandler(true);
+        // ChangeStateMeshCollider(true);
+    }  
+
+    public void ChangeStateClickEventHandler(bool state)
+    {
+        _clickEventHandler.enabled = state;
     }
-    public void SetDefault()
+
+    public void ChangeStateRenderer(bool state)
     {
-        gameObject.tag = "Clickable";
-        gridState = State.Default;
+        _meshRenderer.enabled = state;
     }
-    public void SetHovered()
+    public void ChangeStateMeshCollider(bool state)
     {
-        gridState = State.Hovered;
+        _meshCollider.enabled = state;
     }
-    public void SetSelected()
+
+    public void SetGridState(State state)
     {
-        gridState = State.Selected;
-    }
-    public void SetHasObject()
-    {
-        gridState = State.HasObject;
-    }
-    public void SetBuilted()
-    {
-        gameObject.tag = "Untagged";
-        gridState = State.Builted;
+        switch(state)
+        {
+            case State.Default:
+                gameObject.tag = "Clickable";
+                gameObject.tag = "Untagged";
+                gridState = State.Default;
+                break;
+            case State.Hovered:
+                gameObject.tag = "Clickable";
+                gridState = State.Hovered;
+                break;
+            case State.Selected:
+                gridState = State.Selected;
+                break;  
+            case State.HasObject:
+                gameObject.tag = "Untagged";
+                gridState = State.HasObject;
+                break;
+            case State.Builted:
+                gameObject.tag = "Untagged";
+                gridState = State.Builted;
+                break;
+        }
     }
 
     public bool GetIsHovered()
@@ -137,7 +169,7 @@ public class GridEvent : MonoBehaviour
             if(!detectedColliders.Contains(obj))
                 detectedColliders.Add(obj);
 
-            SetHasObject();
+            SetGridState(State.HasObject);
             ChangeMesh();
         }
     }
@@ -150,7 +182,7 @@ public class GridEvent : MonoBehaviour
 
             if(detectedColliders.Count == 0)
             {
-                SetDefault();
+                SetGridState(State.Default);
                 ChangeMesh();
             }
         }
@@ -160,7 +192,7 @@ public class GridEvent : MonoBehaviour
     {
         if(detectedColliders.Count == 0 && !GetIsBuilted())
         {
-            SetDefault();
+            SetGridState(State.Default);
         }
     }
 }
