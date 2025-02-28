@@ -218,6 +218,7 @@ public class ClickManager : MonoBehaviour
                     hoverObj = hit.collider.gameObject;
                 }
                 hit.collider.GetComponent<ClickEventHandler>().OnMouseHover(hit.point);
+                break;
             }
         }
     }
