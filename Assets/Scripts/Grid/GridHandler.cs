@@ -25,7 +25,11 @@ public class GridHandler : MonoBehaviour
 
     public void HoveredGrid(Vector3 hitPoint)
     {
-        if(grid.activeSelf)
+        // 감지된 gird 들은 WhenHoveredIn()을 시켜준다.
+        // 벗어난 grid 들은 WhenHoveredOut()을 시켜준다.
+        // 근데 이 과정은 gird들의 상태를 변경시키고 해야함
+        // 새로 들어온 gird WhenHoveredIn() 실행 -> 새로 들어온 gird 상태 변경 -> 나간 gird들 상태 변경 -> 나간 gird WhenHoveredOut() 실행
+        if(GameStatus.instance.gameState == GameStates.ConstructionMode)
         {
             _range = new Vector3(_buildingRange,1,_buildingRange);
             areaPos = new Vector3(hitPoint.x, 0.01f, hitPoint.z);
@@ -42,7 +46,17 @@ public class GridHandler : MonoBehaviour
             // 최신화된 Grid List의 요소들을 검사해서 Builted && Hovered 상태가 아니면 Mesh를 바꿔준다.
             UpdateGridMeshToHovered();
             UpdateGridMeshToSelected();
-           
+        }
+    }
+
+    public void ChangeGridNormal()
+    {
+        foreach(Collider collider in detectedGrids)
+        {
+            if(collider.TryGetComponent(out GridEvent gird))
+            {
+                gird.WhenHoveredOut();
+            }
         }
     }
 
@@ -61,12 +75,15 @@ public class GridHandler : MonoBehaviour
             {
                 if(obj.TryGetComponent(out GridEvent grid))
                 {
-                    if(!detectedObjs.Contains(obj) && !grid.GetIsBuilted() && !grid.GetIsHasObject())
+                    if(!detectedObjs.Contains(obj))
                     {
-                        grid.SetDefault();
-                        grid.ChangeMesh();
+                        if(!grid.GetIsBuilted() && !grid.GetIsHasObject())
+                        {
+                            grid.SetGridState(GridEvent.State.Default);
+                            grid.ChangeMesh();
+                        }
+                        grid.WhenHoveredOut();
                     }
-                    grid.UnSetRender();
                 }
             }
         }
@@ -95,13 +112,13 @@ public class GridHandler : MonoBehaviour
         {
             if(obj.TryGetComponent(out GridEvent grid))
             {
+                grid.WhenHoveredIn();
                 grid.CheckHasObject();
                 if(!grid.GetIsBuilted() && !grid.GetIsHasObject())
                 {
-                    grid.SetHovered();
+                    grid.SetGridState(GridEvent.State.Hovered);
                     grid.ChangeMesh();
                 }
-                grid.SetRander();
             }
         }
     }
@@ -116,7 +133,7 @@ public class GridHandler : MonoBehaviour
                 {
                     grid.ChangeMeshToBlocked();
                 } else {
-                    grid.SetSelected();
+                    grid.SetGridState(GridEvent.State.Selected);
                     grid.ChangeMesh();
                 }
             }
@@ -129,7 +146,7 @@ public class GridHandler : MonoBehaviour
         {
             if(obj.TryGetComponent(out GridEvent grid))
             {
-                grid.SetBuilted();
+                grid.SetGridState(GridEvent.State.Builted);
                 grid.ChangeMesh();
             }
         }
@@ -168,7 +185,7 @@ public class GridHandler : MonoBehaviour
             {
                 if(grid.GetIsBuilted())
                 {
-                    grid.SetDefault();
+                    grid.SetGridState(GridEvent.State.Default);
                     grid.ChangeMesh();
                 }
             }
@@ -184,7 +201,7 @@ public class GridHandler : MonoBehaviour
             if(startPoint.TryGetComponent(out GridEvent grid))
             {
                 colliders.Add(startPoint);
-                grid.SetBuilted();
+                grid.SetGridState(GridEvent.State.Builted);
                 grid.ChangeMesh();
             }
         }
