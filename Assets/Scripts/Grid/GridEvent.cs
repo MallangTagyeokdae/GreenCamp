@@ -98,23 +98,21 @@ public class GridEvent : MonoBehaviour
         switch(state)
         {
             case State.Default:
-                gameObject.tag = "Clickable";
                 gameObject.tag = "Untagged";
                 gridState = State.Default;
                 break;
             case State.Hovered:
-                gameObject.tag = "Clickable";
                 gridState = State.Hovered;
                 break;
             case State.Selected:
                 gridState = State.Selected;
                 break;  
             case State.HasObject:
-                gameObject.tag = "Untagged";
+                gameObject.tag = "HasObject";
                 gridState = State.HasObject;
                 break;
             case State.Builted:
-                gameObject.tag = "Untagged";
+                gameObject.tag = "HasObject";
                 gridState = State.Builted;
                 break;
         }

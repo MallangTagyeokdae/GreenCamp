@@ -17,7 +17,7 @@ public class TurretMagician : Unit
                 unitCurrentHealth: 1000000,
                 unitCost: 0,
                 unitPower: 35,
-                unitPowerRange: 14,
+                unitPowerRange: 20,
                 unitMoveSpeed: 3,
                 populationCost: 1)
     {

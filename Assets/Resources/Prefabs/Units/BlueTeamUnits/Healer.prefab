@@ -6400,11 +6400,12 @@ MonoBehaviour:
       m_Calls: []
   teamID: 
   healthBar: {fileID: 6922770217836032722}
-  clickedEffect: {fileID: 0}
-  enemyClickedEffect: {fileID: 0}
+  clickedEffect: {fileID: 5871974877446687666}
+  enemyClickedEffect: {fileID: 7734174381063801536}
   isTurretUnit: 0
   state: 0
   target: {fileID: 0}
+  projectileTarget: {fileID: 0}
   animator: {fileID: 0}
   prefab: {fileID: 0}
   prefabPosition: {fileID: 0}
@@ -20259,6 +20260,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5329887860975645673, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
   m_PrefabInstance: {fileID: 7460331249514427640}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5871974877446687666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3960099710613061450, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
+  m_PrefabInstance: {fileID: 7460331249514427640}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8474658654172760194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20339,5 +20345,10 @@ PrefabInstance:
 --- !u!4 &7734174381063566040 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2218383157601778266, guid: 193b64beca1aa4be98b1458b103ef51d, type: 3}
+  m_PrefabInstance: {fileID: 8474658654172760194}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7734174381063801536 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2218383157602042434, guid: 193b64beca1aa4be98b1458b103ef51d, type: 3}
   m_PrefabInstance: {fileID: 8474658654172760194}
   m_PrefabAsset: {fileID: 0}
