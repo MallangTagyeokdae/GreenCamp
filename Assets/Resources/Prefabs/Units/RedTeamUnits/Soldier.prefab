@@ -84,6 +84,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3742256514944475680 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5004287419509689969, guid: b3c52779e94764e83bc8fdbef740ece5, type: 3}
+  m_PrefabInstance: {fileID: 8547241234072923217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5300771150843076451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4543562318480356146, guid: b3c52779e94764e83bc8fdbef740ece5, type: 3}
+  m_PrefabInstance: {fileID: 8547241234072923217}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5864727300351772452 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2881834226238106485, guid: b3c52779e94764e83bc8fdbef740ece5, type: 3}
@@ -115,8 +125,8 @@ MonoBehaviour:
       m_Calls: []
   teamID: red
   healthBar: {fileID: 2354246537718519500}
-  clickedEffect: {fileID: 0}
-  enemyClickedEffect: {fileID: 0}
+  clickedEffect: {fileID: 3742256514944475680}
+  enemyClickedEffect: {fileID: 5300771150843076451}
   isTurretUnit: 0
   state: 0
   target: {fileID: 0}

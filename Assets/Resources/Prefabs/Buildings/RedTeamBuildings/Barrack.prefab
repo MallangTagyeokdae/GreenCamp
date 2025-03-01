@@ -195,8 +195,8 @@ MonoBehaviour:
       m_Calls: []
   teamID: 
   healthBar: {fileID: 2579093876378188609}
-  clickedEffect: {fileID: 0}
-  enemyClickedEffect: {fileID: 0}
+  clickedEffect: {fileID: 4372409055882967551}
+  enemyClickedEffect: {fileID: 2636305227638179209}
   progressBar: {fileID: 5971038891646231793}
   state: 0
   inProgressItem: 0
@@ -1148,6 +1148,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
+--- !u!1 &4372409055882967551 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3960099710613061450, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
+  m_PrefabInstance: {fileID: 745613376040535733}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4877226524814849372 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5329887860975645673, guid: 41e54c08d472d3e45ab057f7ac511002, type: 3}
@@ -1563,6 +1568,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 193b64beca1aa4be98b1458b103ef51d, type: 3}
+--- !u!1 &2636305227638179209 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2218383157602042434, guid: 193b64beca1aa4be98b1458b103ef51d, type: 3}
+  m_PrefabInstance: {fileID: 4206166448155215819}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2636305227638472081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2218383157601778266, guid: 193b64beca1aa4be98b1458b103ef51d, type: 3}
