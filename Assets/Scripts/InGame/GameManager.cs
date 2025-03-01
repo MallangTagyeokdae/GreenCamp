@@ -455,13 +455,13 @@ public class GameManager : MonoBehaviour
 
         if (building.GetComponent<Academy>()) // 다른 건물에서 업그래드이가 완료됐을 때 아카데미를 클릭하고 있으면 UI를 업데이트 해야줘야기 때문에 필터링해줌
         {
-            if (clickedObject[0].GetComponent<Academy>())
+            if (clickedObject[0].GetComponent<Academy>() && clickedObject.Count == 1)
             {
                 SetBuildingInfo(9, building);
             }
         }
 
-        if (clickedObject[0].name == building.name)
+        if (clickedObject[0].name == building.name && clickedObject.Count == 1)
         {
             switch (building.type)
             {
