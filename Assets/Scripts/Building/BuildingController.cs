@@ -148,6 +148,9 @@ public class BuildingController : MonoBehaviour
             case "PopulationBuilding":
                 GameStatus.instance.maxUnitCount -= building.GetComponent<PopulationBuilding>().increasePersent;
                 break;
+            case "Defender":
+                building.GetComponent<Defender>().GetComponent<PhotonView>().RPC("RemoveDefenderUnit", RpcTarget.AllBuffered);
+                break;
         }
 
         await StartTimer(3f);
