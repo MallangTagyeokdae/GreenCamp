@@ -159,8 +159,8 @@ public class ClickManager : MonoBehaviour
         {
             RaycastHit hit = hits[i];
             GameObject hitObject = hit.collider.gameObject;
-             bool isTarget = GameStatus.instance.gameState == GameStates.ConstructionMode
-                        ? hitObject.layer == LayerMask.NameToLayer("Grid")
+            bool isTarget = GameStatus.instance.gameState == GameStates.ConstructionMode
+                        ? hitObject.layer == LayerMask.NameToLayer("Grid") && hitObject.tag != "HasObject"
                         : hitObject.CompareTag("Clickable");
             
             if(isTarget){

@@ -16,8 +16,8 @@ public class TurretArcher : Unit
                 unitMaxHealth: 1000000,
                 unitCurrentHealth: 1000000,
                 unitCost: 0,
-                unitPower: 35,
-                unitPowerRange: 14,
+                unitPower: 10,
+                unitPowerRange: 15,
                 unitMoveSpeed: 3,
                 populationCost: 1)
     {
@@ -28,7 +28,7 @@ public class TurretArcher : Unit
     {
         this.maxHealth = 1000000;
         this.currentHealth = 1000000;
-        this.unitPower = 35;
+        this.unitPower = 15;
         if(GameStatus.instance.teamID == teamID){
             SetAttEnter((GameObject enemy) => { GameManager.instance.AttackUnit(gameObject, enemy); });
             SetAttExit((GameObject enemy) => { attackList.Remove(enemy); });
@@ -42,7 +42,7 @@ public class TurretArcher : Unit
         this.unitType = "Archer";
         this.unitLocation = unitLocation;
         this.unitCost = 40;
-        this.unitPowerRange = 14;
+        this.unitPowerRange = 15;
         this.unitMoveSpeed = 5;
         this.populationCost = 1;
         this.population = 1;
