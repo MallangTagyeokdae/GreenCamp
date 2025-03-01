@@ -1185,17 +1185,23 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        if(tempGroup.Count == 0)
-        {
-            return;
-        }
+        int size = tempGroup.Count;
 
-        for(int i=0; i<tempGroup.Count; i++)
+        for(int i= size-1; i >= 0; i--)
         {
-            if(tempGroup[i] == null || !tempGroup[i] || tempGroup[i].CompareTag("Untagged"))
+            if(tempGroup[i] == null || !tempGroup[i])
             {
                 tempGroup.Remove(tempGroup[i]);
             }
+            else if(tempGroup[i].CompareTag("Untagged"))
+            {
+                tempGroup.Remove(tempGroup[i]);
+            }
+        }
+
+        if(tempGroup.Count == 0)
+        {
+            return;
         }
 
         if(tempGroup.Count > 0)
