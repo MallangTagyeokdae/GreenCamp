@@ -1148,7 +1148,7 @@ public class GameManager : MonoBehaviour
 
     public void SetGroup(List<GameObject> entities, int level) // 부대지정함수, 지정할 요소 리스트, 그룹순서를 받음
     {
-        List<GameObject> tempGroup = new List<GameObject>(entities);
+        List<GameObject> tempGroup = new List<GameObject>(PraseGroup(entities));
         switch(level)
         {
             case 1:
@@ -1183,6 +1183,11 @@ public class GameManager : MonoBehaviour
             case 4:
                 tempGroup = groupSet4;
                 break;
+        }
+
+        if(tempGroup.Count == 0)
+        {
+            return;
         }
 
         for(int i=0; i<tempGroup.Count; i++)
@@ -1231,7 +1236,25 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+    }
 
+    private List<GameObject> PraseGroup(List<GameObject> entities)
+    {
+        if(entities.Count > 1) // 리스트 크기가 1보다 크면
+        {
+            if(entities[0].GetComponent<Unit>())
+            {
+                return entities;
+            }
+            else
+            {
+                return entities.GetRange(1,entities.Count-1);
+            }
+        }
+        else
+        {
+            return entities;
+        }
     }
 
     public void SetScreen(int level) // 화면지정함수

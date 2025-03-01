@@ -82,7 +82,6 @@ public class Defender : Building
     [PunRPC]
     public override void DestroyEntity()
     {
-        gameObject.GetComponent<PhotonView>().RPC("RemoveDefenderUnit", RpcTarget.AllBuffered);
         Destroy(gameObject);
     }
 
