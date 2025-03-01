@@ -132,6 +132,12 @@ public abstract class Building : Entity
             //this.gameObject.GetComponent<MeshFilter>().mesh = completeMesh;
             gameObject.GetComponent<PhotonView>().RPC("SetCompleteMesh", RpcTarget.AllBuffered);
             gameObject.GetComponent<PhotonView>().RPC("GenerateCompleteEffect", RpcTarget.All);
+            
+            if(gameObject.TryGetComponent(out Defender defender))
+            {
+                Debug.Log("유닛 출현");
+                defender.GetComponent<PhotonView>().RPC("SetUnit", RpcTarget.AllBuffered);
+            }
         }
     }
 
