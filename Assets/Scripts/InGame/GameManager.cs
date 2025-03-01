@@ -318,6 +318,8 @@ public class GameManager : MonoBehaviour
                     }
 
                     selectedUnit.target = targetObject;
+                    selectedUnit.destination = Vector3.zero;
+                    
                     if (selectedUnit.attackList.Contains(targetObject))
                     {
                         selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, targetObject));
@@ -850,6 +852,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject go in clickedObject)
         {
             go.TryGetComponent(out Unit selectedUnit);
+            selectedUnit.destination = Vector3.zero;
             if (selectedUnit == null || (selectedUnit != null && selectedUnit.state == Unit.State.Die))
             {
                 continue;
