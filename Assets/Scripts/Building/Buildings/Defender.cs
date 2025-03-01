@@ -54,6 +54,8 @@ public class Defender : Building
         this.population = 1;
         this.fow = 40;
     }
+
+    [PunRPC]
     public void SetMagician()
     {
         for(int i=0; i<turretArchers.Count; i++)
@@ -80,6 +82,39 @@ public class Defender : Building
     [PunRPC]
     public override void DestroyEntity()
     {
+        gameObject.GetComponent<PhotonView>().RPC("RemoveDefenderUnit", RpcTarget.AllBuffered);
         Destroy(gameObject);
+    }
+
+    [PunRPC]
+    public void RemoveDefenderUnit()
+    {
+        foreach(GameObject unit in turretArchers)
+        {
+            if(unit.activeSelf == true)
+            {
+                unit.SetActive(false);
+            }
+        }
+
+        foreach(GameObject unit in turretMagician)
+        {
+            if(unit.activeSelf == true)
+            {
+                unit.SetActive(false);
+            }
+        }
+    }
+
+    [PunRPC]
+    public void SetUnit()
+    {
+        foreach(GameObject unit in turretArchers)
+        {
+            if(unit.activeSelf == false)
+            {
+                unit.SetActive(true);
+            }
+        }
     }
 }

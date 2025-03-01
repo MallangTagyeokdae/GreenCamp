@@ -156,7 +156,7 @@ public class BuildingController : MonoBehaviour
         {
             GameManager.instance.fogWar.GetComponent<csFogWar>().RemoveFogRevealer(building.gameObject);
         }
-        
+
         GameManager.instance.gridHandler.SetAfterDestroy(building.underGrid);
         building.GetComponent<PhotonView>().RPC("DestroyEntity",RpcTarget.AllBuffered);
     }
@@ -175,7 +175,10 @@ public class BuildingController : MonoBehaviour
                 GameStatus.instance.IncreaseMaxBuildingCount(2 * building.level);
                 building.GetComponent<Command>().attackPower += 5;
                 GameManager.instance.commandLevel ++;
-                if(building.level >= 4) building.GetComponent<Command>().SetMagician();
+                if(building.level >= 4)
+                {
+                    building.GetComponent<Command>().GetComponent<PhotonView>().RPC("SetMagician", RpcTarget.All);
+                }
                 break;
             case ResourceBuilding:
                 GameStatus.instance.resourcePerSecond += .5f;
@@ -187,7 +190,10 @@ public class BuildingController : MonoBehaviour
                 break;
             case Defender:
                 building.GetComponent<Defender>().attackPower += 5;
-                if(building.level >= 4) building.GetComponent<Defender>().SetMagician();
+                if(building.level >= 4)
+                {
+                    building.GetComponent<Defender>().GetComponent<PhotonView>().RPC("SetMagician", RpcTarget.All);
+                }
                 break;
         }
     }

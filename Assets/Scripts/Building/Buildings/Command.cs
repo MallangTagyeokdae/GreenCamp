@@ -68,6 +68,7 @@ public class Command : Building
         this._sponPos = setSponPos;
     }
     
+    [PunRPC]
     public void SetMagician()
     {
         for(int i=0; i<turretArchers.Count; i++)
