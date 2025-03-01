@@ -364,6 +364,8 @@ public class GameManager : MonoBehaviour
                     }
 
                     selectedUnit.target = targetObject;
+                    selectedUnit.destination = Vector3.zero;
+                    
                     if (selectedUnit.attackList.Contains(targetObject))
                     {
                         selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, targetObject));

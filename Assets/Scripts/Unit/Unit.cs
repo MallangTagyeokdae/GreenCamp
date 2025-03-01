@@ -422,7 +422,7 @@ public abstract class Unit : Entity
 
     public void Launch()
     {
-        if (target != null)
+        if (projectileTarget != null)
         {
             GameObject pjtObject = Instantiate(prefab, prefabPosition.position, Quaternion.identity);
             pjtObject.AddComponent<Projectile>();
