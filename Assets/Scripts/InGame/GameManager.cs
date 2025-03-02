@@ -241,6 +241,7 @@ public class GameManager : MonoBehaviour
         }
 
         //결국 먼저 제외할 유닛을 리스트에서 제거하는 로직이 먼저 일어나고 이후에 최대 16개의 유닛을 추가해야함.
+        
         if(clickedObject.Count <= 15 + startIndex){ //16개의 유닛이 선택이 된 상태에서 shift 땅 클릭은 clicked object를 초기화 시키지 않으므로 해당 조건에 참이 되지 않음 -> 빼는건 안되고 추가는 되도록
             if (CheckState("InGame"))
             {

@@ -162,8 +162,9 @@ public class ClickManager : MonoBehaviour
             bool isTarget = GameStatus.instance.gameState == GameStates.ConstructionMode
                         ? hitObject.layer == LayerMask.NameToLayer("Grid") && hitObject.tag != "HasObject"
                         : hitObject.CompareTag("Clickable");
-            
-            if(isTarget){
+
+            if (isTarget)
+            {
                 action?.Invoke(hit.collider.gameObject, hit.point);
                 break;
             }
@@ -219,7 +220,6 @@ public class ClickManager : MonoBehaviour
             }
         }
     }
-
     private void HoverAction(RaycastHit hit)
     {
         if (hoverObj != hit.collider.gameObject)
@@ -263,37 +263,37 @@ public class ClickManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            foreach (RaycastHit hit in hits)
+            DestroyDragBox();
+            if (!_isDragging)
             {
-                if (hit.collider.name == "RealGround" && hit.collider.gameObject.CompareTag("Clickable"))
-                {
-                    DestroyDragBox();
-                    if (!_isDragging)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        _isDragging = false;
-                    }
+                return;
+            }
+            else
+            {
+                _isDragging = false;
+            }
 
-                    endPos = hit.point;
-                    Collider[] colliders = startPos != endPos ? SelectObjectInBox() : null;
-                    if (colliders != null)
-                    {
-                        foreach (Collider collider in colliders)
-                        {
-                            if (collider.gameObject.CompareTag("Clickable"))
-                            {
-                                collider.gameObject.GetComponent<ClickEventHandler>().Dragged();
-                            }
-                            //Debug.Log($"{collider.gameObject.name}");
-                        }
-                    }
+            Collider[] colliders = SelectObjectInBox();
 
+            foreach (Collider collider in colliders)
+            {
+                if(collider.TryGetComponent(out Unit unit)){
+                    Debug.Log($"name: {unit.name}, unit active self: {unit.clickedEffect.activeSelf}");
                 }
             }
 
+            Array.Sort<Collider>(colliders, (a,b) => isClicked(a,b));
+
+            foreach (Collider collider in colliders)
+            {
+                if(collider.TryGetComponent(out Unit unit)){
+                    Debug.Log($"name: {unit.name}, unit active self: {unit.clickedEffect.activeSelf}");
+                }
+                if (collider.gameObject.CompareTag("Clickable"))
+                {
+                    collider.gameObject.GetComponent<ClickEventHandler>().Dragged();
+                }
+            }
         }
 
         if (_isDragging) //end position을 갱신
@@ -313,8 +313,27 @@ public class ClickManager : MonoBehaviour
                     }
                 }
             }
-
         }
+    }
+
+    private int isClicked(Collider a, Collider b)
+    {
+        if (!a.TryGetComponent(out Unit unit_A) || !b.TryGetComponent(out Unit unit_B))
+        {
+            Debug.Log($"a.name: {a.name}, b.name: {b.name}");
+            return 0;
+        }
+
+        bool isAclicked = unit_A.clickedEffect.activeSelf;
+        bool isBclicked = unit_B.clickedEffect.activeSelf;
+
+        if (isAclicked == isBclicked)
+        {
+            return 0;
+        }
+
+        //Debug.Log("맞는 것 같은데?");
+        return isAclicked ? -1 : 1;
     }
 
     private void UpdateDragBox(Vector3 start, Vector3 end)
@@ -369,6 +388,6 @@ public class ClickManager : MonoBehaviour
             Mathf.Abs(startPos.z - endPos.z)
         ) / 2, Quaternion.identity);
 
-        return colliders;
+        return colliders.Where(c => c.GetComponent<Unit>() != null).ToArray();
     }
 }
