@@ -98,7 +98,6 @@ public class GameManager : MonoBehaviour
             masterTimer = StartCoroutine(MasterTimer());
         }
     }
-
     [PunRPC]
     private void CreateCommand(int index)
     {
@@ -223,6 +222,11 @@ public class GameManager : MonoBehaviour
                 }
                 clickedObject.Add(clickedObj);
                 unitController.SetActiveHealthBar(clickedObj, true);
+                
+                if(clickedObj.TryGetComponent(out Unit unit))
+                {
+                    SetUnitInfo(7, unit.gameObject);
+                }
             }
         }
     }
@@ -230,7 +234,6 @@ public class GameManager : MonoBehaviour
     // 리팩토링때 조져야함
     public void AddClickedObject(GameObject clickedObj)
     {
-
         int startIndex = 0;
 
         if(!clickedObject[0].GetComponent<Unit>()){
@@ -284,12 +287,27 @@ public class GameManager : MonoBehaviour
                 
                 unitController.SetActiveHealthBar(clickedObj, isActive);
 
-                if (clickedObject.Count == startIndex + 1) SetUnitInfo(7, clickedObject[startIndex]);
-                else if (clickedObject.Count >= startIndex + 2)
+                // 드래그로 지웠는데 clickedObject 크기가 0이거나 0번째가 땅이면 기본 List로 변경해줌
+                if(clickedObject.Count == 0)
                 {
-                    uIController.ActiveFalseUI(8);
-                    SetGroupUnitUI(8, startIndex);
+                    SetClickedObject(ground);
+                    SetBuildingListUI();
                 }
+                else if(clickedObject.Count == 1 && !clickedObject[0].GetComponent<Unit>())
+                {
+                    SetClickedObject(ground);
+                    SetBuildingListUI();
+                }
+                else
+                {
+                    if (clickedObject.Count == startIndex + 1) SetUnitInfo(7, clickedObject[startIndex]);
+                    else if (clickedObject.Count >= startIndex + 2)
+                    {
+                        uIController.ActiveFalseUI(8);
+                        SetGroupUnitUI(8, startIndex);
+                    }
+                }
+
             }
         }
     }
@@ -376,25 +394,27 @@ public class GameManager : MonoBehaviour
 
     public void GroundLeftClickEvent(Vector3 newLocation)
     {
-        switch (GameStatus.instance.gameState)
-        {
-            case GameStates.InGame:
-                SetClickedObject(ground);
-                SetBuildingListUI();
-                break;
-            case GameStates.SetMoveRot:
-                MoveUnit(newLocation, 1);
-                SetState("InGame");
-                uIController.SetUnitOrderButton(currentUI);
-                break;
-            case GameStates.SetTargetMode:
-                foreach (GameObject gameObject in clickedObject)
-                {
-                    Attang(newLocation, 2, gameObject);
-                }
-                SetState("InGame");
-                uIController.SetUnitOrderButton(currentUI);
-                break;
+        if(!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift)){
+            switch (GameStatus.instance.gameState)
+            {
+                case GameStates.InGame:
+                    SetClickedObject(ground);
+                    SetBuildingListUI();
+                    break;
+                case GameStates.SetMoveRot:
+                    MoveUnit(newLocation, 1);
+                    SetState("InGame");
+                    uIController.SetUnitOrderButton(currentUI);
+                    break;
+                case GameStates.SetTargetMode:
+                    foreach (GameObject gameObject in clickedObject)
+                    {
+                        Attang(newLocation, 2, gameObject);
+                    }
+                    SetState("InGame");
+                    uIController.SetUnitOrderButton(currentUI);
+                    break;
+            }
         }
     }
     // =====================================================
@@ -407,15 +427,18 @@ public class GameManager : MonoBehaviour
     }
     public void SetBuildingInfo(int UIindex, Building building)
     {
-        if (clickedObject.Count > 0 && clickedObject[0] == building.gameObject && CheckState("InGame"))
-        {
-            currentUI = uIController.SetBuildingUI(UIindex, building);
-        }
-        else{
-            if(clickedObject.Count == 0){   //임시
-                clickedObject.Add(ground);
+        if(!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift)){
+
+            if (clickedObject.Count > 0 && clickedObject[0] == building.gameObject && CheckState("InGame"))
+            {
+                currentUI = uIController.SetBuildingUI(UIindex, building);
             }
-            SetBuildingListUI();
+            else{
+                if(clickedObject.Count == 0){   //임시
+                    clickedObject.Add(ground);
+                }
+                SetBuildingListUI();
+            }
         }
     }
     public void SetUnitInfo(int UIindex, GameObject unit)
@@ -864,16 +887,20 @@ public class GameManager : MonoBehaviour
             
             if (selectedUnit == null || (selectedUnit != null && selectedUnit.state == Unit.State.Die))
             {
-                continue;
-            }
+                selectedUnit.destination = Vector3.zero;
+                if (selectedUnit == null || (selectedUnit != null && selectedUnit.state == Unit.State.Die))
+                {
+                    continue;
+                }
 
-            selectedUnit.target = null;
+                selectedUnit.target = null;
 
-            if (selectedUnit.unitBehaviour != null)
-            {
-                StopCoroutine(selectedUnit.unitBehaviour);
+                if (selectedUnit.unitBehaviour != null)
+                {
+                    StopCoroutine(selectedUnit.unitBehaviour);
+                }
+                selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, newLocation, order));
             }
-            selectedUnit.unitBehaviour = StartCoroutine(unitController.Move(go, newLocation, order));
         }
     }
 
@@ -1197,17 +1224,23 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        if(tempGroup.Count == 0)
-        {
-            return;
-        }
+        int size = tempGroup.Count;
 
-        for(int i=0; i<tempGroup.Count; i++)
+        for(int i= size-1; i >= 0; i--)
         {
-            if(tempGroup[i] == null || !tempGroup[i] || tempGroup[i].CompareTag("Untagged"))
+            if(tempGroup[i] == null || !tempGroup[i])
             {
                 tempGroup.Remove(tempGroup[i]);
             }
+            else if(tempGroup[i].CompareTag("Untagged"))
+            {
+                tempGroup.Remove(tempGroup[i]);
+            }
+        }
+
+        if(tempGroup.Count == 0)
+        {
+            return;
         }
 
         if(tempGroup.Count > 0)
@@ -1347,7 +1380,13 @@ public class GameManager : MonoBehaviour
     // =================== 키관련 함수 ======================== 
     public void PressedSpace()
     {
-        if (clickedObject.Count == 1)
+        if (clickedObject.Count == 0)
+        {
+            target.transform.position = command.transform.position;
+            SetClickedObject(ground);
+            SetBuildingListUI();
+        }
+        else if (clickedObject.Count == 1)
         {
             if (clickedObject[0] == ground)
             {
