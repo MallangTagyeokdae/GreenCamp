@@ -376,6 +376,6 @@ public class ClickManager : MonoBehaviour
             Mathf.Abs(startPos.z - endPos.z)
         ) / 2, Quaternion.identity);
 
-        return colliders.Where(c => c.GetComponent<Unit>() != null && c.GetComponent<Unit>().teamID == GameStatus.instance.teamID).ToArray();
+        return colliders.Where(c => c.GetComponent<Unit>() != null && c.GetComponent<Unit>().teamID == GameStatus.instance.teamID && c.CompareTag("Clickable")).ToArray();
     }
 }
