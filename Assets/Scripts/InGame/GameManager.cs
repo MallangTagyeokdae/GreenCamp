@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
         // 본진이 지어질 위치 Grid의 평균값으로 계산
         startingPoint = gridHandler.CalculateGridScale(startGrids);
         gridHandler.ChangeGridNormal();
-        
+
         // 본진 생성
         Building building = buildingController.CreateBuilding(startingPoint, buildingType, new Vector3(-90, 90, 0), gridHandler.constructionGrids);
 
@@ -141,12 +141,12 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStates.SetMoveRot:
                 GameStatus.instance.gameState = state;
-                Cursor.SetCursor(moveCursor, new Vector2(-5.0f,5.0f), CursorMode.Auto);
+                Cursor.SetCursor(moveCursor, new Vector2(-5.0f, 5.0f), CursorMode.Auto);
                 uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.SetTargetMode:
                 GameStatus.instance.gameState = state;
-                Cursor.SetCursor(attackCursor, new Vector2(-5.0f,5.0f), CursorMode.Auto);
+                Cursor.SetCursor(attackCursor, new Vector2(-5.0f, 5.0f), CursorMode.Auto);
                 uIController.SetUnitOrderButton(currentUI);
                 break;
             case GameStates.EndGame:
@@ -192,7 +192,8 @@ public class GameManager : MonoBehaviour
                 clickedObject.Remove(clickedObj);
                 entity.clickedEffect.SetActive(false);
 
-                if(entity is Unit unit){
+                if (entity is Unit unit)
+                {
                     unitController.SetActiveHealthBar(clickedObj);
                 }
             }
@@ -222,8 +223,8 @@ public class GameManager : MonoBehaviour
                 }
                 clickedObject.Add(clickedObj);
                 unitController.SetActiveHealthBar(clickedObj, true);
-                
-                if(clickedObj.TryGetComponent(out Unit unit))
+
+                if (clickedObj.TryGetComponent(out Unit unit))
                 {
                     SetUnitInfo(7, unit.gameObject);
                 }
@@ -236,80 +237,84 @@ public class GameManager : MonoBehaviour
     {
         int startIndex = 0;
 
-        if(!clickedObject[0].GetComponent<Unit>()){
-            if(clickedObject[0].TryGetComponent(out Entity entity) && entity.clickedEffect.activeSelf){
+        if (!clickedObject[0].GetComponent<Unit>())
+        {
+            if (clickedObject[0].TryGetComponent(out Entity entity) && entity.clickedEffect.activeSelf)
+            {
                 entity.clickedEffect.SetActive(false);
             }
             startIndex = 1;
         }
 
-        //결국 먼저 제외할 유닛을 리스트에서 제거하는 로직이 먼저 일어나고 이후에 최대 16개의 유닛을 추가해야함.
-        
-        if(clickedObject.Count <= 15 + startIndex){ //16개의 유닛이 선택이 된 상태에서 shift 땅 클릭은 clicked object를 초기화 시키지 않으므로 해당 조건에 참이 되지 않음 -> 빼는건 안되고 추가는 되도록
-            if (CheckState("InGame"))
+        if (CheckState("InGame"))
+        {
+            bool isToggle = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) ? true : false;
+
+            if (isToggle)
             {
-                bool isActive = true;
-                if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)){
-                    if(!clickedObject.Contains(clickedObj)){
-                        clickedObject.Add(clickedObj);
-                        if (clickedObj.GetComponent<Entity>() != null && clickedObj.GetComponent<Entity>().clickedEffect != null)
-                        {
-                            if (clickedObj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
-                            {
-                                clickedObj.GetComponent<Entity>().clickedEffect.SetActive(true);
-                            }
-                        }
-                    }
-                    else{
-                        clickedObject.Remove(clickedObj);
-                        if (clickedObj.GetComponent<Entity>() != null && clickedObj.GetComponent<Entity>().clickedEffect != null)
-                        {
-                            if (clickedObj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
-                            {
-                                clickedObj.GetComponent<Entity>().clickedEffect.SetActive(false);
-                            }
-                        }
-                        isActive = false;
-                    }
-                }
-                else{
-                   if(!clickedObject.Contains(clickedObj)){
-                        clickedObject.Add(clickedObj);
-                        if (clickedObj.GetComponent<Entity>() != null && clickedObj.GetComponent<Entity>().clickedEffect != null)
-                        {
-                            if (clickedObj.GetComponent<Entity>().teamID == GameStatus.instance.teamID)
-                            {
-                                clickedObj.GetComponent<Entity>().clickedEffect.SetActive(true);
-                            }
-                        }
-                    }
-                }
-                
-                unitController.SetActiveHealthBar(clickedObj, isActive);
+                ToggleClick(clickedObj, startIndex);
+            }
 
-                // 드래그로 지웠는데 clickedObject 크기가 0이거나 0번째가 땅이면 기본 List로 변경해줌
-                if(clickedObject.Count == 0)
-                {
-                    SetClickedObject(ground);
-                    SetBuildingListUI();
-                }
-                else if(clickedObject.Count == 1 && !clickedObject[0].GetComponent<Unit>())
-                {
-                    SetClickedObject(ground);
-                    SetBuildingListUI();
-                }
-                else
-                {
-                    if (clickedObject.Count == startIndex + 1) SetUnitInfo(7, clickedObject[startIndex]);
-                    else if (clickedObject.Count >= startIndex + 2)
-                    {
-                        uIController.ActiveFalseUI(8);
-                        SetGroupUnitUI(8, startIndex);
-                    }
-                }
+            else
+            {
+                TryClickObject(clickedObj, startIndex);
+            }
 
+            if (clickedObject.Count == 0)
+            {
+                SetClickedObject(ground);
+                SetBuildingListUI();
+            }
+            else if (clickedObject.Count == 1 && !clickedObject[0].GetComponent<Unit>())
+            {
+                SetClickedObject(ground);
+                SetBuildingListUI();
+            }
+            else
+            {
+                if (clickedObject.Count == startIndex + 1) SetUnitInfo(7, clickedObject[startIndex]);
+                else if (clickedObject.Count >= startIndex + 2)
+                {
+                    uIController.ActiveFalseUI(8);
+                    SetGroupUnitUI(8, startIndex);
+                }
             }
         }
+
+    }
+
+    private void ToggleClick(GameObject clickedObj, int startIndex)
+    {
+        if (!clickedObject.Contains(clickedObj))
+        {
+            TryClickObject(clickedObj, startIndex);
+            return;
+        }
+
+        TryResolveClick(clickedObj);
+    }
+
+    private void TryClickObject(GameObject clickedObj, int startIndex)
+    {
+        if (clickedObject.Count > 15 + startIndex)
+        {
+            return;
+        }
+
+        if (!clickedObject.Contains(clickedObj))
+        {
+            clickedObject.Add(clickedObj);
+            clickedObj.GetComponent<Entity>().clickedEffect.SetActive(true);
+        }
+
+        unitController.SetActiveHealthBar(clickedObj, true);
+    }
+
+    private void TryResolveClick(GameObject clickedObj)
+    {
+        clickedObject.Remove(clickedObj);
+        clickedObj.GetComponent<Entity>().clickedEffect.SetActive(false);
+        unitController.SetActiveHealthBar(clickedObj, false);
     }
 
     public void SetTargetObject(GameObject target, int click)
@@ -344,7 +349,7 @@ public class GameManager : MonoBehaviour
 
                     selectedUnit.target = targetObject;
                     selectedUnit.destination = Vector3.zero;
-                    
+
                     if (selectedUnit.attackList.Contains(targetObject))
                     {
                         selectedUnit.unitBehaviour = StartCoroutine(unitController.Attack(go, targetObject));
@@ -394,7 +399,8 @@ public class GameManager : MonoBehaviour
 
     public void GroundLeftClickEvent(Vector3 newLocation)
     {
-        if(!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift)){
+        if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+        {
             switch (GameStatus.instance.gameState)
             {
                 case GameStates.InGame:
@@ -427,14 +433,17 @@ public class GameManager : MonoBehaviour
     }
     public void SetBuildingInfo(int UIindex, Building building)
     {
-        if(!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift)){
+        if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+        {
 
             if (clickedObject.Count > 0 && clickedObject[0] == building.gameObject && CheckState("InGame"))
             {
                 currentUI = uIController.SetBuildingUI(UIindex, building);
             }
-            else{
-                if(clickedObject.Count == 0){   //임시
+            else
+            {
+                if (clickedObject.Count == 0)
+                {   //임시
                     clickedObject.Add(ground);
                 }
                 SetBuildingListUI();
@@ -522,7 +531,7 @@ public class GameManager : MonoBehaviour
     public void UpdateEventUI(GameObject eventedObject)
     {
         // 체력이 0이하일때 
-        if(eventedObject.GetComponent<Entity>().currentHealth <= 0 && clickedObject.Contains(eventedObject))
+        if (eventedObject.GetComponent<Entity>().currentHealth <= 0 && clickedObject.Contains(eventedObject))
         {
             clickedObject.Remove(eventedObject);
         }
@@ -535,10 +544,10 @@ public class GameManager : MonoBehaviour
                 SetBuildingListUI();
                 break;
             case 1:
-                if(clickedObject[0].TryGetComponent(out Building building))
+                if (clickedObject[0].TryGetComponent(out Building building))
                 {
                     // 클릭리스트 크기가 1인데 0번째가 빌딩
-                    if(uIController.CheckIsUnitUI(currentUI))
+                    if (uIController.CheckIsUnitUI(currentUI))
                     {
                         SetClickedObject(ground);
                         SetBuildingListUI();
@@ -548,7 +557,7 @@ public class GameManager : MonoBehaviour
                         ReloadBuildingUI(building);
                     }
                 }
-                else if(clickedObject[0].TryGetComponent(out Unit unit))
+                else if (clickedObject[0].TryGetComponent(out Unit unit))
                 {
                     // 클릭리스트 크기가 1인데 0번째가 유닛
                     SetUnitInfo(7, unit.gameObject);
@@ -561,7 +570,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case 2:
-                if(clickedObject[0].GetComponent<Unit>())
+                if (clickedObject[0].GetComponent<Unit>())
                 {
                     // 클릭리스트 크기가 2인데 0번째가 유닛
                     uIController.ActiveFalseUI(8);
@@ -570,7 +579,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     // 클릭리스트 크기가 2인데 0번째가 유닛이 아님
-                    SetUnitInfo(7,clickedObject[1]);
+                    SetUnitInfo(7, clickedObject[1]);
                 }
                 break;
             default:
@@ -881,11 +890,7 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject go in clickedObject)
         {
-            if(go.TryGetComponent(out Unit selectedUnit)){
-                selectedUnit.destination = Vector3.zero;
-            }
-            
-            if (selectedUnit == null || (selectedUnit != null && selectedUnit.state == Unit.State.Die))
+            if (go.TryGetComponent(out Unit selectedUnit))
             {
                 selectedUnit.destination = Vector3.zero;
                 if (selectedUnit == null || (selectedUnit != null && selectedUnit.state == Unit.State.Die))
@@ -1188,7 +1193,7 @@ public class GameManager : MonoBehaviour
     public void SetGroup(List<GameObject> entities, int level) // 부대지정함수, 지정할 요소 리스트, 그룹순서를 받음
     {
         List<GameObject> tempGroup = new List<GameObject>(PraseGroup(entities));
-        switch(level)
+        switch (level)
         {
             case 1:
                 groupSet1 = tempGroup;
@@ -1208,7 +1213,7 @@ public class GameManager : MonoBehaviour
     public void SetClickedOBJToGroup(int level)
     {
         List<GameObject> tempGroup = new List<GameObject>();
-        switch(level)
+        switch (level)
         {
             case 1:
                 tempGroup = groupSet1;
@@ -1226,26 +1231,26 @@ public class GameManager : MonoBehaviour
 
         int size = tempGroup.Count;
 
-        for(int i= size-1; i >= 0; i--)
+        for (int i = size - 1; i >= 0; i--)
         {
-            if(tempGroup[i] == null || !tempGroup[i])
+            if (tempGroup[i] == null || !tempGroup[i])
             {
                 tempGroup.Remove(tempGroup[i]);
             }
-            else if(tempGroup[i].CompareTag("Untagged"))
+            else if (tempGroup[i].CompareTag("Untagged"))
             {
                 tempGroup.Remove(tempGroup[i]);
             }
         }
 
-        if(tempGroup.Count == 0)
+        if (tempGroup.Count == 0)
         {
             return;
         }
 
-        if(tempGroup.Count > 0)
+        if (tempGroup.Count > 0)
         {
-            if(tempGroup.Count == 1)
+            if (tempGroup.Count == 1)
             {
                 tempGroup[0].GetComponent<ClickEventHandler>().leftClickDownEvent.Invoke(tempGroup[0].transform.position);
                 SetClickedObject(tempGroup[0]);
@@ -1255,17 +1260,17 @@ public class GameManager : MonoBehaviour
                 SetClickedObject(tempGroup[0]);
             }
 
-            for(int i=1; i<tempGroup.Count; i++)
+            for (int i = 1; i < tempGroup.Count; i++)
             {
                 AddClickedObject(tempGroup[i]);
 
-                if(tempGroup[i].TryGetComponent(out Entity entity))
+                if (tempGroup[i].TryGetComponent(out Entity entity))
                 {
                     entity.clickedEffect.SetActive(true);
                 }
             }
 
-            switch(level)
+            switch (level)
             {
                 case 1:
                     groupSet1 = tempGroup;
@@ -1285,15 +1290,15 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> PraseGroup(List<GameObject> entities)
     {
-        if(entities.Count > 1) // 리스트 크기가 1보다 크면
+        if (entities.Count > 1) // 리스트 크기가 1보다 크면
         {
-            if(entities[0].GetComponent<Unit>())
+            if (entities[0].GetComponent<Unit>())
             {
                 return entities;
             }
             else
             {
-                return entities.GetRange(1,entities.Count-1);
+                return entities.GetRange(1, entities.Count - 1);
             }
         }
         else
@@ -1305,7 +1310,7 @@ public class GameManager : MonoBehaviour
     public void SetScreen(int level) // 화면지정함수
     {
         Vector3 targetPos = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
-        switch(level)
+        switch (level)
         {
             case 1:
                 screenSet1 = targetPos;
@@ -1321,7 +1326,7 @@ public class GameManager : MonoBehaviour
 
     public void SetCamera(int level)
     {
-        switch(level)
+        switch (level)
         {
             case 1:
                 target.transform.position = screenSet1;
@@ -1437,7 +1442,7 @@ public class GameManager : MonoBehaviour
             case GameStates.InGame:
             case GameStates.SetTargetMode:
             case GameStates.SetMoveRot:
-                if(Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     SetScreen(1);
                 }
@@ -1456,7 +1461,7 @@ public class GameManager : MonoBehaviour
             case GameStates.InGame:
             case GameStates.SetTargetMode:
             case GameStates.SetMoveRot:
-                if(Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     SetScreen(2);
                 }
@@ -1475,7 +1480,7 @@ public class GameManager : MonoBehaviour
             case GameStates.InGame:
             case GameStates.SetTargetMode:
             case GameStates.SetMoveRot:
-                if(Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     SetScreen(3);
                 }
@@ -1501,7 +1506,7 @@ public class GameManager : MonoBehaviour
             case GameStates.InGame:
             case GameStates.SetTargetMode:
             case GameStates.SetMoveRot:
-                if(Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     SetGroup(clickedObject, 1);
                 }
@@ -1520,7 +1525,7 @@ public class GameManager : MonoBehaviour
             case GameStates.InGame:
             case GameStates.SetTargetMode:
             case GameStates.SetMoveRot:
-                if(Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     SetGroup(clickedObject, 2);
                 }
@@ -1539,7 +1544,7 @@ public class GameManager : MonoBehaviour
             case GameStates.InGame:
             case GameStates.SetTargetMode:
             case GameStates.SetMoveRot:
-                if(Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     SetGroup(clickedObject, 3);
                 }
@@ -1559,7 +1564,7 @@ public class GameManager : MonoBehaviour
             case GameStates.SetTargetMode:
             case GameStates.SetMoveRot:
                 Debug.Log("1눌림");
-                if(Input.GetKey(KeyCode.LeftShift))
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
                     SetGroup(clickedObject, 4);
                 }
@@ -1962,13 +1967,15 @@ public class GameManager : MonoBehaviour
 
     public void testleaveroom()
     {
-        if(GameStatus.instance.gameState != GameStates.EndGame){
-            DestroyEntity(command.gameObject);    
+        if (GameStatus.instance.gameState != GameStates.EndGame)
+        {
+            DestroyEntity(command.gameObject);
         }
         PhotonManager.instance.LeaveRoom();
     }
 
-    public void Surrender(){
+    public void Surrender()
+    {
         DestroyEntity(command.gameObject);
     }
 }

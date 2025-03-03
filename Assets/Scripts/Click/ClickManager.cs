@@ -274,21 +274,10 @@ public class ClickManager : MonoBehaviour
             }
 
             Collider[] colliders = SelectObjectInBox();
-
-            foreach (Collider collider in colliders)
-            {
-                if(collider.TryGetComponent(out Unit unit)){
-                    Debug.Log($"name: {unit.name}, unit active self: {unit.clickedEffect.activeSelf}");
-                }
-            }
-
             Array.Sort<Collider>(colliders, (a,b) => isClicked(a,b));
 
             foreach (Collider collider in colliders)
             {
-                if(collider.TryGetComponent(out Unit unit)){
-                    Debug.Log($"name: {unit.name}, unit active self: {unit.clickedEffect.activeSelf}");
-                }
                 if (collider.gameObject.CompareTag("Clickable"))
                 {
                     collider.gameObject.GetComponent<ClickEventHandler>().Dragged();
@@ -332,7 +321,6 @@ public class ClickManager : MonoBehaviour
             return 0;
         }
 
-        //Debug.Log("맞는 것 같은데?");
         return isAclicked ? -1 : 1;
     }
 
@@ -388,6 +376,6 @@ public class ClickManager : MonoBehaviour
             Mathf.Abs(startPos.z - endPos.z)
         ) / 2, Quaternion.identity);
 
-        return colliders.Where(c => c.GetComponent<Unit>() != null).ToArray();
+        return colliders.Where(c => c.GetComponent<Unit>() != null && c.GetComponent<Unit>().teamID == GameStatus.instance.teamID).ToArray();
     }
 }
