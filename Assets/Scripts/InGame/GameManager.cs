@@ -1819,6 +1819,7 @@ public class GameManager : MonoBehaviour
                     {
                         if (gameObject.TryGetComponent(out Unit unit))
                         {
+                            unit.destination = Vector3.zero;
                             StopCoroutine(unit.unitBehaviour);
                             unit.ChangeState("Idle");
                             unit.SetOrder(0);
