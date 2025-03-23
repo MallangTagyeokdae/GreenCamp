@@ -189,6 +189,9 @@ public class GameManager : MonoBehaviour
                     return;
                 }
 
+                if(clickedObject.Count == 1){
+                    clickedObject.Add(ground);
+                }
                 clickedObject.Remove(clickedObj);
                 entity.clickedEffect.SetActive(false);
 
@@ -196,6 +199,7 @@ public class GameManager : MonoBehaviour
                 {
                     unitController.SetActiveHealthBar(clickedObj);
                 }
+                
             }
 
             else
