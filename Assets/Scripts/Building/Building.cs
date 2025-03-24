@@ -200,6 +200,12 @@ public abstract class Building : Entity
     }
 
     [PunRPC]
+    public void SyncBuildingHealth(float helath)
+    {
+        currentHealth = helath;
+    }
+
+    [PunRPC]
     public void SyncSetTag(string tag)
     {
         gameObject.tag = tag;

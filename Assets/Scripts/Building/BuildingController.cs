@@ -320,6 +320,10 @@ public class BuildingController : MonoBehaviour
             building.currentHealth += building.maxHealth - building.addedHealth;
         }
         building.currentHealth = Mathf.FloorToInt(building.currentHealth); // 소수점 아래자리 버리기
+        if(building.currentHealth >= building.maxHealth - 5 || building.currentHealth > building.maxHealth)
+        {
+            building.GetComponent<PhotonView>().RPC("SyncBuildingHealth", RpcTarget.AllBuffered, building.maxHealth);
+        }
     }
 
     private async Task StartTimer(float time)

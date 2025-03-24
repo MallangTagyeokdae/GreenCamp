@@ -189,17 +189,49 @@ public class GameManager : MonoBehaviour
                     return;
                 }
 
-                if(clickedObject.Count == 1){
-                    clickedObject.Add(ground);
-                }
-                clickedObject.Remove(clickedObj);
-                entity.clickedEffect.SetActive(false);
-
-                if (entity is Unit unit)
+                if(clickedObject.Contains(clickedObj))
                 {
-                    unitController.SetActiveHealthBar(clickedObj);
+                    if(clickedObject.Count == 1){
+                        clickedObject.Add(ground);
+                    }
+                    clickedObject.Remove(clickedObj);
+                    entity.clickedEffect.SetActive(false);
+                    if (entity is Unit unit)
+                    {
+                        unitController.SetActiveHealthBar(clickedObj);
+                    }
                 }
-                
+                else
+                {
+                    clickedObject.Add(clickedObj);
+                    entity.clickedEffect.SetActive(true);
+                    if (entity is Unit unit)
+                    {
+                        unitController.SetActiveHealthBar(clickedObj,true);
+                    }
+                }
+
+
+                int startIndex = 0;
+
+                if (!clickedObject[0].GetComponent<Unit>())
+                {
+                    startIndex = 1;
+                }
+                if (clickedObject.Count == 1 && !clickedObject[0].GetComponent<Unit>())
+                {
+                    SetClickedObject(ground);
+                    SetBuildingListUI();
+                }
+                else
+                {
+                    if (clickedObject.Count == startIndex + 1) SetUnitInfo(7, clickedObject[startIndex]);
+                    else if (clickedObject.Count >= startIndex + 2)
+                    {
+                        uIController.ActiveFalseUI(8);
+                        SetGroupUnitUI(8, startIndex);
+                    }
+                }
             }
 
             else
