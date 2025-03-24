@@ -66,7 +66,6 @@ public class UIController : MonoBehaviour
         Slider currentHealthBar = uIElement.progressBar;
         TMP_Text power = selectedUI.transform.Find("Center/Information/DamageArea/Damage").GetComponent<TMP_Text>();
         TMP_Text moveSpeed = selectedUI.transform.Find("Center/Information/MoveSpeedArea/Speed").GetComponent<TMP_Text>();
-        
 
         switch (unit.unitType)
         {
@@ -400,11 +399,11 @@ public class UIController : MonoBehaviour
         }
         else if (building.name.Contains("Barrack"))
         {
-            return "병영";
+            return "훈련소";
         }
         else if (building.name.Contains("Population"))
         {
-            return "인구수건물";
+            return "막사";
         }
         else if (building.name.Contains("Resource"))
         {
