@@ -37,12 +37,12 @@ public class ResourceBuilding : Building
         this.currentHealth = .1f;
         this.progress = 0;
         this.level = 1;
-        this.cost = 125;
+        this.cost = 70;
         this.levelUpCost = 75;
-        this.increaseLevelCost = 50;
+        this.increaseLevelCost = 15;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
-        this.loadingTime = 20f;
+        this.loadingTime = 25f;
         this.underGrid = colliders;
         this.population = 1;
         this.increasePersent = .5f;

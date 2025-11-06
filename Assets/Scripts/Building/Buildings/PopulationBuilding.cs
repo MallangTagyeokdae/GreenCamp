@@ -35,9 +35,9 @@ public class PopulationBuilding : Building
         this.location = buildingLocation;
         this.progress = 0;
         this.level = 1;
-        this.cost = 100;
-        this.levelUpCost = 50;
-        this.increaseLevelCost = 50;
+        this.cost = 35;
+        this.levelUpCost = 40;
+        this.increaseLevelCost = 25;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
         this.loadingTime = 15f;

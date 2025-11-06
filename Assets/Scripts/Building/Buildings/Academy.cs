@@ -35,12 +35,12 @@ public class Academy : Building
         this.location = buildingLocation;
         this.progress = 0;
         this.level = 1;
-        this.cost = 100;
-        this.levelUpCost = 100;
-        this.increaseLevelCost = 100;
+        this.cost = 40;
+        this.levelUpCost = 40;
+        this.increaseLevelCost = 20;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
-        this.loadingTime = 15f;
+        this.loadingTime = 10f;
         this.underGrid = colliders;
         this.population = 2;
         this.fow = 40;

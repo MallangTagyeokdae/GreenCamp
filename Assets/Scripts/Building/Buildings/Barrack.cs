@@ -34,13 +34,13 @@ public class Barrack : Building
         this.location = buildingLocation;
         this.progress = 0;
         this.level = 1;
-        this.cost = 150;
-        this.levelUpCost = 100;
-        this.increaseLevelCost = 50;
+        this.cost = 50;
+        this.levelUpCost = 30;
+        this.increaseLevelCost = 15;
         this._sponPos = new Vector3(buildingLocation.x, buildingLocation.y, buildingLocation.z - 5.5f);
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
-        this.loadingTime = 30f;
+        this.loadingTime = 10f;
         // this.loadingTime = 1f; // 디버깅 전용
         this.underGrid = colliders;
         this.population = 1;

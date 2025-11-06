@@ -1027,19 +1027,19 @@ public class GameManager : MonoBehaviour
         switch (unitType)
         {
             case "Soldier":
-                progressState = await OrderCreate(building, 1.0f, token);
+                progressState = await OrderCreate(building, 5.0f, token);
                 break;
             case "Archer":
-                progressState = await OrderCreate(building, 1.0f/*15f*/, token);
+                progressState = await OrderCreate(building, 6.0f/*15f*/, token);
                 break;
             case "Tanker":
-                progressState = await OrderCreate(building, 20f, token);
+                progressState = await OrderCreate(building, 8f, token);
                 break;
             case "Healer":
-                progressState = await OrderCreate(building, 25f, token);
+                progressState = await OrderCreate(building, 10f, token);
                 break;
             case "Scout":
-                progressState = await OrderCreate(building, 7f, token);
+                progressState = await OrderCreate(building, 3.5f, token);
                 break;
 
         }
@@ -1120,7 +1120,7 @@ public class GameManager : MonoBehaviour
         tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
         // 업그레이드 시간설정 부분
-        if (await OrderCreate(building, upgradeLevel * 30f, cts.Token))
+        if (await OrderCreate(building, upgradeLevel * 12f, cts.Token))
         {
             tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
 
