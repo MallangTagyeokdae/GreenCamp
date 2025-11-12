@@ -60,7 +60,7 @@ public class GameStatus : MonoBehaviour
     public void InitGameStatus()
     {
         teamID = PhotonManager.instance.GetTeam(PhotonNetwork.LocalPlayer);
-        currentResourceCount = 40;
+        currentResourceCount = 47;
         resourcePerSecond = 3;
         maxUnitCount = 2;
         currentUnitCount = 0;
@@ -76,9 +76,9 @@ public class GameStatus : MonoBehaviour
         armorIncrease = 0;
         damageIncrease = 0;
         healthIncrease = 0;
-        damageUpgradeCost = 30;
-        armorUpgradeCost = 30;
-        healthUpgradeCost = 30;
+        damageUpgradeCost = 40;
+        armorUpgradeCost = 40;
+        healthUpgradeCost = 40;
     }
 
     public void IncreaseResourcePerSecond(int count)

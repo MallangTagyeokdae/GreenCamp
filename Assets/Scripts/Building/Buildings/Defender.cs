@@ -49,7 +49,7 @@ public class Defender : Building
         this.attackRange = 10;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
-        this.loadingTime = 7f;
+        this.loadingTime = 12f;
         this.underGrid = colliders;
         this.population = 1;
         this.fow = 40;

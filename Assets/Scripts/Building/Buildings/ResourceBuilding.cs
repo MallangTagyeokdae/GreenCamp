@@ -42,10 +42,10 @@ public class ResourceBuilding : Building
         this.increaseLevelCost = 15;
         this.healthBar = buildingHealthBar;
         this.progressBar = buildingProgressBar;
-        this.loadingTime = 25f;
+        this.loadingTime = 20f;
         this.underGrid = colliders;
         this.population = 1;
-        this.increasePersent = .5f;
+        this.increasePersent = 1f;
         this.fow = 40;
     }
 

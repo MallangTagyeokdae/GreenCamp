@@ -791,7 +791,7 @@ public class GameManager : MonoBehaviour
 
                 tasks[building.gameObject] = cts; // 딕셔너리에 건물 오브젝트와 같이 토큰을 저장
 
-                if (await OrderCreate(building, building.level /* 25f*/, cts.Token))
+                if (await OrderCreate(building, building.level * 7f, cts.Token))
 
                 {
                     tasks.Remove(building.gameObject); // 레벨업이 완료되면 딕셔너리에서 제거해줌
@@ -1030,7 +1030,7 @@ public class GameManager : MonoBehaviour
                 progressState = await OrderCreate(building, 5.0f, token);
                 break;
             case "Archer":
-                progressState = await OrderCreate(building, 6.0f/*15f*/, token);
+                progressState = await OrderCreate(building, 6.5f, token);
                 break;
             case "Tanker":
                 progressState = await OrderCreate(building, 8f, token);
